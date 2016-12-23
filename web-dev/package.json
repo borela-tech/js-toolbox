@@ -1,6 +1,6 @@
 {
-  "name": "ctrine-preset-web",
-  "version": "0.1.0",
+  "name": "ctrine-preset-web-dev",
+  "version": "0.1.1",
   "description": "Useful tools that can be used to create ctrine web apps.",
   "repository": {
     "type": "git",

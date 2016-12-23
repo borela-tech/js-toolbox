@@ -1,6 +1,6 @@
 {
   "name": "ctrine-preset-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dependencies needed to run ctrine node apps.",
   "repository": {
     "type": "git",
