@@ -1,6 +1,6 @@
 {
   "name": "ctrine-preset-core",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "Core dependencies needed to run ctrine apps.",
   "repository": {
     "type": "git",
