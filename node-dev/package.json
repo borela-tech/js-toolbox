@@ -12,17 +12,20 @@
     "node",
     "preset"
   ],
-  "author": [{
-    "name": "Alexandre Borela",
-    "email": "alexandre@borela.tech",
-    "url": "http://www.borela.tech"
-  }],
+  "author": [
+    {
+      "name": "Alexandre Borela",
+      "email": "alexandre@borela.tech",
+      "url": "http://www.borela.tech"
+    }
+  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ctrine/preset/issues"
   },
   "homepage": "http://www.ctrine.com/#/preset",
   "dependencies": {
-    "ctrine-preset-dev": "^0.1.2"
+    "ctrine-preset-dev": "^0.1.2",
+    "webpack-node-externals": "^1.5.4"
   }
 }
