@@ -1,0 +1,27 @@
+{
+  "name": "ctrine-preset-web",
+  "version": "0.1.0",
+  "description": "Dependencies needed to run ctrine web apps.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ctrine/preset.git"
+  },
+  "keywords": [
+    "ctrine",
+    "preset",
+    "web"
+  ],
+  "author": [{
+    "name": "Alexandre Borela",
+    "email": "alexandre@borela.tech",
+    "url": "http://www.borela.tech"
+  }],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ctrine/preset/issues"
+  },
+  "homepage": "http://www.ctrine.com/#/preset",
+  "dependencies": {
+    "ctrine-preset-core": "^0.1.0"
+  }
+}
