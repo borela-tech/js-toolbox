@@ -1,0 +1,27 @@
+{
+  "name": "ctrine-preset-core",
+  "version": "0.1.0",
+  "description": "Core dependencies needed to run ctrine applications.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ctrine/preset.git"
+  },
+  "keywords": [
+    "core",
+    "ctrine",
+    "preset"
+  ],
+  "author": [{
+    "name": "Alexandre Borela",
+    "email": "alexandre@borela.tech",
+    "url": "http://www.borela.tech"
+  }],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ctrine/preset/issues"
+  },
+  "homepage": "http://www.ctrine.com/#/preset",
+  "dependencies": {
+    "babel-polyfill": "^6.16.0"
+  }
+}
