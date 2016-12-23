@@ -1,7 +1,7 @@
 {
   "name": "ctrine-preset-dev",
   "version": "0.1.0",
-  "description": "Useful common tools that can be used to create ctrine applications.",
+  "description": "Useful common tools that can be used to create ctrine apps.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ctrine/preset.git"

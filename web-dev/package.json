@@ -1,7 +1,7 @@
 {
   "name": "ctrine-preset-web",
   "version": "0.1.0",
-  "description": "Useful tools that can be used to create ctrine applications.",
+  "description": "Useful tools that can be used to create ctrine web apps.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ctrine/preset.git"
