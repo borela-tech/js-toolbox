@@ -23,6 +23,6 @@
   "homepage": "http://www.ctrine.com/#/preset",
   "dependencies": {
     "ctrine-preset-dev": "^0.1.2",
-    "webpack-preset-server": "^2.1.0-beta.11"
+    "webpack-dev-server": "^2.1.0-beta.11"
   }
 }
