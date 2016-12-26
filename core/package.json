@@ -11,11 +11,13 @@
     "ctrine",
     "preset"
   ],
-  "author": [{
-    "name": "Alexandre Borela",
-    "email": "alexandre@borela.tech",
-    "url": "http://www.borela.tech"
-  }],
+  "author": [
+    {
+      "name": "Alexandre Borela",
+      "email": "alexandre@borela.tech",
+      "url": "http://www.borela.tech"
+    }
+  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ctrine/preset/issues"
