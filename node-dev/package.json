@@ -1,7 +1,7 @@
 {
   "name": "ctrine-preset-node-dev",
-  "version": "1.0.1",
-  "description": "Useful tools that can be used to create ctrine node libs.",
+  "version": "1.0.2",
+  "description": "Useful tools that can be used to create ctrine node libs and apps.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ctrine/preset.git"
