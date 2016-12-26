@@ -1,6 +1,6 @@
 {
   "name": "ctrine-preset-node",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "Dependencies needed to run ctrine node apps.",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   },
   "homepage": "http://www.ctrine.com/#/preset",
   "dependencies": {
-    "ctrine-preset-core": "^0.1.5",
+    "ctrine-preset-core": "^1.0.0",
     "source-map-support": "^0.4.6"
   }
 }

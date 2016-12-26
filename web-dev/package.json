@@ -1,6 +1,6 @@
 {
   "name": "ctrine-preset-web-dev",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "Useful tools that can be used to create ctrine web apps.",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   },
   "homepage": "http://www.ctrine.com/#/preset",
   "dependencies": {
-    "ctrine-preset-dev": "^0.1.5",
+    "ctrine-preset-dev": "^1.0.0",
     "webpack-dev-server": "^2.1.0-beta.11"
   }
 }

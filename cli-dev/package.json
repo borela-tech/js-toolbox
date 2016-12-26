@@ -1,6 +1,6 @@
 {
   "name": "ctrine-preset-cli-dev",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Useful tools that can be used to create ctrine cli apps.",
   "repository": {
     "type": "git",
@@ -25,6 +25,6 @@
   },
   "homepage": "http://www.ctrine.com/#/preset",
   "dependencies": {
-    "ctrine-preset-node": "^0.1.5"
+    "ctrine-preset-node-dev": "^1.0.0"
   }
 }
