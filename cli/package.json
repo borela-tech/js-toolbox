@@ -2,10 +2,15 @@
   "name": "ctrine-preset-cli",
   "version": "1.0.0",
   "description": "Dependencies needed to run ctrine cli apps.",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ctrine/preset.git"
   },
+  "bugs": {
+    "url": "https://github.com/ctrine/preset/issues"
+  },
+  "homepage": "http://www.ctrine.com/#/preset",
   "keywords": [
     "ctrine",
     "cli",
@@ -18,11 +23,6 @@
       "url": "http://www.borela.tech"
     }
   ],
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/ctrine/preset/issues"
-  },
-  "homepage": "http://www.ctrine.com/#/preset",
   "dependencies": {
     "colors": "^1.1.2",
     "ctrine-preset-node": "^1.0.0",
