@@ -1,11 +1,16 @@
 {
   "name": "ctrine-preset-web-dev",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Useful tools that can be used to create ctrine web apps.",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ctrine/preset.git"
   },
+  "bugs": {
+    "url": "https://github.com/ctrine/preset/issues"
+  },
+  "homepage": "http://www.ctrine.com/#/preset",
   "keywords": [
     "ctrine",
     "preset",
@@ -18,13 +23,8 @@
       "url": "http://www.borela.tech"
     }
   ],
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/ctrine/preset/issues"
-  },
-  "homepage": "http://www.ctrine.com/#/preset",
   "dependencies": {
     "ctrine-preset-dev": "^1.0.0",
-    "webpack-dev-server": "^2.1.0-beta.11"
+    "webpack-dev-server": "^2.2.0-rc.0"
   }
 }
