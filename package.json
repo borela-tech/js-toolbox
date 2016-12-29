@@ -5,12 +5,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ctrine/preset.git"
+    "url": "git+https://github.com/ctrine/dev-preset.git"
   },
   "bugs": {
-    "url": "https://github.com/ctrine/preset/issues"
+    "url": "https://github.com/ctrine/dev-preset/issues"
   },
-  "homepage": "http://www.ctrine.com/#/preset",
+  "homepage": "http://www.ctrine.com/#/dev-preset",
   "keywords": [
     "ctrine",
     "dev",
