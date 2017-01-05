@@ -1,6 +1,6 @@
 {
   "name": "ctrine-dev-preset",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Useful common tools used to develop ctrine apps.",
   "license": "Apache-2.0",
   "repository": {
@@ -40,6 +40,7 @@
     "html-webpack-plugin": "^2.24.1",
     "isdev": "^1.0.1",
     "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
     "node-sass": "^3.13.0",
     "npm-run-all": "^3.1.1",
     "postcss-loader": "^1.1.1",
