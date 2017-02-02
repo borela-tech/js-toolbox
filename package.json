@@ -1,6 +1,6 @@
 {
   "name": "ctrine-dev-preset",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Useful common tools used to develop ctrine apps.",
   "license": "Apache-2.0",
   "repository": {
@@ -24,6 +24,7 @@
   "dependencies": {
     "autoprefixer": "^6.5.3",
     "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.8",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -35,6 +36,7 @@
     "cpx": "^1.5.0",
     "cross-env": "^3.1.3",
     "css-loader": "^0.25.0",
+    "eslint": "^3.14.1",
     "favicons-webpack-plugin": "0.0.7",
     "file-loader": "^0.9.0",
     "flow-bin": "^0.33.0",
