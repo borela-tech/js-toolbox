@@ -1,7 +1,7 @@
 {
   "name": "ctrine-dev-preset",
   "version": "1.9.0",
-  "description": "Useful common tools used to develop ctrine apps.",
+  "description": "Useful common tools used to develop Ctrine apps.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
