@@ -1,6 +1,6 @@
 {
   "name": "ctrine-dev-preset",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Useful common tools used to develop Ctrine apps.",
   "license": "Apache-2.0",
   "repository": {
@@ -45,6 +45,7 @@
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.24.1",
     "isdev": "^1.0.1",
+    "jest": "^20.0.3",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "mocha": "^3.2.0",
