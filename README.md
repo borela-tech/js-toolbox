@@ -1,3 +1,3 @@
-# Ctrine - Dev preset
+# Ctrine - Dev Preset
 
-Dependencies required to develop Ctrine apps.
+Useful tools to develop apps and websites.
