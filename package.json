@@ -1,7 +1,7 @@
 {
   "name": "ctrine-dev-preset",
-  "version": "4.0.1",
-  "description": "Useful tools to develop apps and websites.",
+  "version": "4.0.2",
+  "description": "Useful tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
