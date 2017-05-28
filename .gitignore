@@ -1,8 +1,4 @@
-*.DS_Store
-*.idea
 *.log
 *.sublime-workspace
 build
-dist
-lib
 node_modules
