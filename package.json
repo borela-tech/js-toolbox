@@ -1,6 +1,6 @@
 {
   "name": "ctrine-dev-preset",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Useful tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "repository": {
@@ -29,6 +29,7 @@
     "cpx": "^1.5.0",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.1",
+    "enzyme": "^2.8.2",
     "eslint": "^3.14.1",
     "file-loader": "^0.11.1",
     "flow-bin": "^0.46.0",
@@ -44,6 +45,7 @@
     "npm-run-all": "^4.0.2",
     "postcss-loader": "^2.0.5",
     "raw-loader": "^0.5.1",
+    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.5.2",
     "sass-loader": "^6.0.5",
     "source-map-loader": "^0.2.1",
