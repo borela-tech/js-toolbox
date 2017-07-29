@@ -1,16 +1,16 @@
 {
   "name": "@ctrine/toolbox",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Useful tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ctrine/dev-preset.git"
+    "url": "git+https://github.com/ctrine/toolbox.git"
   },
   "bugs": {
-    "url": "https://github.com/ctrine/dev-preset/issues"
+    "url": "https://github.com/ctrine/toolbox/issues"
   },
-  "homepage": "http://www.ctrine.com/#/dev-preset",
+  "homepage": "http://www.ctrine.com/#/toolbox",
   "keywords": [
     "ctrine",
     "dev",
