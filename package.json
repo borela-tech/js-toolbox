@@ -3,6 +3,9 @@
   "version": "6.0.1",
   "description": "Useful tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ctrine/toolbox.git"
