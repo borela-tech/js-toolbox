@@ -1,6 +1,6 @@
 {
-  "name": "ctrine-dev-preset",
-  "version": "4.2.1",
+  "name": "@ctrine/toolbox",
+  "version": "6.0.0",
   "description": "Useful tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "repository": {
@@ -55,7 +55,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "url-loader": "^0.5.9",
-    "webpack": "^2.2.0",
+    "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1",
     "webpack-node-externals": "^1.5.4"
   }
