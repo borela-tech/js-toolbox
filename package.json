@@ -1,6 +1,6 @@
 {
   "name": "@ctrine/toolbox",
-  "version": "7.0.0",
+  "version": "7.1.1",
   "description": "Useful tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "publishConfig": {
@@ -33,7 +33,7 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "enzyme": "^3.1.0",
-    "enzyme-to-json": "^3.1.2",
+    "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.8.0",
     "file-loader": "^1.1.5",
     "flow-bin": "^0.56.0",
