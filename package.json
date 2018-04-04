@@ -1,7 +1,7 @@
 {
   "name": "@ctrine/toolbox",
   "version": "7.6.0",
-  "description": "Useful tools to develop libraries, apps and websites.",
+  "description": "Tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
@@ -17,7 +17,9 @@
   "keywords": [
     "ctrine",
     "dev",
-    "preset"
+    "preset",
+    "tool",
+    "tools"
   ],
   "author": {
     "name": "Alexandre Borela",
