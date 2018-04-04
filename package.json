@@ -1,6 +1,6 @@
 {
   "name": "@ctrine/toolbox",
-  "version": "7.6.0",
+  "version": "8.0.0",
   "description": "Tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "publishConfig": {
