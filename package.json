@@ -3,6 +3,18 @@
   "version": "8.0.0",
   "description": "Tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
+  "bin": {
+    "ctr": "build/index.js",
+    "ctrine": "build/index.js"
+  },
+  "scripts": {
+    "build": "npm run clean && webpack-cli --mode=production",
+    "clean": "rimraf \"build\"",
+    "dev": "npm run clean && webpack-cli --mode=development",
+    "pretty": "prettier \"**/*.js\" --write",
+    "test": "jest src --verbose",
+    "test-w": "jest src --verbose --watch"
+  },
   "publishConfig": {
     "access": "public"
   },
