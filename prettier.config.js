@@ -11,6 +11,6 @@
 // the License.
 
 module.exports = {
-  parser: "flow",
+  bracketSpacing: false,
   semi: false
 }
