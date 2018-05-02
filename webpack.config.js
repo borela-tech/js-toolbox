@@ -11,7 +11,7 @@
 // the License.
 
 let nodeExternals = require("webpack-node-externals")
-let { resolve } = require("path")
+let {resolve} = require("path")
 
 module.exports = {
   devtool: "source-map",
@@ -28,10 +28,7 @@ module.exports = {
       {
         exclude: /node_modules/,
         test: /\.js$/,
-        use: [
-          { loader: "babel-loader" },
-          { loader: "source-map-loader" }
-        ]
+        use: [{loader: "babel-loader"}, {loader: "source-map-loader"}]
       }
     ]
   },
