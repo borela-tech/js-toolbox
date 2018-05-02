@@ -69,6 +69,7 @@
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
+    "eslint": "^4.19.1",
     "file-loader": "^1.1.11",
     "flow-bin": "^0.69.0",
     "flow-typed": "^2.4.0",
