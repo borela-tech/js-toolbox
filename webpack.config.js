@@ -16,12 +16,12 @@ let { resolve } = require("path")
 module.exports = {
   devtool: "source-map",
   externals: nodeExternals({
-    whitelist: [
-      "@babel/polyfill",
+    // whitelist: [
+      // "@babel/polyfill",
       // "core-js/fn/regexp/escape",
-      "core-js/shim",
-      "regenerator-runtime/runtime"
-    ]
+      // "core-js/shim",
+      // "regenerator-runtime/runtime"
+    // ]
   }),
   module: {
     rules: [
