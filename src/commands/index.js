@@ -10,13 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import Yargs from "yargs"
-import {build, lint, scaffold, test} from "./commands"
-
-Yargs.command(build)
-  .command(scaffold)
-  .command(lint)
-  .command(test)
-  .demandCommand()
-  .help()
-  .parse()
+export build from "./build"
+export lint from "./lint"
+export scaffold from "./scaffold"
+export test from "./test"

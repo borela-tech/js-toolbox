@@ -10,13 +10,25 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import Yargs from "yargs"
-import {build, lint, scaffold, test} from "./commands"
-
-Yargs.command(build)
-  .command(scaffold)
-  .command(lint)
-  .command(test)
-  .demandCommand()
-  .help()
-  .parse()
+export default {
+  command: "build",
+  description: "Build the project",
+  builder: yargs => {
+    return yargs
+      .command({
+        command: "cli-app",
+        description: "Build the CLI app"
+      })
+      .command({
+        command: "node-app",
+        description: "Build the node app"
+      })
+      .command({
+        command: "web-app",
+        description: "Build the web app"
+      })
+  },
+  handler: args => {
+    // TODO.
+  }
+}
