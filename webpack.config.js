@@ -11,6 +11,7 @@
 // the License.
 
 let nodeExternals = require("webpack-node-externals")
+let {BannerPlugin} = require("webpack")
 let {resolve} = require("path")
 
 module.exports = {
@@ -35,5 +36,11 @@ module.exports = {
   output: {
     path: resolve(__dirname, "build")
   },
+  plugins: [
+    new BannerPlugin({
+      banner: "#!/usr/bin/env node",
+      raw: true
+    })
+  ],
   target: "node"
 }
