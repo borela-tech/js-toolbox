@@ -10,7 +10,8 @@
   "scripts": {
     "build": "npm run clean && webpack-cli --mode=production",
     "clean": "rimraf \"build\"",
-    "dev": "npm run clean && webpack-cli --mode=development --watch",
+    "dev": "npm run clean && webpack-cli --mode=development",
+    "dev-w": "npm run clean && webpack-cli --mode=development --watch",
     "pretty": "prettier \"**/*.js\" --write",
     "test": "jest src --verbose",
     "test-w": "jest src --verbose --watch"
