@@ -4,8 +4,8 @@
   "description": "Tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "bin": {
-    "ctr": "build/index.js",
-    "ctrine": "build/index.js"
+    "ctr": "build/main.js",
+    "ctrine": "build/main.js"
   },
   "scripts": {
     "build": "npm run clean && webpack-cli --mode=production",
