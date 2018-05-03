@@ -14,6 +14,6 @@ export default {
   command: "test",
   description: "Run test suites",
   handler: args => {
-    // TODO.
+    console.log("Test command executed.")
   }
 }

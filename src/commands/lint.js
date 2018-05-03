@@ -19,6 +19,6 @@ export default {
     })
   },
   handler: args => {
-    // TODO.
+    console.log("Lint command executed.")
   }
 }

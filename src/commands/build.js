@@ -29,6 +29,6 @@ export default {
       })
   },
   handler: args => {
-    // TODO.
+    console.log("Build command executed.")
   }
 }
