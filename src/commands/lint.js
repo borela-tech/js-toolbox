@@ -12,10 +12,10 @@
 
 export default {
   command: "lint",
-  description: "Check or fix code style",
+  description: "Check or fix code style.",
   builder: yargs => {
     return yargs.option("fix", {
-      description: "Fix lint errors"
+      description: "Fix lint errors."
     })
   },
   handler: args => {

@@ -12,23 +12,21 @@
 
 export default {
   command: "scaffold",
-  description: "Generate scaffold",
+  description: "Generate scaffold.",
   builder: yargs => {
     return yargs
       .command({
-        command: "cli-app",
-        description: "Generate the scaffold to build a CLI app"
+        command: "node-app",
+        description: "Generate the scaffold to build a node app."
       })
       .command({
-        command: "node-app",
-        description: "Generate the scaffold to build a node app"
+        command: "node-cli",
+        description: "Generate the scaffold to build a CLI app."
       })
       .command({
         command: "web-app",
-        description: "Generate the scaffold to build a web app"
+        description: "Generate the scaffold to build a web app."
       })
-  },
-  handler: args => {
-    console.log("Scaffold command executed.")
+      .demandCommand()
   }
 }
