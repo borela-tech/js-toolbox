@@ -10,25 +10,47 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {run} from "../util/tool"
+
+function buildLib(args) {
+  cleanup()
+  run("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
+}
+
+function buildNodeApp(args) {
+  cleanup()
+  run("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
+}
+
+function buildWebApp(args) {
+  cleanup()
+  run("webpack", [])
+}
+
+function cleanup() {
+  run("rimraf", ['"build/!(.git)"'])
+}
+
 export default {
   command: "build",
-  description: "Build the project",
+  description: "Build the project.",
   builder: yargs => {
     return yargs
       .command({
-        command: "cli-app",
-        description: "Build the CLI app"
+        command: "lib",
+        description: "Build a library to be used in a node or web app.",
+        handler: buildLib
       })
       .command({
         command: "node-app",
-        description: "Build the node app"
+        description: "Build a node app.",
+        handler: buildNodeApp
       })
       .command({
         command: "web-app",
-        description: "Build the web app"
+        description: "Build a web app.",
+        handler: buildWebApp
       })
-  },
-  handler: args => {
-    console.log("Build command executed.")
+      .demandCommand()
   }
 }
