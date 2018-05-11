@@ -4,14 +4,13 @@
   "description": "Tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "bin": {
-    "ctr": "build/main.js",
-    "ctrine": "build/main.js"
+    "ctr": "build/index.js",
+    "ctrine": "build/index.js"
   },
   "scripts": {
-    "build": "npm run clean && webpack-cli --mode=production",
     "clean": "rimraf \"build\"",
-    "dev": "npm run clean && webpack-cli --mode=development",
-    "dev-w": "npm run clean && webpack-cli --mode=development --watch",
+    "dev": "npm run clean && babel src -d build --ignore **/__*__/** -s",
+    "dev-w": "npm run clean && babel src -d build --ignore **/__*__/** -s --watch",
     "pretty": "prettier \"**/*.js\" --write",
     "test": "jest src --verbose",
     "test-w": "jest src --verbose --watch"
