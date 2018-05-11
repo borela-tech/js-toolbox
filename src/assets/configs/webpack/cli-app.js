@@ -18,10 +18,10 @@ module.exports = {
   devtool: "source-map",
   externals: nodeExternals({
     // whitelist: [
-      // "@babel/polyfill",
-      // "core-js/fn/regexp/escape",
-      // "core-js/shim",
-      // "regenerator-runtime/runtime"
+    // "@babel/polyfill",
+    // "core-js/fn/regexp/escape",
+    // "core-js/shim",
+    // "regenerator-runtime/runtime"
     // ]
   }),
   module: {
