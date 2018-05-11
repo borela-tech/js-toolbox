@@ -10,10 +10,27 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {CONFIGS_DIR, PACKAGE_DIR} from "../util/paths"
+import {join} from "path"
+import {run} from "../util/tool"
+
+const JEST_CONFIG_PATH = join(CONFIGS_DIR, "jest.js")
+
 export default {
   command: "test",
-  description: "Run test suites",
+  description: "Run test suites.",
+  builder: yargs => {
+    yargs.options({
+      watch: {
+        default: false,
+        description: "Watch for changes and run tests automatically.",
+        type: "boolean"
+      }
+    })
+  },
   handler: args => {
-    console.log("Test command executed.")
+    let jestArgs = [PACKAGE_DIR, `--config=${JEST_CONFIG_PATH}`]
+    if (args.watch) jestArgs.push("--watch")
+    run("jest", jestArgs)
   }
 }
