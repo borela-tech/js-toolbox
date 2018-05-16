@@ -10,11 +10,11 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {CONFIGS_DIR, PACKAGE_DIR} from "../util/paths"
+import {CONFIGS_DIR} from "../paths"
 import {join} from "path"
-import {run} from "../util/tool"
+import {runBinary} from "../binaries"
 
-const JEST_CONFIG_PATH = join(CONFIGS_DIR, "jest.js")
+const JEST_CONFIG_PATH = join(CONFIGS_DIR, "jest/config.js")
 
 export default {
   command: "test",
@@ -29,8 +29,8 @@ export default {
     })
   },
   handler: args => {
-    let jestArgs = [PACKAGE_DIR, `--config=${JEST_CONFIG_PATH}`]
+    let jestArgs = [`--config=${JEST_CONFIG_PATH}`]
     if (args.watch) jestArgs.push("--watch")
-    run("jest", jestArgs)
+    runBinary("jest", jestArgs)
   }
 }
