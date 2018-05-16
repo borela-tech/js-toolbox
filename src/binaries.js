@@ -13,37 +13,37 @@
 import {existsSync} from "fs"
 import {join} from "path"
 import {spawnSync} from "child_process"
-import {
-  TARGET_PACKAGE_DIR,
-  TARGET_PACKAGE_BIN_DIR,
-  TOOLBOX_BIN_DIR
-} from "./paths"
+import {PACKAGE_DIR, PACKAGE_BIN_DIR, TOOLBOX_BIN_DIR} from "./paths"
 
 // Cache for found binaries.
 const BINARIES = {}
 
 /**
- * Finds the binary either in the toolbox or target package’s directory.
+ * Find the binary either in the toolbox or target package’s directory.
  */
-function findBin(bin: string) {
-  if (BINARIES[bin]) return BINARIES[bin]
+export function findBinary(targetBinary: string) {
+  if (BINARIES[targetBinary]) return BINARIES[targetBinary]
 
-  const TOOLBOX_BIN = join(TOOLBOX_BIN_DIR, bin)
+  const TOOLBOX_BIN = join(TOOLBOX_BIN_DIR, targetBinary)
   if (existsSync(TOOLBOX_BIN))
-    BINARIES[bin] =
+    BINARIES[targetBinary] =
       process.platform === "win32" ? `${TOOLBOX_BIN}.cmd` : TOOLBOX_BIN
 
-  const PACKAGE_BIN = join(TARGET_PACKAGE_BIN_DIR, bin)
+  const PACKAGE_BIN = join(PACKAGE_BIN_DIR, targetBinary)
   if (existsSync(PACKAGE_BIN))
-    BINARIES[bin] =
+    BINARIES[targetBinary] =
       process.platform === "win32" ? `${PACKAGE_BIN}.cmd` : PACKAGE_BIN
 
-  return BINARIES[bin]
+  return BINARIES[targetBinary]
 }
 
-export function run(bin: string, args: string[]) {
-  return spawnSync(findBin(bin), args, {
-    cwd: TARGET_PACKAGE_DIR,
+/**
+ * Find the binary and run it.
+ */
+export function runBinary(targetBinary: string, args: string[]) {
+  const FOUND_BINARY = findBinary(targetBinary)
+  return spawnSync(FOUND_BINARY, args, {
+    cwd: PACKAGE_DIR,
     stdio: "inherit"
   })
 }
