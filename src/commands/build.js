@@ -10,25 +10,25 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {run} from "../util/tool"
+import {runBinary} from "../binaries"
 
 function buildLib(args) {
   cleanup()
-  run("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
+  runBinary("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
 }
 
 function buildNodeApp(args) {
   cleanup()
-  run("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
+  runBinary("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
 }
 
 function buildWebApp(args) {
   cleanup()
-  run("webpack", [])
+  runBinary("webpack", [])
 }
 
 function cleanup() {
-  run("rimraf", ['"build/!(.git)"'])
+  runBinary("rimraf", ['"build/!(.git)"'])
 }
 
 export default {
