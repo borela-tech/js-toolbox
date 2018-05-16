@@ -14,7 +14,7 @@
   "plugins": [
     // Transforms that break if the other is changed.
     "@babel/plugin-transform-flow-comments",
-    "@babel/plugin-proposal-decorators",
+    ["@babel/plugin-proposal-decorators", {legacy:true}],
     // Other transforms.
     "@babel/plugin-proposal-async-generator-functions",
     "@babel/plugin-proposal-class-properties",
