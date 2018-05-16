@@ -13,16 +13,13 @@
 import pkgDir from "pkg-dir"
 import {join} from "path"
 
-export const TARGET_PACKAGE_DIR = pkgDir.sync()
-export const TARGET_PACKAGE_BIN_DIR = join(
-  TARGET_PACKAGE_DIR,
-  "node_modules",
-  ".bin"
-)
+export const PACKAGE_DIR = pkgDir.sync()
+export const PACKAGE_MODULES_DIR = join(PACKAGE_DIR, "node_modules")
+export const PACKAGE_BIN_DIR = join(PACKAGE_MODULES_DIR, ".bin")
 
-export const TOOLBOX_DIR = join(__dirname, "..", "..")
-export const TOOLBOX_BIN_DIR = join(TOOLBOX_DIR, "node_modules", ".bin")
+export const TOOLBOX_DIR = join(__dirname, "..")
+export const TOOLBOX_MODULES_DIR = join(TOOLBOX_DIR, "node_modules")
+export const TOOLBOX_BIN_DIR = join(TOOLBOX_MODULES_DIR, ".bin")
 
-export const ASSETS_DIR = join(TOOLBOX_DIR, "build/assets")
-export const CONFIGS_DIR = join(ASSETS_DIR, "configs")
-export const TEMPLATES_DIR = join(ASSETS_DIR, "templates")
+export const CONFIGS_DIR = join(TOOLBOX_DIR, "build", "configs")
+export const TEMPLATES_DIR = join(TOOLBOX_DIR, "templates")
