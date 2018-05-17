@@ -12,7 +12,6 @@
 
 import babelJest from "babel-jest"
 import {findModule} from "../../modules"
-import {TARGET_PACKAGE_DIR, TOOLBOX_DIR} from "../../paths"
 
 module.exports = babelJest.createTransformer({
   plugins: [
