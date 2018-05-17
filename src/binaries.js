@@ -15,8 +15,8 @@ import {join} from "path"
 import {spawnSync} from "child_process"
 import {PACKAGE_DIR, PACKAGE_BIN_DIR, TOOLBOX_BIN_DIR} from "./paths"
 
-// Cache for found binaries.
 const BINARIES = {}
+const IS_WINDOWS = process.platform === "win32"
 
 /**
  * Find the binary either in the toolbox or target package’s directory.
@@ -26,13 +26,11 @@ export function findBinary(targetBinary: string) {
 
   const TOOLBOX_BIN = join(TOOLBOX_BIN_DIR, targetBinary)
   if (existsSync(TOOLBOX_BIN))
-    BINARIES[targetBinary] =
-      process.platform === "win32" ? `${TOOLBOX_BIN}.cmd` : TOOLBOX_BIN
+    BINARIES[targetBinary] = IS_WINDOWS ? `${TOOLBOX_BIN}.cmd` : TOOLBOX_BIN
 
   const PACKAGE_BIN = join(PACKAGE_BIN_DIR, targetBinary)
   if (existsSync(PACKAGE_BIN))
-    BINARIES[targetBinary] =
-      process.platform === "win32" ? `${PACKAGE_BIN}.cmd` : PACKAGE_BIN
+    BINARIES[targetBinary] = IS_WINDOWS ? `${PACKAGE_BIN}.cmd` : PACKAGE_BIN
 
   return BINARIES[targetBinary]
 }
