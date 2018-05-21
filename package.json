@@ -8,12 +8,8 @@
   },
   "scripts": {
     "clean": "rimraf \"build\"",
-    "dev": "npm run clean && run-p dev:*",
-    "dev:assets": "cpx \"src/**/*(*.json|!(*.js))\" build",
-    "dev:babel": "babel src -d build --ignore **/__*__/** -s",
-    "dev-w": "npm run clean && run-p dev-w:*",
-    "dev-w:assets": "cpx \"src/**/*(*.json|!(*.js))\" build --watch",
-    "dev-w:babel": "babel src -d build --ignore **/__*__/** -s --watch",
+    "dev": "npm run clean && babel src -d build --ignore **/__*__/** -s",
+    "dev-w": "npm run clean && babel src -d build --ignore **/__*__/** -s --watch",
     "pretty": "prettier \"**/*.js\" --write",
     "test": "jest src --verbose",
     "test-w": "jest src --verbose --watch"
