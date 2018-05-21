@@ -20,6 +20,18 @@ Yargs.command(build)
   .command(scaffold)
   .command(lint)
   .command(test)
+  .option("flow", {
+    description: "Convert Flow annotations to comments.",
+    type: "boolean"
+  })
+  .option("react", {
+    description: "Enable React’s JSX.",
+    type: "boolean"
+  })
+  .option("typescript", {
+    description: "Enable TypeScript.",
+    type: "boolean"
+  })
   .demandCommand()
   .help("help", "Show usage instructions.")
   .version("version", "Show toolbox version.", packageInfo.version)
