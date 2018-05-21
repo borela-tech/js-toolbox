@@ -38,10 +38,11 @@ export function findBinary(targetBinary: string) {
 /**
  * Find the binary and run it.
  */
-export function runBinary(targetBinary: string, args: string[]) {
+export function runBinary(targetBinary: string, args: string[], env: any) {
   const FOUND_BINARY = findBinary(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
+    env,
     stdio: "inherit"
   })
 }
