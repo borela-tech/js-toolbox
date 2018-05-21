@@ -11,30 +11,6 @@
 // the License.
 
 import babelJest from "babel-jest"
-import {findModule} from "../../modules"
+import preset from "../babel"
 
-module.exports = babelJest.createTransformer({
-  plugins: [
-    // Transforms that break if the order is changed.
-    findModule("@babel/plugin-transform-flow-comments"),
-    [findModule("@babel/plugin-proposal-decorators"), {legacy: true}],
-    // Other transforms.
-    findModule("@babel/plugin-proposal-async-generator-functions"),
-    findModule("@babel/plugin-proposal-class-properties"),
-    findModule("@babel/plugin-proposal-do-expressions"),
-    findModule("@babel/plugin-proposal-export-default-from"),
-    findModule("@babel/plugin-proposal-export-namespace-from"),
-    findModule("@babel/plugin-proposal-function-bind"),
-    findModule("@babel/plugin-proposal-function-sent"),
-    findModule("@babel/plugin-proposal-logical-assignment-operators"),
-    findModule("@babel/plugin-proposal-nullish-coalescing-operator"),
-    findModule("@babel/plugin-proposal-numeric-separator"),
-    findModule("@babel/plugin-proposal-object-rest-spread"),
-    findModule("@babel/plugin-proposal-optional-catch-binding"),
-    findModule("@babel/plugin-proposal-optional-chaining"),
-    findModule("@babel/plugin-proposal-pipeline-operator"),
-    findModule("@babel/plugin-proposal-throw-expressions"),
-    findModule("@babel/plugin-proposal-unicode-property-regex")
-  ],
-  presets: [[findModule("@babel/preset-env"), {targets: {node: 6}}]]
-})
+module.exports = babelJest.createTransformer(preset)
