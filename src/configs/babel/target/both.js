@@ -10,10 +10,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {findModule} from "../../modules"
-import basic from "./shared"
+import plugins from "../plugins"
+import {findModule} from "../../../modules"
 
-module.exports = function() {
-  basic.presets.push(findModule("@babel/preset-typescript"))
-  return basic
+export default function() {
+  return {
+    plugins: plugins(),
+    presets: [
+      [
+        findModule("@babel/preset-env"),
+        {
+          targets: {
+            browsers: ["chrome >= 49", ">= 0.5%, last 2 versions, not dead"],
+            node: 6
+          }
+        }
+      ]
+    ]
+  }
 }

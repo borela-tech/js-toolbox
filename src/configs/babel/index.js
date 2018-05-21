@@ -10,11 +10,27 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import basicNodePreset from "./target/node"
+import basicPreset from "./target/both"
+import basicWebPreset from "./target/web"
 import {findModule} from "../../modules"
-import basic from "./shared"
 
-module.exports = function() {
-  basic.plugins.unshift(findModule("@babel/plugin-transform-flow-comments"))
-  basic.presets.push(findModule("@babel/preset-react"))
-  return basic
+let {flow, react, target, typescript} = process.env
+let result = basicPreset()
+
+if (target === "node") result = basicNodePreset()
+if (target === "web") result = basicWebPreset()
+
+if (flow) {
+  result.plugins.unshift(findModule("@babel/plugin-transform-flow-comments"))
 }
+
+if (react) {
+  result.presets.push(findModule("@babel/preset-react"))
+}
+
+if (typescript) {
+  result.presets.push(findModule("@babel/preset-typescript"))
+}
+
+module.exports = result

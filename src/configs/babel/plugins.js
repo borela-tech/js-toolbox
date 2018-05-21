@@ -12,8 +12,11 @@
 
 import {findModule} from "../../modules"
 
-export default {
-  plugins: [
+/**
+ * Plugins used by all preset variations.
+ */
+export default function() {
+  return [
     // Transforms that break if the order is changed.
     [findModule("@babel/plugin-proposal-decorators"), {legacy: true}],
     // Other transforms.
@@ -33,16 +36,5 @@ export default {
     findModule("@babel/plugin-proposal-pipeline-operator"),
     findModule("@babel/plugin-proposal-throw-expressions"),
     findModule("@babel/plugin-proposal-unicode-property-regex")
-  ],
-  presets: [
-    [
-      findModule("@babel/preset-env"),
-      {
-        targets: {
-          browsers: ["chrome >= 49", ">= 0.5%, last 2 versions, not dead"],
-          node: 6
-        }
-      }
-    ]
   ]
 }
