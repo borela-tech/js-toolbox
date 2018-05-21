@@ -10,25 +10,67 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {CONFIGS_DIR} from "../paths"
+import {join} from "path"
 import {runBinary} from "../binaries"
+
+const PRESET_LOCATION = join(CONFIGS_DIR, "babel", "index.js")
+const BABEL_ARGS = [
+  "src",
+  "-d",
+  "build",
+  "--ignore",
+  "**/__*__/**",
+  "-s",
+  `--presets=${PRESET_LOCATION}`
+]
 
 function buildLib(args) {
   cleanup()
-  runBinary("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
+  runBinary("babel", BABEL_ARGS, {
+    target: "both",
+    flow: args.flow,
+    react: args.react,
+    typescript: args.typescript
+  })
 }
 
 function buildNodeApp(args) {
   cleanup()
-  runBinary("babel", ["src", "-d", "build", "--ignore", "**/__*__/**", "-s"])
+  runBinary("babel", BABEL_ARGS, {
+    target: "node",
+    flow: args.flow,
+    react: args.react,
+    typescript: args.typescript
+  })
+}
+
+function buildNodeLib(args) {
+  cleanup()
+  runBinary("babel", BABEL_ARGS, {
+    target: "node",
+    flow: args.flow,
+    react: args.react,
+    typescript: args.typescript
+  })
 }
 
 function buildWebApp(args) {
+  console.log("TODO")
+}
+
+function buildWebLib(args) {
   cleanup()
-  runBinary("webpack", [])
+  runBinary("babel", BABEL_ARGS, {
+    target: "web",
+    flow: args.flow,
+    react: args.react,
+    typescript: args.typescript
+  })
 }
 
 function cleanup() {
-  runBinary("rimraf", ['"build/!(.git)"'])
+  runBinary("rimraf", ['"build"'])
 }
 
 export default {
@@ -38,7 +80,7 @@ export default {
     return yargs
       .command({
         command: "lib",
-        description: "Build a library to be used in a node or web app.",
+        description: "Build a library to be used on node or web app.",
         handler: buildLib
       })
       .command({
@@ -47,9 +89,19 @@ export default {
         handler: buildNodeApp
       })
       .command({
+        command: "node-lib",
+        description: "Build a library to be used on node apps.",
+        handler: buildNodeLib
+      })
+      .command({
         command: "web-app",
         description: "Build a web app.",
         handler: buildWebApp
+      })
+      .command({
+        command: "web-lib",
+        description: "Build a library to be used on web apps.",
+        handler: buildWebLib
       })
       .demandCommand()
   }
