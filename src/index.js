@@ -12,6 +12,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import packageInfo from "../package"
 import Yargs from "yargs"
 import {build, lint, scaffold, test} from "./commands"
 
@@ -20,5 +21,6 @@ Yargs.command(build)
   .command(lint)
   .command(test)
   .demandCommand()
-  .help()
+  .help("help", "Show usage instructions.")
+  .version("version", "Show toolbox version.", packageInfo.version)
   .parse()
