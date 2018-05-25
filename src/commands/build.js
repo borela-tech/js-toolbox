@@ -71,6 +71,8 @@ function cleanup() {
 function getBuildOptions(args) {
   return {
     commentFlow: args.commentFlow,
+    flow: args.flow,
+    production: args.production,
     react: args.react,
     removeFlow: args.removeFlow,
     typescript: args.typescript

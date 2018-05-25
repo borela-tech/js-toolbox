@@ -15,34 +15,63 @@ import basicPreset from "./target/both"
 import basicWebPreset from "./target/web"
 import {findModule} from "../../modules"
 
-// There’s no way to pass the preset settings when using the CLI, so we are
-// using the environment variables passed to the “runBinary()” function.
-let {commentFlow, react, removeFlow, target, typescript} = process.env
+module.exports = function() {
+  // There’s no way to pass the preset settings when using the CLI, so we are
+  // using the environment variables passed to the “runBinary()” function.
+  let {
+    commentFlow = false,
+    flow = false,
+    production = false,
+    react = false,
+    removeFlow = false,
+    target = false,
+    typescript = false
+  } = process.env
 
-// Select the basic preset.
-let result = basicPreset()
-if (target === "node") result = basicNodePreset()
-if (target === "web") result = basicWebPreset()
+  // Select the basic preset.
+  let result = basicPreset()
+  if (target === "node") result = basicNodePreset()
+  if (target === "web") result = basicWebPreset()
 
-// Comment Flow annotations.
-if (commentFlow)
-  result.plugins.unshift(findModule("@babel/plugin-transform-flow-comments"))
+  console.log(commentFlow, flow, production, react, removeFlow, target, typescript)
 
-// Remove Flow annotations if they are not being commented already.
-if (removeFlow && !commentFlow)
-  result.plugins.unshift(findModule("@babel/plugin-transform-flow-strip-types"))
+  // Comment Flow annotations.
+  if (commentFlow) {
+    console.log(commentFlow)
+    console.log("aaaaaaaaaaaaaaaaaa")
+    result.plugins.unshift(findModule("@babel/plugin-transform-flow-comments"))
+  }
 
-// Enable JSX for React.
-if (react) {
-  result.plugins.unshift(findModule("@babel/plugin-syntax-jsx"))
-  result.plugins.unshift(findModule("@babel/plugin-transform-react-jsx"))
-  result.plugins.unshift(
-    findModule("@babel/plugin-transform-react-display-name")
-  )
+  // Remove Flow annotations if they are not being commented already.
+  if (removeFlow && !commentFlow)
+    result.plugins.unshift(
+      findModule("@babel/plugin-transform-flow-strip-types")
+    )
+
+  if (flow || commentFlow || removeFlow)
+    result.plugins.unshift(findModule("@babel/plugin-syntax-flow"))
+
+  // Enable JSX for React.
+  if (react) {
+    result.plugins.push(findModule("@babel/plugin-syntax-jsx"))
+    result.plugins.push(findModule("@babel/plugin-transform-react-jsx"))
+    result.plugins.push(
+      findModule("@babel/plugin-transform-react-display-name")
+    )
+
+    if (!production) {
+      result.plugins.push(findModule("@babel/plugin-transform-react-jsx-self"))
+      result.plugins.push(
+        findModule("@babel/plugin-transform-react-jsx-source")
+      )
+    }
+  }
+
+  // Add TypeScript support.
+  if (typescript)
+    result.plugins.push(findModule("@babel/plugin-transform-typescript"))
+
+  return result
 }
 
-// Add TypeScript support.
-if (typescript)
-  result.presets.push(findModule("@babel/plugin-transform-typescript"))
-
-module.exports = result
+console.log(module.exports())

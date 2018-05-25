@@ -29,12 +29,20 @@ Yargs.command(build)
     description: "Convert Flow annotations to comments.",
     type: "boolean"
   })
+  .option("flow", {
+    description: "Enable Flow annotations.",
+    type: "boolean"
+  })
   .option("react", {
     description: "Enable React’s JSX.",
     type: "boolean"
   })
   .option("remove-flow", {
     description: "Remove Flow annotations.",
+    type: "boolean"
+  })
+  .option("production", {
+    description: "Remove debug plugins.",
     type: "boolean"
   })
   .option("typescript", {
