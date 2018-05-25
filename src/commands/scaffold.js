@@ -12,20 +12,20 @@
 
 export default {
   command: "scaffold",
-  description: "Generate scaffold.",
+  description: "Generate a project from the available templates.",
   builder: yargs => {
     return yargs
       .command({
         command: "node-app",
-        description: "Generate the scaffold to build a node app."
+        description: "Generate a project to build a node app."
       })
       .command({
         command: "node-cli",
-        description: "Generate the scaffold to build a CLI app."
+        description: "Generate a project to build a CLI app."
       })
       .command({
         command: "web-app",
-        description: "Generate the scaffold to build a web app."
+        description: "Generate a project to build a web app."
       })
       .demandCommand()
   }
