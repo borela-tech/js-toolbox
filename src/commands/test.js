@@ -11,6 +11,7 @@
 // the License.
 
 import {CONFIGS_DIR} from "../paths"
+import {getBuildOptions} from "./build"
 import {join} from "path"
 import {runBinary} from "../binaries"
 
@@ -31,10 +32,6 @@ export default {
   handler: args => {
     let jestArgs = [`--config=${JEST_CONFIG_PATH}`]
     if (args.watch) jestArgs.push("--watch")
-    runBinary("jest", jestArgs, {
-      flow: args.flow,
-      react: args.react,
-      typescript: args.typescript
-    })
+    runBinary("jest", jestArgs, ...getBuildOptions(args))
   }
 }

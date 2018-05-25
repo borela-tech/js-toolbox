@@ -15,22 +15,34 @@ import basicPreset from "./target/both"
 import basicWebPreset from "./target/web"
 import {findModule} from "../../modules"
 
-let {flow, react, target, typescript} = process.env
-let result = basicPreset()
+// There’s no way to pass the preset settings when using the CLI, so we are
+// using the environment variables passed to the “runBinary()” function.
+let {commentFlow, react, removeFlow, target, typescript} = process.env
 
+// Select the basic preset.
+let result = basicPreset()
 if (target === "node") result = basicNodePreset()
 if (target === "web") result = basicWebPreset()
 
-if (flow) {
+// Comment Flow annotations.
+if (commentFlow)
   result.plugins.unshift(findModule("@babel/plugin-transform-flow-comments"))
-}
 
+// Remove Flow annotations if they are not being commented already.
+if (removeFlow && !commentFlow)
+  result.plugins.unshift(findModule("@babel/plugin-transform-flow-strip-types"))
+
+// Enable JSX for React.
 if (react) {
-  result.presets.push(findModule("@babel/preset-react"))
+  result.plugins.unshift(findModule("@babel/plugin-syntax-jsx"))
+  result.plugins.unshift(findModule("@babel/plugin-transform-react-jsx"))
+  result.plugins.unshift(
+    findModule("@babel/plugin-transform-react-display-name")
+  )
 }
 
-if (typescript) {
-  result.presets.push(findModule("@babel/preset-typescript"))
-}
+// Add TypeScript support.
+if (typescript)
+  result.presets.push(findModule("@babel/plugin-transform-typescript"))
 
 module.exports = result

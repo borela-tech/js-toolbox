@@ -29,9 +29,7 @@ function buildLib(args) {
   cleanup()
   runBinary("babel", BABEL_ARGS, {
     target: "both",
-    flow: args.flow,
-    react: args.react,
-    typescript: args.typescript
+    ...getBuildOptions(args)
   })
 }
 
@@ -39,9 +37,7 @@ function buildNodeApp(args) {
   cleanup()
   runBinary("babel", BABEL_ARGS, {
     target: "node",
-    flow: args.flow,
-    react: args.react,
-    typescript: args.typescript
+    ...getBuildOptions(args)
   })
 }
 
@@ -49,9 +45,7 @@ function buildNodeLib(args) {
   cleanup()
   runBinary("babel", BABEL_ARGS, {
     target: "node",
-    flow: args.flow,
-    react: args.react,
-    typescript: args.typescript
+    ...getBuildOptions(args)
   })
 }
 
@@ -63,14 +57,24 @@ function buildWebLib(args) {
   cleanup()
   runBinary("babel", BABEL_ARGS, {
     target: "web",
-    flow: args.flow,
-    react: args.react,
-    typescript: args.typescript
+    ...getBuildOptions(args)
   })
 }
 
 function cleanup() {
   runBinary("rimraf", ['"build"'])
+}
+
+/**
+ * Returns the options affects which plugins are enabled.
+ */
+function getBuildOptions(args) {
+  return {
+    commentFlow: args.commentFlow,
+    react: args.react,
+    removeFlow: args.removeFlow,
+    typescript: args.typescript
+  }
 }
 
 export default {
