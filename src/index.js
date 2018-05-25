@@ -20,7 +20,12 @@ Yargs.command(build)
   .command(scaffold)
   .command(lint)
   .command(test)
-  .option("flow", {
+  .demandCommand()
+  // Custom help and version messages.
+  .help("help", "Show usage instructions.")
+  .version("version", "Show toolbox version.", packageInfo.version)
+  // Build options.
+  .option("comment-flow", {
     description: "Convert Flow annotations to comments.",
     type: "boolean"
   })
@@ -28,11 +33,12 @@ Yargs.command(build)
     description: "Enable React’s JSX.",
     type: "boolean"
   })
+  .option("remove-flow", {
+    description: "Remove Flow annotations.",
+    type: "boolean"
+  })
   .option("typescript", {
     description: "Enable TypeScript.",
     type: "boolean"
   })
-  .demandCommand()
-  .help("help", "Show usage instructions.")
-  .version("version", "Show toolbox version.", packageInfo.version)
   .parse()
