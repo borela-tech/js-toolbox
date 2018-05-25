@@ -60,6 +60,8 @@
     "@babel/plugin-transform-flow-strip-types": "^7.0.0-beta.48",
     "@babel/plugin-transform-react-display-name": "^7.0.0-beta.48",
     "@babel/plugin-transform-react-jsx": "^7.0.0-beta.48",
+    "@babel/plugin-transform-react-jsx-self": "^7.0.0-beta.49",
+    "@babel/plugin-transform-react-jsx-source": "^7.0.0-beta.49",
     "@babel/plugin-transform-typescript": "^7.0.0-beta.48",
     "@babel/polyfill": "^7.0.0-beta.48",
     "@babel/preset-env": "^7.0.0-beta.48",
