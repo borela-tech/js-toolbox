@@ -14,7 +14,7 @@ import {CONFIGS_DIR} from "../paths"
 import {join} from "path"
 import {runBinary} from "../binaries"
 
-const PRESET_LOCATION = join(CONFIGS_DIR, "babel", "index.js")
+const PRESET_LOCATION = join(CONFIGS_DIR, "babel-preset", "index.js")
 const BABEL_ARGS = [
   "src",
   "-d",

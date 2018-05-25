@@ -11,6 +11,6 @@
 // the License.
 
 import babelJest from "babel-jest"
-import preset from "../babel"
+import preset from "../babel-preset"
 
 module.exports = babelJest.createTransformer(preset)
