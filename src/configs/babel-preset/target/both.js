@@ -21,7 +21,12 @@ export default function() {
         findModule("@babel/preset-env"),
         {
           targets: {
-            browsers: ["chrome >= 49", ">= 0.5%, last 2 versions, not dead"],
+            browsers: [
+              "chrome >= 49",
+              ">= 0.5%",
+              "last 2 versions",
+              "not dead"
+            ],
             node: 6
           }
         }
