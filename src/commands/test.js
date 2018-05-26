@@ -32,6 +32,6 @@ export default {
   handler: args => {
     let jestArgs = [`--config=${JEST_CONFIG_PATH}`]
     if (args.watch) jestArgs.push("--watch")
-    runBinary("jest", jestArgs, ...getBuildOptions(args))
+    runBinary("jest", jestArgs, getBuildOptions(args))
   }
 }
