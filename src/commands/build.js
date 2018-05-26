@@ -69,14 +69,13 @@ function cleanup() {
  * Returns the options affects which plugins are enabled.
  */
 function getBuildOptions(args) {
-  return {
-    commentFlow: args.commentFlow,
-    flow: args.flow,
-    production: args.production,
-    react: args.react,
-    removeFlow: args.removeFlow,
-    typescript: args.typescript
-  }
+  let result = {}
+  if (args.commentFlow) result.commentFlow = true
+  if (args.flow) result.flow = true
+  if (args.production) result.production = true
+  if (args.removeFlow) result.removeFlow = true
+  if (args.typescript) result.typescript = true
+  return result
 }
 
 export default {
