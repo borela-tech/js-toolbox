@@ -8,8 +8,8 @@
   },
   "scripts": {
     "clean": "rimraf \"build\"",
-    "dev": "npm run clean && babel src -d build --ignore **/__*__/** -s",
-    "dev-w": "npm run clean && babel src -d build --ignore **/__*__/** -s --watch",
+    "dev": "npm run clean && babel src -d build --ignore **/__*__/** --source-maps inline",
+    "dev-w": "npm run clean && babel src -d build --ignore **/__*__/** --source-maps inline --watch",
     "pretty": "prettier \"**/*.js\" --write",
     "test": "jest src --verbose",
     "test-w": "jest src --verbose --watch"
@@ -71,6 +71,7 @@
     "babel-eslint": "^8.2.3",
     "babel-jest": "^23.0.0",
     "babel-loader": "^8.0.0-beta.3",
+    "babel-plugin-source-map-support": "^2.0.1",
     "cpx": "^1.5.0",
     "cross-env": "^5.1.6",
     "css-loader": "^0.28.11",
