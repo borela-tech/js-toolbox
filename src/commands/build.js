@@ -21,7 +21,7 @@ const BABEL_ARGS = [
   "build",
   "--ignore",
   "**/__*__/**",
-  "-s",
+  "--source-maps inline",
   `--presets=${PRESET_LOCATION}`
 ]
 

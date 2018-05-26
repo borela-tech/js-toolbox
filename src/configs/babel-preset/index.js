@@ -54,6 +54,10 @@ module.exports = function() {
     findModule("@babel/plugin-proposal-unicode-property-regex")
   ]
 
+  // Enable source map on stack traces.
+  if (!production)
+    result.plugins.push(findModule("babel-plugin-source-map-support"))
+
   // Comment Flow annotations.
   if (commentFlow)
     result.plugins.unshift(findModule("@babel/plugin-transform-flow-comments"))
