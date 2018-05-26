@@ -68,7 +68,7 @@ function cleanup() {
 /**
  * Returns the options affects which plugins are enabled.
  */
-function getBuildOptions(args) {
+export function getBuildOptions(args) {
   let result = {}
   if (args.commentFlow) result.commentFlow = true
   if (args.flow) result.flow = true
