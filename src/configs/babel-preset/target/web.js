@@ -10,12 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import plugins from "../plugins"
 import {findModule} from "../../../modules"
 
 export default function() {
   return {
-    plugins: plugins(),
     presets: [
       [
         findModule("@babel/preset-env"),

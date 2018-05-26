@@ -28,10 +28,31 @@ module.exports = function() {
     typescript = false
   } = process.env
 
-  // Select the basic preset.
   let result = basicPreset()
   if (target === "node") result = basicNodePreset()
   if (target === "web") result = basicWebPreset()
+
+  result.plugins = [
+    // Transforms that break if the order is changed.
+    [findModule("@babel/plugin-proposal-decorators"), {legacy: true}],
+    // Other transforms.
+    findModule("@babel/plugin-proposal-async-generator-functions"),
+    findModule("@babel/plugin-proposal-class-properties"),
+    findModule("@babel/plugin-proposal-do-expressions"),
+    findModule("@babel/plugin-proposal-export-default-from"),
+    findModule("@babel/plugin-proposal-export-namespace-from"),
+    findModule("@babel/plugin-proposal-function-bind"),
+    findModule("@babel/plugin-proposal-function-sent"),
+    findModule("@babel/plugin-proposal-logical-assignment-operators"),
+    findModule("@babel/plugin-proposal-nullish-coalescing-operator"),
+    findModule("@babel/plugin-proposal-numeric-separator"),
+    findModule("@babel/plugin-proposal-object-rest-spread"),
+    findModule("@babel/plugin-proposal-optional-catch-binding"),
+    findModule("@babel/plugin-proposal-optional-chaining"),
+    findModule("@babel/plugin-proposal-pipeline-operator"),
+    findModule("@babel/plugin-proposal-throw-expressions"),
+    findModule("@babel/plugin-proposal-unicode-property-regex")
+  ]
 
   // Comment Flow annotations.
   if (commentFlow)
@@ -43,6 +64,7 @@ module.exports = function() {
       findModule("@babel/plugin-transform-flow-strip-types")
     )
 
+  // Parse Flow annoations.
   if (flow || commentFlow || removeFlow)
     result.plugins.unshift(findModule("@babel/plugin-syntax-flow"))
 
@@ -62,7 +84,7 @@ module.exports = function() {
     }
   }
 
-  // Add TypeScript support.
+  // Parse TypeScript.
   if (typescript)
     result.plugins.push(findModule("@babel/plugin-transform-typescript"))
 
