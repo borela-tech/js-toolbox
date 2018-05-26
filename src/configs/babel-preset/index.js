@@ -33,14 +33,9 @@ module.exports = function() {
   if (target === "node") result = basicNodePreset()
   if (target === "web") result = basicWebPreset()
 
-  console.log(commentFlow, flow, production, react, removeFlow, target, typescript)
-
   // Comment Flow annotations.
-  if (commentFlow) {
-    console.log(commentFlow)
-    console.log("aaaaaaaaaaaaaaaaaa")
+  if (commentFlow)
     result.plugins.unshift(findModule("@babel/plugin-transform-flow-comments"))
-  }
 
   // Remove Flow annotations if they are not being commented already.
   if (removeFlow && !commentFlow)
@@ -73,5 +68,3 @@ module.exports = function() {
 
   return result
 }
-
-console.log(module.exports())
