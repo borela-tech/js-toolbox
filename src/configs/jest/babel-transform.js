@@ -13,4 +13,4 @@
 import babelJest from "babel-jest"
 import preset from "../babel-preset"
 
-module.exports = babelJest.createTransformer(preset)
+module.exports = babelJest.createTransformer(preset())
