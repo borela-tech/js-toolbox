@@ -75,7 +75,7 @@ export function getBuildOptions(args) {
   if (args.jsx) result.jsx = true
   if (args.production) result.production = true
   if (args.removeFlow) result.removeFlow = true
-  if (args.typescript) result.typescript = true
+  if (args.typeScript) result.typeScript = true
   return result
 }
 

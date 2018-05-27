@@ -49,7 +49,7 @@ Yargs.command(build)
     description: "Remove debug plugins.",
     type: "boolean"
   })
-  .option("typescript", {
+  .option("type-script", {
     description: "Enable TypeScript.",
     type: "boolean"
   })

@@ -13,8 +13,8 @@
 import {findModule} from "../../modules"
 
 export function addTypeScriptPlugins(plugins) {
-  let {typescript} = process.env
-  if (!typescript) return
+  let {typeScript} = process.env
+  if (!typeScript) return
   result.plugins.push(findModule("@babel/plugin-transform-typescript"))
 }
 
