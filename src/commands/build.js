@@ -72,6 +72,7 @@ export function getBuildOptions(args) {
   let result = {}
   if (args.commentFlow) result.commentFlow = true
   if (args.flow) result.flow = true
+  if (args.jsx) result.jsx = true
   if (args.production) result.production = true
   if (args.removeFlow) result.removeFlow = true
   if (args.typescript) result.typescript = true

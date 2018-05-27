@@ -33,8 +33,12 @@ Yargs.command(build)
     description: "Enable Flow annotations.",
     type: "boolean"
   })
+  .option("jsx", {
+    description: "Enable JSX.",
+    type: "boolean"
+  })
   .option("react", {
-    description: "Enable React’s JSX.",
+    description: "Enable React transformations.",
     type: "boolean"
   })
   .option("remove-flow", {
