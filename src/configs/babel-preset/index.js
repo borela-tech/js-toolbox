@@ -15,16 +15,30 @@ import addFlowPlugins from './plugins/flow'
 import addJsxPlugins from './plugins/jsx'
 import addReactPlugins from './plugins/react'
 import addTypeScriptPlugins from './plugins/typeScript'
-import basicNodePreset from "./target/node"
-import basicPreset from "./target/both"
-import basicWebPreset from "./target/web"
+import {findModule} from "../../modules"
 
 module.exports = function() {
-  let result = basicPreset()
-  if (target === "node") result = basicNodePreset()
-  if (target === "web") result = basicWebPreset()
+  let targets = {}
+  let {browsers, target, nodeJs} = process.env
 
-  result.plugins = []
+  switch (target) {
+    case "all":
+      targets.browsers = browsers
+      targets.node = nodeJs
+      break
+    case "browsers":
+      targets.browsers = browsers
+      break
+    case "node-js":
+      targets.node = nodeJs
+      break
+  }
+
+  let result = {
+    plugins: [],
+    presets: [findModule("@babel/preset-env"), targets]
+  }
+
   addBasicPlugins(result.plugins)
   addFlowPlugins(result.plugins)
   addJsxPlugins(result.plugins)

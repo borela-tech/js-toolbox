@@ -25,90 +25,11 @@ const BABEL_ARGS = [
   `--presets=${PRESET_LOCATION}`
 ]
 
-function buildLib(args) {
-  cleanup()
-  runBinary("babel", BABEL_ARGS, {
-    target: "both",
-    ...getBuildOptions(args)
-  })
-}
-
-function buildNodeApp(args) {
-  cleanup()
-  runBinary("babel", BABEL_ARGS, {
-    target: "node",
-    ...getBuildOptions(args)
-  })
-}
-
-function buildNodeLib(args) {
-  cleanup()
-  runBinary("babel", BABEL_ARGS, {
-    target: "node",
-    ...getBuildOptions(args)
-  })
-}
-
-function buildWebApp(args) {
-  console.log("TODO")
-}
-
-function buildWebLib(args) {
-  cleanup()
-  runBinary("babel", BABEL_ARGS, {
-    target: "web",
-    ...getBuildOptions(args)
-  })
-}
-
-function cleanup() {
-  runBinary("rimraf", ['"build"'])
-}
-
-/**
- * Returns the options affects which plugins are enabled.
- */
-export function getBuildOptions(args) {
-  let result = {}
-  if (args.commentFlow) result.commentFlow = true
-  if (args.flow) result.flow = true
-  if (args.jsx) result.jsx = true
-  if (args.production) result.production = true
-  if (args.removeFlow) result.removeFlow = true
-  if (args.typeScript) result.typeScript = true
-  return result
-}
-
 export default {
   command: "build",
   description: "Build the project.",
-  builder: yargs => {
-    return yargs
-      .command({
-        command: "lib",
-        description: "Build a library to be used on node or web app.",
-        handler: buildLib
-      })
-      .command({
-        command: "node-app",
-        description: "Build a node app.",
-        handler: buildNodeApp
-      })
-      .command({
-        command: "node-lib",
-        description: "Build a library to be used on node apps.",
-        handler: buildNodeLib
-      })
-      .command({
-        command: "web-app",
-        description: "Build a web app.",
-        handler: buildWebApp
-      })
-      .command({
-        command: "web-lib",
-        description: "Build a library to be used on web apps.",
-        handler: buildWebLib
-      })
-      .demandCommand()
+  handler: args => {
+    runBinary("rimraf", ['"build"'])
+    runBinary("babel", BABEL_ARGS, args)
   }
 }

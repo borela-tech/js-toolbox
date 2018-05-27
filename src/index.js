@@ -25,6 +25,11 @@ Yargs.command(build)
   .help("help", "Show usage instructions.")
   .version("version", "Show toolbox version.", packageInfo.version)
   // Build options.
+  .option("browsers", {
+    description: "Browsers targeted by the project.",
+    default: ["chrome >= 49", ">= 0.5%", "last 2 versions", "not dead"],
+    type: "array"
+  })
   .option("comment-flow", {
     description: "Convert Flow annotations to comments.",
     type: "boolean"
@@ -37,6 +42,11 @@ Yargs.command(build)
     description: "Enable JSX.",
     type: "boolean"
   })
+  .option("node-js", {
+    description: "Minimum NodeJS version targeted by the project.",
+    default: 6,
+    type: "string"
+  })
   .option("react", {
     description: "Enable React transformations.",
     type: "boolean"
@@ -44,6 +54,12 @@ Yargs.command(build)
   .option("remove-flow", {
     description: "Remove Flow annotations.",
     type: "boolean"
+  })
+  .option("platforms", {
+    choices: ["all", "browsers", "node-js"],
+    description: "Platforms targeted by the project.",
+    default: ["all"],
+    type: "array"
   })
   .option("production", {
     description: "Remove debug plugins.",
