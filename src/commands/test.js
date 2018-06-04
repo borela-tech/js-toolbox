@@ -14,7 +14,7 @@ import {CONFIGS_DIR} from "../paths"
 import {join} from "path"
 import {runBinary} from "../binaries"
 
-const JEST_CONFIG_PATH = join(CONFIGS_DIR, "jest/config.js")
+const JEST_CONFIG_PATH = join(CONFIGS_DIR, "jest", "index.js")
 
 export default {
   command: "test",
