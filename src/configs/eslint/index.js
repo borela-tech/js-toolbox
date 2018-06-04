@@ -10,29 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {CONFIGS_DIR, PACKAGE_DIR} from "../paths"
+import {CONFIGS_DIR} from "../../paths"
 import {join} from "path"
-import {runBinary} from "../binaries"
 
-const ESLINT_CONFIG_PATH = join(CONFIGS_DIR, "eslint", "index.js")
-const ESLINT_ARGS = [
-  '--ignore-pattern',
-  '/build/',
-  '--config',
-  ESLINT_CONFIG_PATH,
-  PACKAGE_DIR
-]
+const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, "eslint")
 
-export default {
-  command: "lint",
-  description: "Check or fix code style.",
-  builder: yargs => {
-    return yargs.option("fix", {
-      description: "Fix lint errors."
-    })
-  },
-  handler: ctrineArgs => {
-    // Ctrine arguments are passed as environment variables.
-    runBinary("eslint", ESLINT_ARGS, ctrineArgs)
-  }
+module.exports = {
+  parser: "Babel-ESLint",
+  extends: [
+    join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
+    join(ESLINT_CONFIG_DIR, 'core', 'stylistic-issues.js'),
+  ]
 }

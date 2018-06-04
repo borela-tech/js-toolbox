@@ -1,0 +1,31 @@
+%YAML1.2
+---
+
+# Licensed under the Apache License, Version 2.0 (the “License”); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an “AS IS” BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+# https://github.com/facebook/jest/tree/master/packages/eslint-plugin-jest#supported-rules
+rules:
+  # This rule reminds you to remove “.skip” or the “x” prefix from your tests.
+  jest/no-disabled-tests: error
+
+  # This rule reminds you to remove “.only” from your tests by raising a warning
+  # whenever you are using the exclusivity feature.
+  jest/no-focused-tests: error
+
+  # Having identical titles for two different tests or test suites may create
+  # confusion.
+  jest/no-identical-title: error
+
+  # Ensure “expect()” is called with a single argument and there is an actual
+  # expectation made.
+  jest/valid-expect: error
