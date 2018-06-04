@@ -28,8 +28,9 @@ const BABEL_ARGS = [
 export default {
   command: "build",
   description: "Build the project.",
-  handler: args => {
+  handler: ctrineArgs => {
     runBinary("rimraf", ['"build"'])
-    runBinary("babel", BABEL_ARGS, args)
+    // Ctrine arguments are passed as environment variables.
+    runBinary("babel", BABEL_ARGS, ctrineArgs)
   }
 }
