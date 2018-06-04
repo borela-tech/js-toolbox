@@ -28,5 +28,8 @@ export default {
         description: "Generate a project to build a web app."
       })
       .demandCommand()
+  },
+  handler: ctrineArgs => {
+    // TODO
   }
 }
