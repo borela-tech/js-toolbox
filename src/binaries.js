@@ -10,19 +10,20 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {existsSync} from "fs"
-import {join} from "path"
-import {spawnSync} from "child_process"
-import {PACKAGE_DIR, PACKAGE_BIN_DIR, TOOLBOX_BIN_DIR} from "./paths"
+import {existsSync} from 'fs'
+import {join} from 'path'
+import {spawnSync} from 'child_process'
+import {PACKAGE_DIR, PACKAGE_BIN_DIR, TOOLBOX_BIN_DIR} from './paths'
 
 const BINARIES = {}
-const IS_WINDOWS = process.platform === "win32"
+const IS_WINDOWS = process.platform === 'win32'
 
 /**
  * Find the binary either in the toolbox or target package’s directory.
  */
 export function findBinary(targetBinary: string) {
-  if (BINARIES[targetBinary]) return BINARIES[targetBinary]
+  if (BINARIES[targetBinary])
+    return BINARIES[targetBinary]
 
   const TOOLBOX_BIN = join(TOOLBOX_BIN_DIR, targetBinary)
   if (existsSync(TOOLBOX_BIN))
@@ -43,6 +44,6 @@ export function runBinary(targetBinary: string, args: string[], env: any) {
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
     env,
-    stdio: "inherit"
+    stdio: 'inherit',
   })
 }

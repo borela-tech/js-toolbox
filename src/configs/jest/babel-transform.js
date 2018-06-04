@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import babelJest from "babel-jest"
-import preset from "../babel-preset"
+import babelJest from 'babel-jest'
+import preset from '../babel-preset'
 
 module.exports = babelJest.createTransformer(preset())

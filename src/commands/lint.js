@@ -10,29 +10,32 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {CONFIGS_DIR, PACKAGE_DIR} from "../paths"
-import {join} from "path"
-import {runBinary} from "../binaries"
+import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
+import {join} from 'path'
+import {runBinary} from '../binaries'
 
-const ESLINT_CONFIG_PATH = join(CONFIGS_DIR, "eslint", "index.js")
+const ESLINT_CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const ESLINT_ARGS = [
   '--ignore-pattern',
   '/build/',
   '--config',
   ESLINT_CONFIG_PATH,
-  PACKAGE_DIR
+  PACKAGE_DIR,
 ]
 
 export default {
-  command: "lint",
-  description: "Check or fix code style.",
+  command: 'lint',
+  description: 'Check or fix code style.',
   builder: yargs => {
-    return yargs.option("fix", {
-      description: "Fix lint errors."
+    return yargs.option('fix', {
+      description: 'Fix lint errors.',
     })
   },
   handler: ctrineArgs => {
+    let args = [...ESLINT_ARGS]
+    if (ctrineArgs.fix)
+      args.push('--fix')
     // Ctrine arguments are passed as environment variables.
-    runBinary("eslint", ESLINT_ARGS, ctrineArgs)
-  }
+    runBinary('eslint', args, ctrineArgs)
+  },
 }

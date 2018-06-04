@@ -12,9 +12,9 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import packageInfo from "../package"
-import Yargs from "yargs"
-import {build, lint, scaffold, test} from "./commands"
+import packageInfo from '../package'
+import Yargs from 'yargs'
+import {build, lint, scaffold, test} from './commands'
 
 Yargs.command(build)
   .command(scaffold)
@@ -22,51 +22,49 @@ Yargs.command(build)
   .command(test)
   .demandCommand()
   // Custom help and version messages.
-  .help("help", "Show usage instructions.")
-  .version("version", "Show toolbox version.", packageInfo.version)
+  .help('help', 'Show usage instructions.')
+  .version('version', 'Show toolbox version.', packageInfo.version)
   // Build options.
-  .option("browsers", {
-    description: "Browsers targeted by the project.",
-    default: ["chrome >= 49", ">= 0.5%", "last 2 versions", "not dead"],
-    type: "array"
+  .option('browsers', {
+    description: 'Browsers targeted by the project.',
+    default: ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'],
+    type: 'array',
   })
-  .option("comment-flow", {
-    description: "Convert Flow annotations to comments.",
-    type: "boolean"
+  .option('comment-flow', {
+    description: 'Convert Flow annotations to comments.',
+    type: 'boolean',
   })
-  .option("flow", {
-    description: "Enable Flow annotations.",
-    type: "boolean"
+  .option('flow', {
+    description: 'Enable Flow annotations.',
+    type: 'boolean',
   })
-  .option("jsx", {
-    description: "Enable JSX.",
-    type: "boolean"
+  .option('jsx', {
+    description: 'Enable JSX.',
+    type: 'boolean',
   })
-  .option("node-js", {
-    description: "Minimum NodeJS version targeted by the project.",
+  .option('node-js', {description: 'Minimum NodeJS version targeted by the project.',
     default: 6,
-    type: "string"
+    type: 'string'})
+  .option('react', {
+    description: 'Enable React transformations.',
+    type: 'boolean',
   })
-  .option("react", {
-    description: "Enable React transformations.",
-    type: "boolean"
+  .option('remove-flow', {
+    description: 'Remove Flow annotations.',
+    type: 'boolean',
   })
-  .option("remove-flow", {
-    description: "Remove Flow annotations.",
-    type: "boolean"
+  .option('platforms', {
+    choices: ['all', 'browsers', 'node-js'],
+    description: 'Platforms targeted by the project.',
+    default: ['all'],
+    type: 'array',
   })
-  .option("platforms", {
-    choices: ["all", "browsers", "node-js"],
-    description: "Platforms targeted by the project.",
-    default: ["all"],
-    type: "array"
+  .option('production', {
+    description: 'Remove debug plugins.',
+    type: 'boolean',
   })
-  .option("production", {
-    description: "Remove debug plugins.",
-    type: "boolean"
-  })
-  .option("type-script", {
-    description: "Enable TypeScript.",
-    type: "boolean"
+  .option('type-script', {
+    description: 'Enable TypeScript.',
+    type: 'boolean',
   })
   .parse()

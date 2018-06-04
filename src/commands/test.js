@@ -10,28 +10,29 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {CONFIGS_DIR} from "../paths"
-import {join} from "path"
-import {runBinary} from "../binaries"
+import {CONFIGS_DIR} from '../paths'
+import {join} from 'path'
+import {runBinary} from '../binaries'
 
-const JEST_CONFIG_PATH = join(CONFIGS_DIR, "jest", "index.js")
+const JEST_CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 
 export default {
-  command: "test",
-  description: "Run test suites.",
+  command: 'test',
+  description: 'Run test suites.',
   builder: yargs => {
     yargs.options({
       watch: {
         default: false,
-        description: "Watch for changes and run tests automatically.",
-        type: "boolean"
-      }
+        description: 'Watch for changes and run tests automatically.',
+        type: 'boolean',
+      },
     })
   },
   handler: ctrineArgs => {
     let jestArgs = [`--config=${JEST_CONFIG_PATH}`]
-    if (ctrineArgs.watch) jestArgs.push("--watch")
+    if (ctrineArgs.watch)
+      jestArgs.push('--watch')
     // Ctrine arguments are passed as environment variables.
-    runBinary("jest", jestArgs, ctrineArgs)
-  }
+    runBinary('jest', jestArgs, ctrineArgs)
+  },
 }

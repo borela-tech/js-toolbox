@@ -10,12 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {CONFIGS_DIR, PACKAGE_DIR} from "../../paths"
-import {join} from "path"
+import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
+import {join} from 'path'
 
 module.exports = {
   rootDir: PACKAGE_DIR,
   transform: {
-    "^.+\\.(jsx?|mjs)$": join(CONFIGS_DIR, "jest", "babel-transform.js")
-  }
+    '^.+\\.(jsx?|mjs)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
+  },
 }

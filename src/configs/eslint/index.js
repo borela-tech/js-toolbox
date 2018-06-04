@@ -10,15 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {CONFIGS_DIR} from "../../paths"
-import {join} from "path"
+import {CONFIGS_DIR} from '../../paths'
+import {join} from 'path'
 
-const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, "eslint")
+const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 
 module.exports = {
-  parser: "Babel-ESLint",
+  parser: 'Babel-ESLint',
   extends: [
     join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
     join(ESLINT_CONFIG_DIR, 'core', 'stylistic-issues.js'),
-  ]
+  ],
 }

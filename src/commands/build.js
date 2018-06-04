@@ -10,27 +10,27 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {CONFIGS_DIR} from "../paths"
-import {join} from "path"
-import {runBinary} from "../binaries"
+import {CONFIGS_DIR} from '../paths'
+import {join} from 'path'
+import {runBinary} from '../binaries'
 
-const PRESET_LOCATION = join(CONFIGS_DIR, "babel-preset", "index.js")
+const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
-  "src",
-  "-d",
-  "build",
-  "--ignore",
-  "**/__*__/**",
-  "--source-maps inline",
-  `--presets=${PRESET_LOCATION}`
+  'src',
+  '-d',
+  'build',
+  '--ignore',
+  '**/__*__/**',
+  '--source-maps inline',
+  `--presets=${PRESET_LOCATION}`,
 ]
 
 export default {
-  command: "build",
-  description: "Build the project.",
+  command: 'build',
+  description: 'Build the project.',
   handler: ctrineArgs => {
-    runBinary("rimraf", ['"build"'])
+    runBinary('rimraf', ['"build"'])
     // Ctrine arguments are passed as environment variables.
-    runBinary("babel", BABEL_ARGS, ctrineArgs)
-  }
+    runBinary('babel', BABEL_ARGS, ctrineArgs)
+  },
 }

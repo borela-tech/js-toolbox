@@ -10,12 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {findModule} from "../../../modules"
+import {findModule} from '../../../modules'
 
 export function addJsxPlugins(plugins) {
   let {jsx} = process.env
-  if (!jsx) return
-  plugins.push(findModule("@babel/plugin-syntax-jsx"))
+  if (!jsx)
+    return
+  plugins.push(findModule('@babel/plugin-syntax-jsx'))
 }
 
 export default addJsxPlugins

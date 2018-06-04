@@ -18,16 +18,16 @@ module.exports = {
     'array-bracket-newline': ['error', 'consistent'],
 
     // This rule enforces consistent spacing inside array brackets.
-    'array-bracket-spacing': [ 'error', 'never'],
+    'array-bracket-spacing': ['error', 'never'],
 
     // This rule enforces line breaks between array elements.
     'array-element-newline': 'off',
 
     // This rule enforces consistent spacing inside single-line blocks.
-    'block-spacing': [ 'error', 'never' ],
+    'block-spacing': ['error', 'never'],
 
     // This rule enforces consistent brace style for blocks.
-    'brace-style': [ 'error', '1tbs' ],
+    'brace-style': ['error', '1tbs'],
 
     // This rule enforces consistent variable naming.
     camelcase: 'off',
@@ -38,24 +38,24 @@ module.exports = {
     'capitalized-comments': [
       'error',
       'always',
-      { ignoreConsecutiveComments: true }
+      {ignoreConsecutiveComments: true},
     ],
 
     // This rule enforces consistent use of trailing commas in object and array
     // literals.
-    'comma-dangle': [ 'error', 'always-multiline' ],
+    'comma-dangle': ['error', 'always-multiline'],
 
     // This rule enforces consistent spacing before and after commas in variable
     // declarations, array literals, object literals, function parameters, and
     // sequences.
-    'comma-spacing': [ 'error'],
+    'comma-spacing': ['error'],
 
     // This rule enforce consistent comma style in array literals, object
     // literals, and variable declarations.
-    'comma-style': [ 'error', 'last' ],
+    'comma-style': ['error', 'last'],
 
     // This rule enforces consistent spacing inside computed property brackets.
-    'computed-property-spacing': [ 'error', 'never' ],
+    'computed-property-spacing': ['error', 'never'],
 
     // This rule enforces two things about variables with the designated alias
     // names for “this”:
@@ -67,11 +67,11 @@ module.exports = {
 
     // This rule enforces at least one newline (or absence thereof) at the end
     // of non-empty files.
-    'eol-last': [ 'error', 'always' ],
+    'eol-last': ['error', 'always'],
 
     // This rule requires or disallows spaces between the function name and the
     // opening parenthesis that calls it.
-    'func-call-spacing': [ 'error', 'never' ],
+    'func-call-spacing': ['error', 'never'],
 
     // This rule requires function names to match the name of the variable or
     // property to which they are assigned. The rule will ignore property
@@ -88,12 +88,12 @@ module.exports = {
     'func-style': [
       'error',
       'declaration',
-      {allowArrowFunctions: true}
+      {allowArrowFunctions: true},
     ],
 
     // This rule enforces consistent line breaks inside parentheses of function
     // parameters or arguments.
-    'function-paren-newline': [ 'error', 'consistent'],
+    'function-paren-newline': ['error', 'consistent'],
 
     // This rule disallows specified identifiers in assignments and function
     // definitions.
@@ -107,11 +107,13 @@ module.exports = {
     'id-match': 'off',
 
     // This rule enforces a consistent indentation style.
-    indent: [ 'error', 2 ],
+    indent: ['error', 2, {
+      SwitchCase: 1,
+    }],
 
     // This rule enforces the consistent use of either double or single quotes in
     // JSX attributes.
-    'jsx-quotes': [ 'error', 'prefer-double' ],
+    'jsx-quotes': ['error', 'prefer-double'],
 
     // This rule enforces consistent spacing between keys and values in object
     // literal properties.
@@ -124,12 +126,12 @@ module.exports = {
     'line-comment-position': [
       'error',
       // Enforces line comments only above code, in its own line.
-      'above'
+      'above',
     ],
 
     // This rule enforces consistent line endings independent of operating
     // system.
-    'linebreak-style': [ 'error', 'unix' ],
+    'linebreak-style': ['error', 'unix'],
 
     // This rule improves readability by enforcing lines between class members.
     // It will not check empty lines before the first member and after the last
@@ -141,11 +143,11 @@ module.exports = {
 
     // This rule enforces a maximum depth that blocks can be nested to reduce
     // code complexity.
-    'max-depth': [ 'warn', 4 ],
+    'max-depth': ['warn', 4],
 
     // This rule enforces a maximum line length to increase code readability and
     // maintainability.
-    'max-len': [ 'warn', 80, {
+    'max-len': ['warn', 80, {
       ignoreComments: false,
       ignoreRegExpLiterals: true,
       ignoreStrings: true,
@@ -155,7 +157,7 @@ module.exports = {
 
     // This rule enforces a maximum number of lines per file, in order to aid in
     // maintainability and reduce complexity.
-    'max-lines': [ 'warn', 700 ],
+    'max-lines': ['warn', 700],
 
     // This rule enforces a maximum depth that callbacks can be nested to
     // increase code clarity.
@@ -163,7 +165,7 @@ module.exports = {
 
     // This rule enforces a maximum number of parameters allowed in function
     // definitions.
-    'max-params': [ 'warn', 7 ],
+    'max-params': ['warn', 7],
 
     // This rule enforces a maximum number of statements allowed in function
     // blocks.
@@ -226,7 +228,7 @@ module.exports = {
 
     // This rule aims to reduce the scrolling required when reading through your code.
     // It will warn when the maximum amount of empty lines has been exceeded.
-    'no-multiple-empty-lines': [ 'error', { max: 1, maxEOF: 1}],
+    'no-multiple-empty-lines': ['error', {max: 1, maxEOF: 1}],
 
     // This rule disallows negated conditions in either of the following:
     //   * “if” statements which have an “else” branch.
@@ -268,7 +270,7 @@ module.exports = {
 
     // This rule aims to enforce a consistent location for single-line
     // statements.
-    'nonblock-statement-body-position': [ 'error', 'below' ],
+    'nonblock-statement-body-position': ['error', 'below'],
 
     // This rule enforces consistent line breaks inside braces of object
     // literals or destructuring assignments.
@@ -291,34 +293,34 @@ module.exports = {
 
     // This rule requires or disallows assignment operator shorthand where
     // possible.
-    'operator-assignment':[
+    'operator-assignment': [
       'error',
       // Use shorthand where possible.
-      'always'
+      'always',
     ],
 
     // This rule enforces a consistent line-break style for operators.
     'operator-linebreak': [
       'error',
       // Requires line-breaks to be placed before the operator.
-      'before'
+      'before',
     ],
 
     // This rule enforces consistent empty line padding within blocks.
-    'padded-blocks': [ 'error', 'never' ],
+    'padded-blocks': ['error', 'never'],
 
     // This rule requires quotes around object literal property names.
-    'quote-props': [ 'error', 'as-needed' ],
+    'quote-props': ['error', 'as-needed'],
 
     // This rule enforces the consistent use of either backticks, double, or
     // single quotes.
-    quotes: [ 'error', 'single' ],
+    quotes: ['error', 'single'],
 
     // This rule requires JSDoc comments for specified nodes.
     'require-jsdoc': 'off',
 
     // This rule enforces consistent use of semicolons.
-    semi: [ 'error', 'never' ],
+    semi: ['error', 'never'],
 
     // This rule aims to enforce spacing around a semicolon.
     'semi-spacing': 'off',
@@ -328,7 +330,8 @@ module.exports = {
 
     // This rule checks all property definitions of object expressions and
     // verifies that all variables are sorted alphabetically.
-    'sort-keys': [ 'error', 'asc', { caseSensitive: false, natural: true }],
+    'sort-keys': ['error', 'asc', {caseSensitive: false,
+      natural: true}],
 
     // This rule checks all variable declaration blocks and verifies that all
     // variables are sorted alphabetically.
@@ -336,10 +339,10 @@ module.exports = {
 
     // This rule will enforce consistency of spacing before blocks. It is only
     // applied on blocks that don’t begin on a new line.
-    'space-before-blocks': [ 'error', 'always' ],
+    'space-before-blocks': ['error', 'always'],
 
     // This rule aims to enforce consistent spacing before function parentheses.
-    'space-before-function-paren': [ 'error', {
+    'space-before-function-paren': ['error', {
       anonymous: 'always',
       asyncArrow: 'always',
       named: 'never',
@@ -347,7 +350,7 @@ module.exports = {
 
     // This rule will enforce consistency of spacing directly inside of
     // parentheses.
-    'space-in-parens': [ 'error', 'never' ],
+    'space-in-parens': ['error', 'never'],
 
     // This rule is aimed at ensuring there are spaces around infix operators.
     'space-infix-ops': 'error',
@@ -356,28 +359,28 @@ module.exports = {
     // operators and after/before non words unary operators.
     'space-unary-ops': [
       'error',
-      { nonwords: false,
-        words: true
-      }],
+      {nonwords: false,
+        words: true},
+    ],
 
     // This rule will enforce consistency of spacing after the start of a
     // comment “//” or “/*”. It also provides several exceptions for various
     // documentation styles.
-    'spaced-comment': [ 'error', 'always' ],
+    'spaced-comment': ['error', 'always'],
 
     // This rule controls spacing around colons of case and default clauses in
     // switch statements. This rule does the check only if the consecutive
     // tokens exist on the same line.
-    "switch-colon-spacing": "error",
+    'switch-colon-spacing': 'error',
 
     // This rule aims to maintain consistency around the spacing between
     // template tag functions and their template literals.
-    'template-tag-spacing': [ 'error', 'never' ],
+    'template-tag-spacing': ['error', 'never'],
 
     // This rule will enforce consistency of the Unicode BOM in all files.
-    'unicode-bom': [ 'error', 'never' ],
+    'unicode-bom': ['error', 'never'],
 
     // Forces regex literals to be wrapped around parenthesis.
-    'wrap-regex': 'off'
-  }
+    'wrap-regex': 'off',
+  },
 }

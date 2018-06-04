@@ -10,22 +10,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {findModule} from "../../../modules"
+import {findModule} from '../../../modules'
 
 export function addFlowPlugins(plugins) {
   let {commentFlow, flow, removeFlow} = process.env
 
   // Parse Flow annoations.
   if (flow || commentFlow || removeFlow)
-    plugins.push(findModule(`@babel/plugin-syntax-flow`))
+    plugins.push(findModule('@babel/plugin-syntax-flow'))
 
   // Comment Flow annotations.
   if (commentFlow)
-    plugins.push(findModule(`@babel/plugin-transform-flow-comments`))
+    plugins.push(findModule('@babel/plugin-transform-flow-comments'))
 
   // Remove Flow annotations.
   if (removeFlow)
-    plugins.push(findModule(`@babel/plugin-transform-flow-strip-types`))
+    plugins.push(findModule('@babel/plugin-transform-flow-strip-types'))
 }
 
 export default addFlowPlugins

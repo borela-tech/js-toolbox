@@ -33,7 +33,7 @@ module.exports = {
 
     // This rule is aimed at reducing code complexity by capping the amount of
     // cyclomatic complexity allowed in a program
-    complexity: [ 'warn', 10 ],
+    complexity: ['warn', 10],
 
     // This rule requires return statements to either always or never specify
     // values. It ignores function definitions where the name begins with an
@@ -50,21 +50,21 @@ module.exports = {
       // Forces brace-less “if”, “else if”, “else”, “for”, “while” or “do” if
       // their body contains only one single-line statement. And forces braces in
       // all other cases.
-      'multi-or-nest'
+      'multi-or-nest',
     ],
 
     // This rule aims to require default case in switch statements.
     'default-case': 'off',
 
     // This rule aims to enforce newline consistency in member expressions.
-    'dot-location': [ 'error', 'property' ],
+    'dot-location': ['error', 'property'],
 
     // This rule is aimed at maintaining code consistency and improving code
     // readability by encouraging use of the dot notation style whenever possible.
     'dot-notation': 'error',
 
     // This rule is aimed at eliminating the type-unsafe equality operators.
-    eqeqeq: [ 'error', 'always' ],
+    eqeqeq: ['error', 'always'],
 
     // This rule is aimed at preventing unexpected behavior that could arise from
     // using a “for in” loop without filtering the results in the loop. As such,
@@ -294,8 +294,8 @@ module.exports = {
     'no-warning-comments': [
       'warn', {
         location: 'start',
-        terms: [ 'FIXME', 'TODO', 'WARNING', 'XXX' ]
-      }
+        terms: ['FIXME', 'TODO', 'WARNING', 'XXX'],
+      },
     ],
 
     // This rule disallows “with” statements. This statement is forbidden in
@@ -304,7 +304,7 @@ module.exports = {
 
     // This rule aims to ensure that Promises are only rejected with Error
     // objects.
-    'prefer-promise-reject-errors': ['error', {allowEmptyReject:true}],
+    'prefer-promise-reject-errors': ['error', {allowEmptyReject: true}],
 
     // This rule is aimed at preventing the unintended conversion of a string to a
     // number of a different base than the intended.
@@ -324,6 +324,6 @@ module.exports = {
 
     // This rule aims to enforce consistent style of conditions which compare a
     // variable to a literal value.
-    yoda: [ 'error', 'never' ]
-  }
+    yoda: ['error', 'never'],
+  },
 }
