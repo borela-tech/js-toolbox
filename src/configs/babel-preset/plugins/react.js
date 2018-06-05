@@ -15,6 +15,9 @@ import {findModule} from '../../../modules'
 export function addReactPlugins(plugins) {
   let {jsx, react} = process.env
 
+  if (!react)
+    return
+
   // Transform JSX into “React.createElement()” calls.
   if (jsx)
     plugins.push(findModule('@babel/plugin-transform-react-jsx'))
