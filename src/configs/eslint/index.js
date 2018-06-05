@@ -17,6 +17,9 @@ const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 
 module.exports = {
   parser: 'Babel-ESLint',
+  plugins: [
+    'eslint-plugin-babel',
+  ],
   extends: [
     join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
     join(ESLINT_CONFIG_DIR, 'core', 'stylistic-issues.js'),
