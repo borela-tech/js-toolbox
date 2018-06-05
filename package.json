@@ -4,6 +4,7 @@
   "description": "Tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "bin": {
+    "ctr": "build/index.js",
     "ctrine": "build/index.js"
   },
   "scripts": {
