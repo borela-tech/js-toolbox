@@ -14,9 +14,8 @@ import {findModule} from '../../../modules'
 
 export function addJsxPlugins(plugins) {
   let {jsx} = process.env
-  if (!jsx)
-    return
-  plugins.push(findModule('@babel/plugin-syntax-jsx'))
+  if (jsx)
+    plugins.push(findModule('@babel/plugin-syntax-jsx'))
 }
 
 export default addJsxPlugins

@@ -24,15 +24,16 @@ Yargs.command(build)
   // Custom help and version messages.
   .help('help', 'Show usage instructions.')
   .version('version', 'Show toolbox version.', packageInfo.version)
-  // Build options.
-  .option('browsers', {
-    description: 'Browsers targeted by the project.',
-    default: ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'],
-    type: 'array',
-  })
+  // Build and linting options.
   .option('comment-flow', {
     description: 'Convert Flow annotations to comments.',
     type: 'boolean',
+  })
+  .option('env', {
+    choices: ['browser', 'node-js'],
+    description: 'Used to determine the polyfills and fine tune the linter.',
+    default: ['browser', 'node-js'],
+    type: 'array',
   })
   .option('flow', {
     description: 'Enable Flow annotations.',
@@ -42,11 +43,6 @@ Yargs.command(build)
     description: 'Enable JSX.',
     type: 'boolean',
   })
-  .option('node-js', {
-    description: 'Minimum NodeJS version targeted by the project.',
-    default: 6,
-    type: 'string',
-  })
   .option('react', {
     description: 'Enable React transformations.',
     type: 'boolean',
@@ -55,15 +51,19 @@ Yargs.command(build)
     description: 'Remove Flow annotations.',
     type: 'boolean',
   })
-  .option('platforms', {
-    choices: ['all', 'browsers', 'node-js'],
-    description: 'Platforms targeted by the project.',
-    default: ['all'],
-    type: 'array',
-  })
   .option('production', {
     description: 'Remove debug plugins.',
     type: 'boolean',
+  })
+  .option('target-browser', {
+    description: 'Browsers targeted by the project.',
+    default: ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'],
+    type: 'array',
+  })
+  .option('target-node-js', {
+    description: 'Minimum NodeJS version targeted by the project.',
+    default: 6,
+    type: 'string',
   })
   .option('type-script', {
     description: 'Enable TypeScript.',
