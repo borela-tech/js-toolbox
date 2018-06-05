@@ -22,6 +22,11 @@ module.exports = {
   ],
   extends: [
     join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
+    join(ESLINT_CONFIG_DIR, 'core', 'es2015.js'),
+    join(ESLINT_CONFIG_DIR, 'core', 'nodejs-and-commonjs.js'),
+    join(ESLINT_CONFIG_DIR, 'core', 'possible-errors.js'),
+    join(ESLINT_CONFIG_DIR, 'core', 'strict-mode.js'),
     join(ESLINT_CONFIG_DIR, 'core', 'stylistic-issues.js'),
+    join(ESLINT_CONFIG_DIR, 'core', 'variables.js'),
   ],
 }
