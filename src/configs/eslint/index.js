@@ -13,9 +13,15 @@
 import {CONFIGS_DIR} from '../../paths'
 import {join} from 'path'
 
+let {env} = process.env
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 
 module.exports = {
+  env: {
+    browser: env.includes('browser'),
+    jest: env.includes('jest'),
+    node: env.includes('node-js'),
+  },
   parser: 'Babel-ESLint',
   plugins: [
     'eslint-plugin-babel',
