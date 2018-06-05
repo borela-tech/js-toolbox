@@ -334,8 +334,7 @@ module.exports = {
 
     // This rule checks all property definitions of object expressions and
     // verifies that all variables are sorted alphabetically.
-    'sort-keys': ['error', 'asc', {caseSensitive: false,
-      natural: true}],
+    'sort-keys': 'off',
 
     // This rule checks all variable declaration blocks and verifies that all
     // variables are sorted alphabetically.
