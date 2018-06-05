@@ -182,7 +182,8 @@ module.exports = {
     'multiline-ternary': 'off',
 
     // This rule requires constructor names to begin with a capital letter.
-    'new-cap': 'error',
+    // 'new-cap': 'error',
+    "babel/new-cap": 'error',
 
     // This rule requires parentheses when invoking a constructor with no
     // arguments using the new keyword in order to increase code clarity.
@@ -278,7 +279,8 @@ module.exports = {
 
     // This rule enforce consistent spacing inside braces of object literals,
     // destructuring assignments, and import/export statements.
-    'object-curly-spacing': ['error', 'never'],
+    // 'object-curly-spacing': ['error', 'never'],
+    'babel/object-curly-spacing': ['error', 'never'],
 
     // This rule aims to maintain consistency of newlines between object
     // properties.
@@ -314,13 +316,15 @@ module.exports = {
 
     // This rule enforces the consistent use of either backticks, double, or
     // single quotes.
-    quotes: ['error', 'single'],
+    // quotes: ['error', 'single'],
+    'babel/quotes': ['error', 'single'],
 
     // This rule requires JSDoc comments for specified nodes.
     'require-jsdoc': 'off',
 
     // This rule enforces consistent use of semicolons.
-    semi: ['error', 'never'],
+    // semi: ['error', 'never'],
+    'babel/semi': ['error', 'never'],
 
     // This rule aims to enforce spacing around a semicolon.
     'semi-spacing': 'off',

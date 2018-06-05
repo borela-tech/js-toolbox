@@ -153,7 +153,8 @@ module.exports = {
 
     // This rule aims to flag usage of this keywords outside of classes or
     // class-like objects.
-    'no-invalid-this': 'off',
+    // 'no-invalid-this': 'off',
+    'babel/no-invalid-this': 'off',
 
     // This rule is aimed at preventing errors that may arise from using the
     // __iterator__ property, which is not implemented in several browsers. As
@@ -265,7 +266,8 @@ module.exports = {
 
     // This rule aims to eliminate unused expressions which have no effect on the
     // state of the program.
-    'no-unused-expressions': 'error',
+    // 'no-unused-expressions': 'error',
+    'babel/no-unused-expressions': 'error',
 
     // This rule is aimed at eliminating unused labels.
     'no-unused-labels': 'error',
