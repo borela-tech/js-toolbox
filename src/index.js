@@ -42,9 +42,11 @@ Yargs.command(build)
     description: 'Enable JSX.',
     type: 'boolean',
   })
-  .option('node-js', {description: 'Minimum NodeJS version targeted by the project.',
+  .option('node-js', {
+    description: 'Minimum NodeJS version targeted by the project.',
     default: 6,
-    type: 'string'})
+    type: 'string',
+  })
   .option('react', {
     description: 'Enable React transformations.',
     type: 'boolean',

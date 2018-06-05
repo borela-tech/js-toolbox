@@ -26,11 +26,9 @@ const ESLINT_ARGS = [
 export default {
   command: 'lint',
   description: 'Check or fix code style.',
-  builder: yargs => {
-    return yargs.option('fix', {
-      description: 'Fix lint errors.',
-    })
-  },
+  builder: yargs => yargs.option('fix', {
+    description: 'Fix lint errors.',
+  }),
   handler: ctrineArgs => {
     let args = [...ESLINT_ARGS]
     if (ctrineArgs.fix)
