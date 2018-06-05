@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export build from "./build"
-export lint from "./lint"
-export scaffold from "./scaffold"
-export test from "./test"
+export build from './build'
+export lint from './lint'
+export scaffold from './scaffold'
+export test from './test'

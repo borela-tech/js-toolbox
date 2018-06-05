@@ -107,12 +107,10 @@ module.exports = {
     'id-match': 'off',
 
     // This rule enforces a consistent indentation style.
-    indent: ['error', 2, {
-      SwitchCase: 1,
-    }],
+    indent: ['error', 2, {SwitchCase: 1}],
 
-    // This rule enforces the consistent use of either double or single quotes in
-    // JSX attributes.
+    // This rule enforces the consistent use of either double or single quotes
+    // in JSX attributes.
     'jsx-quotes': ['error', 'prefer-double'],
 
     // This rule enforces consistent spacing between keys and values in object
@@ -183,7 +181,7 @@ module.exports = {
 
     // This rule requires constructor names to begin with a capital letter.
     // 'new-cap': 'error',
-    "babel/new-cap": 'error',
+    'babel/new-cap': 'error',
 
     // This rule requires parentheses when invoking a constructor with no
     // arguments using the new keyword in order to increase code clarity.
@@ -227,9 +225,11 @@ module.exports = {
     // This rule disallows using multiple assignments within a single statement.
     'no-multi-assign': 'off',
 
-    // This rule aims to reduce the scrolling required when reading through your code.
-    // It will warn when the maximum amount of empty lines has been exceeded.
-    'no-multiple-empty-lines': ['error', {max: 1, maxEOF: 1}],
+    // This rule aims to reduce the scrolling required when reading through your
+    // code. It will warn when the maximum amount of empty lines has been
+    // exceeded.
+    'no-multiple-empty-lines': ['error', {max: 1,
+      maxEOF: 1}],
 
     // This rule disallows negated conditions in either of the following:
     //   * “if” statements which have an “else” branch.
@@ -360,11 +360,8 @@ module.exports = {
 
     // This rule enforces consistency regarding the spaces after words unary
     // operators and after/before non words unary operators.
-    'space-unary-ops': [
-      'error',
-      {nonwords: false,
-        words: true},
-    ],
+    'space-unary-ops': ['error', {nonwords: false,
+      words: true}],
 
     // This rule will enforce consistency of spacing after the start of a
     // comment “//” or “/*”. It also provides several exceptions for various
