@@ -31,9 +31,13 @@ export default {
   }),
   handler: ctrineArgs => {
     let args = [...ESLINT_ARGS]
+
     if (ctrineArgs.fix)
       args.push('--fix')
-    // Ctrine arguments are passed as environment variables.
+
+    // Lint test files.
+    // runBinary('eslint', args, ctrineArgs)
+    // Lint all other files.
     runBinary('eslint', args, ctrineArgs)
   },
 }
