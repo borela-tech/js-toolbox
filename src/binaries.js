@@ -21,7 +21,7 @@ const IS_WINDOWS = process.platform === 'win32'
 /**
  * Find the binary either in the toolbox or target package’s directory.
  */
-export function findBinary(targetBinary: string) {
+export function findBinary(targetBinary:string) {
   if (BINARIES[targetBinary])
     return BINARIES[targetBinary]
 
@@ -39,7 +39,7 @@ export function findBinary(targetBinary: string) {
 /**
  * Find the binary and run it.
  */
-export function runBinary(targetBinary: string, args: string[], env: any) {
+export function runBinary(targetBinary:string, args:string[], env:any) {
   const FOUND_BINARY = findBinary(targetBinary)
   // Delete any falsy property to prevent them to be passed as strings.
   for (let prop in env) {

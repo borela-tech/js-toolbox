@@ -20,7 +20,7 @@ const MODULES = {}
 /**
  * Find the module either in the toolbox or target package’s directory.
  */
-export function findModule(targetModule: string) {
+export function findModule(targetModule:string) {
   if (MODULES[targetModule])
     return MODULES[targetModule]
 
