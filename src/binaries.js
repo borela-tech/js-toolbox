@@ -41,6 +41,12 @@ export function findBinary(targetBinary: string) {
  */
 export function runBinary(targetBinary: string, args: string[], env: any) {
   const FOUND_BINARY = findBinary(targetBinary)
+  // Delete any falsy property to prevent them to be passed as strings.
+  for (let prop in env) {
+    if (!env[prop])
+      delete env[prop]
+  }
+  // Run the actual bianry.
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
     env,
