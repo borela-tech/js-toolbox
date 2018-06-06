@@ -13,8 +13,30 @@
 import {CONFIGS_DIR} from '../../paths'
 import {join} from 'path'
 
-let {env} = process.env
+let {env, flow, jest, react, typeScript} = process.env
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
+
+let optionalPlugins = []
+let optionalExtensions = []
+
+if (flow) {
+  optionalPlugins.push('eslint-plugin-flowtype')
+  optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'flow.js'))
+}
+
+if (jest) {
+  optionalPlugins.push('eslint-plugin-jest')
+  optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'jest.js'))
+}
+
+if (react) {
+  optionalPlugins.push('eslint-plugin-react')
+  optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'react.js'))
+}
+
+if (typeScript) {
+  // TODO
+}
 
 module.exports = {
   env: {
@@ -25,6 +47,7 @@ module.exports = {
   parser: 'Babel-ESLint',
   plugins: [
     'eslint-plugin-babel',
+    ...optionalPlugins,
   ],
   extends: [
     join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
@@ -34,5 +57,6 @@ module.exports = {
     join(ESLINT_CONFIG_DIR, 'core', 'strict-mode.js'),
     join(ESLINT_CONFIG_DIR, 'core', 'stylistic-issues.js'),
     join(ESLINT_CONFIG_DIR, 'core', 'variables.js'),
+    ...optionalExtensions,
   ],
 }
