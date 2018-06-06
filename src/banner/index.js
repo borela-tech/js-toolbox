@@ -14,3 +14,4 @@ import fs from 'fs'
 import {join} from 'path'
 
 export const CTRINE = fs.readFileSync(join(__dirname, 'ctrine.txt'), 'UTF-8')
+  .replace(/\n$/, '')
