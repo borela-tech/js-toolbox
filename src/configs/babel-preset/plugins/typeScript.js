@@ -15,7 +15,7 @@ import {findModule} from '../../../modules'
 export function addTypeScriptPlugins(plugins) {
   let {typeScript} = process.env
   if (typeScript)
-    result.plugins.push(findModule('@babel/plugin-transform-typescript'))
+    plugins.push(findModule('@babel/plugin-transform-typescript'))
 }
 
 export default addTypeScriptPlugins
