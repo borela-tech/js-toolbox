@@ -9,8 +9,12 @@
   },
   "scripts": {
     "clean": "rimraf \"build\"",
-    "dev": "npm run clean && babel src -d build --ignore **/__*__/** --source-maps inline",
-    "dev-w": "npm run clean && babel src -d build --ignore **/__*__/** --source-maps inline --watch",
+    "dev": "npm run clean && run-p dev:*",
+    "dev:assets": "cpx src/**/*.txt build",
+    "dev:build": "babel src -d build --ignore **/__*__/** --source-maps inline",
+    "dev-w": "npm run clean && run-p dev-w:*",
+    "dev-w:assets": "cpx src/**/*.txt build --watch",
+    "dev-w:build": "babel src -d build --ignore **/__*__/** --source-maps inline --watch",
     "test": "jest src --verbose",
     "test-w": "jest src --verbose --watch"
   },

@@ -10,10 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export const CTRINE = `
-   ________________  _____   ________
-  / ____/_  __/ __ \/  _/ | / / ____/
- / /     / / / /_/ // //  |/ / __/
-/ /___  / / / _, _// // /|  / /___
-\____/ /_/ /_/ |_/___/_/ |_/_____/
-`
+import fs from 'fs'
+import {join} from 'path'
+
+export const CTRINE = fs.readFileSync(join(__dirname, 'ctrine.txt'), 'UTF-8')
