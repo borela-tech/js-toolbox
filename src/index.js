@@ -15,9 +15,10 @@
 import packageInfo from '../package'
 import Yargs from 'yargs'
 import {build, lint, scaffold, test} from './commands'
-import {CTRINE} from './banner'
+import {EPILOG, PROLOG} from './banner'
 
-Yargs.usage(CTRINE)
+Yargs.usage(PROLOG)
+  .epilog(EPILOG)
   .command(build)
   .command(scaffold)
   .command(lint)

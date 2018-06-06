@@ -11,7 +11,14 @@
 // the License.
 
 import fs from 'fs'
+import packageInfo from '../../package'
 import {join} from 'path'
 
-export const CTRINE = fs.readFileSync(join(__dirname, 'ctrine.txt'), 'UTF-8')
+const PROLOG_PATH = join(__dirname, 'prolog.txt')
+const EPILOG_PATH = join(__dirname, 'epilog.txt')
+
+export const PROLOG = fs.readFileSync(PROLOG_PATH, 'UTF-8')
+  .replace(/\n$/, '')
+  .replace(/#version/, packageInfo.version)
+export const EPILOG = fs.readFileSync(EPILOG_PATH, 'UTF-8')
   .replace(/\n$/, '')
