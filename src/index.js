@@ -15,8 +15,10 @@
 import packageInfo from '../package'
 import Yargs from 'yargs'
 import {build, lint, scaffold, test} from './commands'
+import {CTRINE} from './banner'
 
-Yargs.command(build)
+Yargs.usage(CTRINE)
+  .command(build)
   .command(scaffold)
   .command(lint)
   .command(test)
