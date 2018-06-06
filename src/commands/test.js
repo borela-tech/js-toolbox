@@ -32,7 +32,6 @@ export default {
     let jestArgs = [`--config=${JEST_CONFIG_PATH}`]
     if (ctrineArgs.watch)
       jestArgs.push('--watch')
-    // Ctrine arguments are passed as environment variables.
     runBinary('jest', jestArgs, ctrineArgs)
   },
 }

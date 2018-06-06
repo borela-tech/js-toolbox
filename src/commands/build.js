@@ -30,7 +30,6 @@ export default {
   description: 'Build the project.',
   handler: ctrineArgs => {
     runBinary('rimraf', ['"build"'])
-    // Ctrine arguments are passed as environment variables.
     runBinary('babel', BABEL_ARGS, ctrineArgs)
   },
 }
