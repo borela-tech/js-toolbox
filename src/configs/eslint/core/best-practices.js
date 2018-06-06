@@ -270,7 +270,7 @@ module.exports = {
     // This rule aims to eliminate unused expressions which have no effect on
     // the state of the program.
     // 'no-unused-expressions': 'error',
-    'babel/no-unused-expressions': 'error',
+    'babel/no-unused-expressions': 'warn',
 
     // This rule is aimed at eliminating unused labels.
     'no-unused-labels': 'error',
@@ -299,7 +299,7 @@ module.exports = {
     'no-warning-comments': [
       'warn', {
         location: 'start',
-        terms: ['FIXME', 'TODO', 'WARNING', 'XXX'],
+        terms: ['FIXME', 'TODO', 'XXX'],
       },
     ],
 
