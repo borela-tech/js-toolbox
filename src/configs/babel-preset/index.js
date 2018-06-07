@@ -18,16 +18,16 @@ import addTypeScriptPlugins from './plugins/typeScript'
 import {findModule} from '../../modules'
 
 module.exports = function () {
-  let {env, targetBrowser, targetNodeJs} = process.env
+  let {supportedBrowser, supportedNodeJs, supportedPlatforms} = process.env
   let targets = {}
 
-  for (let i of env) {
-    switch (i) {
+  for (let platform of supportedPlatforms) {
+    switch (platform) {
       case 'browser':
-        targets.browsers = targetBrowser
+        targets.browsers = supportedBrowser
         break
       case 'node-js':
-        targets.node = targetNodeJs
+        targets.node = supportedNodeJs
         break
     }
   }

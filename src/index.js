@@ -34,12 +34,6 @@ Yargs.usage(PROLOG)
     description: 'Convert Flow annotations to comments.',
     type: 'boolean',
   })
-  .option('env', {
-    choices: ['browser', 'node-js'],
-    description: 'Used to determine the polyfills and fine tune the linter.',
-    default: ['browser', 'node-js'],
-    type: 'array',
-  })
   .option('flow', {
     description: 'Enable Flow annotations.',
     type: 'boolean',
@@ -60,15 +54,21 @@ Yargs.usage(PROLOG)
     description: 'Remove debug plugins.',
     type: 'boolean',
   })
-  .option('target-browser', {
-    description: 'Browsers targeted by the project.',
+  .option('supported-browser', {
+    description: 'Browsers supported by the project.',
     default: ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'],
     type: 'array',
   })
-  .option('target-node-js', {
-    description: 'Minimum NodeJS version targeted by the project.',
+  .option('supported-node-js', {
+    description: 'Minimum NodeJS version supported by the project.',
     default: 6,
     type: 'string',
+  })
+  .option('supported-platforms', {
+    choices: ['browser', 'node-js'],
+    description: 'Used to determine the polyfills and fine tune the linter.',
+    default: ['browser', 'node-js'],
+    type: 'array',
   })
   .option('type-script', {
     description: 'Enable TypeScript.',
