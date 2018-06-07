@@ -54,7 +54,7 @@ function normalizeEnv(env) {
 export function runBin(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = findBinary(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
-    cwd:PACKAGE_DIR,
+    cwd: PACKAGE_DIR,
     env: normalizeEnv(env),
     stdio: 'inherit',
   })
@@ -63,10 +63,10 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
 /**
  * Find the binary and run it.
  */
-export function runBinBuffered(targetBinary:string, args:string[], env?:any) {
+export function runBinPiped(targetBinary:string, args:string[], env?:any) {
   const FOUND_BINARY = findBinary(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
-    cwd:PACKAGE_DIR,
+    cwd: PACKAGE_DIR,
     env: normalizeEnv(env),
   })
 }
