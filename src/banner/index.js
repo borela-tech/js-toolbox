@@ -19,6 +19,6 @@ const EPILOG_PATH = join(__dirname, 'epilog.txt')
 
 export const PROLOG = fs.readFileSync(PROLOG_PATH, 'UTF-8')
   .replace(/\n$/, '')
-  .replace(/#version/, packageInfo.version)
+  .replace(/#version/, packageInfo.version.padStart(8))
 export const EPILOG = fs.readFileSync(EPILOG_PATH, 'UTF-8')
   .replace(/\n$/, '')
