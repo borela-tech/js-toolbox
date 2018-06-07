@@ -11,17 +11,24 @@
 // the License.
 
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
+import {EPILOG, PROLOG, SEPARATOR} from '../banner'
 import {join} from 'path'
-import {runBinary} from '../binaries'
+import {getModuleNameVersion} from '../modules'
+import {runBinPiped} from '../binaries'
 
 const ESLINT_CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const ESLINT_ARGS = [
   '--ignore-pattern',
-  '/build/',
+  'build/**',
   '--config',
   ESLINT_CONFIG_PATH,
   PACKAGE_DIR,
 ]
+
+function logBuffer(buffer:Buffer) {
+  if (buffer.length)
+    console.log(buffer.toString().replace(/\n+$/, ''))
+}
 
 export default {
   command: 'lint',
@@ -29,15 +36,50 @@ export default {
   builder: yargs => yargs.option('fix', {
     description: 'Fix lint errors.',
   }),
-  handler: ctrineArgs => {
-    let args = [...ESLINT_ARGS]
+  handler: env => {
+    let sourceArgs = ['--ignore-pattern', '**/__tests__/**', ...ESLINT_ARGS]
+    let testsArgs = [
+      '--ignore-pattern',
+      'src/**',
+      '--ignore-pattern',
+      '!**/__tests__',
+      '--ignore-pattern',
+      '!**/__tests__/**',
+      ...ESLINT_ARGS
+    ]
 
-    if (ctrineArgs.fix)
-      args.push('--fix')
+    if (env.fix) {
+      sourceArgs.push('--fix')
+      testsArgs.push('--fix')
+    }
 
-    // Lint test files.
-    // runBinary('eslint', args, ctrineArgs)
-    // Lint all other files.
-    runBinary('eslint', args, ctrineArgs)
+    console.log(PROLOG)
+    console.log('Linter: %s', getModuleNameVersion('ESlint'))
+    console.log(SEPARATOR)
+    console.log()
+
+    console.log('    [1/2] Linting sources...')
+
+    let {
+      stdout: outSources,
+      stderr: errorSources,
+    } = runBinPiped('eslint', sourceArgs, env)
+
+    logBuffer(errorSources)
+    logBuffer(outSources)
+
+    console.log()
+    console.log('    [2/2] Linting tests...')
+
+    let {
+      stdout: outTests,
+      stderr: errorTests,
+    } = runBinPiped('eslint', testsArgs, { jest: true, ...env})
+
+    logBuffer(errorTests)
+    logBuffer(outTests)
+
+    console.log()
+    console.log(EPILOG)
   },
 }
