@@ -12,8 +12,8 @@
 
 import {existsSync} from 'fs'
 import {join} from 'path'
-import {spawnSync} from 'child_process'
 import {PACKAGE_DIR, PACKAGE_BIN_DIR, TOOLBOX_BIN_DIR} from './paths'
+import {spawnSync} from 'child_process'
 
 const BINARIES = {}
 const IS_WINDOWS = process.platform === 'win32'
