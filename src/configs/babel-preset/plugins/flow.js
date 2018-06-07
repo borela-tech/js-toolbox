@@ -11,9 +11,10 @@
 // the License.
 
 import {findModule} from '../../../modules'
+import {getSettings} from '../../toolbox'
 
 export function addFlowPlugins(plugins) {
-  let {commentFlow, flow, removeFlow} = process.env
+  let {commentFlow, flow, removeFlow} = getSettings()
 
   // Parse Flow annoations.
   if (flow || commentFlow || removeFlow)

@@ -11,9 +11,10 @@
 // the License.
 
 import {CONFIGS_DIR} from '../../paths'
+import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-let {flow, jest, react, supportedPlatforms, typeScript} = process.env
+let {flow, jest, react, supportedPlatforms, typeScript} = getSettings()
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 let optionalExtensions = []
 

@@ -15,10 +15,11 @@ import addFlowPlugins from './plugins/flow'
 import addJsxPlugins from './plugins/jsx'
 import addReactPlugins from './plugins/react'
 import addTypeScriptPlugins from './plugins/typeScript'
+import {getSettings} from '../toolbox'
 import {findModule} from '../../modules'
 
 module.exports = function () {
-  let {supportedBrowser, supportedNodeJs, supportedPlatforms} = process.env
+  let {supportedBrowser, supportedNodeJs, supportedPlatforms} = getSettings()
   let targets = {}
 
   for (let platform of supportedPlatforms) {

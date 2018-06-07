@@ -11,9 +11,10 @@
 // the License.
 
 import {findModule} from '../../../modules'
+import {getSettings} from '../../toolbox'
 
 export function addReactPlugins(plugins) {
-  let {jsx, react} = process.env
+  let {jsx, production, react} = getSettings()
 
   if (!react)
     return
@@ -26,7 +27,6 @@ export function addReactPlugins(plugins) {
   // “React.createClass()” or “createReactClass()”.
   plugins.push(findModule('@babel/plugin-transform-react-display-name'))
 
-  let {production} = process.env
   if (production)
     return
 

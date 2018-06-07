@@ -11,9 +11,10 @@
 // the License.
 
 import {findModule} from '../../../modules'
+import {getSettings} from '../../toolbox'
 
 export function addTypeScriptPlugins(plugins) {
-  let {typeScript} = process.env
+  let {typeScript} = getSettings()
   if (typeScript)
     plugins.push(findModule('@babel/plugin-transform-typescript'))
 }

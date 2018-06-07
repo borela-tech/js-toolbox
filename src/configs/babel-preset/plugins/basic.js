@@ -11,6 +11,7 @@
 // the License.
 
 import {findModule} from '../../../modules'
+import {getSettings} from '../../toolbox'
 
 export function addBasicPlugins(plugins) {
   // Basic extensions.
@@ -34,7 +35,7 @@ export function addBasicPlugins(plugins) {
   plugins.push([findModule('@babel/plugin-proposal-decorators'), {legacy: true}])
   plugins.push(findModule('@babel/plugin-proposal-class-properties'))
 
-  let {production} = process.env
+  let {production} = getSettings()
   if (production)
     return
 
