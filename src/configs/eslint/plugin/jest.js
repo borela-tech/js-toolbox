@@ -12,6 +12,7 @@
 
 // https://github.com/jest-community/eslint-plugin-jest#rules
 module.exports = {
+  plugins: ['eslint-plugin-jest'],
   rules: {
     // Jest allows you to choose how you want to define your tests, using the
     // “it” or the “test” keywords, with multiple permutations for each one,

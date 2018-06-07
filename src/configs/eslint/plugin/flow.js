@@ -12,6 +12,7 @@
 
 // https://github.com/gajus/eslint-plugin-flowtype#eslint-plugin-flowtype-rules
 module.exports = {
+  plugins: ['eslint-plugin-flowtype'],
   rules: {
     // Enforces a particular array type annotation style for complex types.
     'flowtype/array-style-complex-type': ['error', 'shorthand'],

@@ -15,24 +15,16 @@ import {join} from 'path'
 
 let {env, flow, jest, react, typeScript} = process.env
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
-
-let optionalPlugins = []
 let optionalExtensions = []
 
-if (flow) {
-  optionalPlugins.push('eslint-plugin-flowtype')
+if (flow)
   optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'flow.js'))
-}
 
-if (jest) {
-  optionalPlugins.push('eslint-plugin-jest')
+if (jest)
   optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'jest.js'))
-}
 
-if (react) {
-  optionalPlugins.push('eslint-plugin-react')
+if (react)
   optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'react.js'))
-}
 
 if (typeScript) {
   // TODO
@@ -45,10 +37,7 @@ module.exports = {
     node: env.includes('node-js'),
   },
   parser: 'Babel-ESLint',
-  plugins: [
-    'eslint-plugin-babel',
-    ...optionalPlugins,
-  ],
+  plugins: ['eslint-plugin-babel'],
   extends: [
     join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
     join(ESLINT_CONFIG_DIR, 'core', 'es2015.js'),

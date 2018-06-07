@@ -11,6 +11,7 @@
 // the License.
 
 module.exports = {
+  plugins: ['eslint-plugin-react'],
   rules: {
     // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
 
