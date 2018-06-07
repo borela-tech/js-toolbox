@@ -13,7 +13,7 @@
 import {CONFIGS_DIR} from '../../paths'
 import {join} from 'path'
 
-let {env, flow, jest, react, typeScript} = process.env
+let {flow, jest, react, supportedPlatforms, typeScript} = process.env
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 let optionalExtensions = []
 
@@ -32,9 +32,9 @@ if (typeScript) {
 
 module.exports = {
   env: {
-    browser: env.includes('browser'),
-    jest: env.includes('jest'),
-    node: env.includes('node-js'),
+    jest,
+    browser: supportedPlatforms.includes('browser'),
+    node: supportedPlatforms.includes('node-js'),
   },
   parser: 'Babel-ESLint',
   plugins: ['eslint-plugin-babel'],
