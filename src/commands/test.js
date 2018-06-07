@@ -12,7 +12,7 @@
 
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {runBinary} from '../binaries'
+import {runBin} from '../binaries'
 
 const JEST_CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 
@@ -28,10 +28,10 @@ export default {
       },
     })
   },
-  handler: ctrineArgs => {
-    let jestArgs = [`--config=${JEST_CONFIG_PATH}`]
-    if (ctrineArgs.watch)
-      jestArgs.push('--watch')
-    runBinary('jest', jestArgs, ctrineArgs)
+  handler: env => {
+    let args = [`--config=${JEST_CONFIG_PATH}`]
+    if (env.watch)
+      args.push('--watch')
+    runBin('jest', args, env)
   },
 }

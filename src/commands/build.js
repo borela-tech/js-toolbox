@@ -12,7 +12,7 @@
 
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {runBinary} from '../binaries'
+import {runBin} from '../binaries'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
@@ -28,8 +28,8 @@ const BABEL_ARGS = [
 export default {
   command: 'build',
   description: 'Build the project.',
-  handler: ctrineArgs => {
-    runBinary('rimraf', ['"build"'])
-    runBinary('babel', BABEL_ARGS, ctrineArgs)
+  handler: env => {
+    runBin('rimraf', ['"build"'])
+    runBin('babel', BABEL_ARGS, env)
   },
 }

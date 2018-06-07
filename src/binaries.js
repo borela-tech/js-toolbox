@@ -37,19 +37,36 @@ export function findBinary(targetBinary:string) {
 }
 
 /**
+ * Delete any falsy property to prevent them to be passed as strings.
+ */
+function normalizeEnv(env) {
+  let result = []
+  for (let prop in env) {
+    if (env[prop])
+      result[prop] = env[prop]
+  }
+  return result
+}
+
+/**
+ * Find the binary and run it with the parent IO attached to it.
+ */
+export function runBin(targetBinary:string, args:string[], env?:Object) {
+  const FOUND_BINARY = findBinary(targetBinary)
+  return spawnSync(FOUND_BINARY, args, {
+    cwd:PACKAGE_DIR,
+    env: normalizeEnv(env),
+    stdio: 'inherit',
+  })
+}
+
+/**
  * Find the binary and run it.
  */
-export function runBinary(targetBinary:string, args:string[], env:any) {
+export function runBinBuffered(targetBinary:string, args:string[], env?:any) {
   const FOUND_BINARY = findBinary(targetBinary)
-  // Delete any falsy property to prevent them to be passed as strings.
-  for (let prop in env) {
-    if (!env[prop])
-      delete env[prop]
-  }
-  // Run the actual bianry.
   return spawnSync(FOUND_BINARY, args, {
-    cwd: PACKAGE_DIR,
-    env,
-    stdio: 'inherit',
+    cwd:PACKAGE_DIR,
+    env: normalizeEnv(env),
   })
 }
