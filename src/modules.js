@@ -34,3 +34,12 @@ export function findModule(targetModule:string) {
 
   return MODULES[targetModule]
 }
+
+export function getModuleInfo(targetModule:string) {
+  return require(join(findModule(targetModule), 'package.json'))
+}
+
+export function getModuleNameVersion(targetModule:string) {
+  let info = getModuleInfo(targetModule)
+  return `${targetModule} (v${info.version})`
+}
