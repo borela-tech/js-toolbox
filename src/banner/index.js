@@ -16,7 +16,8 @@ import {join} from 'path'
 
 const PROLOG_PATH = join(__dirname, 'prolog.txt')
 const EPILOG_PATH = join(__dirname, 'epilog.txt')
-const PADDED_VERSION = packageInfo.version.padStart('#version'.length)
+const PADDED_VERSION = `v${packageInfo.version}`
+  .padStart('#version'.length)
 
 export const PROLOG = fs.readFileSync(PROLOG_PATH, 'UTF-8')
   .replace(/\n$/, '')
