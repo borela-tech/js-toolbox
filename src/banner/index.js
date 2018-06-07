@@ -22,9 +22,9 @@ const PADDED_VERSION = `v${packageInfo.version}`
   .padStart('#version'.length)
 
 export const PROLOG = fs.readFileSync(PROLOG_PATH, 'UTF-8')
-  .replace(/\n$/, '')
+  .replace(/\n+$/, '')
   .replace(/#version/, PADDED_VERSION)
 export const EPILOG = fs.readFileSync(EPILOG_PATH, 'UTF-8')
-  .replace(/\n$/, '')
+  .replace(/\n+$/, '')
 export const SEPARATOR = fs.readFileSync(SEPARATOR_PATH, 'UTF-8')
-  .replace(/\n$/, '')
+  .replace(/\n+$/, '')
