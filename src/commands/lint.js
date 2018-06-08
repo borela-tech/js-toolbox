@@ -45,7 +45,7 @@ export default {
       '!**/__tests__',
       '--ignore-pattern',
       '!**/__tests__/**',
-      ...ESLINT_ARGS
+      ...ESLINT_ARGS,
     ]
 
     if (env.fix) {
@@ -56,8 +56,8 @@ export default {
     console.log(PROLOG)
     console.log('Linter: %s', getModuleNameVersion('ESlint'))
     console.log(SEPARATOR)
-    console.log()
 
+    console.log()
     console.log('    [1/2] Linting sources...')
 
     let {
@@ -74,7 +74,7 @@ export default {
     let {
       stdout: outTests,
       stderr: errorTests,
-    } = runBinPiped('eslint', testsArgs, { jest: true, ...env})
+    } = runBinPiped('eslint', testsArgs, {jest: true, ...env})
 
     logBuffer(errorTests)
     logBuffer(outTests)
