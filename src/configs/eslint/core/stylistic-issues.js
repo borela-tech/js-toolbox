@@ -284,7 +284,7 @@ module.exports = {
 
     // This rule aims to maintain consistency of newlines between object
     // properties.
-    'object-property-newline': 'error',
+    'object-property-newline': ['error', {allowAllPropertiesOnSameLine: true}],
 
     // This rule enforces variables to be declared either together or separately
     // per function or block scope.
