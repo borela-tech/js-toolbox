@@ -12,7 +12,7 @@
 
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {runBin} from '../binaries'
+import {assertBinaryExists, runBin} from '../binaries'
 
 const JEST_CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 
@@ -29,6 +29,7 @@ export default {
     })
   },
   handler: env => {
+    assertBinaryExists('jest')
     let args = [`--config=${JEST_CONFIG_PATH}`]
     if (env.watch)
       args.push('--watch')

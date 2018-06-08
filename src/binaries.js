@@ -37,7 +37,18 @@ export function findBinary(targetBinary:string) {
 }
 
 /**
- * Delete any falsy property to prevent them to be passed as strings.
+ * Checks if the binary exists on the system or stop the CLI completly.
+ */
+export function assertBinaryExists(targetBinary:string) {
+  if (findBinary(targetBinary))
+    return true
+  console.error(`Binary “${targetBinary}” not found.`)
+  process.exit()
+  return false
+}
+
+/**
+ * Delete any falsy properties to prevent them to be passed as strings.
  */
 function normalizeEnv(env) {
   let result = []

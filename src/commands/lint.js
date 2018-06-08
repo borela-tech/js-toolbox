@@ -14,7 +14,7 @@ import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {EPILOG, PROLOG, SEPARATOR} from '../banner'
 import {join} from 'path'
 import {getModuleNameVersion} from '../modules'
-import {runBinPiped} from '../binaries'
+import {assertBinaryExists, runBinPiped} from '../binaries'
 
 const ESLINT_CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const ESLINT_ARGS = [
@@ -25,6 +25,9 @@ const ESLINT_ARGS = [
   PACKAGE_DIR,
 ]
 
+/**
+ * Prints the buffer if it’s not empty.
+ */
 function logBuffer(buffer:Buffer) {
   if (buffer.length)
     console.log(buffer.toString().replace(/\n+$/, ''))
@@ -37,6 +40,8 @@ export default {
     description: 'Fix lint errors.',
   }),
   handler: env => {
+    assertBinaryExists('eslint')
+
     let sourceArgs = ['--ignore-pattern', '**/__tests__/**', ...ESLINT_ARGS]
     let testsArgs = [
       '--ignore-pattern',
@@ -54,7 +59,7 @@ export default {
     }
 
     console.log(PROLOG)
-    console.log('Linter: %s', getModuleNameVersion('ESlint'))
+    console.log('Linter: %s', getModuleNameVersion('eslint'))
     console.log(SEPARATOR)
 
     console.log()

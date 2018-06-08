@@ -12,7 +12,7 @@
 
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {runBin} from '../binaries'
+import {assertBinaryExists, runBin} from '../binaries'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
@@ -29,6 +29,8 @@ export default {
   command: 'build',
   description: 'Build the project.',
   handler: env => {
+    assertBinaryExists('rimraf')
+    assertBinaryExists('babel')
     runBin('rimraf', ['"build"'])
     runBin('babel', BABEL_ARGS, env)
   },
