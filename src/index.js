@@ -16,14 +16,21 @@ import packageInfo from '../package'
 import Yargs from 'yargs'
 import {build, lint, scaffold, test} from './commands'
 import {EPILOG, PROLOG} from './banner'
+import {PACKAGE_DIR} from './paths'
 
-Yargs.usage(PROLOG)
+const PARSER = Yargs.usage(PROLOG)
   .epilog(EPILOG)
-  .command(build)
-  .command(scaffold)
-  .command(lint)
-  .command(test)
-  .demandCommand(1, 'Error: Use one of the commands available.')
+
+if (!PACKAGE_DIR) {
+  PARSER.command(scaffold)
+} else {
+  PARSER.command(build)
+    .command(scaffold)
+    .command(lint)
+    .command(test)
+}
+
+PARSER.demandCommand(1, 'Error: Use one of the commands available.')
   .recommendCommands()
   .strict()
   // Custom help and version messages.
