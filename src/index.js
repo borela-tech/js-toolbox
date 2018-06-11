@@ -21,14 +21,13 @@ import {PACKAGE_DIR} from './paths'
 const PARSER = Yargs.usage(PROLOG)
   .epilog(EPILOG)
 
-if (!PACKAGE_DIR) {
-  PARSER.command(scaffold)
-} else {
+if (PACKAGE_DIR) {
   PARSER.command(build)
     .command(scaffold)
     .command(lint)
     .command(test)
-}
+} else
+  PARSER.command(scaffold)
 
 PARSER.demandCommand(1, 'Error: Use one of the commands available.')
   .recommendCommands()
