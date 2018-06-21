@@ -13,14 +13,12 @@
 import {camelizeKeys} from 'humps'
 import {existsSync} from 'fs'
 import {join} from 'path'
-import {PACKAGE_DIR} from '../paths'
+import {CTRINE_JSON_PATH, PACKAGE_JSON_PATH} from '../paths'
 
-const PACKAGE_JSON_PATH = join(PACKAGE_DIR, 'package.json')
 const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
   ? require(PACKAGE_JSON_PATH)
   : {}
 
-const CTRINE_JSON_PATH = join(PACKAGE_DIR, 'ctrine.json')
 const CTRINE_JSON = existsSync(CTRINE_JSON_PATH)
   ? require(CTRINE_JSON_PATH)
   : {}

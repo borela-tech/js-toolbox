@@ -23,3 +23,6 @@ export const TOOLBOX_BIN_DIR = join(TOOLBOX_MODULES_DIR, '.bin')
 
 export const CONFIGS_DIR = join(TOOLBOX_DIR, 'build', 'configs')
 export const TEMPLATES_DIR = join(TOOLBOX_DIR, 'templates')
+
+export const PACKAGE_JSON_PATH = join(PACKAGE_DIR, 'package.json')
+export const CTRINE_JSON_PATH = join(PACKAGE_DIR, 'ctrine.json')
