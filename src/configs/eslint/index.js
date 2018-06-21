@@ -14,8 +14,8 @@ import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-let {flow, jest, react, supportedPlatforms, typeScript} = getSettings()
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
+let {flow, jest, react, supportedPlatforms, typeScript} = getSettings()
 let optionalExtensions = []
 
 if (flow)
@@ -27,9 +27,8 @@ if (jest)
 if (react)
   optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'react.js'))
 
-if (typeScript) {
-  // TODO
-}
+// TODO
+// if (typeScript) {}
 
 module.exports = {
   env: {
