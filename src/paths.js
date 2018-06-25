@@ -13,7 +13,7 @@
 import pkgDir from 'pkg-dir'
 import {join} from 'path'
 
-export const PACKAGE_DIR = pkgDir.sync() || ''
+export const PACKAGE_DIR = pkgDir.sync(process.cwd()) || ''
 export const TOOLBOX_DIR = join(__dirname, '..')
 
 export const BIN_DIR = join(TOOLBOX_DIR, 'node_modules', '.bin')
