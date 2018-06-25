@@ -14,15 +14,12 @@ import pkgDir from 'pkg-dir'
 import {join} from 'path'
 
 export const PACKAGE_DIR = pkgDir.sync() || ''
-export const PACKAGE_MODULES_DIR = join(PACKAGE_DIR, 'node_modules')
-export const PACKAGE_BIN_DIR = join(PACKAGE_MODULES_DIR, '.bin')
-
 export const TOOLBOX_DIR = join(__dirname, '..')
-export const TOOLBOX_MODULES_DIR = join(TOOLBOX_DIR, 'node_modules')
-export const TOOLBOX_BIN_DIR = join(TOOLBOX_MODULES_DIR, '.bin')
 
+export const BIN_DIR = join(TOOLBOX_DIR, 'node_modules', '.bin')
 export const CONFIGS_DIR = join(TOOLBOX_DIR, 'build', 'configs')
+export const MODULES_DIR = join(TOOLBOX_DIR, 'node_modules')
 export const TEMPLATES_DIR = join(TOOLBOX_DIR, 'templates')
 
-export const PACKAGE_JSON_PATH = join(PACKAGE_DIR, 'package.json')
-export const CTRINE_JSON_PATH = join(PACKAGE_DIR, 'ctrine.json')
+export const CTRINE_JSON = join(PACKAGE_DIR, 'ctrine.json')
+export const PACKAGE_JSON = join(PACKAGE_DIR, 'package.json')
