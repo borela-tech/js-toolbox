@@ -12,7 +12,6 @@
 
 import {join} from 'path'
 
-const DEFAULT_CWD = process.cwd
 const FIXTURE = join(__dirname, '__fixture__')
 const FOO = join(FIXTURE, 'foo')
 const FOO_PACKAGE = join(FIXTURE, 'foo-package')
@@ -20,28 +19,23 @@ const FOO_BAR = join(FIXTURE, 'foo', 'bar')
 const FOO_BAR_PACKAGE = join(FIXTURE, 'foo', 'bar-package')
 const FOO_BAR_PACKAGE_BAZ = join(FIXTURE, 'foo', 'bar-package', 'baz')
 
-describe('paths.js', () => {
-  describe('constant “PACKAGE_DIR” has the package root', () => {
-    afterEach(() => {
-      process.cwd = DEFAULT_CWD
-    })
+// The CLI’s current working directory is set to be the target package, this
+// test makes sure we are getting the correct package root.
+describe('PACKAGE_DIR', () => {
+  test.each([
+    [FIXTURE, FIXTURE],
+    [FOO, FIXTURE],
+    [FOO_PACKAGE, FOO_PACKAGE],
+    [FOO_BAR, FIXTURE],
+    [FOO_BAR_PACKAGE, FOO_BAR_PACKAGE],
+    [FOO_BAR_PACKAGE_BAZ, FOO_BAR_PACKAGE],
+  ])('It has the package’s root', (cwd, root) => {
+    jest.spyOn(process, 'cwd').mockImplementation(() => cwd)
 
-    beforeEach(() => {
-      jest.resetModules()
-    })
+    const {PACKAGE_DIR} = require('../../paths')
+    expect(PACKAGE_DIR).toBe(root)
 
-    test.each([
-      [FIXTURE, FIXTURE],
-      [FOO, FIXTURE],
-      [FOO_PACKAGE, FOO_PACKAGE],
-      [FOO_BAR, FIXTURE],
-      [FOO_BAR_PACKAGE, FOO_BAR_PACKAGE],
-      [FOO_BAR_PACKAGE_BAZ, FOO_BAR_PACKAGE],
-    ])('%s', (workingDir, expectedDir) => {
-      process.cwd = jest.fn(() => workingDir)
-      const {PACKAGE_DIR} = require('../../paths')
-      expect(process.cwd).toHaveBeenCalled()
-      expect(PACKAGE_DIR).toBe(expectedDir)
-    })
+    process.cwd.mockRestore()
+    jest.resetModules()
   })
 })
