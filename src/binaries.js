@@ -12,61 +12,34 @@
 
 import {existsSync} from 'fs'
 import {join} from 'path'
-import {PACKAGE_DIR, PACKAGE_BIN_DIR, TOOLBOX_BIN_DIR} from './paths'
+import {noFalsyProps} from './util'
+import {PACKAGE_DIR, BIN_DIR} from './paths'
 import {spawnSync} from 'child_process'
 
-const BINARIES = {}
-const IS_WINDOWS = process.platform === 'win32'
-
 /**
- * Find the binary either in the toolbox or target package’s directory.
- */
-export function findBinary(targetBinary:string) {
-  if (BINARIES[targetBinary])
-    return BINARIES[targetBinary]
-
-  const TOOLBOX_BIN = join(TOOLBOX_BIN_DIR, targetBinary)
-  if (existsSync(TOOLBOX_BIN))
-    BINARIES[targetBinary] = IS_WINDOWS ? `${TOOLBOX_BIN}.cmd` : TOOLBOX_BIN
-
-  const PACKAGE_BIN = join(PACKAGE_BIN_DIR, targetBinary)
-  if (existsSync(PACKAGE_BIN))
-    BINARIES[targetBinary] = IS_WINDOWS ? `${PACKAGE_BIN}.cmd` : PACKAGE_BIN
-
-  return BINARIES[targetBinary]
-}
-
-/**
- * Checks if the binary exists on the system or stop the CLI completly.
+ * Checks if the binary exists or crash.
  */
 export function assertBinaryExists(targetBinary:string) {
-  if (findBinary(targetBinary))
-    return true
-  console.error(`Binary “${targetBinary}” not found.`)
-  process.exit()
-  return false
+  if (!existsSync(getBinaryPath(targetBinary)))
+    throw new Error(`Binary “${targetBinary}” not found.`)
 }
 
 /**
- * Delete any falsy properties to prevent them to be passed as strings.
+ * Get the target binary’s path.
  */
-function normalizeEnv(env) {
-  let result = []
-  for (let prop in env) {
-    if (env[prop])
-      result[prop] = env[prop]
-  }
-  return result
+export function getBinaryPath(targetBinary:string) {
+  const BIN = join(BIN_DIR, targetBinary)
+  return process.platform === 'win32' ? `${BIN}.cmd` : BIN
 }
 
 /**
  * Find the binary and run it with the parent IO attached to it.
  */
 export function runBin(targetBinary:string, args:string[], env?:Object) {
-  const FOUND_BINARY = findBinary(targetBinary)
+  const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
-    env: normalizeEnv(env),
+    env: noFalsyProps(env),
     stdio: 'inherit',
   })
 }
@@ -74,10 +47,10 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
 /**
  * Find the binary and run it.
  */
-export function runBinPiped(targetBinary:string, args:string[], env?:any) {
-  const FOUND_BINARY = findBinary(targetBinary)
+export function runBinPiped(targetBinary:string, args:string[], env?:Object) {
+  const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
-    env: normalizeEnv(env),
+    env: noFalsyProps(env),
   })
 }
