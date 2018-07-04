@@ -15,6 +15,8 @@ import {join} from 'path'
 
 module.exports = {
   rootDir: PACKAGE_DIR,
+  testRegex: '/__tests__/.*',
+  testPathIgnorePatterns: ['/node_modules/', '/__fixture__/', '/__fixtures__/'],
   transform: {
     '^.+\\.(jsx?|mjs)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
   },
