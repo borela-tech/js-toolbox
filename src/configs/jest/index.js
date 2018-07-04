@@ -20,4 +20,5 @@ module.exports = {
   transform: {
     '^.+\\.(jsx?|mjs)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
   },
+  verbose: true,
 }
