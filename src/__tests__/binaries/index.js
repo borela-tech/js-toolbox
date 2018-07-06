@@ -15,32 +15,39 @@ import {join} from 'path'
 const CURRENT_PLATFORM = process.platform
 const FIXTURE_PATH = join(__dirname, '__fixture__')
 
-function sharedBeforeAfterEach(platform) {
+function stubPlatform(platform) {
   afterEach(() => {
     Object.defineProperty(process, 'platform', {
       get: () => CURRENT_PLATFORM
     })
-
-    jest.clearAllMocks()
   })
 
   beforeEach(() => {
     Object.defineProperty(process, 'platform', {
       get: () => platform
     })
+  })
+}
 
+function stubBinPath() {
+  beforeEach(() => {
     jest.doMock('../../paths', () => ({
       BIN_DIR: FIXTURE_PATH
     }))
   })
 }
 
+afterEach(() => {
+  jest.restoreAllMocks()
+})
+
 describe('Binary helpers', () => {
   describe.each([
     ['win32', 'foo', join(FIXTURE_PATH, 'foo.cmd')],
     ['linux', 'foo', join(FIXTURE_PATH, 'foo')],
   ])('Binary exists', (platform, bin, path) => {
-    sharedBeforeAfterEach(platform)
+    stubPlatform(platform)
+    stubBinPath()
 
     describe('assertBinaryExists()', () => {
       test('Do nothing', () => {
@@ -61,7 +68,8 @@ describe('Binary helpers', () => {
     ['win32', 'bar', join(FIXTURE_PATH, 'bar.cmd')],
     ['linux', 'bar', join(FIXTURE_PATH, 'bar')],
   ])('Binary does not exist', (platform, bin, path) => {
-    sharedBeforeAfterEach(platform)
+    stubPlatform(platform)
+    stubBinPath()
 
     describe('assertBinaryExists()', () => {
       test('throws an exception', () => {
