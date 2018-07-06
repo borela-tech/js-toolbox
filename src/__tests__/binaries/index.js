@@ -85,4 +85,15 @@ describe('Binary helpers', () => {
       })
     })
   })
+
+//   describe('Functions to run the binary', () => {
+//     beforeEach(() => {
+//
+//     })
+//
+//     describe('runBin()', () => {
+//       test('Returns the full path', () => {
+//       })
+//     })
+//   })
 })
