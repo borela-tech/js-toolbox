@@ -62,7 +62,7 @@ module.exports = {
 
     // Ensure every test to have either “expect.assertions()” or
     // “expect.hasAssertions()” as its first expression.
-    'jest/prefer-expect-assertions': 'error',
+    'jest/prefer-expect-assertions': 'off',
 
     // In order to have a better failure message, “toBeNull()” should be used
     // upon asserting expections on null value.
