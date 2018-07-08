@@ -13,27 +13,34 @@
 import {findModule} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
+function babelPlugin(target, options) {
+  const TARGET_MODULE = findModule(`@babel/plugin-proposal-${target}`)
+  if (options)
+    return [TARGET_MODULE, options]
+  return TARGET_MODULE
+}
+
 export function addBasicPlugins(plugins) {
   // Basic extensions.
-  plugins.push(findModule('@babel/plugin-proposal-async-generator-functions'))
-  plugins.push(findModule('@babel/plugin-proposal-do-expressions'))
-  plugins.push(findModule('@babel/plugin-proposal-export-default-from'))
-  plugins.push(findModule('@babel/plugin-proposal-export-namespace-from'))
-  plugins.push(findModule('@babel/plugin-proposal-function-bind'))
-  plugins.push(findModule('@babel/plugin-proposal-function-sent'))
-  plugins.push(findModule('@babel/plugin-proposal-logical-assignment-operators'))
-  plugins.push(findModule('@babel/plugin-proposal-nullish-coalescing-operator'))
-  plugins.push(findModule('@babel/plugin-proposal-numeric-separator'))
-  plugins.push(findModule('@babel/plugin-proposal-object-rest-spread'))
-  plugins.push(findModule('@babel/plugin-proposal-optional-catch-binding'))
-  plugins.push(findModule('@babel/plugin-proposal-optional-chaining'))
-  plugins.push(findModule('@babel/plugin-proposal-pipeline-operator'))
-  plugins.push(findModule('@babel/plugin-proposal-throw-expressions'))
-  plugins.push(findModule('@babel/plugin-proposal-unicode-property-regex'))
+  plugins.push(babelPlugin('pipeline-operator', {proposal: 'minimal'}))
+  plugins.push(babelPlugin('async-generator-functions'))
+  plugins.push(babelPlugin('do-expressions'))
+  plugins.push(babelPlugin('export-default-from'))
+  plugins.push(babelPlugin('export-namespace-from'))
+  plugins.push(babelPlugin('function-bind'))
+  plugins.push(babelPlugin('function-sent'))
+  plugins.push(babelPlugin('logical-assignment-operators'))
+  plugins.push(babelPlugin('nullish-coalescing-operator'))
+  plugins.push(babelPlugin('numeric-separator'))
+  plugins.push(babelPlugin('object-rest-spread'))
+  plugins.push(babelPlugin('optional-catch-binding'))
+  plugins.push(babelPlugin('optional-chaining'))
+  plugins.push(babelPlugin('throw-expressions'))
+  plugins.push(babelPlugin('unicode-property-regex'))
 
   // Decorators must appear before class properties.
-  plugins.push([findModule('@babel/plugin-proposal-decorators'), {legacy: true}])
-  plugins.push(findModule('@babel/plugin-proposal-class-properties'))
+  plugins.push(babelPlugin('decorators', {legacy: true}))
+  plugins.push(babelPlugin('class-properties'))
 
   let {production} = getSettings()
   if (production)
