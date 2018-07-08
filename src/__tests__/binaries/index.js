@@ -18,13 +18,13 @@ const FIXTURE_PATH = join(__dirname, '__fixture__')
 function stubPlatform(platform) {
   afterEach(() => {
     Object.defineProperty(process, 'platform', {
-      get: () => CURRENT_PLATFORM
+      get: () => CURRENT_PLATFORM,
     })
   })
 
   beforeEach(() => {
     Object.defineProperty(process, 'platform', {
-      get: () => platform
+      get: () => platform,
     })
   })
 }
@@ -32,7 +32,7 @@ function stubPlatform(platform) {
 function stubBinPath() {
   beforeEach(() => {
     jest.doMock('../../paths', () => ({
-      BIN_DIR: FIXTURE_PATH
+      BIN_DIR: FIXTURE_PATH,
     }))
   })
 }
