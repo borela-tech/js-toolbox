@@ -12,8 +12,8 @@
 
 import {existsSync} from 'fs'
 import {join} from 'path'
-import {noFalsyProps} from './util'
 import {PACKAGE_DIR, BIN_DIR} from './paths'
+import {pickNonFalsy} from './util'
 import {spawnSync} from 'child_process'
 
 /**
@@ -39,7 +39,7 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
-    env: noFalsyProps(env),
+    env: pickNonFalsy(env),
     stdio: 'inherit',
   })
 }
@@ -51,6 +51,6 @@ export function runBinPiped(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
-    env: noFalsyProps(env),
+    env: pickNonFalsy(env),
   })
 }

@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export function noFalsyProps(obj:Object):Object {
+export function pickNonFalsy(obj:Object):Object {
   let result = {}
   for (let prop in obj) {
     if (obj[prop])

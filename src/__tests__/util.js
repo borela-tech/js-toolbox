@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {noFalsyProps} from '../util'
+import {pickNonFalsy} from '../util'
 
 const NO_FALSY = {a: 1, b: 2, c: 3}
 
@@ -24,8 +24,8 @@ describe('noFalsyProps()', () => {
     [{d: undefined, ...NO_FALSY}, NO_FALSY],
     [{d: NaN, ...NO_FALSY}, NO_FALSY],
   ])('Returns a new object without the falsy props', (a, expected) => {
-    let b = noFalsyProps(a)
+    let b = pickNonFalsy(a)
     expect(b).not.toBe(a)
-    expect(noFalsyProps(a)).toEqual(expected)
+    expect(b).toEqual(expected)
   })
 })
