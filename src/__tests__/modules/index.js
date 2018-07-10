@@ -21,6 +21,7 @@ const FOO_MODULE = join(FIXTURE_PATH, 'foo')
 const BAR_MODULE = join(FIXTURE_PATH, 'bar')
 
 beforeEach(() => {
+  // Stub the MODULES_DIR to point to the fixture.
   jest.doMock('../../paths', () => ({
     MODULES_DIR: FIXTURE_PATH,
   }))
@@ -28,6 +29,7 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.restoreAllMocks()
+  jest.resetModules()
 })
 
 describe('Module helpers', () => {
@@ -47,7 +49,7 @@ describe('Module helpers', () => {
     })
 
     describe('getModulePackageJson()', () => {
-      test('returns the “package.json” from the module', () => {
+      test('Returns the “package.json” from the module', () => {
         let {getModulePackageJson} = require('../../modules')
         expect(getModulePackageJson('foo')).toEqual({
           name: 'foo',
@@ -57,7 +59,7 @@ describe('Module helpers', () => {
     })
 
     describe('getModuleNameVersion()', () => {
-      test('returns the name and version from the module', () => {
+      test('Returns the name and version from the module', () => {
         let {
           getModuleNameVersion,
           getModulePackageJson,
@@ -70,7 +72,7 @@ describe('Module helpers', () => {
 
   describe('Module does not exist', () => {
     describe('assertModuleExists()', () => {
-      test('throws an exception', () => {
+      test('Throws an exception', () => {
         let {assertModuleExists} = require('../../modules')
         expect(() => assertModuleExists('bar')).toThrow()
       })

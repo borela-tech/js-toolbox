@@ -29,16 +29,16 @@ function stubPlatform(platform) {
   })
 }
 
-function stubBinPath() {
-  beforeEach(() => {
-    jest.doMock('../../paths', () => ({
-      BIN_DIR: FIXTURE_PATH,
-    }))
-  })
-}
+beforeEach(() => {
+  // Stube the BIN_DIR to point to the fixture.
+  jest.doMock('../../paths', () => ({
+    BIN_DIR: FIXTURE_PATH,
+  }))
+})
 
 afterEach(() => {
   jest.restoreAllMocks()
+  jest.resetModules()
 })
 
 describe('Binary helpers', () => {
@@ -47,7 +47,6 @@ describe('Binary helpers', () => {
     ['linux', 'foo', join(FIXTURE_PATH, 'foo')],
   ])('Binary exists', (platform, bin, path) => {
     stubPlatform(platform)
-    stubBinPath()
 
     describe('assertBinaryExists()', () => {
       test('Do nothing', () => {
@@ -69,10 +68,9 @@ describe('Binary helpers', () => {
     ['linux', 'bar', join(FIXTURE_PATH, 'bar')],
   ])('Binary does not exist', (platform, bin, path) => {
     stubPlatform(platform)
-    stubBinPath()
 
     describe('assertBinaryExists()', () => {
-      test('throws an exception', () => {
+      test('Throws an exception', () => {
         let {assertBinaryExists} = require('../../binaries')
         expect(() => assertBinaryExists(bin)).toThrow()
       })
@@ -85,15 +83,4 @@ describe('Binary helpers', () => {
       })
     })
   })
-
-//   describe('Functions to run the binary', () => {
-//     beforeEach(() => {
-//
-//     })
-//
-//     describe('runBin()', () => {
-//       test('Returns the full path', () => {
-//       })
-//     })
-//   })
 })
