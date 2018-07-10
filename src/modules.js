@@ -12,34 +12,22 @@
 
 import {existsSync} from 'fs'
 import {join} from 'path'
-import {PACKAGE_MODULES_DIR, TOOLBOX_MODULES_DIR} from './paths'
+import {MODULES_DIR} from './paths'
 
-// Cache for found modules.
-const MODULES = {}
-
-/**
- * Find the module either in the toolbox or target package’s directory.
- */
-export function findModule(targetModule:string) {
-  if (MODULES[targetModule])
-    return MODULES[targetModule]
-
-  const TOOLBOX_MODULE = join(TOOLBOX_MODULES_DIR, targetModule)
-  if (existsSync(TOOLBOX_MODULE))
-    MODULES[targetModule] = TOOLBOX_MODULE
-
-  const PACKAGE_MODULE = join(PACKAGE_MODULES_DIR, targetModule)
-  if (existsSync(PACKAGE_MODULE))
-    MODULES[targetModule] = PACKAGE_MODULE
-
-  return MODULES[targetModule]
+export function assertModuleExists(targetModule:string) {
+  if (!existsSync(getModulePath(targetModule)))
+    throw new Error(`Module “${targetModule}” not found.`)
 }
 
-export function getModuleInfo(targetModule:string) {
-  return require(join(findModule(targetModule), 'package.json'))
+export function getModulePath(targetModule:string) {
+  return join(MODULES_DIR, targetModule)
 }
 
 export function getModuleNameVersion(targetModule:string) {
-  let info = getModuleInfo(targetModule)
-  return `${targetModule} (v${info.version})`
+  let json = getModulePackageJson(targetModule)
+  return `${targetModule} (v${json.version})`
+}
+
+export function getModulePackageJson(targetModule:string) {
+  return require(join(getModulePath(targetModule), 'package.json'))
 }
