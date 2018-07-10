@@ -16,12 +16,12 @@ import {join} from 'path'
 // This is the path to target package being manipulated by the toolbox.
 export const PACKAGE_DIR = pkgDir.sync(process.cwd()) || ''
 
-// This is the path to the toolbox itself.
-export const TOOLBOX_DIR = join(__dirname, '..')
-
 // The toolbox can be configured through these files.
 export const CTRINE_JSON = join(PACKAGE_DIR, 'ctrine.json')
 export const PACKAGE_JSON = join(PACKAGE_DIR, 'package.json')
+
+// This is the path to the toolbox itself.
+export const TOOLBOX_DIR = join(__dirname, '..')
 
 // Other helpers to locate the assets.
 export const BIN_DIR = join(TOOLBOX_DIR, 'node_modules', '.bin')
