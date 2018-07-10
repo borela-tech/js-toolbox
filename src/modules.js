@@ -19,6 +19,23 @@ export function assertModuleExists(targetModule:string) {
     throw new Error(`Module “${targetModule}” not found.`)
 }
 
+export function babelPlugin(plugin:string, options?:Object) {
+  const MODULE = getModulePath(`@babel/plugin-${plugin}`)
+  return options ? [MODULE, options] : MODULE
+}
+
+export function babelProposalPlugin(plugin:string, options?:Object) {
+  return babelPlugin(`proposal-${plugin}`, options)
+}
+
+export function babelSyntaxPlugin(plugin:string, options?:Object) {
+  return babelPlugin(`syntax-${plugin}`, options)
+}
+
+export function babelTransformPlugin(plugin:string, options?:Object) {
+  return babelPlugin(`transform-${plugin}`, options)
+}
+
 export function getModulePath(targetModule:string) {
   return join(MODULES_DIR, targetModule)
 }

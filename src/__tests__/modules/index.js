@@ -41,6 +41,64 @@ describe('Module helpers', () => {
       })
     })
 
+    describe('Babel plugin helpers', () => {
+      const OPTIONS = {a:1, b:2, c:3}
+      const PLUGIN = join(FIXTURE_PATH, '@babel/plugin-foo')
+      const PROPOSAL = join(FIXTURE_PATH, '@babel/plugin-proposal-foo')
+      const SYNTAX = join(FIXTURE_PATH, '@babel/plugin-syntax-foo')
+      const TRANSFORM = join(FIXTURE_PATH, '@babel/plugin-transform-foo')
+
+      describe('babelPlugin()', () => {
+        test('Returns the full path to the plugin', () => {
+          let {babelPlugin} = require('../../modules')
+          expect(babelPlugin('foo')).toBe(PLUGIN)
+        })
+
+        test('Returns the path and options in a array', () => {
+          let {babelPlugin} = require('../../modules')
+          expect(babelPlugin('foo', OPTIONS)).toEqual([PLUGIN, OPTIONS])
+        })
+      })
+
+      describe('babelProposalPlugin()', () => {
+        test('Returns the full path to the plugin', () => {
+          let {babelProposalPlugin} = require('../../modules')
+          expect(babelProposalPlugin('foo')).toBe(PROPOSAL)
+        })
+
+        test('Returns the path and options in a array', () => {
+          let {babelProposalPlugin} = require('../../modules')
+          expect(babelProposalPlugin('foo', OPTIONS))
+            .toEqual([PROPOSAL, OPTIONS])
+        })
+      })
+
+      describe('babelSyntaxPlugin()', () => {
+        test('Returns the full path to the plugin', () => {
+          let {babelSyntaxPlugin} = require('../../modules')
+          expect(babelSyntaxPlugin('foo')).toBe(SYNTAX)
+        })
+
+        test('Returns the path and options in a array', () => {
+          let {babelSyntaxPlugin} = require('../../modules')
+          expect(babelSyntaxPlugin('foo', OPTIONS)).toEqual([SYNTAX, OPTIONS])
+        })
+      })
+
+      describe('babelTransformPlugin()', () => {
+        test('Returns the full path to the plugin', () => {
+          let {babelTransformPlugin} = require('../../modules')
+          expect(babelTransformPlugin('foo')).toBe(TRANSFORM)
+        })
+
+        test('Returns the path and options in a array', () => {
+          let {babelTransformPlugin} = require('../../modules')
+          expect(babelTransformPlugin('foo', OPTIONS))
+            .toEqual([TRANSFORM, OPTIONS])
+        })
+      })
+    })
+
     describe('getBinaryPath()', () => {
       test('Returns the full path', () => {
         let {getModulePath} = require('../../modules')
