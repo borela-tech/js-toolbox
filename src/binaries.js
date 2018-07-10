@@ -16,17 +16,11 @@ import {PACKAGE_DIR, BIN_DIR} from './paths'
 import {pickNonFalsy} from './util'
 import {spawnSync} from 'child_process'
 
-/**
- * Checks if the binary exists or crash.
- */
 export function assertBinaryExists(targetBinary:string) {
   if (!existsSync(getBinaryPath(targetBinary)))
     throw new Error(`Binary “${targetBinary}” not found.`)
 }
 
-/**
- * Get the target binary’s path.
- */
 export function getBinaryPath(targetBinary:string) {
   const BIN = join(BIN_DIR, targetBinary)
   return process.platform === 'win32' ? `${BIN}.cmd` : BIN
