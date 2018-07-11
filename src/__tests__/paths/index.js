@@ -45,6 +45,13 @@ describe.each([
     })
   })
 
+  describe('CTRINE_JS', () => {
+    test('It has the path to a “ctrine.js” file at the package’s root', () => {
+      const {CTRINE_JS} = require('../../paths')
+      expect(CTRINE_JS).toBe(join(root, 'ctrine.js'))
+    })
+  })
+
   describe('CTRINE_JSON', () => {
     test('It has the path to a “ctrine.json” file at the package’s root', () => {
       const {CTRINE_JSON} = require('../../paths')
