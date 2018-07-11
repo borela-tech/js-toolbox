@@ -10,37 +10,30 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {findModule} from '../../../modules'
+import {babelProposalPlugin, getModulePath} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-function babelPlugin(target, options) {
-  const TARGET_MODULE = findModule(`@babel/plugin-proposal-${target}`)
-  if (options)
-    return [TARGET_MODULE, options]
-  return TARGET_MODULE
-}
-
-export function addBasicPlugins(plugins) {
+export default function addBasicPlugins(plugins) {
   // Basic extensions.
-  plugins.push(babelPlugin('pipeline-operator', {proposal: 'minimal'}))
-  plugins.push(babelPlugin('async-generator-functions'))
-  plugins.push(babelPlugin('do-expressions'))
-  plugins.push(babelPlugin('export-default-from'))
-  plugins.push(babelPlugin('export-namespace-from'))
-  plugins.push(babelPlugin('function-bind'))
-  plugins.push(babelPlugin('function-sent'))
-  plugins.push(babelPlugin('logical-assignment-operators'))
-  plugins.push(babelPlugin('nullish-coalescing-operator'))
-  plugins.push(babelPlugin('numeric-separator'))
-  plugins.push(babelPlugin('object-rest-spread'))
-  plugins.push(babelPlugin('optional-catch-binding'))
-  plugins.push(babelPlugin('optional-chaining'))
-  plugins.push(babelPlugin('throw-expressions'))
-  plugins.push(babelPlugin('unicode-property-regex'))
+  plugins.push(babelProposalPlugin('pipeline-operator', {proposal: 'minimal'}))
+  plugins.push(babelProposalPlugin('async-generator-functions'))
+  plugins.push(babelProposalPlugin('do-expressions'))
+  plugins.push(babelProposalPlugin('export-default-from'))
+  plugins.push(babelProposalPlugin('export-namespace-from'))
+  plugins.push(babelProposalPlugin('function-bind'))
+  plugins.push(babelProposalPlugin('function-sent'))
+  plugins.push(babelProposalPlugin('logical-assignment-operators'))
+  plugins.push(babelProposalPlugin('nullish-coalescing-operator'))
+  plugins.push(babelProposalPlugin('numeric-separator'))
+  plugins.push(babelProposalPlugin('object-rest-spread'))
+  plugins.push(babelProposalPlugin('optional-catch-binding'))
+  plugins.push(babelProposalPlugin('optional-chaining'))
+  plugins.push(babelProposalPlugin('throw-expressions'))
+  plugins.push(babelProposalPlugin('unicode-property-regex'))
 
   // Decorators must appear before class properties.
-  plugins.push(babelPlugin('decorators', {legacy: true}))
-  plugins.push(babelPlugin('class-properties'))
+  plugins.push(babelProposalPlugin('decorators', {legacy: true}))
+  plugins.push(babelProposalPlugin('class-properties'))
 
   let {production} = getSettings()
   if (production)
@@ -48,7 +41,5 @@ export function addBasicPlugins(plugins) {
 
   // IMPORTANT: This plugin will enable source map on stack traces but only if
   // babel generate inline source maps.
-  plugins.push(findModule('babel-plugin-source-map-support'))
+  plugins.push(getModulePath('babel-plugin-source-map-support'))
 }
-
-export default addBasicPlugins

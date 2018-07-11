@@ -10,13 +10,11 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {findModule} from '../../../modules'
+import {babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-export function addTypeScriptPlugins(plugins) {
+export default function addTypeScriptPlugins(plugins) {
   let {typeScript} = getSettings()
   if (typeScript)
-    plugins.push(findModule('@babel/plugin-transform-typescript'))
+    plugins.push(babelTransformPlugin('typescript'))
 }
-
-export default addTypeScriptPlugins

@@ -10,10 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {findModule} from '../../../modules'
+import {babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-export function addReactPlugins(plugins) {
+export default function addReactPlugins(plugins) {
   let {jsx, production, react} = getSettings()
 
   if (!react)
@@ -21,22 +21,20 @@ export function addReactPlugins(plugins) {
 
   // Transform JSX into “React.createElement()” calls.
   if (jsx)
-    plugins.push(findModule('@babel/plugin-transform-react-jsx'))
+    plugins.push(babelTransformPlugin('react-jsx'))
 
   // Add display name attribute to React classes created by calling
   // “React.createClass()” or “createReactClass()”.
-  plugins.push(findModule('@babel/plugin-transform-react-display-name'))
+  plugins.push(babelTransformPlugin('react-display-name'))
 
-  if (production)
-    return
+  // Plugins used during development only.
+  if (!production) {
+    // Add “__self” property to JSX elements which React will use to generate
+    // runtime warnings.
+    plugins.push(babelTransformPlugin('react-jsx-self'))
 
-  // Add “__self” property to JSX elements which React will use to generate
-  // runtime warnings.
-  plugins.push(findModule('@babel/plugin-transform-react-jsx-self'))
-
-  // Add “__source” property to JSX elements containing the file and line number
-  // used to enhance error messages.
-  plugins.push(findModule('@babel/plugin-transform-react-jsx-source'))
+    // Add “__source” property to JSX elements containing the file and line
+    // number used to enhance error messages.
+    plugins.push(babelTransformPlugin('react-jsx-source'))
+  }
 }
-
-export default addReactPlugins

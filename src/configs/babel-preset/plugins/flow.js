@@ -10,23 +10,21 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {findModule} from '../../../modules'
+import {babelSyntaxPlugin, babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-export function addFlowPlugins(plugins) {
+export default function addFlowPlugins(plugins) {
   let {commentFlow, flow, removeFlow} = getSettings()
 
   // Parse Flow annoations.
   if (flow || commentFlow || removeFlow)
-    plugins.push(findModule('@babel/plugin-syntax-flow'))
+    plugins.push(babelSyntaxPlugin('flow'))
 
   // Comment Flow annotations.
   if (commentFlow)
-    plugins.push(findModule('@babel/plugin-transform-flow-comments'))
+    plugins.push(babelTransformPlugin('flow-comments'))
 
   // Remove Flow annotations.
   if (removeFlow)
-    plugins.push(findModule('@babel/plugin-transform-flow-strip-types'))
+    plugins.push(babelTransformPlugin('flow-strip-types'))
 }
-
-export default addFlowPlugins

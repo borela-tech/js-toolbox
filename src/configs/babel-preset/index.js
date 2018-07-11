@@ -15,8 +15,8 @@ import addFlowPlugins from './plugins/flow'
 import addJsxPlugins from './plugins/jsx'
 import addReactPlugins from './plugins/react'
 import addTypeScriptPlugins from './plugins/typeScript'
+import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
-import {findModule} from '../../modules'
 
 module.exports = function () {
   let {supportedBrowser, supportedNodeJs, supportedPlatforms} = getSettings()
@@ -35,7 +35,7 @@ module.exports = function () {
 
   let result = {
     plugins: [],
-    presets: [findModule('@babel/preset-env'), targets],
+    presets: [getModulePath('@babel/preset-env'), targets],
   }
 
   addBasicPlugins(result.plugins)
