@@ -27,8 +27,9 @@ if (jest)
 if (react)
   optionalExtensions.push(join(ESLINT_CONFIG_DIR, 'plugin', 'react.js'))
 
+if (typeScript) {
 // TODO
-// if (typeScript) {}
+}
 
 module.exports = {
   env: {

@@ -42,7 +42,7 @@ describe('Module helpers', () => {
     })
 
     describe('Babel plugin helpers', () => {
-      const OPTIONS = {a:1, b:2, c:3}
+      const OPTIONS = {a: 1, b: 2, c: 3}
       const PLUGIN = join(FIXTURE_PATH, '@babel/plugin-foo')
       const PROPOSAL = join(FIXTURE_PATH, '@babel/plugin-proposal-foo')
       const SYNTAX = join(FIXTURE_PATH, '@babel/plugin-syntax-foo')
