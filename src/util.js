@@ -10,6 +10,11 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+export function interopRequire(path) {
+  const RESULT = require(path)
+  return RESULT.default || RESULT
+}
+
 export function pickNonFalsy(obj:Object):Object {
   let result = {}
   for (let prop in obj) {

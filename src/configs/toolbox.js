@@ -11,20 +11,24 @@
 // the License.
 
 import {camelizeKeys} from 'humps'
-import {existsSync} from 'fs'
-import {join} from 'path'
 import {
   CTRINE_JS as CTRINE_JS_PATH,
   CTRINE_JSON as CTRINE_JSON_PATH,
   PACKAGE_JSON as PACKAGE_JSON_PATH,
 } from '../paths'
+import {existsSync} from 'fs'
+import {interopRequire} from '../util'
 
 const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
-  ? require(PACKAGE_JSON_PATH)
+  ? require(PACKAGE_JSON_PATH).ctrine
+  : {}
+
+const CTRINE_MJS = existsSync(CTRINE_MJS_PATH)
+  ? interopRequire(CTRINE_MJS_PATH)
   : {}
 
 const CTRINE_JS = existsSync(CTRINE_JS_PATH)
-  ? require(CTRINE_JS_PATH)
+  ? interopRequire(CTRINE_JS_PATH)
   : {}
 
 const CTRINE_JSON = existsSync(CTRINE_JSON_PATH)
@@ -33,9 +37,10 @@ const CTRINE_JSON = existsSync(CTRINE_JSON_PATH)
 
 export function getSettings() {
   return camelizeKeys({
-    ...PACKAGE_JSON.ctrine,
+    ...PACKAGE_JSON,
     ...CTRINE_JSON,
-    ...(CTRINE_JS.default || CTRINE_JS),
+    ...CTRINE_JS,
+    ...CTRINE_MJS,
     ...process.env,
   })
 }
