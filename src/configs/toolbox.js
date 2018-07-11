@@ -14,6 +14,7 @@ import {camelizeKeys} from 'humps'
 import {
   CTRINE_JS as CTRINE_JS_PATH,
   CTRINE_JSON as CTRINE_JSON_PATH,
+  CTRINE_MJS as CTRINE_MJS_PATH,
   PACKAGE_JSON as PACKAGE_JSON_PATH,
 } from '../paths'
 import {existsSync} from 'fs'
