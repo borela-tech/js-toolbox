@@ -67,6 +67,6 @@ module.exports = {
 
     // This rule will warn when it encounters a reference to an identifier that
     // has not yet been declared.
-    'no-use-before-define': 'error',
+    'no-use-before-define': ['error', {functions: false}],
   },
 }
