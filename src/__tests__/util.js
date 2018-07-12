@@ -14,7 +14,7 @@ import {pickNonFalsy} from '../util'
 
 const NO_FALSY = {a: 1, b: 2, c: 3}
 
-describe('noFalsyProps()', () => {
+describe('pickNonFalsy()', () => {
   test.each([
     [NO_FALSY, NO_FALSY],
     [{d: false, ...NO_FALSY}, NO_FALSY],
