@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import addBasicPlugins from './plugins/basic'
+import addExperimentalPlugins from './plugins/experimental'
 import addFlowPlugins from './plugins/flow'
 import addJsxPlugins from './plugins/jsx'
 import addReactPlugins from './plugins/react'
@@ -19,9 +19,14 @@ import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
 
 module.exports = function () {
-  let {supportedBrowser, supportedNodeJs, supportedPlatforms} = getSettings()
-  let targets = {}
+  let {
+    production,
+    supportedBrowser,
+    supportedNodeJs,
+    supportedPlatforms,
+  } = getSettings()
 
+  let targets = {}
   for (let platform of supportedPlatforms) {
     switch (platform) {
       case 'browser':
@@ -38,11 +43,17 @@ module.exports = function () {
     presets: [getModulePath('@babel/preset-env'), targets],
   }
 
-  addBasicPlugins(result.plugins)
+  addExperimentalPlugins(result.plugins)
   addFlowPlugins(result.plugins)
   addJsxPlugins(result.plugins)
   addReactPlugins(result.plugins)
   addTypeScriptPlugins(result.plugins)
+
+  if (!production) {
+    // IMPORTANT: This plugin will enable source map on stack traces but only if
+    // babel generate inline source maps.
+    plugins.push(getModulePath('babel-plugin-source-map-support'))
+  }
 
   return result
 }
