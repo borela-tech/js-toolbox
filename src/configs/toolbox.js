@@ -14,7 +14,6 @@ import {camelizeKeys} from 'humps'
 import {
   CTRINE_JS as CTRINE_JS_PATH,
   CTRINE_JSON as CTRINE_JSON_PATH,
-  CTRINE_MJS as CTRINE_MJS_PATH,
   PACKAGE_JSON as PACKAGE_JSON_PATH,
 } from '../paths'
 import {existsSync} from 'fs'
@@ -22,10 +21,6 @@ import {interopRequire} from '../util'
 
 const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
   ? require(PACKAGE_JSON_PATH).ctrine
-  : {}
-
-const CTRINE_MJS = existsSync(CTRINE_MJS_PATH)
-  ? interopRequire(CTRINE_MJS_PATH)
   : {}
 
 const CTRINE_JS = existsSync(CTRINE_JS_PATH)
@@ -41,7 +36,6 @@ export function getSettings() {
     ...PACKAGE_JSON,
     ...CTRINE_JSON,
     ...CTRINE_JS,
-    ...CTRINE_MJS,
     ...process.env,
   })
 }

@@ -18,7 +18,7 @@ module.exports = {
   testRegex: '/__tests__/.*',
   testPathIgnorePatterns: ['/node_modules/', '/__fixture__/', '/__fixtures__/'],
   transform: {
-    '^.+\\.(jsx?|mjs)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
+    '^.+\\.(jsx?)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
   },
   verbose: true,
 }

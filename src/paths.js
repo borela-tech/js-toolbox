@@ -17,7 +17,6 @@ import {join} from 'path'
 export const PACKAGE_DIR = pkgDir.sync(process.cwd()) || ''
 
 // The toolbox can be configured through these files.
-export const CTRINE_MJS = join(PACKAGE_DIR, 'ctrine.mjs')
 export const CTRINE_JS = join(PACKAGE_DIR, 'ctrine.js')
 export const CTRINE_JSON = join(PACKAGE_DIR, 'ctrine.json')
 export const PACKAGE_JSON = join(PACKAGE_DIR, 'package.json')
