@@ -1,0 +1,13 @@
+{
+  "name": "foo",
+  "version": 42,
+  "ctrine": {
+    "foo": 1,
+    "bar": 1,
+    "baz": 1,
+    "foo-bar": 1,
+    "fooBar": 1,
+    "foo-bar-baz": 1,
+    "foo-bar-baz-qux": 1
+  }
+}

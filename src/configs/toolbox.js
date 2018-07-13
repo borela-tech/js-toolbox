@@ -31,11 +31,15 @@ const CTRINE_JSON = existsSync(CTRINE_JSON_PATH)
   ? require(CTRINE_JSON_PATH)
   : {}
 
+const ENV = process.env.ctrine
+  ? JSON.parse(process.env.ctrine)
+  : {}
+
 export function getSettings() {
-  return camelizeKeys({
-    ...PACKAGE_JSON,
-    ...CTRINE_JSON,
-    ...CTRINE_JS,
-    ...process.env,
-  })
+  return {
+    ...camelizeKeys(PACKAGE_JSON),
+    ...camelizeKeys(CTRINE_JSON),
+    ...camelizeKeys(CTRINE_JS),
+    ...camelizeKeys(ENV),
+  }
 }

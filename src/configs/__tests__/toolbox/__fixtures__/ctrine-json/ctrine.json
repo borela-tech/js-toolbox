@@ -1,0 +1,9 @@
+{
+  "foo": 2,
+  "bar": 2,
+  "baz": 2,
+  "foo-bar": 2,
+  "foo-bar-baz": 2,
+  "fooBarBaz": 2,
+  "foo-bar-baz-qux": 2
+}
