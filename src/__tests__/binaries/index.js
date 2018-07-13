@@ -15,31 +15,17 @@ import {join} from 'path'
 const CURRENT_PLATFORM = process.platform
 const FIXTURE_PATH = join(__dirname, '__fixture__')
 
-function stubPlatform(platform) {
-  afterEach(() => {
-    Object.defineProperty(process, 'platform', {
-      get: () => CURRENT_PLATFORM,
-    })
-  })
+jest.doMock('../../paths', () => ({
+  BIN_DIR: FIXTURE_PATH,
+}))
 
+function stubPlatform(platform) {
   beforeEach(() => {
     Object.defineProperty(process, 'platform', {
       get: () => platform,
     })
   })
 }
-
-beforeEach(() => {
-  // Stube the BIN_DIR to point to the fixture.
-  jest.doMock('../../paths', () => ({
-    BIN_DIR: FIXTURE_PATH,
-  }))
-})
-
-afterEach(() => {
-  jest.restoreAllMocks()
-  jest.resetModules()
-})
 
 describe('Binary helpers', () => {
   describe.each([

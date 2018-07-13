@@ -20,17 +20,9 @@ const FOO_MODULE = join(FIXTURE_PATH, 'foo')
 // This module does not exist.
 const BAR_MODULE = join(FIXTURE_PATH, 'bar')
 
-beforeEach(() => {
-  // Stub the MODULES_DIR to point to the fixture.
-  jest.doMock('../../paths', () => ({
-    MODULES_DIR: FIXTURE_PATH,
-  }))
-})
-
-afterEach(() => {
-  jest.restoreAllMocks()
-  jest.resetModules()
-})
+jest.doMock('../../paths', () => ({
+  MODULES_DIR: FIXTURE_PATH,
+}))
 
 describe('Module helpers', () => {
   describe('Module exists', () => {
