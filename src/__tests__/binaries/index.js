@@ -12,7 +12,6 @@
 
 import {join} from 'path'
 
-const CURRENT_PLATFORM = process.platform
 const FIXTURE_PATH = join(__dirname, '__fixture__')
 
 jest.doMock('../../paths', () => ({
