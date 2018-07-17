@@ -29,10 +29,10 @@
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-optional-catch-binding",
     "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-pipeline-operator",
     "@babel/plugin-proposal-throw-expressions",
     "@babel/plugin-proposal-unicode-property-regex",
     "babel-plugin-source-map-support"
+    ["@babel/plugin-proposal-pipeline-operator", {"proposal": "minimal"}],
   ],
   "presets": [
     ["@babel/preset-env", {
