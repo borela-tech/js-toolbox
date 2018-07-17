@@ -40,7 +40,7 @@ module.exports = function () {
 
   let result = {
     plugins: [],
-    presets: [getModulePath('@babel/preset-env'), targets],
+    presets: [[getModulePath('@babel/preset-env'), {targets}]],
   }
 
   addExperimentalPlugins(result.plugins)
@@ -52,7 +52,7 @@ module.exports = function () {
   if (!production) {
     // IMPORTANT: This plugin will enable source map on stack traces but only if
     // babel generate inline source maps.
-    plugins.push(getModulePath('babel-plugin-source-map-support'))
+    result.plugins.push(getModulePath('babel-plugin-source-map-support'))
   }
 
   return result
