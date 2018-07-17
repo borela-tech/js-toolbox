@@ -33,7 +33,7 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
-    env: pickNonFalsy(env),
+    env: {ctrine: JSON.stringify(pickNonFalsy(env))},
     stdio: 'inherit',
   })
 }
@@ -45,6 +45,6 @@ export function runBinPiped(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
-    env: pickNonFalsy(env),
+    env: {ctrine: JSON.stringify(pickNonFalsy(env))},
   })
 }
