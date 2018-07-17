@@ -22,19 +22,13 @@ function setFixture(fixture) {
   }))
 }
 
-function stubEnv() {
+function stubEnv(env = {}) {
   beforeEach(() => {
     const ORIGINAL = process.env
-    const DATA = {
-      foo: 42,
-      'foo-bar': 42,
-      fooBarBaz: 42,
-    }
-
     Object.defineProperty(process, 'env', {
       get: () => ({
         ...ORIGINAL,
-        ctrine: JSON.stringify(DATA)
+        ctrine: JSON.stringify(env),
       })
     })
   })
@@ -47,6 +41,8 @@ afterEach(() => {
 
 describe('getSettings()', () => {
   describe('Clean env', () => {
+    stubEnv()
+
     test('load settings from “package.json”', () => {
       setFixture('package-json')
       let {getSettings} = require('../../toolbox')
@@ -101,7 +97,11 @@ describe('getSettings()', () => {
   })
 
   describe('Settings on env too', () => {
-    stubEnv()
+    stubEnv({
+      foo: 42,
+      'foo-bar': 42,
+      fooBarBaz: 42,
+    })
 
     test('Only env', () => {
       setFixture('env')
