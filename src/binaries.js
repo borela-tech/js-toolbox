@@ -26,9 +26,6 @@ export function getBinaryPath(targetBinary:string) {
   return process.platform === 'win32' ? `${BIN}.cmd` : BIN
 }
 
-/**
- * Find the binary and run it with the parent IO attached to it.
- */
 export function runBin(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
@@ -38,9 +35,6 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
   })
 }
 
-/**
- * Find the binary and run it.
- */
 export function runBinPiped(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = getBinaryPath(targetBinary)
   return spawnSync(FOUND_BINARY, args, {
