@@ -10,44 +10,44 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import addExperimentalPlugins from './plugins/experimental'
-import addFlowPlugins from './plugins/flow'
-import addJsxPlugins from './plugins/jsx'
-import addReactPlugins from './plugins/react'
-import addTypeScriptPlugins from './plugins/typeScript'
+import experimental from './plugins/experimental'
+import flow from './plugins/flow'
+import jsx from './plugins/jsx'
+import react from './plugins/react'
+import typeScript from './plugins/typeScript'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
 
+type lol = {
+abc:number
+}
+
+@test
+class Test extends lol<Test> {
+  test() {
+  }
+}
+
 module.exports = function () {
   let {
+    browsers,
+    node,
+    platforms,
     production,
-    supportedBrowser,
-    supportedNodeJs,
-    supportedPlatforms,
   } = getSettings()
-
-  let targets = {}
-  for (let platform of supportedPlatforms) {
-    switch (platform) {
-      case 'browser':
-        targets.browsers = supportedBrowser
-        break
-      case 'node-js':
-        targets.node = supportedNodeJs
-        break
-    }
-  }
 
   let result = {
     plugins: [],
-    presets: [[getModulePath('@babel/preset-env'), {targets}]],
+    presets: [[getModulePath('@babel/preset-env'), {
+      targets: {browsers, node}
+    }]],
   }
 
-  addExperimentalPlugins(result.plugins)
-  addFlowPlugins(result.plugins)
-  addJsxPlugins(result.plugins)
-  addReactPlugins(result.plugins)
-  addTypeScriptPlugins(result.plugins)
+  experimental(result.plugins)
+  flow(result.plugins)
+  jsx(result.plugins)
+  react(result.plugins)
+  typeScript(result.plugins)
 
   if (!production) {
     // IMPORTANT: This plugin will enable source map on stack traces but only if

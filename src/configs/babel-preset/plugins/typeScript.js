@@ -13,7 +13,7 @@
 import {babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-export default function addTypeScriptPlugins(plugins) {
+export default function(plugins) {
   let {typeScript} = getSettings()
   if (typeScript)
     plugins.push(babelTransformPlugin('typescript'))

@@ -13,7 +13,7 @@
 import {babelSyntaxPlugin} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-export default function addJsxPlugins(plugins) {
+export default function(plugins) {
   let {jsx} = getSettings()
   if (jsx)
     plugins.push(babelSyntaxPlugin('jsx'))

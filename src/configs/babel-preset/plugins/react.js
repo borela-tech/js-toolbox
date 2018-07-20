@@ -13,7 +13,7 @@
 import {babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-export default function addReactPlugins(plugins) {
+export default function(plugins) {
   let {jsx, production, react} = getSettings()
 
   if (!react)
