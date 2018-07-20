@@ -16,75 +16,74 @@ import {join} from 'path'
 import {getModuleNameVersion} from '../modules'
 import {assertBinaryExists, runBinPiped} from '../binaries'
 
-const ESLINT_CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
-const ESLINT_ARGS = [
-  '--ignore-pattern',
-  'build/**',
-  '--config',
-  ESLINT_CONFIG_PATH,
+const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
+const BASIC_ARGS = [
+  '--ignore-pattern', 'build/**',
+  '--config', CONFIG_PATH,
   PACKAGE_DIR,
 ]
 
-/**
- * Prints the buffer if it’s not empty.
- */
+function builder(yargs) {
+  yargs.option('fix', {
+    description: 'Fix lint errors.',
+  })
+}
+
+function lintSources(args) {
+  let eslintArgs = [
+    '--ignore-pattern', '**/__tests__/**',
+    ...BASIC_ARGS,
+  ]
+  runEslint(eslintArgs, args)
+}
+
+function lintTests(args) {
+  let eslintArgs = [
+    '--ignore-pattern', 'src/**',
+    '--ignore-pattern', '!**/__tests__',
+    '--ignore-pattern', '!**/__tests__/**',
+    ...BASIC_ARGS,
+  ]
+  runEslint(eslintArgs, args)
+}
+
+function handler(args) {
+  assertBinaryExists('eslint')
+
+  console.log(PROLOG)
+  console.log('Linter: %s', getModuleNameVersion('eslint'))
+  console.log(SEPARATOR)
+
+  console.log()
+  console.log('    [1/2] Linting sources...')
+  lintSources(args)
+
+  console.log()
+  console.log('    [2/2] Linting tests...')
+  lintTests(args)
+
+  console.log()
+  console.log(EPILOG)
+}
+
 function logBuffer(buffer:Buffer) {
   if (buffer.length)
     console.log(buffer.toString().replace(/\n+$/, ''))
 }
 
+function runEslint(args, env) {
+  let {
+    stdout: outSources,
+    stderr: errorSources,
+  } = runBinPiped('eslint', args, env)
+
+  logBuffer(errorSources)
+  logBuffer(outSources)
+}
+
 export default {
   command: 'lint',
   description: 'Check or fix code style.',
-  builder: yargs => yargs.option('fix', {
-    description: 'Fix lint errors.',
-  }),
-  handler: env => {
-    assertBinaryExists('eslint')
-
-    let sourceArgs = ['--ignore-pattern', '**/__tests__/**', ...ESLINT_ARGS]
-    let testsArgs = [
-      '--ignore-pattern',
-      'src/**',
-      '--ignore-pattern',
-      '!**/__tests__',
-      '--ignore-pattern',
-      '!**/__tests__/**',
-      ...ESLINT_ARGS,
-    ]
-
-    if (env.fix) {
-      sourceArgs.push('--fix')
-      testsArgs.push('--fix')
-    }
-
-    console.log(PROLOG)
-    console.log('Linter: %s', getModuleNameVersion('eslint'))
-    console.log(SEPARATOR)
-
-    console.log()
-    console.log('    [1/2] Linting sources...')
-
-    let {
-      stdout: outSources,
-      stderr: errorSources,
-    } = runBinPiped('eslint', sourceArgs, env)
-
-    logBuffer(errorSources)
-    logBuffer(outSources)
-
-    console.log()
-    console.log('    [2/2] Linting tests...')
-
-    let {
-      stdout: outTests,
-      stderr: errorTests,
-    } = runBinPiped('eslint', testsArgs, {jest: true, ...env})
-
-    logBuffer(errorTests)
-    logBuffer(outTests)
-
-    console.log()
-    console.log(EPILOG)
-  },
+  builder,
+  handler,
 }

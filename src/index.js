@@ -18,8 +18,12 @@ import {build, lint, scaffold, test} from './commands'
 import {EPILOG, PROLOG} from './banner'
 import {PACKAGE_DIR} from './paths'
 
-const PARSER = Yargs.usage(PROLOG)
+const PARSER = Yargs.scriptName("ctr")
+  .usage(PROLOG)
   .epilog(EPILOG)
+  .strict()
+  .help('help', 'Show usage instructions.')
+  .version('version', 'Show toolbox version.', packageInfo.version)
 
 if (PACKAGE_DIR) {
   PARSER.command(build)
@@ -31,53 +35,4 @@ if (PACKAGE_DIR) {
 
 PARSER.demandCommand(1, 'Error: Use one of the commands available.')
   .recommendCommands()
-  .strict()
-  // Custom help and version messages.
-  .help('help', 'Show usage instructions.')
-  .version('version', 'Show toolbox version.', packageInfo.version)
-  // Build and linting options.
-  .option('comment-flow', {
-    description: 'Convert Flow annotations to comments.',
-    type: 'boolean',
-  })
-  .option('flow', {
-    description: 'Enable Flow annotations.',
-    type: 'boolean',
-  })
-  .option('jsx', {
-    description: 'Enable JSX.',
-    type: 'boolean',
-  })
-  .option('react', {
-    description: 'Enable React transformations.',
-    type: 'boolean',
-  })
-  .option('remove-flow', {
-    description: 'Remove Flow annotations.',
-    type: 'boolean',
-  })
-  .option('production', {
-    description: 'Remove debug plugins.',
-    type: 'boolean',
-  })
-  .option('supported-browser', {
-    description: 'Browsers supported by the project.',
-    default: ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'],
-    type: 'array',
-  })
-  .option('supported-node-js', {
-    description: 'Minimum NodeJS version supported by the project.',
-    default: 6,
-    type: 'string',
-  })
-  .option('supported-platforms', {
-    choices: ['browser', 'node-js'],
-    description: 'Used to determine the polyfills and fine tune the linter.',
-    default: ['browser', 'node-js'],
-    type: 'array',
-  })
-  .option('type-script', {
-    description: 'Enable TypeScript.',
-    type: 'boolean',
-  })
   .parse()

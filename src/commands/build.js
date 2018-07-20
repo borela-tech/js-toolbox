@@ -10,6 +10,16 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {
+  browsers,
+  commentFlow,
+  jsx,
+  node,
+  platforms,
+  react,
+  removeFlow,
+  typeScript
+} from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
 import {assertBinaryExists, runBin} from '../binaries'
@@ -17,21 +27,33 @@ import {assertBinaryExists, runBin} from '../binaries'
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
   'src',
-  '-d',
-  'build',
-  '--ignore',
-  '**/__*__/**',
-  '--source-maps inline',
+  '-d', 'build',
+  '--ignore', '**/__*__/**',
+  '--source-maps', 'inline',
   `--presets=${PRESET_LOCATION}`,
 ]
+
+function builder(yargs) {
+  browsers(yargs)
+  commentFlow(yargs)
+  jsx(yargs)
+  node(yargs)
+  platforms(yargs)
+  react(yargs)
+  removeFlow(yargs)
+  typeScript(yargs)
+}
+
+function handler(args) {
+  assertBinaryExists('rimraf')
+  assertBinaryExists('babel')
+  runBin('rimraf', ['"build"'])
+  runBin('babel', BABEL_ARGS, args)
+}
 
 export default {
   command: 'build',
   description: 'Build the project.',
-  handler: env => {
-    assertBinaryExists('rimraf')
-    assertBinaryExists('babel')
-    runBin('rimraf', ['"build"'])
-    runBin('babel', BABEL_ARGS, env)
-  },
+  builder,
+  handler,
 }

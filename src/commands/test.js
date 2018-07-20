@@ -14,25 +14,30 @@ import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
 import {assertBinaryExists, runBin} from '../binaries'
 
-const JEST_CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
+const CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
+
+function builder(yargs) {
+  yargs.options({
+    watch: {
+      default: false,
+      description: 'Watch for changes and run tests automatically.',
+      type: 'boolean',
+    },
+  })
+}
+
+function handler(args) {
+  assertBinaryExists('jest')
+  let jestArgs = [
+    `--config=${CONFIG_PATH}`,
+    args.watch && '--watch',
+  ]
+  runBin('jest', jestArgs, args)
+}
 
 export default {
   command: 'test',
   description: 'Run test suites.',
-  builder: yargs => {
-    yargs.options({
-      watch: {
-        default: false,
-        description: 'Watch for changes and run tests automatically.',
-        type: 'boolean',
-      },
-    })
-  },
-  handler: env => {
-    assertBinaryExists('jest')
-    let args = [`--config=${JEST_CONFIG_PATH}`]
-    if (env.watch)
-      args.push('--watch')
-    runBin('jest', args, env)
-  },
+  builder,
+  handler,
 }
