@@ -29,7 +29,8 @@ module.exports = function () {
   let result = {
     plugins: [],
     presets: [[getModulePath('@babel/preset-env'), {
-      targets: {browsers, node}
+      ...browsers && {browsers},
+      ...node && {node}
     }]],
   }
 
