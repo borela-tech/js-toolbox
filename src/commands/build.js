@@ -28,7 +28,7 @@ const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
   'src',
   '-d', 'build',
-  '--ignore', '**/__*__/**',
+  '--ignore', '**/__tests__',
   '--source-maps', 'inline',
   `--presets=${PRESET_LOCATION}`,
 ]
