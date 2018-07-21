@@ -18,16 +18,6 @@ import typeScript from './plugins/typeScript'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
 
-type lol = {
-abc:number
-}
-
-@test
-class Test extends lol<Test> {
-  test() {
-  }
-}
-
 module.exports = function () {
   let {
     browsers,
