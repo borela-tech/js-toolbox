@@ -28,10 +28,9 @@ function builder(yargs) {
 
 function handler(args) {
   assertBinaryExists('jest')
-  let jestArgs = [
-    `--config=${CONFIG_PATH}`,
-    args.watch && '--watch',
-  ]
+  let jestArgs = [`--config=${CONFIG_PATH}`]
+  if (args.watch)
+    jestArgs.push('--watch')
   runBin('jest', jestArgs, args)
 }
 
