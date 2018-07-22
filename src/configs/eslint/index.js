@@ -15,7 +15,7 @@ import {getSettings} from '../toolbox'
 import {join} from 'path'
 
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
-let {flow, jest, react, supportedPlatforms, typeScript} = getSettings()
+let {flow, jest, platforms, react, typeScript} = getSettings()
 let optionalExtensions = []
 
 if (flow)
@@ -34,8 +34,8 @@ if (typeScript) {
 module.exports = {
   env: {
     jest,
-    browser: supportedPlatforms.includes('browser'),
-    node: supportedPlatforms.includes('node-js'),
+    browser: platforms.includes('browser'),
+    node: platforms.includes('node'),
   },
   parser: 'Babel-ESLint',
   plugins: ['eslint-plugin-babel'],
