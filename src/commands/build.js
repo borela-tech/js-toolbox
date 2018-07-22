@@ -18,7 +18,7 @@ import {
   platforms,
   react,
   removeFlow,
-  typeScript
+  typeScript,
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'

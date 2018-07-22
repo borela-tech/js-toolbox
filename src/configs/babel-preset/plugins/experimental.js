@@ -12,7 +12,7 @@
 
 import {babelProposalPlugin} from '../../../modules'
 
-export default function(plugins) {
+export default function (plugins) {
   // https://babeljs.io/docs/en/next/babel-plugin-proposal-async-generator-functions
   plugins.push(babelProposalPlugin('async-generator-functions'))
 

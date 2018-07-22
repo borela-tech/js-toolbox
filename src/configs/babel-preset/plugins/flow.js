@@ -13,7 +13,7 @@
 import {babelSyntaxPlugin, babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../toolbox'
 
-export default function(plugins) {
+export default function (plugins) {
   let {commentFlow, flow, removeFlow} = getSettings()
 
   // Parse Flow annoations.

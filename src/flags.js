@@ -30,7 +30,7 @@ export function flow(yargs) {
     description: 'Enable Flow annotations.',
     type: 'boolean',
   })
-  .alias('f', 'flow')
+    .alias('f', 'flow')
 }
 
 export function jsx(yargs) {
@@ -38,7 +38,7 @@ export function jsx(yargs) {
     description: 'Enable JSX.',
     type: 'boolean',
   })
-  .alias('j', 'jsx')
+    .alias('j', 'jsx')
 }
 
 export function node(yargs) {
@@ -70,7 +70,7 @@ export function react(yargs) {
     description: 'Enable React transformations.',
     type: 'boolean',
   })
-  .alias('r', 'react')
+    .alias('r', 'react')
 }
 
 export function removeFlow(yargs) {
@@ -85,5 +85,5 @@ export function typeScript(yargs) {
     description: 'Enable TypeScript.',
     type: 'boolean',
   })
- .alias('t', 'type-script')
+    .alias('t', 'type-script')
 }
