@@ -47,8 +47,10 @@ function builder(yargs) {
 function handler(args) {
   assertBinaryExists('rimraf')
   assertBinaryExists('babel')
+
+  let env = args
   runBin('rimraf', ['"build"'])
-  runBin('babel', BABEL_ARGS, args)
+  runBin('babel', BABEL_ARGS, env)
 }
 
 export default {
