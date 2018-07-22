@@ -10,6 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {
+  browsers,
+  flow,
+  jsx,
+  node,
+  platforms,
+  react,
+  typeScript,
+} from '../flags'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {EPILOG, PROLOG, SEPARATOR} from '../banner'
 import {join} from 'path'
@@ -24,6 +33,14 @@ const BASIC_ARGS = [
 ]
 
 function builder(yargs) {
+  browsers(yargs)
+  flow(yargs)
+  jsx(yargs)
+  node(yargs)
+  platforms(yargs)
+  react(yargs)
+  typeScript(yargs)
+
   yargs.option('fix', {
     description: 'Fix lint errors.',
   })
@@ -34,7 +51,13 @@ function lintSources(args) {
     '--ignore-pattern', '**/__tests__/**',
     ...BASIC_ARGS,
   ]
-  runEslint(eslintArgs, args)
+
+  let {fix} = args
+  if (fix)
+    eslintArgs.push('--fix')
+
+  let env = args
+  runEslint(eslintArgs, env)
 }
 
 function lintTests(args) {
@@ -44,7 +67,13 @@ function lintTests(args) {
     '--ignore-pattern', '!**/__tests__/**',
     ...BASIC_ARGS,
   ]
-  runEslint(eslintArgs, args)
+
+  let {fix} = args
+  if (fix)
+    eslintArgs.push('--fix')
+
+  let env = {jest: true, ...args}
+  runEslint(eslintArgs, env)
 }
 
 function handler(args) {
