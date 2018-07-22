@@ -10,6 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {
+  browsers,
+  flow,
+  jsx,
+  node,
+  platforms,
+  react,
+  typeScript,
+} from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
 import {assertBinaryExists, runBin} from '../binaries'
@@ -17,6 +26,14 @@ import {assertBinaryExists, runBin} from '../binaries'
 const CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 
 function builder(yargs) {
+  browsers(yargs)
+  flow(yargs)
+  jsx(yargs)
+  node(yargs)
+  platforms(yargs)
+  react(yargs)
+  typeScript(yargs)
+
   yargs.options({
     watch: {
       default: false,
@@ -28,10 +45,13 @@ function builder(yargs) {
 
 function handler(args) {
   assertBinaryExists('jest')
+
   let jestArgs = [`--config=${CONFIG_PATH}`]
   if (args.watch)
     jestArgs.push('--watch')
-  runBin('jest', jestArgs, args)
+
+  let env = args
+  runBin('jest', jestArgs, env)
 }
 
 export default {
