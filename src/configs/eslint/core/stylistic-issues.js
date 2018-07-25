@@ -271,7 +271,14 @@ module.exports = {
 
     // This rule aims to enforce a consistent location for single-line
     // statements.
-    'nonblock-statement-body-position': ['error', 'below'],
+    'nonblock-statement-body-position': [
+      'error', 'below', {
+        overrides: {
+          else: 'any',
+          if: 'any',
+        },
+      },
+    ],
 
     // This rule enforces consistent line breaks inside braces of object
     // literals or destructuring assignments.
