@@ -21,7 +21,6 @@ import {
 } from '../flags'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {join} from 'path'
-import {getModuleNameVersion} from '../modules'
 import {assertBinaryExists, runBinPiped} from '../binaries'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
@@ -86,8 +85,9 @@ function handler(args) {
 }
 
 function getBufferString(buffer:Buffer):string|undefined {
-  if (buffer.length)
-    return buffer.toString().replace(/\n+$/, '')
+  return buffer.length
+    ? buffer.toString().replace(/\n+$/, '')
+    : undefined
 }
 
 function runEslint(args, env) {
