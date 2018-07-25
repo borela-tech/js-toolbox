@@ -10,24 +10,23 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {existsSync} from 'fs'
+import {join, resolve} from 'path'
+import {TEMPLATES_DIR} from '../paths'
+
+function handler(args) {
+  const TEMPLATE = join(TEMPLATES_DIR, args.template)
+  if (!existsSync(TEMPLATE)) {
+    console.log(`Template “${TEMPLATE}” not found.`)
+    return
+  }
+
+  const DESTINATION = resolve(args.destination || '')
+  console.log('TODO: Implement templates.')
+}
+
 export default {
-  command: 'scaffold',
+  command: 'scaffold <template> [destination]',
   description: 'Generate a project from the available templates.',
-  builder: yargs => yargs
-    .command({
-      command: 'node-app',
-      description: 'Generate a project to build a node app.',
-    })
-    .command({
-      command: 'node-cli',
-      description: 'Generate a project to build a CLI app.',
-    })
-    .command({
-      command: 'web-app',
-      description: 'Generate a project to build a web app.',
-    })
-    .demandCommand(),
-  handler: env => {
-    // TODO
-  },
+  handler,
 }
