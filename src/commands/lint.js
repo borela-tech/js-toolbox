@@ -27,9 +27,8 @@ import {assertBinaryExists, runBinPiped} from '../binaries'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const BASIC_ARGS = [
-  '--ignore-pattern', 'build/**',
   '--config', CONFIG_PATH,
-  PACKAGE_DIR,
+  join(PACKAGE_DIR, 'src'),
 ]
 
 function builder(yargs) {
