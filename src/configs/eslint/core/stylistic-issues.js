@@ -228,8 +228,7 @@ module.exports = {
     // This rule aims to reduce the scrolling required when reading through your
     // code. It will warn when the maximum amount of empty lines has been
     // exceeded.
-    'no-multiple-empty-lines': ['error', {max: 1,
-      maxEOF: 1}],
+    'no-multiple-empty-lines': ['error', {max: 1, maxEOF: 1}],
 
     // This rule disallows negated conditions in either of the following:
     //   * “if” statements which have an “else” branch.
