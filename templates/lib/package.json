@@ -1,0 +1,18 @@
+{
+  "name": "FooBar",
+  "version": "1.0.0",
+  "description": "Foo bar baz.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foo/bar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/foo/bar/issues"
+  },
+  "author": {
+    "name": "Foo Bar",
+    "email": "foo@bar.com",
+    "url": "www.bar.com"
+  }
+}
