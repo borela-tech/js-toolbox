@@ -20,7 +20,6 @@ import {
   typeScript,
 } from '../flags'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
-import {EPILOG, PROLOG, SEPARATOR} from '../banner'
 import {join} from 'path'
 import {getModuleNameVersion} from '../modules'
 import {assertBinaryExists, runBinPiped} from '../binaries'
@@ -78,35 +77,30 @@ function lintTests(args) {
 function handler(args) {
   assertBinaryExists('eslint')
 
-  console.log(PROLOG)
-  console.log('Linter: %s', getModuleNameVersion('eslint'))
-  console.log(SEPARATOR)
-
   console.log()
-  console.log('    [1/2] Linting sources...')
+  console.log('[1/2] Linting sources...')
   lintSources(args)
 
-  console.log()
-  console.log('    [2/2] Linting tests...')
+  console.log('[2/2] Linting tests...')
   lintTests(args)
-
-  console.log()
-  console.log(EPILOG)
 }
 
-function logBuffer(buffer:Buffer) {
+function getBufferString(buffer:Buffer):string|undefined {
   if (buffer.length)
-    console.log(buffer.toString().replace(/\n+$/, ''))
+    return buffer.toString().replace(/\n+$/, '')
 }
 
 function runEslint(args, env) {
   let {
-    stdout: outSources,
-    stderr: errorSources,
+    stdout: out,
+    stderr: error,
   } = runBinPiped('eslint', args, env)
 
-  logBuffer(errorSources)
-  logBuffer(outSources)
+  out = getBufferString(out)
+  error = getBufferString(error)
+
+  if (out) console.log(out, '\n')
+  if (error) console.error(error, '\n')
 }
 
 export default {
