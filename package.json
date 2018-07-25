@@ -14,9 +14,7 @@
     "dev:build": "babel src -d build --ignore **/__tests__ --source-maps inline",
     "dev-w": "npm run clean && run-p dev-w:*",
     "dev-w:assets": "cpx src/banner/*.txt build/banner --watch",
-    "dev-w:build": "babel src -d build --ignore **/__tests__ --source-maps inline --watch",
-    "test": "jest src --verbose",
-    "test-w": "jest src --verbose --watch"
+    "dev-w:build": "babel src -d build --ignore **/__tests__ --source-maps inline --watch"
   },
   "publishConfig": {
     "access": "public"
