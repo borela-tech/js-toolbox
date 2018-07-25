@@ -19,6 +19,9 @@
     "email": "foo@bar.com",
     "url": "www.bar.com"
   },
+  "ctrine": {
+    "platforms": ["node"]
+  },
   "dependencies": {
     "yargs": "^12.0.0"
   }

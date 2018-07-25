@@ -14,5 +14,8 @@
     "name": "Foo Bar",
     "email": "foo@bar.com",
     "url": "www.bar.com"
+  },
+  "ctrine": {
+    "platforms": ["browser", "node"]
   }
 }
