@@ -4,8 +4,8 @@
   "description": "Tools to develop libraries, apps and websites.",
   "license": "Apache-2.0",
   "bin": {
-    "ctr": "build/index.js",
-    "ctrine": "build/index.js"
+    "ctr": "build",
+    "ctrine": "build"
   },
   "scripts": {
     "clean": "rimraf \"build\"",
@@ -15,9 +15,6 @@
     "dev-w": "npm run clean && run-p dev-w:*",
     "dev-w:assets": "cpx src/banner/*.txt build/banner --watch",
     "dev-w:build": "babel src -d build --ignore **/__tests__ --source-maps inline --watch"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "repository": {
     "type": "git",
