@@ -14,7 +14,7 @@ import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {join} from 'path'
 
 module.exports = {
-  rootDir: PACKAGE_DIR,
+  rootDir: join(PACKAGE_DIR, 'src'),
   testRegex: '__tests__',
   testPathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
   transform: {
