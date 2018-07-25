@@ -44,7 +44,7 @@ export function jsx(yargs) {
 export function node(yargs) {
   yargs.option('node', {
     description: 'Minimum NodeJS version supported by the project.',
-    default: 6,
+    default: '8.5.0',
     type: 'string',
   })
 }
