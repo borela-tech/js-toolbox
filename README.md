@@ -1,4 +1,4 @@
-[![Borela JS Toolbox](art/logo.png)][toolbox]
+[![Borela JS Toolbox](rebrand/art/logo.png)][toolbox]
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/toolbox.svg?style=social)][watchers]
 [![GitHub stars](https://img.shields.io/github/stars/borela-tech/toolbox.svg?style=social)][stars]
