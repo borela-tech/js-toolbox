@@ -16,8 +16,8 @@ const FIXTURES_PATH = join(__dirname, '__fixtures__')
 
 function setFixture(fixture) {
   jest.doMock('../../../paths', () => ({
-    CTRINE_JS: join(FIXTURES_PATH, fixture, 'ctrine.js'),
-    CTRINE_JSON: join(FIXTURES_PATH, fixture, 'ctrine.json'),
+    BORELA_JS: join(FIXTURES_PATH, fixture, 'borela.js'),
+    BORELA_JSON: join(FIXTURES_PATH, fixture, 'borela.json'),
     PACKAGE_JSON: join(FIXTURES_PATH, fixture, 'package.json'),
   }))
 }
@@ -28,7 +28,7 @@ function stubEnv(env = {}) {
     Object.defineProperty(process, 'env', {
       get: () => ({
         ...ORIGINAL,
-        ctrine: JSON.stringify(env),
+        borela: JSON.stringify(env),
       })
     })
   })
@@ -56,8 +56,8 @@ describe('getSettings()', () => {
       })
     })
 
-    test('load settings from “ctrine.json”', () => {
-      setFixture('ctrine-json')
+    test('load settings from “borela.json”', () => {
+      setFixture('borela-json')
       let {getSettings} = require('../../toolbox')
       expect(getSettings()).toEqual({
         foo: 2,
@@ -69,8 +69,8 @@ describe('getSettings()', () => {
       })
     })
 
-    test('load settings from “ctrine.js”', () => {
-      setFixture('ctrine-js')
+    test('load settings from “borela.js”', () => {
+      setFixture('borela-js')
       let {getSettings} = require('../../toolbox')
       expect(getSettings()).toEqual({
         foo: 3,
@@ -126,8 +126,8 @@ describe('getSettings()', () => {
       })
     })
 
-    test('load settings from “ctrine.js”', () => {
-      setFixture('ctrine-js')
+    test('load settings from “borela.js”', () => {
+      setFixture('borela-js')
       let {getSettings} = require('../../toolbox')
       expect(getSettings()).toEqual({
         foo: 42,

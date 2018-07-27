@@ -18,7 +18,7 @@ import {build, lint, scaffold, test} from './commands'
 import {EPILOG, PROLOG} from './banner'
 import {PACKAGE_DIR} from './paths'
 
-const PARSER = Yargs.scriptName('ctr')
+const PARSER = Yargs.scriptName('bb')
   .usage(PROLOG)
   .epilog(EPILOG)
   .strict()

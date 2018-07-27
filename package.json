@@ -1,11 +1,10 @@
 {
-  "name": "@ctrine/toolbox",
-  "version": "8.0.0",
-  "description": "Tools to develop libraries, apps and websites.",
+  "name": "@borela-tech/toolbox",
+  "version": "1.0.0",
+  "description": "CLI tool to simplify the development of JavaScript apps/libraries with little to no configuration.",
   "license": "Apache-2.0",
   "bin": {
-    "ctr": "build",
-    "ctrine": "build"
+    "bb": "build/index.js"
   },
   "scripts": {
     "clean": "rimraf \"build\"",
@@ -25,7 +24,7 @@
   },
   "homepage": "http://www.ctrine.com/#/toolbox",
   "keywords": [
-    "ctrine",
+    "borela",
     "dev",
     "develop",
     "development",

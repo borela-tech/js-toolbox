@@ -45,17 +45,17 @@ describe.each([
     })
   })
 
-  describe('CTRINE_JS', () => {
-    test('It has the path to a “ctrine.js” file at the package’s root', () => {
-      const {CTRINE_JS} = require('../../paths')
-      expect(CTRINE_JS).toBe(join(root, 'ctrine.js'))
+  describe('BORELA_JS', () => {
+    test('It has the path to a “borela.js” file at the package’s root', () => {
+      const {BORELA_JS} = require('../../paths')
+      expect(BORELA_JS).toBe(join(root, 'borela.js'))
     })
   })
 
-  describe('CTRINE_JSON', () => {
-    test('It has the path to a “ctrine.json” file at the package’s root', () => {
-      const {CTRINE_JSON} = require('../../paths')
-      expect(CTRINE_JSON).toBe(join(root, 'ctrine.json'))
+  describe('BORELA_JSON', () => {
+    test('It has the path to a “borela.json” file at the package’s root', () => {
+      const {BORELA_JSON} = require('../../paths')
+      expect(BORELA_JSON).toBe(join(root, 'borela.json'))
     })
   })
 

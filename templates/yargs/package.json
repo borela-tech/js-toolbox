@@ -19,7 +19,7 @@
     "email": "foo@bar.com",
     "url": "www.bar.com"
   },
-  "ctrine": {
+  "borela": {
     "platforms": ["node"]
   },
   "dependencies": {
