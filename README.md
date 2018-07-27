@@ -1,4 +1,8 @@
-[![Borela JS Toolbox](art/logo.svg)][toolbox]
+<a href="//github.com/borela-tech/toolbox">
+  <p align="center">
+    <img src="./art/logo.svg" width="300px">
+  </p>
+</a>
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/toolbox.svg?style=social)][watchers]
 [![GitHub stars](https://img.shields.io/github/stars/borela-tech/toolbox.svg?style=social)][stars]
@@ -68,7 +72,6 @@ You can find example projects in the [templates directory](templates).
 [issues]: //github.com/borela-tech/toolbox/issues
 [pulls]: //github.com/borela-tech/toolbox/pulls
 [stars]: //github.com/borela-tech/toolbox/stargazers
-[toolbox]: //github.com/borela-tech/toolbox
 [watchers]: //github.com/borela-tech/toolbox/watchers
 
 [babel]: //babeljs.io
@@ -77,6 +80,7 @@ You can find example projects in the [templates directory](templates).
 [jest]: //jestjs.io
 [jsx]: //facebook.github.io/jsx/
 [react]: //reactjs.org
+[toolbox]: //github.com/borela-tech/toolbox
 [typescript]: //www.typescriptlang.org
 [webpack]: //webpack.js.org
 
