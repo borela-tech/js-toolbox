@@ -1,4 +1,4 @@
-[![Borela JS Toolbox](//github.com/ctrine/toolbox/blob/rebrand/art/logo.svg)][toolbox]
+[![Borela JS Toolbox](art/logo.svg)][toolbox]
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/toolbox.svg?style=social)][watchers]
 [![GitHub stars](https://img.shields.io/github/stars/borela-tech/toolbox.svg?style=social)][stars]
@@ -71,6 +71,7 @@ You can find example projects in the [templates directory](templates).
 [toolbox]: //github.com/borela-tech/toolbox
 [watchers]: //github.com/borela-tech/toolbox/watchers
 
+[babel]: //babeljs.io
 [eslint]: //eslint.org
 [flow]: //flow.org
 [jest]: //jestjs.io
