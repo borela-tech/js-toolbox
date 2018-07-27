@@ -15,7 +15,8 @@
     "dev-w:assets": "cpx src/banner/*.txt build/banner --watch",
     "dev-w:build": "babel src -d build --ignore **/__tests__ --source-maps inline --watch",
     "lint": "bb lint",
-    "test": "bb test"
+    "test": "bb test",
+    "test-w": "bb test --watch"
   },
   "repository": {
     "type": "git",
