@@ -41,8 +41,8 @@ configuration:
 
 ## Installation
 
-```sh
-npm install @borela-tech/js-toolbox -g
+```console
+$ npm install @borela-tech/js-toolbox -g
 ```
 
 ## Creating a simple JS library
@@ -52,28 +52,32 @@ npm install @borela-tech/js-toolbox -g
 
 To run the tests:
 
-`bb test`
+```console
+$ bb test
 
-or in watch mode:
-
-`bb test --watch`
+$ # Or in watch mode.
+$ bb test --watch
+```
 
 To lint the sources and tests:
 
-`bb lint`
+```console
+$ bb lint
 
-If you want [ESLint][eslint] to fix the errors:
-
-`bb lint --fix`
+$ # ESLint will try to fix linting errors but be aware that not all of them can
+$ # be fixed automatically.
+$ bb lint --fix
+```
 
 And finally, to build:
 
-`bb build`
+```console
+$ bb build
 
-The previous build includes a lot of stuff that’s only needed during
-development, to remove them, run:
-
-`bb build --production`
+$ # The previous command includes a lot of stuff that’s only needed during
+$ # development, to build without them, run:
+$ bb build --production
+```
 
 ## Creating an [Express][express] server
 
@@ -82,7 +86,9 @@ development, to remove them, run:
 
 The commands to test, lint and build are the same but this time, you can also:
 
-`bb nodemon`
+```console
+$ bb nodemon
+```
 
 This command will start the server using [nodemon][nodemon] and any changes to
 the files will make [nodemon][nodemon] restart the server.
@@ -94,10 +100,12 @@ the files will make [nodemon][nodemon] restart the server.
 
 The commands to test, lint and build are the same but this time, you can also:
 
-`bb serve`
+```console
+$ bb serve
+```
 
-This command will spin up a [Webpack’s Development Server][webpack-dev-server]
-to serve your application on `localhost:9000`. Features included:
+This command will spin up [Webpack’s Development Server][webpack-dev-server] to
+serve your application on `localhost:9000`. Features included:
 
 * [React Hot Loader][react-hot-loader] to enable hot reload of react components
   without losing state;
@@ -105,29 +113,44 @@ to serve your application on `localhost:9000`. Features included:
 
 ## Commands
 
-`bb build`
+```console
+$ bb build
+$ bb build --production
+```
 
 Compile the files using [Babel][babel] and put them in the build directory. If
 the project type requires bundling, [Webpack][webpack] will be used.
 
-`bb scaffold <template> [destination]`
+```console
+$ bb scaffold <template> [destination]
+```
 
 Copy the template files to the current folder or the destination specified.
 
-`bb lint`
+```console
+$ bb lint
+$ bb lint --fix
+```
 
 Run [ESLint][eslint] on the sources and tests separately to make sure that
 [Jest’s globals][jest-globals] only affect the tests.
 
-`bb nodemon`
+```console
+$ bb nodemon
+```
 
 Run the main script using [nodemon][nodemon].
 
-`bb serve`
+```console
+$ bb serve
+```
 
 Serve a application using [Webpack’s Development Server][webpack-dev-server].
 
-`bb test`
+```console
+$ bb test
+$ bb test --watch
+```
 
 Run [Jest][jest].
 
