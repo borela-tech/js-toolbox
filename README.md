@@ -1,7 +1,5 @@
 <a href="//github.com/borela-tech/toolbox">
-  <p align="center">
-    <img src="./art/logo.svg" width="300px">
-  </p>
+  <img src="./art/logo.svg" width="300px">
 </a>
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/toolbox.svg?style=social)][watchers]
