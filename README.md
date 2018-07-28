@@ -15,8 +15,11 @@ no configuration.
 
 1. [What’s included](#whats-included)
 2. [Installation](#installation)
-3. [Commands](#commands)
-4. [Examples](#examples)
+3. [Creating a simple JS library](#creating-a-simple-js-library)
+4. [Creating an Express server](#Creating-an-express-server)
+5. [Creating a Single Page React Application](#creating-a-single-page-react-application)
+6. [Commands](#commands)
+7. [Available templates](#available-templates)
 
 ## What’s included
 
@@ -39,8 +42,66 @@ configuration:
 ## Installation
 
 ```sh
-npm install @borela-tech/toolbox -g
+npm install @borela-tech/js-toolbox -g
 ```
+
+## Creating a simple JS library
+
+1. Navigate to the directory you want to create the project;
+2. Run the command `bb scaffold lib`;
+
+To run the tests:
+
+`bb test`
+
+or in watch mode:
+
+`bb test --watch`
+
+To lint the sources and tests:
+
+`bb lint`
+
+If you want [ESLint][eslint] to fix the errors:
+
+`bb lint --fix`
+
+And finally, to build:
+
+`bb build`
+
+The previous build includes a lot of stuff that’s only needed during
+development, to remove them, run:
+
+`bb build --production`
+
+## Creating an [Express][express] server
+
+1. Navigate to the directory you want to create the project;
+2. Run the command `bb scaffold express`;
+
+The commands to test, lint and build are the same but this time, you can also:
+
+`bb nodemon`
+
+This command will start the server using [nodemon][nodemon] and any changes to
+the files will make [nodemon][nodemon] restart the server.
+
+## Creating a Single Page [React][react] Application
+
+1. Navigate to the directory you want to create the project;
+2. Run the command `bb scaffold react/spa`;
+
+The commands to test, lint and build are the same but this time, you can also:
+
+`bb serve`
+
+This command will spin up a [Webpack’s Development Server][webpack-dev-server]
+to serve your application on `localhost:9000`. Features included:
+
+* [React Hot Loader][react-hot-loader] to enable hot reload of react components
+  without losing state;
+* [RedBox][red-box-react] to make error messages pretty;
 
 ## Commands
 
@@ -58,13 +119,26 @@ Copy the template files to the current folder or the destination specified.
 Run [ESLint][eslint] on the sources and tests separately to make sure that
 [Jest’s globals][jest-globals] only affect the tests.
 
+`bb nodemon`
+
+Run the main script using [nodemon][nodemon].
+
+`bb serve`
+
+Serve a application using [Webpack’s Development Server][webpack-dev-server].
+
 `bb test`
 
 Run [Jest][jest].
 
-## Examples
+## Available templates
 
-You can find example projects in the [templates directory](templates).
+The templates included in the toolbox are:
+
+* `express`: Simple server using [Express][express];
+* `lib`: Simple JS library;
+* `react/spa`: Single Page React application;
+* `yargs`: CLI using [Yargs][yargs];
 
 [forks]: //github.com/borela-tech/toolbox/network/members
 [issues]: //github.com/borela-tech/toolbox/issues
@@ -74,14 +148,20 @@ You can find example projects in the [templates directory](templates).
 
 [babel]: //babeljs.io
 [eslint]: //eslint.org
+[express]: //expressjs.com/
 [flow]: //flow.org
 [jest]: //jestjs.io
 [jsx]: //facebook.github.io/jsx/
+[nodemon]: //nodemon.io
+[react-hot-loader]: //github.com/gaearon/react-hot-loader
 [react]: //reactjs.org
+[red-box-react]: //github.com/commissure/redbox-react
 [toolbox]: //github.com/borela-tech/toolbox
 [typescript]: //www.typescriptlang.org
 [webpack]: //webpack.js.org
+[yargs]: //yargs.js.org
 
 [experimental-plugins]: //babeljs.io/docs/en/plugins#experimental
 [jest-globals]: //jestjs.io/docs/en/api
 [preset-env]: //babeljs.io/docs/en/next/babel-preset-env.html
+[webpack-dev-server]: //webpack.js.org/configuration/dev-server/
