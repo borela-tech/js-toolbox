@@ -119,6 +119,40 @@ serve your application on `localhost:9000`. Features included:
   without losing state;
 * [RedBox][red-box-react] to make error messages pretty;
 
+## Command flag vs configuration
+
+You can control the commands behavior either through flags or configuration
+files, for example, if you want to enable JSX transformation on the *build* and
+*test* commands, you pass the flag directly to them:
+
+```sh
+bb build --jsx
+bb test --jsx
+```
+
+Alternatively, you can add a `borela` section to your `package.json` like so:
+
+```json
+{
+  "name": "awesome-package",
+  "version": "1.0.0",
+  "description": "Some awesome package.",
+  "borela": {
+    "jsx": true
+  }
+}
+```
+
+Or create a `borela.json` at the root of your package:
+
+```json
+{
+  "jsx": true
+}
+```
+
+The same logic can be applied to all command flags.
+
 ## Commands
 
 ### build
