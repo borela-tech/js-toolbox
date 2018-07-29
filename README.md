@@ -19,12 +19,12 @@ no configuration.
 4. [Creating an Express server](#Creating-an-express-server)
 5. [Creating a Single Page React Application](#creating-a-single-page-react-application)
 6. [Commands](#commands)
-  1. [build](#build)
-  2. [scaffold](#scaffold)
-  3. [lint](#lint)
-  4. [nodemon](#nodemon)
-  5. [serve](#serve)
-  6. [test](#test)
+   1. [build](#build)
+   2. [scaffold](#scaffold)
+   3. [lint](#lint)
+   4. [nodemon](#nodemon)
+   5. [serve](#serve)
+   6. [test](#test)
 7. [Available templates](#available-templates)
 
 ## What’s included
