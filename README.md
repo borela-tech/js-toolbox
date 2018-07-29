@@ -18,14 +18,15 @@ no configuration.
 3. [Creating a simple JS library](#creating-a-simple-js-library)
 4. [Creating an Express server](#Creating-an-express-server)
 5. [Creating a Single Page React Application](#creating-a-single-page-react-application)
-6. [Commands](#commands)
+6. [Command flag vs config file](#command-flag-vs-config-file)
+7. [Commands](#commands)
    1. [build](#build)
    2. [scaffold](#scaffold)
    3. [lint](#lint)
    4. [nodemon](#nodemon)
    5. [serve](#serve)
    6. [test](#test)
-7. [Available templates](#available-templates)
+8. [Available templates](#available-templates)
 
 ## What’s included
 
@@ -119,7 +120,7 @@ serve your application on `localhost:9000`. Features included:
   without losing state;
 * [RedBox][red-box-react] to make error messages pretty;
 
-## Command flag vs configuration
+## Command flag vs config file
 
 You can control the commands behavior either through flags or configuration
 files, for example, if you want to enable JSX transformation on the *build* and
