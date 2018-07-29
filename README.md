@@ -10,7 +10,7 @@
 
 [![Build](https://img.shields.io/travis/com/borela-tech/js-toolbox.svg?style=flat-square)][toolbox]
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20OSX-ff4081.svg?style=flat-square)][toolbox]
-[![License](https://img.shields.io/badge/license-Apache%202.0%20%7C%20BSD%20%7C%20MIT-ba68c8.svg?style=flat-square)][toolbox]
+[![License](https://img.shields.io/badge/license-Apache%202.0-ba68c8.svg?style=flat-square)][toolbox]
 
 CLI tool to simplify the development of JavaScript apps/libraries with little to
 no configuration.
