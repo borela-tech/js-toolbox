@@ -11,6 +11,7 @@
 // the License.
 
 import {existsSync} from 'fs'
+import {getSync as getPathSync, PATH} from 'npm-path'
 import {join} from 'path'
 import {PACKAGE_DIR, BIN_DIR} from './paths'
 import {pickNonFalsy} from './util'
@@ -27,16 +28,18 @@ export function getBinaryPath(targetBinary:string) {
 }
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
-  const FOUND_BINARY = getBinaryPath(targetBinary)
+  // const FOUND_BINARY = getBinaryPath(targetBinary)
+
+  env[PATH] = getPathSync()
   env = pickNonFalsy(env)
 
   if (env.debugToolbox) {
     console.log('CWD: ', PACKAGE_DIR)
-    console.log('Binary: ', FOUND_BINARY)
     console.log('Env: ', env)
+    console.log('Binary: ', targetBinary)
   }
 
-  return spawnSync(FOUND_BINARY, args, {
+  spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,
     env: {borela: JSON.stringify(env)},
     stdio: 'inherit',
