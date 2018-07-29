@@ -11,18 +11,10 @@
 // the License.
 
 import {existsSync} from 'fs'
-import {fork} from 'child_process'
 import {join} from 'path'
-import {MODULES_DIR, PACKAGE_DIR} from './paths'
+import {PACKAGE_DIR, BIN_DIR} from './paths'
 import {pickNonFalsy} from './util'
-
-function forkPromise(script, args, options) {
-  return new Promise((resolve, reject) => {
-    let forked = fork(script, args, options)
-    forked.on('close', () => resolve())
-    forked.on('error', error => reject(error))
-  })
-}
+import {spawnSync} from 'child_process'
 
 export function assertBinaryExists(targetBinary:string) {
   if (!existsSync(getBinaryPath(targetBinary)))
@@ -30,9 +22,8 @@ export function assertBinaryExists(targetBinary:string) {
 }
 
 export function getBinaryPath(targetBinary:string) {
-  const MODULE = join(MODULES_DIR, targetBinary)
-  const PACKAGE_JSON = require(join(MODULE, 'package.json'))
-  return join(MODULE, PACKAGE_JSON.bin[targetBinary])
+  const BIN = join(BIN_DIR, targetBinary)
+  return process.platform === 'win32' ? `${BIN}.cmd` : BIN
 }
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
@@ -45,7 +36,7 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
     console.log('Env: ', env)
   }
 
-  return forkPromise(FOUND_BINARY, args, {
+  return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
     env: {borela: JSON.stringify(env)},
     stdio: 'inherit',

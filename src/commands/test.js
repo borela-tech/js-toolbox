@@ -43,7 +43,7 @@ function builder(yargs) {
   })
 }
 
-async function handler(args) {
+function handler(args) {
   assertBinaryExists('jest')
 
   let jestArgs = [`--config=${CONFIG_PATH}`]
@@ -51,7 +51,7 @@ async function handler(args) {
     jestArgs.push('--watch')
 
   let env = args
-  await runBin('jest', jestArgs, env)
+  runBin('jest', jestArgs, env)
 }
 
 export default {

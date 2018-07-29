@@ -46,13 +46,13 @@ function builder(yargs) {
   typeScript(yargs)
 }
 
-async function handler(args) {
+function handler(args) {
   assertBinaryExists('rimraf')
   assertBinaryExists('babel')
 
   let env = args
-  await runBin('rimraf', ['"build"'])
-  await runBin('babel', BABEL_ARGS, env)
+  runBin('rimraf', ['"build"'])
+  runBin('babel', BABEL_ARGS, env)
 }
 
 export default {
