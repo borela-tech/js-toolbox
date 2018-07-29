@@ -98,7 +98,7 @@ bb nodemon
 ```
 
 This command will start the server using [nodemon][nodemon] and any changes to
-the files will make [nodemon][nodemon] restart the server.
+the files will make nodemon restart the server.
 
 ## Creating a Single Page [React][react] Application
 
@@ -147,7 +147,7 @@ bb lint
 Run [ESLint][eslint] on the sources and tests separately to make sure that
 [Jest’s globals][jest-globals] only affect the tests.
 
-### [nodemon][nodemon]
+### nodemon
 
 ```sh
 bb nodemon
