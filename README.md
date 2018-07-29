@@ -41,8 +41,8 @@ configuration:
 
 ## Installation
 
-```console
-$ npm install @borela-tech/js-toolbox -g
+```sh
+npm install @borela-tech/js-toolbox -g
 ```
 
 ## Creating a simple JS library
@@ -50,33 +50,33 @@ $ npm install @borela-tech/js-toolbox -g
 1. Navigate to the directory you want to create the project;
 2. Run the command `bb scaffold lib`;
 
-To run the tests:
+Run the tests:
 
-```console
-$ bb test
+```sh
+bb test
 
-$ # Or in watch mode.
-$ bb test --watch
+# Or in watch mode.
+bb test --watch
 ```
 
-To lint the sources and tests:
+Lint the sources and tests:
 
-```console
-$ bb lint
+```sh
+bb lint
 
-$ # ESLint will try to fix linting errors but be aware that not all of them can
-$ # be fixed automatically.
-$ bb lint --fix
+# ESLint will try to fix linting errors but be aware that not all of them can
+# be fixed automatically.
+bb lint --fix
 ```
 
 And finally, to build:
 
-```console
-$ bb build
+```sh
+bb build
 
-$ # The previous command includes a lot of stuff that’s only needed during
-$ # development, to build without them, run:
-$ bb build --production
+# The previous command includes a lot of stuff that’s only needed during
+# development, to build without them, run:
+bb build --production
 ```
 
 ## Creating an [Express][express] server
@@ -84,10 +84,11 @@ $ bb build --production
 1. Navigate to the directory you want to create the project;
 2. Run the command `bb scaffold express`;
 
-The commands to test, lint and build are the same but this time, you can also:
+The commands to *test*, *lint* and *build* are the same but this time, you can
+also:
 
-```console
-$ bb nodemon
+```sh
+bb nodemon
 ```
 
 This command will start the server using [nodemon][nodemon] and any changes to
@@ -98,10 +99,11 @@ the files will make [nodemon][nodemon] restart the server.
 1. Navigate to the directory you want to create the project;
 2. Run the command `bb scaffold react/spa`;
 
-The commands to test, lint and build are the same but this time, you can also:
+The commands to *test*, *lint* and *build* are the same but this time, you can
+also:
 
-```console
-$ bb serve
+```sh
+bb serve
 ```
 
 This command will spin up [Webpack’s Development Server][webpack-dev-server] to
@@ -113,43 +115,52 @@ serve your application on `localhost:9000`. Features included:
 
 ## Commands
 
-```console
-$ bb build
-$ bb build --production
+#### build
+
+```sh
+bb build
 ```
 
 Compile the files using [Babel][babel] and put them in the build directory. If
 the project type requires bundling, [Webpack][webpack] will be used.
 
-```console
-$ bb scaffold <template> [destination]
+#### scaffold
+
+```sh
+bb scaffold <template> [destination]
 ```
 
 Copy the template files to the current folder or the destination specified.
 
-```console
-$ bb lint
-$ bb lint --fix
+#### lint
+
+```sh
+bb lint
 ```
 
 Run [ESLint][eslint] on the sources and tests separately to make sure that
 [Jest’s globals][jest-globals] only affect the tests.
 
-```console
-$ bb nodemon
+#### [nodemon][nodemon]
+
+```sh
+bb nodemon
 ```
 
 Run the main script using [nodemon][nodemon].
 
-```console
-$ bb serve
+#### serve
+
+```sh
+bb serve
 ```
 
 Serve a application using [Webpack’s Development Server][webpack-dev-server].
 
-```console
-$ bb test
-$ bb test --watch
+#### test
+
+```sh
+bb test
 ```
 
 Run [Jest][jest].
