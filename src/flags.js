@@ -25,6 +25,13 @@ export function commentFlow(yargs) {
   })
 }
 
+export function debugToolbox(yargs) {
+  yargs.option('debugToolbox', {
+    description: 'Enable Toolbox’s debug messages.',
+    type: 'boolean',
+  })
+}
+
 export function flow(yargs) {
   yargs.option('flow', {
     description: 'Enable Flow annotations.',

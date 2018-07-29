@@ -15,6 +15,7 @@
 import packageInfo from '../package'
 import Yargs from 'yargs'
 import {build, lint, scaffold, test} from './commands'
+import {debugToolbox} from './flags'
 import {EPILOG, PROLOG} from './banner'
 import {PACKAGE_DIR} from './paths'
 
@@ -24,6 +25,8 @@ const PARSER = Yargs.scriptName('bb')
   .strict()
   .help('help', 'Show usage instructions.')
   .version('version', 'Show toolbox version.', packageInfo.version)
+
+debugToolbox(PARSER)
 
 if (PACKAGE_DIR) {
   PARSER.command(build)

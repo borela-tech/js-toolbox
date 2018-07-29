@@ -30,9 +30,11 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
   const FOUND_BINARY = getBinaryPath(targetBinary)
   env = pickNonFalsy(env)
 
-  console.log('CWD: ', PACKAGE_DIR)
-  console.log('Binary: ', FOUND_BINARY)
-  console.log('Env: ', env)
+  if (env.debugToolbox) {
+    console.log('CWD: ', PACKAGE_DIR)
+    console.log('Binary: ', FOUND_BINARY)
+    console.log('Env: ', env)
+  }
 
   return spawnSync(FOUND_BINARY, args, {
     cwd: PACKAGE_DIR,
