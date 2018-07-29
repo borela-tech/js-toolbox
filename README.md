@@ -164,6 +164,28 @@ bb build
 Compile the files using [Babel][babel] and put them in the build directory. If
 the project type requires bundling, [Webpack][webpack] will be used.
 
+Feature flags:
+
+* `-j, --jsx`: Enable JSX;
+* `-r, --react`: Enable React;
+* `-t, --type-script`: Enable TypeScript;
+
+Transformation flags:
+
+* `--comment-flow`: Transform Flow annotations into comment blocks;
+* `--remove-flow`: Remove all Flow annotations.
+
+Polyfill flags:
+
+* `--browsers`¹: Supported browsers;
+* `--node`¹: Minimum supported NodeJS version;
+* `--platforms`: Controls the polyfills and it is used to determine if multiple
+  build outputs are necessary based on the platforms specified;
+
+¹ The polyfill flags `browsers` and `node` are passed directly to
+[@babel/preset-env][preset-env], you can find more information of the accepted
+values on its documentation.
+
 ### scaffold
 
 ```sh
