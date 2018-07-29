@@ -26,7 +26,6 @@ no configuration.
    4. [nodemon](#nodemon)
    5. [serve](#serve)
    6. [test](#test)
-8. [Available templates](#available-templates)
 
 ## What’s included
 
@@ -193,7 +192,13 @@ values on its documentation.
 bb scaffold <template> [destination]
 ```
 
-Copy the template files to the current folder or the destination specified.
+Copy the template files to the current folder or the destination specified. The
+templates included in the toolbox are:
+
+* `express`: Simple server using [Express][express];
+* `lib`: Simple JS library;
+* `react/spa`: Single Page React application;
+* `yargs`: CLI using [Yargs][yargs];
 
 ### lint
 
@@ -227,15 +232,6 @@ bb test
 ```
 
 Run [Jest][jest].
-
-## Available templates
-
-The templates included in the toolbox are:
-
-* `express`: Simple server using [Express][express];
-* `lib`: Simple JS library;
-* `react/spa`: Single Page React application;
-* `yargs`: CLI using [Yargs][yargs];
 
 [forks]: //github.com/borela-tech/toolbox/network/members
 [issues]: //github.com/borela-tech/toolbox/issues
