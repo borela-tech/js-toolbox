@@ -16,6 +16,7 @@ import {
   jsx,
   node,
   platforms,
+  production,
   react,
   removeFlow,
   typeScript,
@@ -39,6 +40,7 @@ function builder(yargs) {
   jsx(yargs)
   node(yargs)
   platforms(yargs)
+  production(yargs)
   react(yargs)
   removeFlow(yargs)
   typeScript(yargs)
