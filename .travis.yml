@@ -20,7 +20,7 @@ before_script:
 language: node_js
 
 node_js:
-  - '8.5.0'
+  - '8.9'
   - '9'
   - '10'
 os:
