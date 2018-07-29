@@ -1,5 +1,5 @@
 {
-  "name": "@borela-tech/toolbox",
+  "name": "@borela-tech/js-toolbox",
   "version": "1.0.0",
   "description": "CLI tool to simplify the development of JavaScript apps/libraries with little to no configuration.",
   "license": "Apache-2.0",
@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ctrine/toolbox.git"
+    "url": "git+//github.com/borela-tech/js-toolbox.git"
   },
   "bugs": {
-    "url": "https://github.com/ctrine/toolbox/issues"
+    "url": "//github.com/borela-tech/js-toolbox/issues"
   },
-  "homepage": "http://www.ctrine.com/#/toolbox",
+  "homepage": "//www.borela.tech/#/js-toolbox",
   "keywords": [
     "borela",
     "dev",
