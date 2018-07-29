@@ -19,6 +19,12 @@ no configuration.
 4. [Creating an Express server](#Creating-an-express-server)
 5. [Creating a Single Page React Application](#creating-a-single-page-react-application)
 6. [Commands](#commands)
+  1. [build](#build)
+  2. [scaffold](#scaffold)
+  3. [lint](#lint)
+  4. [nodemon](#nodemon)
+  5. [serve](#serve)
+  6. [test](#test)
 7. [Available templates](#available-templates)
 
 ## What’s included
@@ -115,7 +121,7 @@ serve your application on `localhost:9000`. Features included:
 
 ## Commands
 
-#### build
+### build
 
 ```sh
 bb build
@@ -124,7 +130,7 @@ bb build
 Compile the files using [Babel][babel] and put them in the build directory. If
 the project type requires bundling, [Webpack][webpack] will be used.
 
-#### scaffold
+### scaffold
 
 ```sh
 bb scaffold <template> [destination]
@@ -132,7 +138,7 @@ bb scaffold <template> [destination]
 
 Copy the template files to the current folder or the destination specified.
 
-#### lint
+### lint
 
 ```sh
 bb lint
@@ -141,7 +147,7 @@ bb lint
 Run [ESLint][eslint] on the sources and tests separately to make sure that
 [Jest’s globals][jest-globals] only affect the tests.
 
-#### [nodemon][nodemon]
+### [nodemon][nodemon]
 
 ```sh
 bb nodemon
@@ -149,7 +155,7 @@ bb nodemon
 
 Run the main script using [nodemon][nodemon].
 
-#### serve
+### serve
 
 ```sh
 bb serve
@@ -157,7 +163,7 @@ bb serve
 
 Serve a application using [Webpack’s Development Server][webpack-dev-server].
 
-#### test
+### test
 
 ```sh
 bb test
