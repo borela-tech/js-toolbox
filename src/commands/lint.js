@@ -54,7 +54,7 @@ function lintSources(args) {
     eslintArgs.push('--fix')
 
   let env = args
-  runBin('eslint', eslintArgs, env)
+  return runBin('eslint', eslintArgs, env)
 }
 
 function lintTests(args) {
@@ -70,18 +70,18 @@ function lintTests(args) {
     eslintArgs.push('--fix')
 
   let env = {jest: true, ...args}
-  runBin('eslint', eslintArgs, env)
+  return runBin('eslint', eslintArgs, env)
 }
 
-function handler(args) {
+async function handler(args) {
   assertBinaryExists('eslint')
 
   console.log()
   console.log('[1/2] Linting sources...')
-  lintSources(args)
+  await lintSources(args)
 
   console.log('[2/2] Linting tests...')
-  lintTests(args)
+  await lintTests(args)
 }
 
 function getBufferString(buffer:Buffer):string|undefined {
