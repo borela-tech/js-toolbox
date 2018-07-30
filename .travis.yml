@@ -14,7 +14,7 @@ before_script:
   # We are using the project itself to do the linting and run the tests but it
   # needs to be compiled first.
   - npm run dev
-  # Make the project available.
+  # Make the project available on PATH.
   - npm link
 
 language: node_js
