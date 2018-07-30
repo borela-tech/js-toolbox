@@ -8,7 +8,9 @@
 [![GitHub pulls](https://img.shields.io/github/issues-pr/borela-tech/toolbox.svg?style=social)][pulls]
 [![GitHub forks](https://img.shields.io/github/forks/borela-tech/toolbox.svg?style=social)][forks]
 
-[![Build](https://img.shields.io/travis/com/borela-tech/js-toolbox.svg?style=flat-square)][toolbox]
+[![Build Travis](https://img.shields.io/travis/com/borela-tech/js-toolbox.svg?style=flat-square)][travis-build]
+[![Build Appveyor](https://img.shields.io/appveyor/tests/borela-tech/js-toolbox.svg?style=flat-square)][appveyor-build]
+[![NodeJS version](https://img.shields.io/badge/nodejs-%E2%89%8.9-orange.svg?style=flat-square)][nodejs]
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20OSX-ff4081.svg?style=flat-square)][toolbox]
 [![License](https://img.shields.io/badge/license-Apache%202.0-ba68c8.svg?style=flat-square)][toolbox]
 
@@ -250,6 +252,7 @@ Run [Jest][jest].
 [jest]: //jestjs.io
 [jsx]: //facebook.github.io/jsx/
 [nodemon]: //nodemon.io
+[nodejs]: //nodejs.org
 [react-hot-loader]: //github.com/gaearon/react-hot-loader
 [react]: //reactjs.org
 [red-box-react]: //github.com/commissure/redbox-react
@@ -258,7 +261,9 @@ Run [Jest][jest].
 [webpack]: //webpack.js.org
 [yargs]: //yargs.js.org
 
+[appveyor-build]: //ci.appveyor.com/project/borela/js-toolbox
 [experimental-plugins]: //babeljs.io/docs/en/plugins#experimental
 [jest-globals]: //jestjs.io/docs/en/api
 [preset-env]: //babeljs.io/docs/en/next/babel-preset-env.html
+[travis-build]: //travis-ci.org/borela-tech/js-toolbox
 [webpack-dev-server]: //webpack.js.org/configuration/dev-server/
