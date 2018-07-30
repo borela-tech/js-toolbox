@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
@@ -59,6 +60,6 @@ const CONFIG = {
 }
 
 if (debugToolbox)
-  console.log('Borela Toolbox | ESLint configuration: ', CONFIG)
+  console.log('ESLint config: ', prettyFormat(CONFIG))
 
 module.exports = CONFIG

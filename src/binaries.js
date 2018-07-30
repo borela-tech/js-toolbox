@@ -19,12 +19,12 @@ const SUCCESS = 0
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
   let {debugToolbox} = env
-  if (debugToolbox) {
-    console.log('Borela Toolbox | Spawning binary')
-    console.log('Binary: ', prettyFormat(targetBinary))
-    console.log('Arguments: ', prettyFormat(args))
-    console.log('Environment: ', prettyFormat(env))
-  }
+  if (debugToolbox)
+    console.log('Spawning binary: ', prettyFormat({
+      Arguments: prettyFormat(args),
+      Binary: prettyFormat(targetBinary),
+      Environment: prettyFormat(env),
+    }))
 
   let result = spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,

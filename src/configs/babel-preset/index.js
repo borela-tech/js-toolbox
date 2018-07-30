@@ -14,6 +14,7 @@ import experimental from './plugins/experimental'
 import flow from './plugins/flow'
 import jsx from './plugins/jsx'
 import react from './plugins/react'
+import prettyFormat from 'pretty-format'
 import typeScript from './plugins/typeScript'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
@@ -50,7 +51,7 @@ module.exports = function () {
   }
 
   if (debugToolbox)
-    console.log('Borela Toolbox | Babel Preset: ', result)
+    console.log('Babel config: ', prettyFormat(result))
 
   return result
 }

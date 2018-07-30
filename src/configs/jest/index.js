@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
@@ -27,6 +28,6 @@ const CONFIG = {
 }
 
 if (debugToolbox)
-  console.log('Borela Toolbox | Jest configuration: ', CONFIG)
+  console.log('Jest config: ', prettyFormat(CONFIG))
 
 module.exports = CONFIG
