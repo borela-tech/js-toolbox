@@ -10,8 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {existsSync} from 'fs'
-import {join} from 'path'
 import {PACKAGE_DIR} from './paths'
 import {pickNonFalsy} from './util'
 import {spawnSync} from 'npm-run'
