@@ -45,7 +45,7 @@ function builder(yargs) {
 
 function lintSources(args) {
   let eslintArgs = [
-    '--ignore-pattern', '**/__tests__/**',
+    '--ignore-pattern', '"**/__tests__/**"',
     ...BASIC_ARGS,
   ]
 
@@ -59,9 +59,9 @@ function lintSources(args) {
 
 function lintTests(args) {
   let eslintArgs = [
-    '--ignore-pattern', 'src/**',
-    '--ignore-pattern', '!**/__tests__',
-    '--ignore-pattern', '!**/__tests__/**',
+    '--ignore-pattern', '"src/**"',
+    '--ignore-pattern', '"!**/__tests__"',
+    '--ignore-pattern', '"!**/__tests__/**"',
     ...BASIC_ARGS,
   ]
 
