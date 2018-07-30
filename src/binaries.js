@@ -17,6 +17,11 @@ import {spawnSync} from 'npm-run'
 
 const SUCCESS = 0
 
+export function exitOnError(runBinResult) {
+  if (runBinResult.status != SUCCESS)
+    process.exit(runBinResult.status)
+}
+
 export function runBin(targetBinary:string, args:string[], env?:Object) {
   let {debugToolbox} = env
   if (debugToolbox)
@@ -39,6 +44,5 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
   if (debugToolbox)
     console.log('Spawn result: ', prettyFormat(result))
 
-  if (result.status != SUCCESS)
-    process.exit(result.status)
+  return result
 }

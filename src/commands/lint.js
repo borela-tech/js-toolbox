@@ -21,7 +21,7 @@ import {
 } from '../flags'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {join} from 'path'
-import {assertBinaryExists, runBin} from '../binaries'
+import {exitOnError, runBin} from '../binaries'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const BASIC_ARGS = [
@@ -55,7 +55,7 @@ function lintSources(args) {
     eslintArgs.push('--fix')
 
   let env = args
-  runBin('eslint', eslintArgs, env)
+  return runBin('eslint', eslintArgs, env)
 }
 
 function lintTests(args) {
@@ -71,16 +71,19 @@ function lintTests(args) {
     eslintArgs.push('--fix')
 
   let env = {jest: true, ...args}
-  runBin('eslint', eslintArgs, env)
+  return runBin('eslint', eslintArgs, env)
 }
 
 function handler(args) {
   console.log()
   console.log('[1/2] Linting sources...')
-  lintSources(args)
+  let resultSources = lintSources(args)
 
   console.log('[2/2] Linting tests...')
-  lintTests(args)
+  let resultTests = lintTests(args)
+
+  exitOnError(resultSources)
+  exitOnError(resultTests)
 }
 
 function getBufferString(buffer:Buffer):string|undefined {
