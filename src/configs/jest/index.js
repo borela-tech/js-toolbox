@@ -30,19 +30,4 @@ const CONFIG = {
 if (debugToolbox)
   console.log('Jest config: ', prettyFormat(CONFIG))
 
-function logSpawnCalls() {
-  var childProcess = require("child_process");
-  var oldSpawn = childProcess.spawn;
-
-  function mySpawn() {
-      console.log('Spawn called');
-      console.log(arguments);
-      var result = oldSpawn.apply(this, arguments);
-      return result;
-  }
-  childProcess.spawn = mySpawn;
-}
-
-logSpawnCalls()
-
 module.exports = CONFIG
