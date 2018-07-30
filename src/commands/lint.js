@@ -86,12 +86,6 @@ function handler(args) {
   exitOnError(resultTests)
 }
 
-function getBufferString(buffer:Buffer):string|undefined {
-  return buffer.length
-    ? buffer.toString().replace(/\n+$/, '')
-    : undefined
-}
-
 export default {
   command: 'lint',
   description: 'Check or fix code style.',
