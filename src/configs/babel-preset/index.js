@@ -22,6 +22,7 @@ import {getSettings} from '../toolbox'
 module.exports = function () {
   let {
     browsers,
+    debugConfigs,
     debugToolbox,
     node,
     platforms,
@@ -50,7 +51,7 @@ module.exports = function () {
     result.plugins.push(getModulePath('babel-plugin-source-map-support'))
   }
 
-  if (debugToolbox)
+  if (debugConfigs || debugToolbox)
     console.log('Babel config: ', prettyFormat(result))
 
   return result

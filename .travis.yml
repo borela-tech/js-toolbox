@@ -31,5 +31,5 @@ notifications:
   email: false
 
 script:
-  - bb lint --debug-toolbox
-  - bb test --debug-toolbox
+  - bb lint --debug-configs
+  - bb test --debug-configs

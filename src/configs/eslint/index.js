@@ -16,6 +16,7 @@ import {getSettings} from '../toolbox'
 import {join} from 'path'
 
 let {
+  debugConfigs,
   debugToolbox,
   flow,
   jest,
@@ -59,7 +60,7 @@ const CONFIG = {
   ],
 }
 
-if (debugToolbox)
+if (debugConfigs || debugToolbox)
   console.log('ESLint config: ', prettyFormat(CONFIG))
 
 module.exports = CONFIG

@@ -15,7 +15,7 @@ import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-let {debugToolbox} = getSettings()
+let {debugConfigs, debugToolbox} = getSettings()
 
 const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
@@ -27,7 +27,7 @@ const CONFIG = {
   verbose: true,
 }
 
-if (debugToolbox)
+if (debugConfigs || debugToolbox)
   console.log('Jest config: ', prettyFormat(CONFIG))
 
 module.exports = CONFIG
