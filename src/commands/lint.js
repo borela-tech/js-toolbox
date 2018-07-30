@@ -25,7 +25,7 @@ import {assertBinaryExists, runBin} from '../binaries'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const BASIC_ARGS = [
-  '--config', CONFIG_PATH,
+  `--config "${CONFIG_PATH}"`,
   join(PACKAGE_DIR, 'src'),
 ]
 
@@ -45,7 +45,8 @@ function builder(yargs) {
 
 function lintSources(args) {
   let eslintArgs = [
-    '--ignore-pattern', '"**/__tests__/**"',
+    '--ignore-pattern "src/**/__tests__"',
+    '--ignore-pattern "src/**/__tests__/**"',
     ...BASIC_ARGS,
   ]
 
@@ -59,9 +60,9 @@ function lintSources(args) {
 
 function lintTests(args) {
   let eslintArgs = [
-    '--ignore-pattern', '"src/**"',
-    '--ignore-pattern', '"!**/__tests__"',
-    '--ignore-pattern', '"!**/__tests__/**"',
+    '--ignore-pattern "src/**"',
+    '--ignore-pattern "!**/__tests__"',
+    '--ignore-pattern "!**/__tests__/**"',
     ...BASIC_ARGS,
   ]
 
