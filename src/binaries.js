@@ -15,6 +15,13 @@ import {pickNonFalsy} from './util'
 import {spawnSync} from 'npm-run'
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
+  let {debugToolbox} = env
+  if (debugToolbox) {
+    console.log('Borela Toolbox | Spawning binary')
+    console.log('targetBinary: ', targetBinary)
+    console.log('args: ', args)
+    console.log('env: ', env)
+  }
   spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,
     env: {borela: JSON.stringify(pickNonFalsy(env))},
