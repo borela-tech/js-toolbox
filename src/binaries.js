@@ -21,12 +21,9 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
   let {debugToolbox} = env
   if (debugToolbox) {
     console.log('Borela Toolbox | Spawning binary')
-    console.log('Binary:')
-    console.log(prettyFormat(targetBinary))
-    console.log('Arguments:')
-    console.log(prettyFormat(args))
-    console.log('Environment:')
-    console.log(prettyFormat(env))
+    console.log('Binary: ', prettyFormat(targetBinary))
+    console.log('Arguments: ', prettyFormat(args))
+    console.log('Environment: ', prettyFormat(env))
   }
 
   let result = spawnSync(targetBinary, args, {
@@ -36,10 +33,8 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
     stdio: 'inherit',
   })
 
-  if (debugToolbox) {
-    console.log('Spawn result:')
-    console.log(prettyFormat(result))
-  }
+  if (debugToolbox)
+    console.log('Spawn result: ', prettyFormat(result))
 
   if (result.status != SUCCESS)
     process.exit(result.status)
