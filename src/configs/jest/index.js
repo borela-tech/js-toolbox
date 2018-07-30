@@ -27,6 +27,6 @@ const CONFIG = {
 }
 
 if (debugToolbox)
-  console.log('Borela Toolbox | ESLint configuration: ', CONFIG)
+  console.log('Borela Toolbox | Jest configuration: ', CONFIG)
 
 module.exports = CONFIG
