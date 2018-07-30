@@ -74,8 +74,6 @@ function lintTests(args) {
 }
 
 function handler(args) {
-  assertBinaryExists('eslint')
-
   console.log()
   console.log('[1/2] Linting sources...')
   lintSources(args)

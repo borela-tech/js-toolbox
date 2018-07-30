@@ -11,37 +11,16 @@
 // the License.
 
 import {existsSync} from 'fs'
-import {getSync as getPathSync, PATH} from 'npm-path'
 import {join} from 'path'
-import {PACKAGE_DIR, BIN_DIR} from './paths'
+import {PACKAGE_DIR} from './paths'
 import {pickNonFalsy} from './util'
-import {spawnSync} from 'child_process'
-
-export function assertBinaryExists(targetBinary:string) {
-  if (!existsSync(getBinaryPath(targetBinary)))
-    throw new Error(`Binary “${targetBinary}” not found.`)
-}
-
-export function getBinaryPath(targetBinary:string) {
-  const BIN = join(BIN_DIR, targetBinary)
-  return process.platform === 'win32' ? `${BIN}.cmd` : BIN
-}
+import {spawnSync} from 'npm-run'
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
-  // const FOUND_BINARY = getBinaryPath(targetBinary)
-
-  env[PATH] = getPathSync()
-  env = pickNonFalsy(env)
-
-  if (env.debugToolbox) {
-    console.log('CWD: ', PACKAGE_DIR)
-    console.log('Env: ', env)
-    console.log('Binary: ', targetBinary)
-  }
-
   spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,
-    env: {borela: JSON.stringify(env)},
+    env: {borela: JSON.stringify(pickNonFalsy(env))},
+    shell: true,
     stdio: 'inherit',
   })
 }
