@@ -30,6 +30,9 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
     stdio: 'inherit',
   })
 
+  if (debugToolbox)
+    console.log(result)
+
   if (result.error)
     process.exit(result.status)
 }
