@@ -1,12 +1,12 @@
-<a href="//github.com/borela-tech/toolbox">
+<a href="//github.com/borela-tech/js-toolbox">
   <img src="./art/logo.svg" width="300px">
 </a>
 
-[![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/toolbox.svg?style=social)][watchers]
-[![GitHub stars](https://img.shields.io/github/stars/borela-tech/toolbox.svg?style=social)][stars]
-[![GitHub issues](https://img.shields.io/github/issues/borela-tech/toolbox.svg?style=social)][issues]
-[![GitHub pulls](https://img.shields.io/github/issues-pr/borela-tech/toolbox.svg?style=social)][pulls]
-[![GitHub forks](https://img.shields.io/github/forks/borela-tech/toolbox.svg?style=social)][forks]
+[![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/js-toolbox.svg?style=social)][watchers]
+[![GitHub stars](https://img.shields.io/github/stars/borela-tech/js-toolbox.svg?style=social)][stars]
+[![GitHub issues](https://img.shields.io/github/issues/borela-tech/js-toolbox.svg?style=social)][issues]
+[![GitHub pulls](https://img.shields.io/github/issues-pr/borela-tech/js-toolbox.svg?style=social)][pulls]
+[![GitHub forks](https://img.shields.io/github/forks/borela-tech/js-toolbox.svg?style=social)][forks]
 
 [![Build Travis](https://img.shields.io/travis/com/borela-tech/js-toolbox.svg?style=flat-square)][travis-build]
 [![Build Appveyor](https://img.shields.io/appveyor/tests/borela-tech/js-toolbox.svg?style=flat-square)][appveyor-build]
@@ -239,11 +239,11 @@ bb test
 
 Run [Jest][jest].
 
-[forks]: //github.com/borela-tech/toolbox/network/members
-[issues]: //github.com/borela-tech/toolbox/issues
-[pulls]: //github.com/borela-tech/toolbox/pulls
-[stars]: //github.com/borela-tech/toolbox/stargazers
-[watchers]: //github.com/borela-tech/toolbox/watchers
+[forks]: //github.com/borela-tech/js-toolbox/network/members
+[issues]: //github.com/borela-tech/js-toolbox/issues
+[pulls]: //github.com/borela-tech/js-toolbox/pulls
+[stars]: //github.com/borela-tech/js-toolbox/stargazers
+[watchers]: //github.com/borela-tech/js-toolbox/watchers
 
 [babel]: //babeljs.io
 [eslint]: //eslint.org
@@ -256,7 +256,7 @@ Run [Jest][jest].
 [react-hot-loader]: //github.com/gaearon/react-hot-loader
 [react]: //reactjs.org
 [red-box-react]: //github.com/commissure/redbox-react
-[toolbox]: //github.com/borela-tech/toolbox
+[toolbox]: //github.com/borela-tech/js-toolbox
 [typescript]: //www.typescriptlang.org
 [webpack]: //webpack.js.org
 [yargs]: //yargs.js.org
