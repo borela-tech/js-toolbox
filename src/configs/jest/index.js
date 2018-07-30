@@ -15,10 +15,12 @@ import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-let {debugConfigs, debugToolbox} = getSettings()
+let {debugConfigs, debugToolbox, platforms} = getSettings()
+const BROWSER = platforms.includes('browser')
 
 const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
+  testEnvironment: BROWSER ? 'jsdom' : 'node',
   testRegex: '__tests__',
   testPathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
   testURL: 'http://localhost',
