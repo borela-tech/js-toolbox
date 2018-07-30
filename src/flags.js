@@ -26,7 +26,7 @@ export function commentFlow(yargs) {
 }
 
 export function debugToolbox(yargs) {
-  yargs.option('debugToolbox', {
+  yargs.option('debug-toolbox', {
     description: 'Enable Toolbox’s debug messages.',
     type: 'boolean',
   })
