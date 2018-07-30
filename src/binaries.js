@@ -22,10 +22,14 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
     console.log('args: ', args)
     console.log('env: ', env)
   }
-  spawnSync(targetBinary, args, {
+
+  let result = spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,
     env: {borela: JSON.stringify(pickNonFalsy(env))},
     shell: true,
     stdio: 'inherit',
   })
+
+  if (result.error)
+    process.exit(result.status)
 }
