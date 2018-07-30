@@ -28,7 +28,10 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
 
   let result = spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,
-    env: {borela: JSON.stringify(pickNonFalsy(env))},
+    env: {
+      ...process.env,
+      borela: JSON.stringify(pickNonFalsy(env)),
+    },
     shell: true,
     stdio: 'inherit',
   })
