@@ -21,6 +21,7 @@ const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
   testRegex: '__tests__',
   testPathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
+  testURL: 'http://localhost',
   transform: {
     '^.+\\.(jsx?)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
   },
