@@ -18,18 +18,19 @@ import {spawnSync} from 'npm-run'
 const SUCCESS = 0
 
 export function exitOnError(runBinResult) {
-  if (runBinResult.status != SUCCESS)
+  if (runBinResult.status !== SUCCESS)
     process.exit(runBinResult.status)
 }
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
   let {debugToolbox} = env
-  if (debugToolbox)
+  if (debugToolbox) {
     console.log('Spawning binary: ', prettyFormat({
       Arguments: args,
       Binary: targetBinary,
       Environment: env,
     }))
+  }
 
   let result = spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,

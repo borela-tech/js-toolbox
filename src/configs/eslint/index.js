@@ -22,7 +22,7 @@ let {
   jest,
   platforms,
   react,
-  typeScript
+  typeScript,
 } = getSettings()
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 let optionalExtensions = []
