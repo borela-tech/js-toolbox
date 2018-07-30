@@ -14,8 +14,15 @@ import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
+let {
+  debugToolbox,
+  flow,
+  jest,
+  platforms,
+  react,
+  typeScript
+} = getSettings()
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
-let {flow, jest, platforms, react, typeScript} = getSettings()
 let optionalExtensions = []
 
 if (flow)
@@ -31,7 +38,7 @@ if (typeScript) {
 // TODO
 }
 
-module.exports = {
+const CONFIG = {
   env: {
     jest,
     browser: platforms.includes('browser'),
@@ -50,3 +57,8 @@ module.exports = {
     ...optionalExtensions,
   ],
 }
+
+if (debugToolbox)
+  console.log('Borela Toolbox | ESLint configuration: ', CONFIG)
+
+module.exports = CONFIG

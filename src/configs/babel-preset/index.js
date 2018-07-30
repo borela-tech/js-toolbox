@@ -21,6 +21,7 @@ import {getSettings} from '../toolbox'
 module.exports = function () {
   let {
     browsers,
+    debugToolbox,
     node,
     platforms,
     production,
@@ -47,6 +48,9 @@ module.exports = function () {
     // babel generate inline source maps.
     result.plugins.push(getModulePath('babel-plugin-source-map-support'))
   }
+
+  if (debugToolbox)
+    console.log('Borela Toolbox | Babel Preset: ', result)
 
   return result
 }

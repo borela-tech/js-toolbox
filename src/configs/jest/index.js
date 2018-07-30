@@ -11,9 +11,12 @@
 // the License.
 
 import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
+import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-module.exports = {
+let {debugToolbox} = getSettings()
+
+const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
   testRegex: '__tests__',
   testPathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
@@ -22,3 +25,8 @@ module.exports = {
   },
   verbose: true,
 }
+
+if (debugToolbox)
+  console.log('Borela Toolbox | ESLint configuration: ', CONFIG)
+
+module.exports = CONFIG
