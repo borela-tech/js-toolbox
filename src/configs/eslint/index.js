@@ -46,7 +46,7 @@ const CONFIG = {
     browser: platforms.includes('browser'),
     node: platforms.includes('node'),
   },
-  parser: 'Babel-ESLint',
+  parser: 'babel-eslint',
   plugins: ['eslint-plugin-babel'],
   extends: [
     join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
