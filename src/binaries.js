@@ -21,9 +21,9 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
   let {debugToolbox} = env
   if (debugToolbox)
     console.log('Spawning binary: ', prettyFormat({
-      Arguments: prettyFormat(args),
-      Binary: prettyFormat(targetBinary),
-      Environment: prettyFormat(env),
+      Arguments: args,
+      Binary: targetBinary,
+      Environment: env,
     }))
 
   let result = spawnSync(targetBinary, args, {
