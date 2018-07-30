@@ -17,37 +17,19 @@ environment:
     - nodejs_version: '10'
 
 install:
+  # Install NodeJS.
   - ps: Install-Product node $env:nodejs_version
+  # Install dependencies.
+  - npm install
+  # We are using the project itself to do the linting and run the tests but it
+  # needs to be compiled first.
+  - npm run dev
+  # Make the project available on PATH.
+  - npm link
 
 platform:
   - x64
 
-
-
-
-
-
-before_script:
-  # We are using the project itself to do the linting and run the tests but it
-  # needs to be compiled first.
-  - npm run dev
-  # Make the project available.
-  - npm link
-
-language: node_js
-
-node_js:
-  - '8.9'
-  - '9'
-  - '10'
-
-notifications:
-  email: false
-
-os:
-  - linux
-  - osx
-
-script:
+test_script:
   - bb lint
   - bb test
