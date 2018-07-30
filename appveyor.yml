@@ -10,6 +10,9 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
+# Disable automatic build(MSBuild).
+build: off
+
 environment:
   matrix:
     - nodejs_version: '8.9'
