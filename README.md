@@ -8,8 +8,8 @@
 [![GitHub pulls](https://img.shields.io/github/issues-pr/borela-tech/js-toolbox.svg?style=social)][pulls]
 [![GitHub forks](https://img.shields.io/github/forks/borela-tech/js-toolbox.svg?style=social)][forks]
 
-[![Build Travis](https://img.shields.io/travis/com/borela-tech/js-toolbox.svg?style=flat-square)][travis-build]
-[![Build Appveyor](https://img.shields.io/appveyor/tests/borela-tech/js-toolbox.svg?style=flat-square)][appveyor-build]
+[![Build Travis](https://img.shields.io/travis/borela-tech/js-toolbox.svg?style=flat-square&label=linux%20%26%20osx)][travis-build]
+[![Build Appveyor](https://img.shields.io/appveyor/ci/borela/js-toolbox/master.svg?style=flat-square&label=windows)][appveyor-build]
 [![NodeJS version](https://img.shields.io/badge/nodejs-%E2%89%A58.9-orange.svg?style=flat-square)][nodejs]
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20OSX-ff4081.svg?style=flat-square)][toolbox]
 [![License](https://img.shields.io/badge/license-Apache%202.0-ba68c8.svg?style=flat-square)][toolbox]
