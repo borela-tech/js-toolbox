@@ -13,7 +13,7 @@
 import prettyFormat from 'pretty-format'
 import {PACKAGE_DIR} from './paths'
 import {pickNonFalsy} from './util'
-import {spawnSync} from 'npm-run'
+import {spawn, spawnSync} from 'npm-run'
 
 const SUCCESS = 0
 
@@ -23,6 +23,19 @@ export function exitOnError(runBinResult) {
 }
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
+  return internalRunBin(spawn, targetBinary, args, env)
+}
+
+export function runBinSync(targetBinary:string, args:string[], env?:Object) {
+  return internalRunBin(spawnSync, targetBinary, args, env)
+}
+
+function internalRunBin(
+  spawnFunction:Function,
+  targetBinary:string,
+  args:string[],
+  env?:Object
+):Object|ChildProcess {
   let {debugToolbox} = env
   if (debugToolbox) {
     console.log('Spawning binary: ', prettyFormat({
@@ -32,7 +45,7 @@ export function runBin(targetBinary:string, args:string[], env?:Object) {
     }))
   }
 
-  let result = spawnSync(targetBinary, args, {
+  let result = spawnFunction(targetBinary, args, {
     cwd: PACKAGE_DIR,
     env: {
       ...process.env,

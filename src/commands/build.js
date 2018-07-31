@@ -23,7 +23,7 @@ import {
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {exitOnError, runBin} from '../binaries'
+import {exitOnError, runBinSync} from '../binaries'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
@@ -48,8 +48,8 @@ function builder(yargs) {
 
 function handler(args) {
   const ENV = args
-  exitOnError(runBin('rimraf', ['"build"']))
-  exitOnError(runBin('babel', BABEL_ARGS, ENV))
+  exitOnError(runBinSync('rimraf', ['"build"']))
+  exitOnError(runBinSync('babel', BABEL_ARGS, ENV))
 }
 
 export default {
