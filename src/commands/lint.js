@@ -78,12 +78,9 @@ function handler(args) {
   console.log()
   console.log('[0/2] Linting sources...')
   let resultSources = lintSources(args)
-
   console.log('[1/2] Linting tests...')
   let resultTests = lintTests(args)
-
   console.log('[2/2] Done linting.')
-
   exitOnError(resultSources)
   exitOnError(resultTests)
 }
