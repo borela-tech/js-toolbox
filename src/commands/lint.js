@@ -21,11 +21,11 @@ import {
 } from '../flags'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {join} from 'path'
-import {assertBinaryExists, runBin} from '../binaries'
+import {exitOnError, runBin} from '../binaries'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const BASIC_ARGS = [
-  '--config', CONFIG_PATH,
+  `--config "${CONFIG_PATH}"`,
   join(PACKAGE_DIR, 'src'),
 ]
 
@@ -45,7 +45,8 @@ function builder(yargs) {
 
 function lintSources(args) {
   let eslintArgs = [
-    '--ignore-pattern', '**/__tests__/**',
+    '--ignore-pattern "src/**/__tests__"',
+    '--ignore-pattern "src/**/__tests__/**"',
     ...BASIC_ARGS,
   ]
 
@@ -54,14 +55,14 @@ function lintSources(args) {
     eslintArgs.push('--fix')
 
   let env = args
-  runBin('eslint', eslintArgs, env)
+  return runBin('eslint', eslintArgs, env)
 }
 
 function lintTests(args) {
   let eslintArgs = [
-    '--ignore-pattern', 'src/**',
-    '--ignore-pattern', '!**/__tests__',
-    '--ignore-pattern', '!**/__tests__/**',
+    '--ignore-pattern "src/**"',
+    '--ignore-pattern "!**/__tests__"',
+    '--ignore-pattern "!**/__tests__/**"',
     ...BASIC_ARGS,
   ]
 
@@ -70,24 +71,19 @@ function lintTests(args) {
     eslintArgs.push('--fix')
 
   let env = {jest: true, ...args}
-  runBin('eslint', eslintArgs, env)
+  return runBin('eslint', eslintArgs, env)
 }
 
 function handler(args) {
-  assertBinaryExists('eslint')
-
   console.log()
   console.log('[1/2] Linting sources...')
-  lintSources(args)
+  let resultSources = lintSources(args)
 
   console.log('[2/2] Linting tests...')
-  lintTests(args)
-}
+  let resultTests = lintTests(args)
 
-function getBufferString(buffer:Buffer):string|undefined {
-  return buffer.length
-    ? buffer.toString().replace(/\n+$/, '')
-    : undefined
+  exitOnError(resultSources)
+  exitOnError(resultTests)
 }
 
 export default {

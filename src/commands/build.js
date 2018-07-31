@@ -16,13 +16,14 @@ import {
   jsx,
   node,
   platforms,
+  production,
   react,
   removeFlow,
   typeScript,
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {assertBinaryExists, runBin} from '../binaries'
+import {exitOnError, runBin} from '../binaries'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
@@ -39,18 +40,16 @@ function builder(yargs) {
   jsx(yargs)
   node(yargs)
   platforms(yargs)
+  production(yargs)
   react(yargs)
   removeFlow(yargs)
   typeScript(yargs)
 }
 
 function handler(args) {
-  assertBinaryExists('rimraf')
-  assertBinaryExists('babel')
-
   let env = args
-  runBin('rimraf', ['"build"'])
-  runBin('babel', BABEL_ARGS, env)
+  exitOnError(runBin('rimraf', ['"build"']))
+  exitOnError(runBin('babel', BABEL_ARGS, env))
 }
 
 export default {

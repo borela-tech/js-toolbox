@@ -10,15 +10,27 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
+import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-module.exports = {
+let {debugConfigs, debugToolbox, platforms} = getSettings()
+const BROWSER = platforms.includes('browser')
+
+const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
+  testEnvironment: BROWSER ? 'jsdom' : 'node',
   testRegex: '__tests__',
   testPathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
+  testURL: 'http://localhost',
   transform: {
     '^.+\\.(jsx?)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
   },
   verbose: true,
 }
+
+if (debugConfigs || debugToolbox)
+  console.log('Jest config: ', prettyFormat(CONFIG))
+
+module.exports = CONFIG

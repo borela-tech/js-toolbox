@@ -45,17 +45,17 @@ describe.each([
     })
   })
 
-  describe('CTRINE_JS', () => {
-    test('It has the path to a “ctrine.js” file at the package’s root', () => {
-      const {CTRINE_JS} = require('../../paths')
-      expect(CTRINE_JS).toBe(join(root, 'ctrine.js'))
+  describe('BORELA_JS', () => {
+    test('It has the path to a “borela.js” file at the package’s root', () => {
+      const {BORELA_JS} = require('../../paths')
+      expect(BORELA_JS).toBe(join(root, 'borela.js'))
     })
   })
 
-  describe('CTRINE_JSON', () => {
-    test('It has the path to a “ctrine.json” file at the package’s root', () => {
-      const {CTRINE_JSON} = require('../../paths')
-      expect(CTRINE_JSON).toBe(join(root, 'ctrine.json'))
+  describe('BORELA_JSON', () => {
+    test('It has the path to a “borela.json” file at the package’s root', () => {
+      const {BORELA_JSON} = require('../../paths')
+      expect(BORELA_JSON).toBe(join(root, 'borela.json'))
     })
   })
 
@@ -71,7 +71,6 @@ describe.each([
 // accidental changes to the paths which could make the CLI hard to debug.
 
 const TOOLBOX_ROOT = join(__dirname, '..', '..', '..')
-const TOOLBOX_BIN = join(TOOLBOX_ROOT, 'node_modules', '.bin')
 const TOOLBOX_CONFIGS = join(TOOLBOX_ROOT, 'build', 'configs')
 const TOOLBOX_MODULES = join(TOOLBOX_ROOT, 'node_modules')
 const TOOLBOX_TEMPLATES = join(TOOLBOX_ROOT, 'templates')
@@ -81,13 +80,6 @@ describe('Toolbox path helpers', () => {
     test('It has the toolbox’s root path', () => {
       const {TOOLBOX_DIR} = require('../../paths')
       expect(TOOLBOX_DIR).toBe(TOOLBOX_ROOT)
-    })
-  })
-
-  describe('BIN_DIR', () => {
-    test('It has the toolbox’s “.bin” path', () => {
-      const {BIN_DIR} = require('../../paths')
-      expect(BIN_DIR).toBe(TOOLBOX_BIN)
     })
   })
 

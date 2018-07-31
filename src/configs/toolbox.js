@@ -12,34 +12,34 @@
 
 import {camelizeKeys} from 'humps'
 import {
-  CTRINE_JS as CTRINE_JS_PATH,
-  CTRINE_JSON as CTRINE_JSON_PATH,
+  BORELA_JS as BORELA_JS_PATH,
+  BORELA_JSON as BORELA_JSON_PATH,
   PACKAGE_JSON as PACKAGE_JSON_PATH,
 } from '../paths'
 import {existsSync} from 'fs'
 import {interopRequire} from '../util'
 
 const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
-  ? require(PACKAGE_JSON_PATH).ctrine
+  ? require(PACKAGE_JSON_PATH).borela
   : {}
 
-const CTRINE_JS = existsSync(CTRINE_JS_PATH)
-  ? interopRequire(CTRINE_JS_PATH)
+const BORELA_JS = existsSync(BORELA_JS_PATH)
+  ? interopRequire(BORELA_JS_PATH)
   : {}
 
-const CTRINE_JSON = existsSync(CTRINE_JSON_PATH)
-  ? require(CTRINE_JSON_PATH)
+const BORELA_JSON = existsSync(BORELA_JSON_PATH)
+  ? require(BORELA_JSON_PATH)
   : {}
 
-const ENV = process.env.ctrine
-  ? JSON.parse(process.env.ctrine)
+const ENV = process.env.borela
+  ? JSON.parse(process.env.borela)
   : {}
 
 export function getSettings() {
   return {
     ...camelizeKeys(PACKAGE_JSON),
-    ...camelizeKeys(CTRINE_JSON),
-    ...camelizeKeys(CTRINE_JS),
+    ...camelizeKeys(BORELA_JSON),
+    ...camelizeKeys(BORELA_JS),
     ...camelizeKeys(ENV),
   }
 }

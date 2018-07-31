@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "Foo bar baz.",
   "license": "Apache-2.0",
+  "scripts": {
+    "build": "bb build --production",
+    "dev": "bb build",
+    "dev-w": "bb build --watch",
+    "lint": "bb lint",
+    "test": "bb test",
+    "test-w": "bb test --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/foo/bar.git"
@@ -15,7 +23,7 @@
     "email": "foo@bar.com",
     "url": "www.bar.com"
   },
-  "ctrine": {
+  "borela": {
     "platforms": ["browser", "node"]
   }
 }

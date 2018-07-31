@@ -1,7 +1,7 @@
 {
   "name": "foo",
   "version": 42,
-  "ctrine": {
+  "borela": {
     "foo": 1,
     "bar": 1,
     "baz": 1,

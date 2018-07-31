@@ -10,35 +10,40 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {existsSync} from 'fs'
-import {join} from 'path'
-import {PACKAGE_DIR, BIN_DIR} from './paths'
+import prettyFormat from 'pretty-format'
+import {PACKAGE_DIR} from './paths'
 import {pickNonFalsy} from './util'
-import {spawnSync} from 'child_process'
+import {spawnSync} from 'npm-run'
 
-export function assertBinaryExists(targetBinary:string) {
-  if (!existsSync(getBinaryPath(targetBinary)))
-    throw new Error(`Binary “${targetBinary}” not found.`)
-}
+const SUCCESS = 0
 
-export function getBinaryPath(targetBinary:string) {
-  const BIN = join(BIN_DIR, targetBinary)
-  return process.platform === 'win32' ? `${BIN}.cmd` : BIN
+export function exitOnError(runBinResult) {
+  if (runBinResult.status !== SUCCESS)
+    process.exit(runBinResult.status)
 }
 
 export function runBin(targetBinary:string, args:string[], env?:Object) {
-  const FOUND_BINARY = getBinaryPath(targetBinary)
-  return spawnSync(FOUND_BINARY, args, {
+  let {debugToolbox} = env
+  if (debugToolbox) {
+    console.log('Spawning binary: ', prettyFormat({
+      Arguments: args,
+      Binary: targetBinary,
+      Environment: env,
+    }))
+  }
+
+  let result = spawnSync(targetBinary, args, {
     cwd: PACKAGE_DIR,
-    env: {ctrine: JSON.stringify(pickNonFalsy(env))},
+    env: {
+      ...process.env,
+      borela: JSON.stringify(pickNonFalsy(env)),
+    },
+    shell: true,
     stdio: 'inherit',
   })
-}
 
-export function runBinPiped(targetBinary:string, args:string[], env?:Object) {
-  const FOUND_BINARY = getBinaryPath(targetBinary)
-  return spawnSync(FOUND_BINARY, args, {
-    cwd: PACKAGE_DIR,
-    env: {ctrine: JSON.stringify(pickNonFalsy(env))},
-  })
+  if (debugToolbox)
+    console.log('Spawn result: ', prettyFormat(result))
+
+  return result
 }

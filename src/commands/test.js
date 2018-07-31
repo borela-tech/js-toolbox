@@ -21,7 +21,7 @@ import {
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {assertBinaryExists, runBin} from '../binaries'
+import {exitOnError, runBin} from '../binaries'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 
@@ -44,14 +44,12 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  assertBinaryExists('jest')
-
   let jestArgs = [`--config=${CONFIG_PATH}`]
   if (args.watch)
     jestArgs.push('--watch')
 
   let env = args
-  runBin('jest', jestArgs, env)
+  exitOnError(runBin('jest', jestArgs, env))
 }
 
 export default {

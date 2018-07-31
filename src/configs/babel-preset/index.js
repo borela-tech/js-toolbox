@@ -14,6 +14,7 @@ import experimental from './plugins/experimental'
 import flow from './plugins/flow'
 import jsx from './plugins/jsx'
 import react from './plugins/react'
+import prettyFormat from 'pretty-format'
 import typeScript from './plugins/typeScript'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
@@ -21,6 +22,8 @@ import {getSettings} from '../toolbox'
 module.exports = function () {
   let {
     browsers,
+    debugConfigs,
+    debugToolbox,
     node,
     platforms,
     production,
@@ -47,6 +50,9 @@ module.exports = function () {
     // babel generate inline source maps.
     result.plugins.push(getModulePath('babel-plugin-source-map-support'))
   }
+
+  if (debugConfigs || debugToolbox)
+    console.log('Babel config: ', prettyFormat(result))
 
   return result
 }

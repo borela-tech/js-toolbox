@@ -17,15 +17,14 @@ import {join} from 'path'
 export const PACKAGE_DIR = pkgDir.sync(process.cwd()) || ''
 
 // The toolbox can be configured through these files.
-export const CTRINE_JS = join(PACKAGE_DIR, 'ctrine.js')
-export const CTRINE_JSON = join(PACKAGE_DIR, 'ctrine.json')
+export const BORELA_JS = join(PACKAGE_DIR, 'borela.js')
+export const BORELA_JSON = join(PACKAGE_DIR, 'borela.json')
 export const PACKAGE_JSON = join(PACKAGE_DIR, 'package.json')
 
 // This is the path to the toolbox itself.
 export const TOOLBOX_DIR = join(__dirname, '..')
 
 // Other helpers to locate the assets.
-export const BIN_DIR = join(TOOLBOX_DIR, 'node_modules', '.bin')
 export const CONFIGS_DIR = join(TOOLBOX_DIR, 'build', 'configs')
 export const MODULES_DIR = join(TOOLBOX_DIR, 'node_modules')
 export const TEMPLATES_DIR = join(TOOLBOX_DIR, 'templates')

@@ -10,12 +10,21 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
+let {
+  debugConfigs,
+  debugToolbox,
+  flow,
+  jest,
+  platforms,
+  react,
+  typeScript,
+} = getSettings()
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
-let {flow, jest, platforms, react, typeScript} = getSettings()
 let optionalExtensions = []
 
 if (flow)
@@ -31,13 +40,13 @@ if (typeScript) {
 // TODO
 }
 
-module.exports = {
+const CONFIG = {
   env: {
     jest,
     browser: platforms.includes('browser'),
     node: platforms.includes('node'),
   },
-  parser: 'Babel-ESLint',
+  parser: 'babel-eslint',
   plugins: ['eslint-plugin-babel'],
   extends: [
     join(ESLINT_CONFIG_DIR, 'core', 'best-practices.js'),
@@ -50,3 +59,8 @@ module.exports = {
     ...optionalExtensions,
   ],
 }
+
+if (debugConfigs || debugToolbox)
+  console.log('ESLint config: ', prettyFormat(CONFIG))
+
+module.exports = CONFIG
