@@ -44,12 +44,11 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  let jestArgs = [`--config=${CONFIG_PATH}`]
+  let jestArgs = [`--config="${CONFIG_PATH}"`]
   if (args.watch)
     jestArgs.push('--watch')
-
-  let env = args
-  exitOnError(runBin('jest', jestArgs, env))
+  const ENV = args
+  exitOnError(runBin('jest', jestArgs, ENV))
 }
 
 export default {

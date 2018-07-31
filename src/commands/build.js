@@ -27,11 +27,11 @@ import {exitOnError, runBin} from '../binaries'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BABEL_ARGS = [
-  'src',
-  '-d', 'build',
-  '--ignore', '**/__tests__',
-  '--source-maps', 'inline',
-  `--presets=${PRESET_LOCATION}`,
+  '"src"',
+  '-d "build"',
+  '--ignore "**/__tests__"',
+  '--source-maps inline',
+  `--presets="${PRESET_LOCATION}"`,
 ]
 
 function builder(yargs) {
@@ -47,9 +47,9 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  let env = args
+  const ENV = args
   exitOnError(runBin('rimraf', ['"build"']))
-  exitOnError(runBin('babel', BABEL_ARGS, env))
+  exitOnError(runBin('babel', BABEL_ARGS, ENV))
 }
 
 export default {

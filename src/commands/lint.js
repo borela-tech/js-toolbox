@@ -26,7 +26,7 @@ import {exitOnError, runBin} from '../binaries'
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const BASIC_ARGS = [
   `--config "${CONFIG_PATH}"`,
-  join(PACKAGE_DIR, 'src'),
+  `"${join(PACKAGE_DIR, 'src')}"`,
 ]
 
 function builder(yargs) {
@@ -54,8 +54,8 @@ function lintSources(args) {
   if (fix)
     eslintArgs.push('--fix')
 
-  let env = args
-  return runBin('eslint', eslintArgs, env)
+  const ENV = args
+  return runBin('eslint', eslintArgs, ENV)
 }
 
 function lintTests(args) {
@@ -70,8 +70,8 @@ function lintTests(args) {
   if (fix)
     eslintArgs.push('--fix')
 
-  let env = {jest: true, ...args}
-  return runBin('eslint', eslintArgs, env)
+  const ENV = {jest: true, ...args}
+  return runBin('eslint', eslintArgs, ENV)
 }
 
 function handler(args) {
