@@ -10,6 +10,10 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
+cache:
+  directories:
+    - node_modules
+
 before_script:
   # We are using the project itself to do the linting and run the tests but it
   # needs to be compiled first.

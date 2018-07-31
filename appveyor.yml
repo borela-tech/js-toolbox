@@ -13,6 +13,9 @@
 # Disable automatic build(MSBuild).
 build: off
 
+cache:
+  - node_modules
+
 environment:
   matrix:
     - nodejs_version: '8.9'
