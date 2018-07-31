@@ -22,30 +22,30 @@ export function exitOnError(runBinResult) {
     process.exit(runBinResult.status)
 }
 
-export function runBin(targetBinary:string, args:string[], env?:Object) {
-  return internalRunBin(spawn, targetBinary, args, env)
+export function runBin(bin:string, args:string[], env?:Object) {
+  return internalRunBin(spawn, bin, args, env)
 }
 
-export function runBinSync(targetBinary:string, args:string[], env?:Object) {
-  return internalRunBin(spawnSync, targetBinary, args, env)
+export function runBinSync(bin:string, args:string[], env?:Object) {
+  return internalRunBin(spawnSync, bin, args, env)
 }
 
 function internalRunBin(
-  spawnFunction:Function,
-  targetBinary:string,
+  spawn:Function,
+  bin:string,
   args:string[],
-  env?:Object
-):Object|ChildProcess {
+  env?:Object,
+) {
   let {debugToolbox} = env
   if (debugToolbox) {
     console.log('Spawning binary: ', prettyFormat({
       Arguments: args,
-      Binary: targetBinary,
+      Binary: bin,
       Environment: env,
     }))
   }
 
-  let result = spawnFunction(targetBinary, args, {
+  let result = spawn(bin, args, {
     cwd: PACKAGE_DIR,
     env: {
       ...process.env,
