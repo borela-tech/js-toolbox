@@ -13,6 +13,7 @@
 import {
   browsers,
   commentFlow,
+  disableSourceMaps,
   jsx,
   node,
   platforms,
@@ -26,17 +27,17 @@ import {join} from 'path'
 import {exitOnError, runBinSync} from '../binaries'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
-const BABEL_ARGS = [
+const BASIC_ARGS = [
   '"src"',
   '-d "build"',
   '--ignore "**/__tests__"',
-  '--source-maps inline',
   `--presets="${PRESET_LOCATION}"`,
 ]
 
 function builder(yargs) {
   browsers(yargs)
   commentFlow(yargs)
+  disableSourceMaps(yargs)
   jsx(yargs)
   node(yargs)
   platforms(yargs)
@@ -47,9 +48,15 @@ function builder(yargs) {
 }
 
 function handler(args) {
+  let {disableSourceMaps} = args
+  let babelArgs = [...BASIC_ARGS]
+
+  if (!disableSourceMaps)
+    babelArgs.push('--source-maps inline')
+
   const ENV = args
   exitOnError(runBinSync('rimraf', ['"build"']))
-  exitOnError(runBinSync('babel', BABEL_ARGS, ENV))
+  exitOnError(runBinSync('babel', babelArgs, ENV))
 }
 
 export default {

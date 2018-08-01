@@ -39,6 +39,13 @@ export function debugToolbox(yargs) {
   })
 }
 
+export function disableSourceMaps(yargs) {
+  yargs.option('disable-source-maps', {
+    description: 'Disable source map generation.',
+    type: 'boolean',
+  })
+}
+
 export function flow(yargs) {
   yargs.option('flow', {
     description: 'Enable Flow annotations.',
