@@ -47,14 +47,25 @@ function builder(yargs) {
   react(yargs)
   removeFlow(yargs)
   typeScript(yargs)
+
+  yargs.options({
+    watch: {
+      default: false,
+      description: 'Watch for changes and rebuild files automatically.',
+      type: 'boolean',
+    },
+  })
 }
 
 function handler(args) {
-  let {disableSourceMaps} = args
+  let {disableSourceMaps, watch} = args
   let babelArgs = [...BASIC_ARGS]
 
   if (!disableSourceMaps)
     babelArgs.push('--source-maps inline')
+
+  if (watch)
+    babelArgs.push('--watch')
 
   const ENV = args
   exitOnError(runBinSync('rimraf', ['"build"']))
