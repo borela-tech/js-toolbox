@@ -13,6 +13,7 @@
 import {
   browsers,
   commentFlow,
+  disableExperimentalPlugins,
   disableSourceMaps,
   jsx,
   node,
@@ -37,6 +38,7 @@ const BASIC_ARGS = [
 function builder(yargs) {
   browsers(yargs)
   commentFlow(yargs)
+  disableExperimentalPlugins(yargs)
   disableSourceMaps(yargs)
   jsx(yargs)
   node(yargs)

@@ -12,6 +12,7 @@
 
 import {
   browsers,
+  disableExperimentalPlugins,
   flow,
   jsx,
   node,
@@ -27,6 +28,7 @@ const CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 
 function builder(yargs) {
   browsers(yargs)
+  disableExperimentalPlugins(yargs)
   flow(yargs)
   jsx(yargs)
   node(yargs)

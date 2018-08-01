@@ -39,6 +39,13 @@ export function debugToolbox(yargs) {
   })
 }
 
+export function disableExperimentalPlugins(yargs) {
+  yargs.option('disable-experimental-plugins', {
+    description: 'Disable Babel’s experimental plugins.',
+    type: 'boolean',
+  })
+}
+
 export function disableSourceMaps(yargs) {
   yargs.option('disable-source-maps', {
     description: 'Disable source map generation.',

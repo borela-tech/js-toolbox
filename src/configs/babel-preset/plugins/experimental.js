@@ -11,8 +11,13 @@
 // the License.
 
 import {babelProposalPlugin} from '../../../modules'
+import {getSettings} from '../../toolbox'
 
 export default function (plugins) {
+  let {disableExperimentalPlugins} = getSettings()
+  if (disableExperimentalPlugins)
+    return
+
   // https://babeljs.io/docs/en/next/babel-plugin-proposal-async-generator-functions
   plugins.push(babelProposalPlugin('async-generator-functions'))
 
