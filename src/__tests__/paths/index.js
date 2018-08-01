@@ -83,6 +83,13 @@ describe('Toolbox path helpers', () => {
     })
   })
 
+  describe('BIN_DIR', () => {
+    test('It has the toolbox’s “.bin” path', () => {
+      const {BIN_DIR} = require('../../paths')
+      expect(BIN_DIR).toBe(TOOLBOX_BIN)
+    })
+  })
+
   describe('CONFIGS_DIR', () => {
     test('It has the toolbox’s configs path', () => {
       const {CONFIGS_DIR} = require('../../paths')

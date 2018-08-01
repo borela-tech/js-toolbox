@@ -25,6 +25,7 @@ export const PACKAGE_JSON = join(PACKAGE_DIR, 'package.json')
 export const TOOLBOX_DIR = join(__dirname, '..')
 
 // Other helpers to locate the assets.
+export const BIN_DIR = join(TOOLBOX_DIR, 'node_modules', '.bin')
 export const CONFIGS_DIR = join(TOOLBOX_DIR, 'build', 'configs')
 export const MODULES_DIR = join(TOOLBOX_DIR, 'node_modules')
 export const TEMPLATES_DIR = join(TOOLBOX_DIR, 'templates')
