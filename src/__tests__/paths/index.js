@@ -71,6 +71,7 @@ describe.each([
 // accidental changes to the paths which could make the CLI hard to debug.
 
 const TOOLBOX_ROOT = join(__dirname, '..', '..', '..')
+const TOOLBOX_BIN = join(TOOLBOX_ROOT, 'node_modules', '.bin')
 const TOOLBOX_CONFIGS = join(TOOLBOX_ROOT, 'build', 'configs')
 const TOOLBOX_MODULES = join(TOOLBOX_ROOT, 'node_modules')
 const TOOLBOX_TEMPLATES = join(TOOLBOX_ROOT, 'templates')
