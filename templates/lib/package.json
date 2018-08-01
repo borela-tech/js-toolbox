@@ -22,8 +22,5 @@
     "name": "Foo Bar",
     "email": "foo@bar.com",
     "url": "www.bar.com"
-  },
-  "borela": {
-    "platforms": ["browser", "node"]
   }
 }

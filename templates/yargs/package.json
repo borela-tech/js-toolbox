@@ -27,9 +27,6 @@
     "email": "foo@bar.com",
     "url": "www.bar.com"
   },
-  "borela": {
-    "platforms": ["node"]
-  },
   "dependencies": {
     "yargs": "^12.0.0"
   }
