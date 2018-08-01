@@ -45,11 +45,12 @@ module.exports = function () {
   react(result.plugins)
   typeScript(result.plugins)
 
-  if (!production) {
+  // TODO: Implement source map using toolbox’s dependency.
+  // if (!production) {
     // IMPORTANT: This plugin will enable source map on stack traces but only if
     // babel generate inline source maps.
-    result.plugins.push(getModulePath('babel-plugin-source-map-support'))
-  }
+    // result.plugins.push(getModulePath('babel-plugin-source-map-support'))
+  // }
 
   if (debugConfigs || debugToolbox)
     console.log('Babel config: ', prettyFormat(result))
