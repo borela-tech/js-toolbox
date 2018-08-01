@@ -1,11 +1,11 @@
 {
-  "name": "FooBar",
+  "name": "",
   "version": "1.0.0",
-  "description": "Foo bar baz.",
+  "description": "",
   "license": "Apache-2.0",
   "bin": {
-    "foo": "build",
-    "bar": "build"
+    "foo": "build/index.js",
+    "bar": "build/index.js"
   },
   "scripts": {
     "build": "bb build --production",
@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/foo/bar.git"
+    "url": "git+https://github.com/a/b.git"
   },
   "bugs": {
-    "url": "https://github.com/foo/bar/issues"
+    "url": "https://github.com/a/b/issues"
   },
   "author": {
-    "name": "Foo Bar",
-    "email": "foo@bar.com",
-    "url": "www.bar.com"
+    "name": "",
+    "email": "",
+    "url": ""
   },
   "dependencies": {
     "yargs": "^12.0.0"
