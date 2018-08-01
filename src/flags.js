@@ -79,7 +79,7 @@ export function node(yargs) {
 
 export function platforms(yargs) {
   yargs.option('platforms', {
-    choices: ['browser', 'electron', 'node'],
+    choices: ['browser', 'node'],
     description: 'Used to determine the polyfills and fine tune the linter.',
     default: ['browser', 'node'],
     type: 'array',
