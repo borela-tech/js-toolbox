@@ -1,4 +1,4 @@
-<h1 align="center"><img src="art/full-logo.svg" alt="borela-js-toolbox" height="200px"></h1>
+<h1><img src="art/full-logo.svg" alt="borela-js-toolbox" height="200px"></h1>
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/js-toolbox.svg?style=social)][watchers]
 [![GitHub stars](https://img.shields.io/github/stars/borela-tech/js-toolbox.svg?style=social)][stars]
