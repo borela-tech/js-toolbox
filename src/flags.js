@@ -83,6 +83,13 @@ export function jsx(yargs) {
     .alias('j', 'jsx')
 }
 
+export function minify(yargs) {
+  yargs.option('minify', {
+    description: 'Minify source.',
+    type: 'boolean',
+  })
+}
+
 export function node(yargs) {
   yargs.option('node', {
     description: 'Minimum NodeJS version supported by the project.',

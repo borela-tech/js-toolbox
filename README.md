@@ -186,6 +186,7 @@ Polyfill flags:
 Other:
 
 * `--comment-flow`: Transform Flow annotations into comment blocks;
+* `--minify`: Minify the resulting code.
 * `--remove-flow`: Remove all Flow annotations.
 * `--watch`:  Watch for changes and rebuild files.
 

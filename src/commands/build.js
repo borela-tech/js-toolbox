@@ -16,6 +16,7 @@ import {
   disableExperimentalPlugins,
   disableSourceMaps,
   jsx,
+  minify,
   node,
   platforms,
   production,
@@ -43,6 +44,7 @@ function builder(yargs) {
   disableExperimentalPlugins(yargs)
   disableSourceMaps(yargs)
   jsx(yargs)
+  minify(yargs)
   node(yargs)
   platforms(yargs)
   production(yargs)
