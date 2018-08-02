@@ -1,8 +1,4 @@
-<h1>
-  <a href="//github.com/borela-tech/js-toolbox">
-    <img src="./art/logo.svg" width="300px">
-  </a>
-</h1>
+<p align="center"><img src="design/favicon.png" alt="js-toolbox" height="300px"></p>
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/js-toolbox.svg?style=social)][watchers]
 [![GitHub stars](https://img.shields.io/github/stars/borela-tech/js-toolbox.svg?style=social)][stars]
