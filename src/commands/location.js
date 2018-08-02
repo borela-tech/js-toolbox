@@ -10,8 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export build from './build'
-export lint from './lint'
-export location from './location'
-export scaffold from './scaffold'
-export test from './test'
+import {join} from 'path'
+
+function handler(args) {
+  console.log(join(__dirname, '..', '..'))
+}
+
+export default {
+  command: 'location',
+  description: 'Returns the Toolbox’s location.',
+  handler,
+}

@@ -14,7 +14,7 @@
 
 import packageInfo from '../package'
 import Yargs from 'yargs'
-import {build, lint, scaffold, test} from './commands'
+import {build, lint, location, scaffold, test} from './commands'
 import {debugConfigs, debugToolbox} from './flags'
 import {EPILOG, PROLOG} from './banner'
 import {PACKAGE_DIR} from './paths'
@@ -31,11 +31,14 @@ debugToolbox(PARSER)
 
 if (PACKAGE_DIR) {
   PARSER.command(build)
-    .command(scaffold)
     .command(lint)
+    .command(location)
+    .command(scaffold)
     .command(test)
-} else
-  PARSER.command(scaffold)
+} else {
+  PARSER.command(location)
+    .command(scaffold)
+}
 
 PARSER.demandCommand(1, 'Error: Use one of the commands available.')
   .recommendCommands()
