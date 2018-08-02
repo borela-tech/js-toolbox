@@ -106,7 +106,7 @@ bb nodemon
 ```
 
 This command will start the server using [nodemon][nodemon] and any changes to
-the files will make nodemon restart the server.
+the files will restart the server.
 
 ## Creating a Single Page [React][react] Application
 
@@ -174,14 +174,11 @@ the project type requires bundling, [Webpack][webpack] will be used.
 
 Feature flags:
 
+* `--disable-experimental-plugins`: Disable [Babel’s experimental plugins][experimental-plugins].
+* `--disable-source-maps`: Disable source map generation.
 * `-j, --jsx`: Enable JSX;
 * `-r, --react`: Enable React;
-* `-t, --type-script`: Enable TypeScript;
-
-Transformation flags:
-
-* `--comment-flow`: Transform Flow annotations into comment blocks;
-* `--remove-flow`: Remove all Flow annotations.
+* `-t, --type-script`: Enable TypeScript;a
 
 Polyfill flags:
 
@@ -189,6 +186,12 @@ Polyfill flags:
 * `--node`¹: Minimum supported NodeJS version;
 * `--platforms`: Controls the polyfills and it is used to determine if multiple
   build outputs are necessary based on the platforms specified;
+
+Other:
+
+* `--comment-flow`: Transform Flow annotations into comment blocks;
+* `--remove-flow`: Remove all Flow annotations.
+* `--watch`:  Watch for changes and rebuild files.
 
 ¹ The polyfill flags `browsers` and `node` are passed directly to
 [@babel/preset-env][preset-env], you can find more information of the accepted
@@ -239,7 +242,28 @@ Serve a application using [Webpack’s Development Server][webpack-dev-server].
 bb test
 ```
 
-Run [Jest][jest].
+Run [Jest][jest] on the project.
+
+Feature flags:
+
+* `--disable-experimental-plugins`: Disable [Babel’s experimental plugins][experimental-plugins].
+* `--disable-source-maps`: Disable source map generation.
+* `-j, --jsx`: Enable JSX;
+* `-r, --react`: Enable React;
+* `-t, --type-script`: Enable TypeScript;a
+
+Polyfill flags:
+
+* `--browsers`¹: Supported browsers;
+* `--node`¹: Minimum supported NodeJS version;
+* `--platforms`: Controls the polyfills and it is used to determine if multiple
+  build outputs are necessary based on the platforms specified;
+
+Other:
+
+* `--comment-flow`: Transform Flow annotations into comment blocks;
+* `--remove-flow`: Remove all Flow annotations.
+* `--watch`:  Watch for changes and rebuild files.
 
 [forks]: //github.com/borela-tech/js-toolbox/network/members
 [issues]: //github.com/borela-tech/js-toolbox/issues
