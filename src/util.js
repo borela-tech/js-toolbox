@@ -16,7 +16,7 @@ export function exitOnPackageNotFound() {
   if (PACKAGE_DIR)
     return
 
-  console.log("No valid “package.json” found.")
+  console.log('No valid “package.json” found.')
   process.exit(1)
 }
 

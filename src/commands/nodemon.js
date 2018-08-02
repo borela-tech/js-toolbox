@@ -15,8 +15,7 @@ import {join} from 'path'
 import {PACKAGE_DIR} from '../paths'
 
 function handler(args) {
-  console.log(PACKAGE_DIR)
-  // exitOnError(runBinSync('nodemon', [`"${PACKAGE_DIR}"`]))
+  exitOnError(runBinSync('nodemon', [`"${PACKAGE_DIR}"`]))
 }
 
 export default {

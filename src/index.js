@@ -25,7 +25,6 @@ import {
 } from './commands'
 import {debugConfigs, debugToolbox} from './flags'
 import {EPILOG, PROLOG} from './banner'
-import {PACKAGE_DIR} from './paths'
 
 const PARSER = Yargs.scriptName('bb')
   .usage(PROLOG)
