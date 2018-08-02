@@ -10,6 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+export function appArgs(yargs) {
+  yargs.option('app-args', {
+    description: 'Arguments passed to the app.',
+    type: 'string',
+  })
+}
+
 export function browsers(yargs) {
   yargs.option('browsers', {
     description: 'Browsers supported by the project.',
@@ -59,6 +66,13 @@ export function flow(yargs) {
     type: 'boolean',
   })
     .alias('f', 'flow')
+}
+
+export function inspect(yargs) {
+  yargs.option('inspect', {
+    description: 'Enable NodeJS inspector.',
+    type: 'boolean',
+  })
 }
 
 export function jsx(yargs) {

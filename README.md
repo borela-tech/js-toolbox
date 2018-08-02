@@ -224,6 +224,11 @@ bb nodemon
 
 Run the main script using [nodemon][nodemon].
 
+Flags:
+
+* `--app-args`: String containing the arguments that needs to be passed to your app.
+* `--inspect`: Enable NodeJS inspector.
+
 ### serve
 
 ```sh

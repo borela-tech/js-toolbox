@@ -10,16 +10,32 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {appArgs, inspect} from '../flags'
 import {exitOnError, runBinSync} from '../binaries'
 import {join} from 'path'
 import {PACKAGE_DIR} from '../paths'
 
+function builder(yargs) {
+  appArgs(yargs)
+  inspect(yargs)
+}
+
 function handler(args) {
-  exitOnError(runBinSync('nodemon', [`"${PACKAGE_DIR}"`]))
+  let {appArgs, inspect} = args
+  let nodemonArgs = [`"${PACKAGE_DIR}"`]
+
+  // Inspect needs to be passed before the script.
+  if (inspect) nodemonArgs.unshift('--inspect')
+
+  // The rest of the app args must be after the script.
+  if (appArgs) nodemonArgs.push(appArgs)
+
+  exitOnError(runBinSync('nodemon', nodemonArgs))
 }
 
 export default {
-  command: 'nodemon',
+  command: 'nodemon [args]',
   description: 'Run the project using nodemon.',
+  builder,
   handler,
 }
