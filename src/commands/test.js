@@ -23,6 +23,7 @@ import {
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
 import {exitOnError, runBinSync} from '../binaries'
+import {exitOnPackageNotFound} from '../util'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 
@@ -46,9 +47,12 @@ function builder(yargs) {
 }
 
 function handler(args) {
+  exitOnPackageNotFound()
+
   let jestArgs = [`--config="${CONFIG_PATH}"`]
   if (args.watch)
     jestArgs.push('--watch')
+
   const ENV = args
   exitOnError(runBinSync('jest', jestArgs, ENV))
 }

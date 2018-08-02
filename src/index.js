@@ -14,7 +14,7 @@
 
 import packageInfo from '../package'
 import Yargs from 'yargs'
-import {build, lint, location, scaffold, test} from './commands'
+import {build, lint, location, nodemon, scaffold, test} from './commands'
 import {debugConfigs, debugToolbox} from './flags'
 import {EPILOG, PROLOG} from './banner'
 import {PACKAGE_DIR} from './paths'
@@ -25,21 +25,16 @@ const PARSER = Yargs.scriptName('bb')
   .strict()
   .help('help', 'Show usage instructions.')
   .version('version', 'Show toolbox version.', packageInfo.version)
+  .command(build)
+  .command(lint)
+  .command(location)
+  .command(nodemon)
+  .command(scaffold)
+  .command(test)
+  .demandCommand(1, 'Error: Use one of the commands available.')
+  .recommendCommands()
 
 debugConfigs(PARSER)
 debugToolbox(PARSER)
 
-if (PACKAGE_DIR) {
-  PARSER.command(build)
-    .command(lint)
-    .command(location)
-    .command(scaffold)
-    .command(test)
-} else {
-  PARSER.command(location)
-    .command(scaffold)
-}
-
-PARSER.demandCommand(1, 'Error: Use one of the commands available.')
-  .recommendCommands()
-  .parse()
+PARSER.parse()

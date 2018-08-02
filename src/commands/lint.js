@@ -22,6 +22,7 @@ import {
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {join} from 'path'
 import {exitOnError, runBinSync} from '../binaries'
+import {exitOnPackageNotFound} from '../util'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const BASIC_ARGS = [
@@ -75,12 +76,15 @@ function lintTests(args) {
 }
 
 function handler(args) {
+  exitOnPackageNotFound()
+
   console.log()
   console.log('[0/2] Linting sources...')
   let resultSources = lintSources(args)
   console.log('[1/2] Linting tests...')
   let resultTests = lintTests(args)
   console.log('[2/2] Done linting.')
+
   exitOnError(resultSources)
   exitOnError(resultTests)
 }

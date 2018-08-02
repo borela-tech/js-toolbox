@@ -10,6 +10,16 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {CONFIGS_DIR, PACKAGE_DIR} from './paths'
+
+export function exitOnPackageNotFound() {
+  if (PACKAGE_DIR)
+    return
+
+  console.log("No valid “package.json” found.")
+  process.exit(1)
+}
+
 export function interopRequire(path) {
   const RESULT = require(path)
   return RESULT.default || RESULT

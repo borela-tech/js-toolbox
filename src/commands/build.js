@@ -26,6 +26,7 @@ import {
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
 import {exitOnError, runBinSync} from '../binaries'
+import {exitOnPackageNotFound} from '../util'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
 const BASIC_ARGS = [
@@ -58,6 +59,8 @@ function builder(yargs) {
 }
 
 function handler(args) {
+  exitOnPackageNotFound()
+
   let {disableSourceMaps, watch} = args
   let babelArgs = [...BASIC_ARGS]
 
