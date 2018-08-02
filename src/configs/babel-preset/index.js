@@ -13,9 +13,10 @@
 import experimental from './plugins/experimental'
 import flow from './plugins/flow'
 import jsx from './plugins/jsx'
-import react from './plugins/react'
 import prettyFormat from 'pretty-format'
+import react from './plugins/react'
 import typeScript from './plugins/typeScript'
+import {addSideEffect} from '@babel/helper-module-imports'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
 
@@ -45,12 +46,17 @@ module.exports = function () {
   react(result.plugins)
   typeScript(result.plugins)
 
-  // TODO: Implement source map using toolbox’s dependency.
-  // if (!production) {
-    // IMPORTANT: This plugin will enable source map on stack traces but only if
-    // babel generate inline source maps.
-    // result.plugins.push(getModulePath('babel-plugin-source-map-support'))
-  // }
+  // IMPORTANT: This plugin will enable source map on stack traces but only if
+  // babel generate inline source maps.
+  if (!production) {
+    result.plugins.push(() => ({
+      visitor: {
+        Program(path) {
+          addSideEffect(path, getModulePath('source-map-support/register'))
+        },
+      },
+    }))
+  }
 
   if (debugConfigs || debugToolbox)
     console.log('Babel config: ', prettyFormat(result))
