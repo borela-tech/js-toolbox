@@ -19,6 +19,7 @@ import {
   platforms,
   react,
   typeScript,
+  watchTests,
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
@@ -36,14 +37,7 @@ function builder(yargs) {
   platforms(yargs)
   react(yargs)
   typeScript(yargs)
-
-  yargs.options({
-    watch: {
-      default: false,
-      description: 'Watch for changes and run tests automatically.',
-      type: 'boolean',
-    },
-  })
+  watchTests(yargs)
 }
 
 function handler(args) {

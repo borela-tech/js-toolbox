@@ -115,3 +115,23 @@ export function typeScript(yargs) {
   })
     .alias('t', 'type-script')
 }
+
+export function watchBuild(yargs) {
+  yargs.options({
+    watch: {
+      default: false,
+      description: 'Watch for changes and rebuild files automatically.',
+      type: 'boolean',
+    },
+  })
+}
+
+export function watchTests(yargs) {
+  yargs.options({
+    watch: {
+      default: false,
+      description: 'Watch for changes and run tests automatically.',
+      type: 'boolean',
+    },
+  })
+}

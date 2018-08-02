@@ -22,6 +22,7 @@ import {
   react,
   removeFlow,
   typeScript,
+  watchBuild,
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
@@ -48,14 +49,7 @@ function builder(yargs) {
   react(yargs)
   removeFlow(yargs)
   typeScript(yargs)
-
-  yargs.options({
-    watch: {
-      default: false,
-      description: 'Watch for changes and rebuild files automatically.',
-      type: 'boolean',
-    },
-  })
+  watchBuild(yargs)
 }
 
 function handler(args) {
