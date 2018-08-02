@@ -36,5 +36,5 @@ os:
   - osx
 
 script:
-  - bb lint
-  - bb test
+  - bb lint --debug-toolbox
+  - bb test --debug-toolbox

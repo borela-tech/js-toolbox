@@ -37,5 +37,5 @@ platform:
   - x64
 
 test_script:
-  - bb lint
-  - bb test
+  - bb lint --debug-toolbox
+  - bb test --debug-toolbox
