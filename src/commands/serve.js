@@ -10,10 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export build from './build'
-export lint from './lint'
-export location from './location'
-export nodemon from './nodemon'
-export scaffold from './scaffold'
-export serve from './serve'
-export test from './test'
+import {exitOnError, runBinSync} from '../binaries'
+import {join} from 'path'
+import {PACKAGE_DIR} from '../paths'
+
+function handler(args) {
+  console.log(PACKAGE_DIR)
+  // exitOnError(runBinSync('nodemon', [`"${PACKAGE_DIR}"`]))
+}
+
+export default {
+  command: 'serve',
+  description: 'Run the project using Webpack’s development server.',
+  handler,
+}

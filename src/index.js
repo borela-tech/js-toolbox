@@ -14,7 +14,15 @@
 
 import packageInfo from '../package'
 import Yargs from 'yargs'
-import {build, lint, location, nodemon, scaffold, test} from './commands'
+import {
+  build,
+  lint,
+  location,
+  nodemon,
+  scaffold,
+  serve,
+  test,
+} from './commands'
 import {debugConfigs, debugToolbox} from './flags'
 import {EPILOG, PROLOG} from './banner'
 import {PACKAGE_DIR} from './paths'
@@ -30,6 +38,7 @@ const PARSER = Yargs.scriptName('bb')
   .command(location)
   .command(nodemon)
   .command(scaffold)
+  .command(serve)
   .command(test)
   .demandCommand(1, 'Error: Use one of the commands available.')
   .recommendCommands()
