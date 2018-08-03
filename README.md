@@ -13,13 +13,13 @@
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20OSX-ff4081.svg?style=flat-square)][toolbox]
 [![License](https://img.shields.io/badge/license-Apache%202.0-ba68c8.svg?style=flat-square)][toolbox]
 
-Develop JavaScript apps/libraries with little to no configuration and
-still be allowed to use all bleeding edge features available through 
-[Babel][babel] and [Webpack][webpack].
+Develop JavaScript apps/libraries with little to no configuration and still be
+allowed to use all bleeding edge features available through  [Babel][babel] and
+[Webpack][webpack].
 
-This tool can be installed globally, be used to compile any project that
-follows the expected directory structure which It will help you reduce
-the devDependencies drastically.
+This tool can be installed globally, be used to compile any project that follows
+the expected directory structure which It will help you reduce the development
+dependencies drastically.
 
 ## Table of contents
 
