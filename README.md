@@ -48,6 +48,13 @@ configuration:
 npm install @borela-tech/js-toolbox -g
 ```
 
+The toolbox uses ´“bb” as its command alias, to see the available options
+type:
+
+```sh
+bb --help
+```
+
 ## Creating a simple JS library
 
 1. Navigate to the directory you want to create the project;
