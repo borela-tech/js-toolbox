@@ -16,6 +16,7 @@ import packageInfo from '../package'
 import Yargs from 'yargs'
 import {
   build,
+  flow,
   lint,
   location,
   nodemon,
@@ -33,6 +34,7 @@ const PARSER = Yargs.scriptName('bb')
   .help('help', 'Show usage instructions.')
   .version('version', 'Show toolbox version.', packageInfo.version)
   .command(build)
+  .command(flow)
   .command(lint)
   .command(location)
   .command(nodemon)

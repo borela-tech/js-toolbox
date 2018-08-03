@@ -10,11 +10,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export build from './build'
-export lint from './lint'
-export flow from './flow'
-export location from './location'
-export nodemon from './nodemon'
-export scaffold from './scaffold'
-export serve from './serve'
-export test from './test'
+import {disableFlowTyped} from '../flags'
+import {exitOnError, runBinSync} from '../binaries'
+import {join} from 'path'
+import {PACKAGE_DIR} from '../paths'
+
+function builder(yargs) {
+  disableFlowTyped(yargs)
+}
+
+function handler(args) {
+  // TODO
+}
+
+export default {
+  command: 'flow',
+  description: 'Run flow.',
+  builder,
+  handler,
+}

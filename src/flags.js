@@ -53,6 +53,13 @@ export function disableExperimentalPlugins(yargs) {
   })
 }
 
+export function disableFlowTyped(yargs) {
+  yargs.option('disable-flow-typed', {
+    description: 'Disable FlowTyped.',
+    type: 'boolean',
+  })
+}
+
 export function disableSourceMaps(yargs) {
   yargs.option('disable-source-maps', {
     description: 'Disable source map generation.',
