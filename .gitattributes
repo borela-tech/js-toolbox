@@ -41,6 +41,8 @@
 *.woff2 binary
 
 # Graphics.
+*.afdesign binary
+*.afphoto binary
 *.ai binary
 *.bmp binary
 *.eps binary
