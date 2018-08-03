@@ -1,4 +1,4 @@
-<h1><img src="art/full-logo.svg" alt="borela-js-toolbox" height="120px"></h1>
+<h1><img src="art/full-logo.svg" alt="borela-js-toolbox" height="150px"></h1>
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/js-toolbox.svg?style=social)][watchers]
 [![GitHub stars](https://img.shields.io/github/stars/borela-tech/js-toolbox.svg?style=social)][stars]
@@ -13,7 +13,13 @@
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20OSX-ff4081.svg?style=flat-square)][toolbox]
 [![License](https://img.shields.io/badge/license-Apache%202.0-ba68c8.svg?style=flat-square)][toolbox]
 
-Develop JavaScript apps/libraries with little to no configuration/devDependencies and still be allowed to use all bleeding edge features available through [Babel][babel] and [Webpack][webpack].
+Develop JavaScript apps/libraries with little to no configuration and
+still be allowed to use all bleeding edge features available through 
+[Babel][babel] and [Webpack][webpack].
+
+This tool can be installed globally, be used to compile any project that
+follows the expected directory structure which It will help you reduce
+the devDependencies drastically.
 
 ## Table of contents
 
@@ -26,13 +32,11 @@ Develop JavaScript apps/libraries with little to no configuration/devDependencie
 
 ## What’s included
 
+* Commands to scaffold, build, lint, test and run the app;
 * All [Babel’s experimental plugins][experimental-plugins] are enabled by
   default;
 * Polyfills are included based on the browsers and minimum NodeJS version
   supported by your project;
-* This tool can be installed globally and used to compile any project that
-  follows the expected directory structure;
-* Your project will have little to no development dependencies;
 
 Some features must be enabled explicitly either through command flags or
 configuration:
