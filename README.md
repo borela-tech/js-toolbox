@@ -1,4 +1,4 @@
-<h1><img src="art/full-logo.svg" alt="borela-js-toolbox" height="100px"></h1>
+<h1><img src="art/full-logo.svg" alt="borela-js-toolbox" height="120px"></h1>
 
 [![GitHub watchers](https://img.shields.io/github/watchers/borela-tech/js-toolbox.svg?style=social)][watchers]
 [![GitHub stars](https://img.shields.io/github/stars/borela-tech/js-toolbox.svg?style=social)][stars]
@@ -13,8 +13,7 @@
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20OSX-ff4081.svg?style=flat-square)][toolbox]
 [![License](https://img.shields.io/badge/license-Apache%202.0-ba68c8.svg?style=flat-square)][toolbox]
 
-CLI tool to simplify the development of JavaScript apps/libraries with little to
-no configuration.
+Develop JavaScript apps/libraries with little to no configuration/devDependencies and still be allowed to use all bleeding edge features available through [Babel][babel] and [Webpack][webpack].
 
 ## Table of contents
 
@@ -23,14 +22,7 @@ no configuration.
 3. [Creating a simple JS library](#creating-a-simple-js-library)
 4. [Creating an Express server](#Creating-an-express-server)
 5. [Creating a Single Page React Application](#creating-a-single-page-react-application)
-6. [Command flag vs config file](#command-flag-vs-config-file)
-7. [Commands](#commands)
-   1. [build](#build)
-   2. [scaffold](#scaffold)
-   3. [lint](#lint)
-   4. [nodemon](#nodemon)
-   5. [serve](#serve)
-   6. [test](#test)
+6. [More information](#more-information)
 
 ## What’s included
 
@@ -65,7 +57,6 @@ Run the tests:
 
 ```sh
 bb test
-
 # Or in watch mode.
 bb test --watch
 ```
@@ -74,7 +65,6 @@ Lint the sources and tests:
 
 ```sh
 bb lint
-
 # ESLint will try to fix linting errors but be aware that not all of them can
 # be fixed automatically.
 bb lint --fix
@@ -84,7 +74,6 @@ And finally, to build:
 
 ```sh
 bb build
-
 # The previous command includes a lot of stuff that’s only needed during
 # development, to build without them, run:
 bb build --production
@@ -124,176 +113,40 @@ serve your application on `localhost:9000`. Features included:
   without losing state;
 * [RedBox][red-box-react] to make error messages pretty;
 
-## Command flag vs config file
+## More information
 
-You can control the commands behavior either through flags or configuration
-files, for example, if you want to enable JSX transformation on the *build* and
-*test* commands, you pass the flag directly to them:
-
-```sh
-bb build --jsx
-bb test --jsx
-```
-
-Alternatively, you can add a `borela` section to your `package.json` like so:
-
-```json
-{
-  "name": "awesome-package",
-  "version": "1.0.0",
-  "description": "Some awesome package.",
-  "borela": {
-    "jsx": true
-  }
-}
-```
-
-Or create a `borela.json` at the root of your package:
-
-```json
-{
-  "jsx": true
-}
-```
-
-The same logic can be applied to all command flags.
-
-## Commands
-
-### build
+To see the available commands/flags you can find more information on our
+[wiki][wiki] or type `--help` next to the command in question:
 
 ```sh
-bb build
+bb --help
+bb build --help
+bb test --help
+# Etc...
 ```
-
-Compile the files using [Babel][babel] and put them in the build directory. If
-the project type requires bundling, [Webpack][webpack] will be used.
-
-Feature flags:
-
-* `--disable-experimental-plugins`: Disable [Babel’s experimental plugins][experimental-plugins].
-* `--disable-source-maps`: Disable source map generation.
-* `-j, --jsx`: Enable JSX;
-* `-r, --react`: Enable React;
-* `-t, --type-script`: Enable TypeScript;a
-
-Polyfill flags:
-
-* `--browsers`¹: Supported browsers;
-* `--node`¹: Minimum supported NodeJS version;
-* `--platforms`: Controls the polyfills and it is used to determine if multiple
-  build outputs are necessary based on the platforms specified;
-
-Other:
-
-* `--comment-flow`: Transform Flow annotations into comment blocks;
-* `--minify`: Minify the resulting code.
-* `--remove-flow`: Remove all Flow annotations.
-* `--watch`:  Watch for changes and rebuild files.
-
-¹ The polyfill flags `browsers` and `node` are passed directly to
-[@babel/preset-env][preset-env], you can find more information of the accepted
-values on its documentation.
-
-### scaffold
-
-```sh
-bb scaffold <template> [destination]
-```
-
-Copy the template files to the current folder or the destination specified. The
-templates included in the toolbox are:
-
-* `express`: Simple server using [Express][express];
-* `lib`: Simple JS library;
-* `react/spa`: Single Page React application;
-* `yargs`: CLI using [Yargs][yargs];
-
-### lint
-
-```sh
-bb lint
-```
-
-Run [ESLint][eslint] on the sources and tests separately to make sure that
-[Jest’s globals][jest-globals] only affect the tests.
-
-### nodemon
-
-```sh
-bb nodemon
-```
-
-Run the main script using [nodemon][nodemon].
-
-Flags:
-
-* `--app-args`: String containing the arguments that needs to be passed to your app.
-* `--inspect`: Enable NodeJS inspector.
-
-### serve
-
-```sh
-bb serve
-```
-
-Serve a application using [Webpack’s Development Server][webpack-dev-server].
-
-### test
-
-```sh
-bb test
-```
-
-Run [Jest][jest] on the project.
-
-Feature flags:
-
-* `--disable-experimental-plugins`: Disable [Babel’s experimental plugins][experimental-plugins].
-* `--disable-source-maps`: Disable source map generation.
-* `-j, --jsx`: Enable JSX;
-* `-r, --react`: Enable React;
-* `-t, --type-script`: Enable TypeScript;a
-
-Polyfill flags:
-
-* `--browsers`¹: Supported browsers;
-* `--node`¹: Minimum supported NodeJS version;
-* `--platforms`: Controls the polyfills and it is used to determine if multiple
-  build outputs are necessary based on the platforms specified;
-
-Other:
-
-* `--comment-flow`: Transform Flow annotations into comment blocks;
-* `--remove-flow`: Remove all Flow annotations.
-* `--watch`:  Watch for changes and rebuild files.
 
 [forks]: //github.com/borela-tech/js-toolbox/network/members
 [issues]: //github.com/borela-tech/js-toolbox/issues
 [pulls]: //github.com/borela-tech/js-toolbox/pulls
 [stars]: //github.com/borela-tech/js-toolbox/stargazers
 [watchers]: //github.com/borela-tech/js-toolbox/watchers
+[wiki]: //github.com/borela-tech/js-toolbox/wiki
 
 [babel]: //babeljs.io
-[eslint]: //eslint.org
 [express]: //expressjs.com/
 [flow]: //flow.org
-[jest]: //jestjs.io
 [jsx]: //facebook.github.io/jsx/
-[nodemon]: //nodemon.io
 [nodejs]: //nodejs.org
-[react-hot-loader]: //github.com/gaearon/react-hot-loader
+[nodemon]: //nodemon.io
 [react]: //reactjs.org
+[react-hot-loader]: //github.com/gaearon/react-hot-loader
 [red-box-react]: //github.com/commissure/redbox-react
 [toolbox]: //github.com/borela-tech/js-toolbox
 [typescript]: //www.typescriptlang.org
 [webpack]: //webpack.js.org
-[yargs]: //yargs.js.org
 
 [appveyor-build]: //ci.appveyor.com/project/borela/js-toolbox
-[david-dm]: //david-dm.org/borela-tech/js-toolbox
 [experimental-plugins]: //babeljs.io/docs/en/plugins#experimental
-[jest-globals]: //jestjs.io/docs/en/api
-[preset-env]: //babeljs.io/docs/en/next/babel-preset-env.html
+[david-dm]: //david-dm.org/borela-tech/js-toolbox
 [travis-build]: //travis-ci.org/borela-tech/js-toolbox
 [webpack-dev-server]: //webpack.js.org/configuration/dev-server/
