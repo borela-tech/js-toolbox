@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // Licensed under the Apache License, Version 2.0 (the “License”); you may not
 // use this file except in compliance with the License. You may obtain a copy of
 // the License at
@@ -12,17 +10,21 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import packageInfo from '../package'
-import Yargs from 'yargs'
-import {hello, world} from './commands'
+function builder(yargs) {
+  yargs.option('another-option', {
+    description: 'Option description.',
+    type: 'string',
+  })
+    .alias('a', 'another-option')
+}
 
-Yargs.scriptName('foo')
-  .usage('Header.')
-  .epilog('Footer.')
-  .strict()
-  .help('help', 'Show usage instructions.')
-  .version('version', 'Show package version.', packageInfo.version)
-  .command(hello)
-  .command(world)
-  .demandCommand(1, 'Error: Use one of the commands available.')
-  .parse()
+function handler(args) {
+  console.log('World!')
+}
+
+export default {
+  command: 'world',
+  description: 'Command description.',
+  builder,
+  handler,
+}
