@@ -10,8 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-describe('Do some tests', () => {
-  test('The actual test', () => {
-    expect(true).toBe(true)
+import {hello} from '../'
+
+describe('hello()', () => {
+  test('Returns “Hello!”', () => {
+    expect(hello()).toBe('Hello!')
   })
 })

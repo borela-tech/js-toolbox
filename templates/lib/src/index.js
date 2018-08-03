@@ -10,10 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export function foo() {
-  console.log('Hello!')
-}
-
-export default bar() {
-  console.log('World!')
+export function hello() {
+  return 'Hello!'
 }
