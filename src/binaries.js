@@ -54,7 +54,7 @@ function internalRunBin(
   }
 
   let result = spawn(bin, args, {
-    cwd: PACKAGE_DIR,
+    cwd: PACKAGE_DIR || process.cwd(),
     env: COMPUTED_ENV,
     shell: true,
     stdio: 'inherit',
