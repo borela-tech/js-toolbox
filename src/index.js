@@ -20,7 +20,7 @@ import {
   lint,
   location,
   nodemon,
-  scaffold,
+  scaffoldProject,
   serve,
   test,
 } from './commands'
@@ -38,7 +38,7 @@ const PARSER = Yargs.scriptName('bb')
   .command(lint)
   .command(location)
   .command(nodemon)
-  .command(scaffold)
+  .command(scaffoldProject)
   .command(serve)
   .command(test)
   .demandCommand(1, 'Error: Use one of the commands available.')

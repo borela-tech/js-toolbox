@@ -26,7 +26,7 @@ function handler(args) {
 }
 
 export default {
-  command: 'scaffold <template> [destination]',
-  description: 'Generate a project from the available templates.',
+  command: 'scaffold-project <template> [dir]',
+  description: 'Generate a project.',
   handler,
 }
