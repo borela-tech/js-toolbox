@@ -18,7 +18,7 @@ import {pickNonFalsy} from './util'
 import {spawn, spawnSync} from 'child_process'
 
 const IS_WINDOWS = process.platform === 'win32'
-const PATH_KEY = IS_WINDOWS === 'win32' ? 'Path' : 'PATH'
+const PATH_KEY = IS_WINDOWS ? 'Path' : 'PATH'
 const TOOLBOX_PATH = BIN_DIR + PATH_DELIMITER + process.env[PATH_KEY]
 const SUCCESS = 0
 
