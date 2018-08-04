@@ -27,7 +27,7 @@ import {
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {exitOnError, runBinSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../binaries'
 import {exitOnPackageNotFound} from '../util'
 
 const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
@@ -67,8 +67,8 @@ function handler(args) {
     babelArgs.push('--watch')
 
   const ENV = args
-  exitOnError(runBinSync('rimraf', ['"build"']))
-  exitOnError(runBinSync('babel', babelArgs, ENV))
+  exitOnError(runCommandSync('rimraf "build"')
+  exitOnError(runCommandSync('babel', babelArgs, ENV))
 }
 
 export default {

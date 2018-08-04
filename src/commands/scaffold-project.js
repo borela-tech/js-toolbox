@@ -12,7 +12,7 @@
 
 import {existsSync, mkdirSync} from 'fs'
 import {join, relative, resolve} from 'path'
-import {exitOnError, runBinSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../binaries'
 import {TEMPLATES_DIR} from '../paths'
 
 const IS_WINDOWS = process.platform === 'win32'
@@ -21,14 +21,9 @@ function copyDirContents(source, destination) {
   if (IS_WINDOWS) {
     // The “echo d |” is used to suppress a prompt to check whether we are
     // copying a file or directory.
-    exitOnError(runBinSync('echo d | xcopy', [
-      `"${source}"`,
-      `"${destination}"`,
-      // Recursive copy.
-      '/S',
-    ]))
+    exitOnError(runCommandSync(`echo d | xcopy "${source}" "${destination}" /S`))
   } else
-    exitOnError(runBinSync('cp', ['-R', `"${source}"`, `"${destination}"`]))
+    exitOnError(runCommandSync(`cp -R "${source}" "${destination}"`))
 }
 
 function handler(args) {

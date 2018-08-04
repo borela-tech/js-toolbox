@@ -23,7 +23,7 @@ import {
 } from '../flags'
 import {CONFIGS_DIR} from '../paths'
 import {join} from 'path'
-import {exitOnError, runBinSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../binaries'
 import {exitOnPackageNotFound} from '../util'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
@@ -48,7 +48,7 @@ function handler(args) {
     jestArgs.push('--watch')
 
   const ENV = args
-  exitOnError(runBinSync('jest', jestArgs, ENV))
+  exitOnError(runCommandSync('jest', jestArgs, ENV))
 }
 
 export default {

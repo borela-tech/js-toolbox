@@ -21,7 +21,7 @@ import {
 } from '../flags'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {join} from 'path'
-import {exitOnError, runBinSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../binaries'
 import {exitOnPackageNotFound} from '../util'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
@@ -56,7 +56,7 @@ function lintSources(args) {
     eslintArgs.push('--fix')
 
   const ENV = args
-  return runBinSync('eslint', eslintArgs, ENV)
+  return runCommandSync('eslint', eslintArgs, ENV)
 }
 
 function lintTests(args) {
@@ -72,7 +72,7 @@ function lintTests(args) {
     eslintArgs.push('--fix')
 
   const ENV = {jest: true, ...args}
-  return runBinSync('eslint', eslintArgs, ENV)
+  return runCommandSync('eslint', eslintArgs, ENV)
 }
 
 function handler(args) {

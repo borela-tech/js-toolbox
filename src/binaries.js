@@ -22,24 +22,24 @@ const PATH_KEY = IS_WINDOWS === 'win32' ? 'Path' : 'PATH'
 const TOOLBOX_PATH = BIN_DIR + PATH_DELIMITER + process.env[PATH_KEY]
 const SUCCESS = 0
 
-export function exitOnError(runBinResult) {
-  if (runBinResult.status === SUCCESS)
+export function exitOnError(runCommandResult) {
+  if (runCommandResult.status === SUCCESS)
     return
-  process.exit(runBinResult.status)
+  process.exit(runCommandResult.status)
 }
 
-export function runBin(bin:string, args:string[], env?:Object) {
-  return internalRunBin(spawn, bin, args, env)
+export function runCommand(bin:string, args:string[], env?:Object) {
+  return internalRunCommand(spawn, bin, args, env)
 }
 
-export function runBinSync(bin:string, args:string[], env?:Object) {
-  return internalRunBin(spawnSync, bin, args, env)
+export function runCommandSync(bin:string, args:string[], env?:Object) {
+  return internalRunCommand(spawnSync, bin, args, env)
 }
 
-function internalRunBin(
+function internalRunCommand(
   spawn:Function,
-  bin:string,
-  args:string[],
+  cmd:string,
+  args:string[],a
   env?:Object,
 ) {
   const COMPUTED_ENV = {
@@ -49,7 +49,7 @@ function internalRunBin(
   }
 
   if (isToolboxBeingDebugged()) {
-    console.log('Spawning binary: ', prettyFormat({args, bin, env}))
+    console.log('Spawning: ', prettyFormat({args, cmd, env}))
     console.log('Computed env:', prettyFormat(COMPUTED_ENV))
   }
 

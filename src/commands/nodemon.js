@@ -11,7 +11,7 @@
 // the License.
 
 import {appArgs, inspect} from '../flags'
-import {exitOnError, runBinSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../binaries'
 import {join} from 'path'
 import {PACKAGE_DIR} from '../paths'
 
@@ -30,7 +30,7 @@ function handler(args) {
   // The rest of the app args must be after the script.
   if (appArgs) nodemonArgs.push(appArgs)
 
-  exitOnError(runBinSync('nodemon', nodemonArgs))
+  exitOnError(runCommandSync('nodemon', nodemonArgs))
 }
 
 export default {
