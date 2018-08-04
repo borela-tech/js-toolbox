@@ -18,7 +18,7 @@ allowed to use all bleeding edge features available through  [Babel][babel] and
 [Webpack][webpack].
 
 This tool can be installed globally, be used to compile any project that follows
-the expected directory structure which It will help you reduce the development
+the expected directory structure which will help you reduce the development
 dependencies drastically.
 
 ## Table of contents
