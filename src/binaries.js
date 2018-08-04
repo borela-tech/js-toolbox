@@ -17,7 +17,8 @@ import {isToolboxBeingDebugged} from './state'
 import {pickNonFalsy} from './util'
 import {spawn, spawnSync} from 'child_process'
 
-const PATH_KEY = process.platform === 'win32' ? 'Path' : 'PATH'
+const IS_WINDOWS = process.platform === 'win32'
+const PATH_KEY = IS_WINDOWS === 'win32' ? 'Path' : 'PATH'
 const TOOLBOX_PATH = BIN_DIR + PATH_DELIMITER + process.env[PATH_KEY]
 const SUCCESS = 0
 
@@ -48,11 +49,8 @@ function internalRunBin(
   }
 
   if (isToolboxBeingDebugged()) {
-    console.log('Spawning binary: ', prettyFormat({
-      Arguments: args,
-      Binary: bin,
-      Environment: env,
-    }))
+    console.log('Spawning binary: ', prettyFormat({args, bin, env}))
+    console.log('Computed env:', prettyFormat(COMPUTED_ENV))
   }
 
   let result = spawn(bin, args, {
