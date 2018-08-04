@@ -22,7 +22,7 @@ function copyDirContents(source, destination) {
     // The “echo d |” is used to suppress a prompt to check whether we are
     // copying a file or directory.
     exitOnError(runCommandSync('echo d | xcopy', [
-      `"${source}" "${destination}" /S`
+      `"${source}" "${destination}" /S`,
     ]))
   } else
     exitOnError(runCommandSync('cp', [`-R "${source}" "${destination}"`]))
