@@ -17,14 +17,14 @@ const FAKE_DB = [{
   id: 1,
   firstName: 'Jack',
   lastName: 'O’Neill',
-},{
+}, {
   id: 2,
   firstName: 'Samantha',
   lastName: 'Carter',
 }]
 
 ROUTER.get('/user/:id', (request, response) => {
-  response.send(FAKE_DB.filter(x => x.id == request.params.id))
+  response.send(FAKE_DB.filter(x => x.id === request.params.id))
 })
 
 ROUTER.get('/users', (request, response) => {
