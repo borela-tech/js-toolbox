@@ -42,9 +42,9 @@ export function getSettings() {
     ...camelizeKeys(BORELA_JS),
     ...camelizeKeys(ENV),
   }
-  // Config files run on separate process, we need to re-enable debug mode if
-  // needed.
+
+  // Config files run on a separate process, we need to re-enable debug state.
   checkDebugFlags(RESULT)
-  // Final settings.
+
   return RESULT
 }
