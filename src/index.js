@@ -25,7 +25,14 @@ import {
   test,
 } from './commands'
 import {debugConfigs, debugToolbox} from './flags'
+import {enableConfigDebugMode, enableDebugMode} from './state'
 import {EPILOG, PROLOG} from './banner'
+
+function checkDebugFlags(args) {
+  let {debugConfigs, debugToolbox} = args
+  if (debugConfigs) enableConfigDebugMode()
+  if (debugToolbox) enableDebugMode()
+}
 
 const PARSER = Yargs.scriptName('bb')
   .usage(PROLOG)
@@ -33,6 +40,7 @@ const PARSER = Yargs.scriptName('bb')
   .strict()
   .help('help', 'Show usage instructions.')
   .version('version', 'Show toolbox version.', packageInfo.version)
+  .middleware([checkDebugFlags])
   .command(build)
   .command(flow)
   .command(lint)

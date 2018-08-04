@@ -13,9 +13,10 @@
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
+import {isConfigBeingDebugged} from '../../state'
 import {join} from 'path'
 
-let {debugConfigs, debugToolbox, platforms} = getSettings()
+let {platforms} = getSettings()
 const BROWSER = platforms.includes('browser')
 
 const CONFIG = {
@@ -30,7 +31,7 @@ const CONFIG = {
   verbose: true,
 }
 
-if (debugConfigs || debugToolbox)
+if (isConfigBeingDebugged())
   console.log('Jest config: ', prettyFormat(CONFIG))
 
 module.exports = CONFIG

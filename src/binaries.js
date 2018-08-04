@@ -11,8 +11,9 @@
 // the License.
 
 import prettyFormat from 'pretty-format'
-import {delimiter as PATH_DELIMITER} from 'path'
 import {BIN_DIR, PACKAGE_DIR} from './paths'
+import {delimiter as PATH_DELIMITER} from 'path'
+import {isToolboxBeingDebugged} from './state'
 import {pickNonFalsy} from './util'
 import {spawn, spawnSync} from 'child_process'
 
@@ -21,8 +22,13 @@ const TOOLBOX_PATH = BIN_DIR + PATH_DELIMITER + process.env[PATH_KEY]
 const SUCCESS = 0
 
 export function exitOnError(runBinResult) {
-  if (runBinResult.status !== SUCCESS)
-    process.exit(runBinResult.status)
+  if (runBinResult.status === SUCCESS)
+    return
+
+  if (isToolboxBeingDebugged())
+    console.log(prettyFormat(runBinResult))
+
+  process.exit(runBinResult.status)
 }
 
 export function runBin(bin:string, args:string[], env?:Object) {
@@ -45,8 +51,7 @@ function internalRunBin(
     borela: JSON.stringify(pickNonFalsy(env)),
   }
 
-  let {debugToolbox} = env || {}
-  if (debugToolbox) {
+  if (isToolboxBeingDebugged()) {
     console.log('Spawning binary: ', prettyFormat({
       Arguments: args,
       Binary: bin,
@@ -61,7 +66,7 @@ function internalRunBin(
     stdio: 'inherit',
   })
 
-  if (debugToolbox)
+  if (isToolboxBeingDebugged())
     console.log('Spawn result: ', prettyFormat(result))
 
   return result
