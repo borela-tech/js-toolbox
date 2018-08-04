@@ -24,10 +24,6 @@ const SUCCESS = 0
 export function exitOnError(runBinResult) {
   if (runBinResult.status === SUCCESS)
     return
-
-  if (isToolboxBeingDebugged())
-    console.log(prettyFormat(runBinResult))
-
   process.exit(runBinResult.status)
 }
 
