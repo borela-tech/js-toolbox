@@ -20,6 +20,6 @@ function handler(args) {
 
 export default {
   command: 'serve',
-  description: 'Run the project using Webpack’s development server.',
+  description: 'Run Webpack’s dev server.',
   handler,
 }

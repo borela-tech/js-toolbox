@@ -18,6 +18,6 @@ function handler(args) {
 
 export default {
   command: 'location',
-  description: 'Returns the Toolbox’s location.',
+  description: 'Print Toolbox’s location.',
   handler,
 }

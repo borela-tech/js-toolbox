@@ -53,7 +53,7 @@ function handler(args) {
 
 export default {
   command: 'test',
-  description: 'Run test suites.',
+  description: 'Run Jest.',
   builder,
   handler,
 }

@@ -25,7 +25,7 @@ function handler(args) {
 
 export default {
   command: 'flow',
-  description: 'Run flow.',
+  description: 'Run Flow.',
   builder,
   handler,
 }
