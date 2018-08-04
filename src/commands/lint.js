@@ -21,7 +21,7 @@ import {
 } from '../flags'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
 import {join} from 'path'
-import {exitOnError, runCommandSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')

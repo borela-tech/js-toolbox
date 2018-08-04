@@ -12,7 +12,7 @@
 
 import {existsSync, mkdirSync} from 'fs'
 import {join, relative, resolve} from 'path'
-import {exitOnError, runCommandSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../system'
 import {TEMPLATES_DIR} from '../paths'
 
 const IS_WINDOWS = process.platform === 'win32'

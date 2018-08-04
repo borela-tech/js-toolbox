@@ -11,7 +11,7 @@
 // the License.
 
 import {disableFlowTyped} from '../flags'
-import {exitOnError, runCommandSync} from '../binaries'
+import {exitOnError, runCommandSync} from '../system'
 import {join} from 'path'
 import {PACKAGE_DIR} from '../paths'
 
