@@ -39,7 +39,7 @@ export function runCommandSync(bin:string, args:string[], env?:Object) {
 function internalRunCommand(
   spawn:Function,
   cmd:string,
-  args:string[],a
+  args:string[],
   env?:Object,
 ) {
   const COMPUTED_ENV = {
