@@ -10,9 +10,26 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {existsSync} from 'fs'
-import {join, resolve} from 'path'
+import {existsSync, mkdirSync} from 'fs'
+import {join, relative, resolve} from 'path'
+import {exitOnError, runBinSync} from '../binaries'
 import {TEMPLATES_DIR} from '../paths'
+
+const IS_WINDOWS = process.platform === 'win32'
+
+function copyDirContents(source, destination) {
+  if (IS_WINDOWS) {
+    // The “echo d |” is used to suppress a prompt to check whether we are
+    // copying a file or directory.
+    exitOnError(runBinSync('echo d | xcopy', [
+      `"${source}"`,
+      `"${destination}"`,
+      // Recursive copy.
+      '/S',
+    ]))
+  } else
+    exitOnError(runBinSync('cp', ['-R', `"${source}"`, `"${destination}"`]))
+}
 
 function handler(args) {
   const TEMPLATE = join(TEMPLATES_DIR, args.template)
@@ -21,8 +38,8 @@ function handler(args) {
     return
   }
 
-  const DESTINATION = resolve(args.destination || '')
-  console.log('TODO: Implement templates.')
+  const DESTINATION = resolve(args.dir || '')
+  copyDirContents(TEMPLATE, DESTINATION)
 }
 
 export default {
