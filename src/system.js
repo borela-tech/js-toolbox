@@ -28,12 +28,12 @@ export function exitOnError(runCommandResult) {
   process.exit(runCommandResult.status)
 }
 
-export function runCommand(bin:string, args:string[], env?:Object) {
-  return internalRunCommand(spawn, bin, args, env)
+export function runCommand(cmd:string, args:string[], env?:Object) {
+  return internalRunCommand(spawn, cmd, args, env)
 }
 
-export function runCommandSync(bin:string, args:string[], env?:Object) {
-  return internalRunCommand(spawnSync, bin, args, env)
+export function runCommandSync(cmd:string, args:string[], env?:Object) {
+  return internalRunCommand(spawnSync, cmd, args, env)
 }
 
 function internalRunCommand(
@@ -53,7 +53,7 @@ function internalRunCommand(
     console.log('Computed env:', prettyFormat(COMPUTED_ENV))
   }
 
-  let result = spawn(bin, args, {
+  let result = spawn(cmd, args, {
     cwd: PACKAGE_DIR || process.cwd(),
     env: COMPUTED_ENV,
     shell: true,
