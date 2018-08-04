@@ -38,3 +38,13 @@ os:
 script:
   - bb lint
   - bb test
+  # Test templates.
+  - cd templates/express
+  - bb lint
+  - bb test
+  - cd ../lib
+  - bb lint
+  - bb test
+  - cd ../yargs
+  - bb lint
+  - bb test
