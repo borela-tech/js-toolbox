@@ -62,7 +62,7 @@ bb --help
 ## Creating a simple JS library
 
 1. Navigate to the directory you want to create the project;
-2. Run the command `bb scaffold lib`;
+2. Run the command `bb scaffold-project lib`;
 
 Run the tests:
 
@@ -93,7 +93,7 @@ bb build --production
 ## Creating an [Express][express] server
 
 1. Navigate to the directory you want to create the project;
-2. Run the command `bb scaffold express`;
+2. Run the command `bb scaffold-project express`;
 
 The commands to *test*, *lint* and *build* are the same but this time, you can
 also:
@@ -108,7 +108,7 @@ the files will restart the server.
 ## Creating a Single Page [React][react] Application
 
 1. Navigate to the directory you want to create the project;
-2. Run the command `bb scaffold react/spa`;
+2. Run the command `bb scaffold-project react/spa`;
 
 The commands to *test*, *lint* and *build* are the same but this time, you can
 also:
