@@ -16,7 +16,7 @@ import {
   BORELA_JSON as BORELA_JSON_PATH,
   PACKAGE_JSON as PACKAGE_JSON_PATH,
 } from '../paths'
-import {checkDebugFlags, interopRequire} from '../util'
+import {interopRequire} from '../util'
 import {existsSync} from 'fs'
 
 const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
@@ -36,15 +36,10 @@ const ENV = process.env.borela
   : {}
 
 export function getSettings() {
-  const RESULT = {
+  return {
     ...camelizeKeys(PACKAGE_JSON),
     ...camelizeKeys(BORELA_JSON),
     ...camelizeKeys(BORELA_JS),
     ...camelizeKeys(ENV),
   }
-
-  // Config files run on a separate process, we need to re-enable debug state.
-  checkDebugFlags(RESULT)
-
-  return RESULT
 }

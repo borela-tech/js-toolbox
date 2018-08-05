@@ -20,7 +20,6 @@ import typeScript from './plugins/typeScript'
 import {addSideEffect} from '@babel/helper-module-imports'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
-import {isConfigBeingDebugged} from '../../state'
 
 module.exports = function () {
   let {
@@ -62,8 +61,8 @@ module.exports = function () {
     }))
   }
 
-  if (isConfigBeingDebugged())
-    console.log('Babel config: ', prettyFormat(result))
+  // if (isConfigBeingDebugged())
+  //   console.log('Babel config: ', prettyFormat(result))
 
   return result
 }

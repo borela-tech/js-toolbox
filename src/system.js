@@ -10,10 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {BIN_DIR, PACKAGE_DIR} from './paths'
 import {delimiter as PATH_DELIMITER} from 'path'
-import {isToolboxBeingDebugged} from './state'
 import {pickNonFalsy} from './util'
 import {spawn, spawnSync} from 'child_process'
 
@@ -48,10 +48,10 @@ function internalRunCommand(
     borela: JSON.stringify(pickNonFalsy(env)),
   }
 
-  if (isToolboxBeingDebugged()) {
-    console.log('Spawning: ', prettyFormat({args, cmd, env}))
-    console.log('Computed env:', prettyFormat(COMPUTED_ENV))
-  }
+  // if (isToolboxBeingDebugged()) {
+  //   console.log('Spawning: ', prettyFormat({args, cmd, env}))
+  //   console.log('Computed env:', prettyFormat(COMPUTED_ENV))
+  // }
 
   let result = spawn(cmd, args, {
     cwd: PACKAGE_DIR || process.cwd(),
@@ -60,8 +60,8 @@ function internalRunCommand(
     stdio: 'inherit',
   })
 
-  if (isToolboxBeingDebugged())
-    console.log('Spawn result: ', prettyFormat(result))
+  // if (isToolboxBeingDebugged())
+  //   console.log('Spawn result: ', prettyFormat(result))
 
   return result
 }

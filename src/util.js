@@ -10,14 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {enableConfigDebugMode, enableDebugMode} from './state'
 import {PACKAGE_DIR} from './paths'
-
-export function checkDebugFlags(args) {
-  let {debugConfigs, debugToolbox} = args
-  if (debugConfigs) enableConfigDebugMode()
-  if (debugToolbox) enableDebugMode()
-}
 
 export function exitOnPackageNotFound() {
   if (PACKAGE_DIR)

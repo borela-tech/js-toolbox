@@ -13,7 +13,6 @@
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
-import {isConfigBeingDebugged} from '../../state'
 import {join} from 'path'
 
 let {
@@ -59,7 +58,7 @@ const CONFIG = {
   ],
 }
 
-if (isConfigBeingDebugged())
-  console.log('ESLint config: ', prettyFormat(CONFIG))
+// if (isConfigBeingDebugged())
+//   console.log('ESLint config: ', prettyFormat(CONFIG))
 
 module.exports = CONFIG
