@@ -13,7 +13,7 @@
 import {join} from 'path'
 
 function handler(args) {
-  console.log(join(__dirname, '..', '..'))
+  process.stdout.write(join(__dirname, '..', '..'))
 }
 
 export default {
