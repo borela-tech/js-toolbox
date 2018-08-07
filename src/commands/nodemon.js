@@ -30,7 +30,7 @@ function handler(args) {
   // The rest of the app args must be after the script.
   if (appArgs) nodemonArgs.push(appArgs)
 
-  exitOnError(runCommandSync('nodemon', nodemonArgs))
+  exitOnError(runCommandSync('nodemon', {args: nodemonArgs}))
 }
 
 export default {

@@ -55,8 +55,10 @@ function lintSources(args) {
   if (fix)
     eslintArgs.push('--fix')
 
-  const ENV = args
-  return runCommandSync('eslint', eslintArgs, ENV)
+  return runCommandSync('eslint', {
+    args: eslintArgs,
+    env: args,
+  })
 }
 
 function lintTests(args) {
@@ -71,8 +73,10 @@ function lintTests(args) {
   if (fix)
     eslintArgs.push('--fix')
 
-  const ENV = {jest: true, ...args}
-  return runCommandSync('eslint', eslintArgs, ENV)
+  return runCommandSync('eslint', {
+    args: eslintArgs,
+    env: {...args, jest: true}
+  })
 }
 
 function handler(args) {

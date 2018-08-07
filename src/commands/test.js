@@ -47,8 +47,10 @@ function handler(args) {
   if (args.watch)
     jestArgs.push('--watch')
 
-  const ENV = args
-  exitOnError(runCommandSync('jest', jestArgs, ENV))
+  exitOnError(runCommandSync('jest', {
+    args: jestArgs,
+    env: args,
+  }))
 }
 
 export default {

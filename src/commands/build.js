@@ -66,9 +66,8 @@ function handler(args) {
   if (watch)
     babelArgs.push('--watch')
 
-  const ENV = args
-  exitOnError(runCommandSync('rimraf', ['"build"']))
-  exitOnError(runCommandSync('babel', babelArgs, ENV))
+  exitOnError(runCommandSync('rimraf', {args: ['"build"']}))
+  exitOnError(runCommandSync('babel', {args: babelArgs, env: args}))
 }
 
 export default {

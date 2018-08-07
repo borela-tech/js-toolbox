@@ -21,11 +21,14 @@ function copyDirContents(source, destination) {
   if (IS_WINDOWS) {
     // The “echo d |” is used to suppress a prompt to check whether we are
     // copying a file or directory.
-    exitOnError(runCommandSync('echo d | xcopy', [
-      `"${source}" "${destination}" /S`,
-    ]))
-  } else
-    exitOnError(runCommandSync('cp', [`-R "${source}" "${destination}"`]))
+    exitOnError(runCommandSync('echo d | xcopy', {
+      args: [`"${source}" "${destination}" /S`],
+    }))
+  } else {
+    exitOnError(runCommandSync('cp', {
+      args: [`-R "${source}" "${destination}"`],
+    }))
+  }
 }
 
 function handler(args) {
