@@ -22,42 +22,48 @@ const PATH_KEY = IS_WINDOWS ? 'Path' : 'PATH'
 const TOOLBOX_PATH = BIN_DIR + PATH_DELIMITER + process.env[PATH_KEY]
 const SUCCESS = 0
 
-export function exitOnError(runCommandResult) {
-  if (runCommandResult.status === SUCCESS)
-    return
-  process.exit(runCommandResult.status)
-}
-
-export function runCommand(cmd:string, args:string[], env?:Object) {
-  return internalRunCommand(spawn, cmd, args, env)
-}
-
-export function runCommandSync(cmd:string, args:string[], env?:Object) {
-  return internalRunCommand(spawnSync, cmd, args, env)
-}
-
-function internalRunCommand(
-  spawn:Function,
-  cmd:string,
-  args:string[],
-  env?:Object,
-) {
-  const COMPUTED_ENV = {
+export function calculateEnv(env = {}) {
+  return {
     ...process.env,
     [PATH_KEY]: TOOLBOX_PATH,
-    borela: JSON.stringify(pickNonFalsy(env)),
+    TEMP_BORELA_JS_TOOLBOX: JSON.stringify(pickNonFalsy(env)),
   }
+}
 
-  // if (isToolboxBeingDebugged()) {
+export function exitOnError(spawnResult) {
+  if (spawnResult.status !== SUCCESS)
+    process.exit(spawnResult.status)
+}
+
+export type RunOptions = {
+  args?:string[],
+  env?:Object,
+  stdio?:string|string[]
+}
+
+export function runCommand(cmd:string, options?:RunOptions) {
+  return internalRunCommand(spawn, cmd, options)
+}
+
+export function runCommandSync(cmd:string, options?:RunOptions) {
+  return internalRunCommand(spawnSync, cmd, options)
+}
+
+function internalRunCommand(spawn:Function, cmd:string, options?:RunOptions) {
+  // if (isToolboxBeingDebugged())
   //   console.log('Spawning: ', prettyFormat({args, cmd, env}))
-  //   console.log('Computed env:', prettyFormat(COMPUTED_ENV))
-  // }
+
+  let {
+    args = [],
+    env = {},
+    stdio = 'inherit',
+  } = options || {}
 
   let result = spawn(cmd, args, {
     cwd: PACKAGE_DIR || process.cwd(),
-    env: COMPUTED_ENV,
+    env: calculateEnv(env),
     shell: true,
-    stdio: 'inherit',
+    stdio,
   })
 
   // if (isToolboxBeingDebugged())
