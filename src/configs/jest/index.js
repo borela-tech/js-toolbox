@@ -15,7 +15,7 @@ import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-let {platforms} = getSettings()
+let {platforms = []} = getSettings()
 const BROWSER = platforms.includes('browser')
 
 const CONFIG = {

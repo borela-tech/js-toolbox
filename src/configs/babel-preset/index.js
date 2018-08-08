@@ -26,7 +26,7 @@ module.exports = function () {
     browsers,
     minify,
     node,
-    platforms,
+    platforms = [],
     production,
   } = getSettings()
 
