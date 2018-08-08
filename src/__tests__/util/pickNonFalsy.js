@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {pickNonFalsy} from '../util'
+import {pickNonFalsy} from '../../util'
 
 const NO_FALSY = {a: 1, b: 2, c: 3}
 
