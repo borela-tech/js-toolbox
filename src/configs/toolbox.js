@@ -10,36 +10,50 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {camelizeKeys} from 'humps'
 import {
-  BORELA_JS as BORELA_JS_PATH,
   BORELA_JSON as BORELA_JSON_PATH,
+  BORELARC as BORELARC_PATH,
   PACKAGE_JSON as PACKAGE_JSON_PATH,
 } from '../paths'
-import {interopRequire} from '../util'
-import {existsSync} from 'fs'
 
-const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
+import {camelizeKeys} from 'humps'
+import {existsSync, readFileSync} from 'fs'
+import {interopRequire} from '../util'
+
+const ENV_VAR = /^BORELA_JS_TOOLBOX_(.+)$/
+
+export function getEnvFlags() {
+  let result = {}
+  for (let prop in process.env) {
+    const MATCH = prop.match(ENV_VAR)
+    if (MATCH)
+      result[MATCH[1].toLowerCase()] = process.env[prop]
+  }
+  return camelizeKeys(result)
+}
+
+export const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
   ? require(PACKAGE_JSON_PATH).borela
   : {}
 
-const BORELA_JS = existsSync(BORELA_JS_PATH)
-  ? interopRequire(BORELA_JS_PATH)
+export const BORELARC = existsSync(BORELARC_PATH)
+  ? JSON.parse(readFileSync(BORELARC_PATH))
   : {}
 
-const BORELA_JSON = existsSync(BORELA_JSON_PATH)
+export const BORELA_JSON = existsSync(BORELA_JSON_PATH)
   ? require(BORELA_JSON_PATH)
   : {}
 
-const ENV = process.env.borela
-  ? JSON.parse(process.env.borela)
+export const CLI_ENV = process.env.TEMP_BORELA_JS_TOOLBOX
+  ? JSON.parse(process.env.TEMP_BORELA_JS_TOOLBOX)
   : {}
 
 export function getSettings() {
   return {
+    ...getEnvFlags(),
     ...camelizeKeys(PACKAGE_JSON),
+    ...camelizeKeys(BORELARC),
     ...camelizeKeys(BORELA_JSON),
-    ...camelizeKeys(BORELA_JS),
-    ...camelizeKeys(ENV),
+    ...camelizeKeys(CLI_ENV),
   }
 }
