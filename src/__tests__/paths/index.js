@@ -47,15 +47,8 @@ describe.each([
 
   describe('BORELARC', () => {
     test('It has the path to a “borelarc” file at the package’s root', () => {
-      const {BORELA_JS} = require('../../paths')
-      expect(BORELA_JS).toBe(join(root, 'borelarc'))
-    })
-  })
-
-  describe('BORELA_JS', () => {
-    test('It has the path to a “borela.js” file at the package’s root', () => {
-      const {BORELA_JS} = require('../../paths')
-      expect(BORELA_JS).toBe(join(root, 'borela.js'))
+      const {BORELARC} = require('../../paths')
+      expect(BORELARC).toBe(join(root, 'borelarc'))
     })
   })
 

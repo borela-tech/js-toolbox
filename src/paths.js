@@ -18,7 +18,6 @@ export const PACKAGE_DIR = pkgDir.sync(process.cwd()) || ''
 
 // The toolbox can be configured through these files.
 export const BORELARC = join(PACKAGE_DIR, 'borelarc')
-export const BORELA_JS = join(PACKAGE_DIR, 'borela.js')
 export const BORELA_JSON = join(PACKAGE_DIR, 'borela.json')
 export const PACKAGE_JSON = join(PACKAGE_DIR, 'package.json')
 

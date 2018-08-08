@@ -19,11 +19,6 @@ export function exitOnPackageNotFound() {
   process.exit(1)
 }
 
-export function interopRequire(path) {
-  const RESULT = require(path)
-  return RESULT.default || RESULT
-}
-
 export function pickNonFalsy(obj:Object):Object {
   let result = {}
   for (let prop in obj) {
