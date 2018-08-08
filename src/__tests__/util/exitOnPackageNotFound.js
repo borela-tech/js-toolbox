@@ -10,40 +10,38 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {exitOnPackageNotFound} from '../../util'
-
-// function stubEnv(cliEnv = {}) {
-//   const ORIGINAL = process.env
-//
-//   afterEach(() => {
-//     Object.defineProperty(process, 'env', {
-//       get: () => ORIGINAL
-//     })
-//   })
-//
-//   beforeEach(() => {
-//     Object.defineProperty(process, 'env', {
-//       get: () => ({
-//         ...ORIGINAL,
-//         TEMP_BORELA_JS_TOOLBOX: JSON.stringify(cliEnv),
-//       })
-//     })
-//   })
-// }
-
 function stubPackageDir(dir) {
   jest.doMock('../../paths', () => ({PACKAGE_DIR: dir}))
 }
 
+let logSpy = jest.spyOn(console, 'log').mockImplementation(() => undefined)
+let processSpy = jest.spyOn(process, 'exit').mockImplementation(() => undefined)
+
 afterEach(() => {
-  jest.restoreAllMocks()
+  logSpy.mockClear()
+  processSpy.mockClear()
   jest.resetModules()
 })
 
-beforeEach(() => {
+afterAll(() => {
+  logSpy.mockRestore()
+  processSpy.mockRestore()
 })
 
 describe('exitOnPackageNotFound()', () => {
-  test('lols', () => {
+  test('Do nothing', () => {
+    stubPackageDir('foo')
+    const {exitOnPackageNotFound} = require('../../util')
+    exitOnPackageNotFound()
+    expect(logSpy).not.toHaveBeenCalled()
+    expect(processSpy).not.toHaveBeenCalled()
+  })
+
+  test('Call console and exit with error', () => {
+    stubPackageDir(undefined)
+    const {exitOnPackageNotFound} = require('../../util')
+    exitOnPackageNotFound()
+    expect(logSpy).toHaveBeenCalled()
+    expect(processSpy).toHaveBeenCalledWith(1)
   })
 })
