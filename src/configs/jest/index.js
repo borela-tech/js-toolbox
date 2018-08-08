@@ -20,6 +20,7 @@ const BROWSER = platforms.includes('browser')
 
 const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
+  modulePathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
   testEnvironment: BROWSER ? 'jsdom' : 'node',
   testRegex: '__tests__',
   testPathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
