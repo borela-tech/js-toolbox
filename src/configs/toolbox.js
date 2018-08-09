@@ -33,27 +33,27 @@ export function getEnvFlags() {
 }
 
 export const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
-  ? require(PACKAGE_JSON_PATH).borela
+  ? camelizeKeys(require(PACKAGE_JSON_PATH).borela)
   : {}
 
 export const BORELARC = existsSync(BORELARC_PATH)
-  ? JSON.parse(readFileSync(BORELARC_PATH))
+  ? camelizeKeys(JSON.parse(readFileSync(BORELARC_PATH)))
   : {}
 
 export const BORELA_JSON = existsSync(BORELA_JSON_PATH)
-  ? require(BORELA_JSON_PATH)
+  ? camelizeKeys(require(BORELA_JSON_PATH))
   : {}
 
 export const CLI_ENV = process.env.TEMP_BORELA_JS_TOOLBOX
-  ? JSON.parse(process.env.TEMP_BORELA_JS_TOOLBOX)
+  ? camelizeKeys(JSON.parse(process.env.TEMP_BORELA_JS_TOOLBOX))
   : {}
 
 export function getSettings() {
   return {
     ...getEnvFlags(),
-    ...camelizeKeys(PACKAGE_JSON),
-    ...camelizeKeys(BORELARC),
-    ...camelizeKeys(BORELA_JSON),
-    ...camelizeKeys(CLI_ENV),
+    ...PACKAGE_JSON,
+    ...BORELARC,
+    ...BORELA_JSON,
+    ...CLI_ENV,
   }
 }
