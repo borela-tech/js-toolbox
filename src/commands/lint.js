@@ -75,7 +75,7 @@ function lintTests(args) {
 
   return runCommandSync('eslint', {
     args: eslintArgs,
-    env: {...args, jest: true}
+    env: {...args, jest: true},
   })
 }
 
