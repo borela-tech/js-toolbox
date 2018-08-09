@@ -10,5 +10,4 @@ The `toolbox.js` file loads the flags in sequence from:
 * `package.json` file;
 * `borelarc` file;
 * `borela.json` file;
-* `borela.js` file;
 * `TEMP_BORELA_JS_TOOLBOX` env variable.
