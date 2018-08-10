@@ -82,12 +82,12 @@ function lintTests(args) {
 function handler(args) {
   exitOnPackageNotFound()
 
-  console.log()
-  console.log('[0/2] Linting sources...')
+  const STDOUT = process.stdout
+  STDOUT.write('[0/2] Linting sources...\n')
   let resultSources = lintSources(args)
-  console.log('[1/2] Linting tests...')
+  STDOUT.write('[1/2] Linting tests...\n')
   let resultTests = lintTests(args)
-  console.log('[2/2] Done linting.')
+  STDOUT.write('[2/2] Done.')
 
   exitOnError(resultSources)
   exitOnError(resultTests)
