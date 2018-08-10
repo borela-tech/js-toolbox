@@ -10,13 +10,19 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
+const LOG = debug('borela-js-toolbox:config:jest')
+
 let {platforms = []} = getSettings()
 const BROWSER = platforms.includes('browser')
+
+LOG('platforms: ', prettyFormat(platforms))
+LOG('BROWSER: ', prettyFormat(BROWSER))
 
 const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
@@ -31,7 +37,5 @@ const CONFIG = {
   verbose: true,
 }
 
-// if (isConfigBeingDebugged())
-//   console.log('Jest config: ', prettyFormat(CONFIG))
-
+LOG(prettyFormat(CONFIG))
 module.exports = CONFIG

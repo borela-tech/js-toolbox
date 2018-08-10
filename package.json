@@ -78,6 +78,7 @@
     "babel-plugin-source-map-support": "^2.0.1",
     "babel-preset-minify": "^0.5.0-alpha.3cc09dcf",
     "cpx": "^1.5.0",
+    "debug": "^3.1.0",
     "enzyme": "^3.3.0",
     "enzyme-to-json": "^3.3.4",
     "eslint": "^5.2.0",

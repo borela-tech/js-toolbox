@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import debug from 'debug'
 import experimental from './plugins/experimental'
 import flow from './plugins/flow'
 import jsx from './plugins/jsx'
@@ -21,6 +22,8 @@ import {addSideEffect} from '@babel/helper-module-imports'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
 
+const LOG = debug('borela-js-toolbox:config:babel')
+
 module.exports = function () {
   let {
     browsers,
@@ -29,6 +32,12 @@ module.exports = function () {
     platforms = [],
     production,
   } = getSettings()
+
+  LOG('browsers: ', prettyFormat(browsers))
+  LOG('minify: ', prettyFormat(minify))
+  LOG('node: ', prettyFormat(node))
+  LOG('platforms: ', prettyFormat(platforms))
+  LOG('production: ', prettyFormat(production))
 
   let result = {
     plugins: [],
@@ -61,8 +70,6 @@ module.exports = function () {
     }))
   }
 
-  // if (isConfigBeingDebugged())
-  //   console.log('Babel config: ', prettyFormat(result))
-
+  LOG(prettyFormat(result))
   return result
 }

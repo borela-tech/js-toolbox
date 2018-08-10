@@ -10,10 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
+
+const LOG = debug('borela-js-toolbox:config:eslint')
 
 let {
   flow,
@@ -22,6 +25,13 @@ let {
   react,
   typeScript,
 } = getSettings()
+
+LOG('flow: ', prettyFormat(flow))
+LOG('jest: ', prettyFormat(jest))
+LOG('platforms: ', prettyFormat(platforms))
+LOG('react: ', prettyFormat(react))
+LOG('typeScript: ', prettyFormat(typeScript))
+
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 let optionalExtensions = []
 
@@ -58,7 +68,5 @@ const CONFIG = {
   ],
 }
 
-// if (isConfigBeingDebugged())
-//   console.log('ESLint config: ', prettyFormat(CONFIG))
-
+LOG(prettyFormat(CONFIG))
 module.exports = CONFIG
