@@ -15,7 +15,7 @@ import {PACKAGE_DIR} from './paths'
 export function exitOnPackageNotFound() {
   if (PACKAGE_DIR)
     return
-  console.log('No valid “package.json” found.')
+  process.stdout.write('No valid “package.json” found.')
   process.exit(1)
 }
 
