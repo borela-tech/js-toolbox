@@ -40,12 +40,9 @@ test_script:
   - bb lint
   - bb test
   # Test templates.
-  - cd templates/express
-  - bb lint
-  - bb test
-  - cd ../lib
-  - bb lint
-  - bb test
-  - cd ../yargs
-  - bb lint
-  - bb test
+  - bb lint templates/express
+  - bb test templates/express
+  - bb lint templates/lib
+  - bb test templates/lib
+  - bb lint templates/yargs
+  - bb test templates/yargs
