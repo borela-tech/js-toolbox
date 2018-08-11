@@ -14,18 +14,21 @@ function stubPackageDir(dir) {
   jest.doMock('../../paths', () => ({PACKAGE_DIR: dir}))
 }
 
-let logSpy = jest.spyOn(console, 'log').mockImplementation(() => undefined)
-let processSpy = jest.spyOn(process, 'exit').mockImplementation(() => undefined)
+const STDOUT_SPY = jest.spyOn(process.stdout, 'write')
+  .mockImplementation(() => undefined)
+
+const EXIT_SPY = jest.spyOn(process, 'exit')
+  .mockImplementation(() => undefined)
 
 afterEach(() => {
-  logSpy.mockClear()
-  processSpy.mockClear()
+  STDOUT_SPY.mockClear()
+  EXIT_SPY.mockClear()
   jest.resetModules()
 })
 
 afterAll(() => {
-  logSpy.mockRestore()
-  processSpy.mockRestore()
+  STDOUT_SPY.mockRestore()
+  EXIT_SPY.mockRestore()
 })
 
 describe('exitOnPackageNotFound()', () => {
@@ -33,15 +36,15 @@ describe('exitOnPackageNotFound()', () => {
     stubPackageDir('foo')
     const {exitOnPackageNotFound} = require('../../util')
     exitOnPackageNotFound()
-    expect(logSpy).not.toHaveBeenCalled()
-    expect(processSpy).not.toHaveBeenCalled()
+    expect(STDOUT_SPY).not.toHaveBeenCalled()
+    expect(EXIT_SPY).not.toHaveBeenCalled()
   })
 
-  test('Call console and exit with error', () => {
+  test('Output error and exit', () => {
     stubPackageDir(undefined)
     const {exitOnPackageNotFound} = require('../../util')
     exitOnPackageNotFound()
-    expect(logSpy).toHaveBeenCalled()
-    expect(processSpy).toHaveBeenCalledWith(1)
+    expect(STDOUT_SPY).toHaveBeenCalled()
+    expect(EXIT_SPY).toHaveBeenCalledWith(1)
   })
 })
