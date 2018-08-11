@@ -16,13 +16,13 @@ import {CONFIGS_DIR, PACKAGE_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-const LOG = debug('borela-js-toolbox:config:jest')
+const log = debug('borela-js-toolbox:config:jest')
 
 let {platforms = []} = getSettings()
 const BROWSER = platforms.includes('browser')
 
-LOG('platforms: ', prettyFormat(platforms))
-LOG('BROWSER: ', prettyFormat(BROWSER))
+log('platforms: ', prettyFormat(platforms))
+log('BROWSER: ', prettyFormat(BROWSER))
 
 const CONFIG = {
   rootDir: join(PACKAGE_DIR, 'src'),
@@ -37,5 +37,5 @@ const CONFIG = {
   verbose: true,
 }
 
-LOG(prettyFormat(CONFIG))
+log(prettyFormat(CONFIG))
 module.exports = CONFIG

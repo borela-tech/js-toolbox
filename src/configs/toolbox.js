@@ -18,7 +18,6 @@ import {
 
 import {camelizeKeys} from 'humps'
 import {existsSync, readFileSync} from 'fs'
-import {interopRequire} from '../util'
 
 const ENV_VAR = /^BORELA_JS_TOOLBOX_(.+)$/
 

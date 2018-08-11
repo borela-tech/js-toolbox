@@ -16,7 +16,7 @@ import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../toolbox'
 import {join} from 'path'
 
-const LOG = debug('borela-js-toolbox:config:eslint')
+const log = debug('borela-js-toolbox:config:eslint')
 
 let {
   flow,
@@ -26,11 +26,11 @@ let {
   typeScript,
 } = getSettings()
 
-LOG('flow: ', prettyFormat(flow))
-LOG('jest: ', prettyFormat(jest))
-LOG('platforms: ', prettyFormat(platforms))
-LOG('react: ', prettyFormat(react))
-LOG('typeScript: ', prettyFormat(typeScript))
+log('flow: ', prettyFormat(flow))
+log('jest: ', prettyFormat(jest))
+log('platforms: ', prettyFormat(platforms))
+log('react: ', prettyFormat(react))
+log('typeScript: ', prettyFormat(typeScript))
 
 const ESLINT_CONFIG_DIR = join(CONFIGS_DIR, 'eslint')
 let optionalExtensions = []
@@ -68,5 +68,5 @@ const CONFIG = {
   ],
 }
 
-LOG(prettyFormat(CONFIG))
+log(prettyFormat(CONFIG))
 module.exports = CONFIG

@@ -10,8 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {existsSync, mkdirSync} from 'fs'
-import {join, relative, resolve} from 'path'
+import {existsSync} from 'fs'
+import {join, resolve} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {TEMPLATES_DIR} from '../paths'
 

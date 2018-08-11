@@ -17,7 +17,7 @@ import {delimiter as PATH_DELIMITER} from 'path'
 import {pickNonFalsy} from './util'
 import {spawn, spawnSync} from 'child_process'
 
-const LOG = debug('borela-js-toolbox')
+const log = debug('borela-js-toolbox')
 const IS_WINDOWS = process.platform === 'win32'
 const PATH_KEY = IS_WINDOWS ? 'Path' : 'PATH'
 const TOOLBOX_PATH = BIN_DIR + PATH_DELIMITER + process.env[PATH_KEY]
@@ -51,7 +51,7 @@ export function runCommandSync(cmd:string, options?:RunOptions) {
 }
 
 function internalRunCommand(spawn:Function, cmd:string, options?:RunOptions) {
-  LOG('Spawning...')
+  log('Spawning...')
 
   let {
     args = [],
@@ -59,8 +59,8 @@ function internalRunCommand(spawn:Function, cmd:string, options?:RunOptions) {
     stdio = 'inherit',
   } = options || {}
 
-  LOG('cmd: ', prettyFormat(cmd))
-  LOG('options: ', prettyFormat(options))
+  log('cmd: ', prettyFormat(cmd))
+  log('options: ', prettyFormat(options))
 
   const COMPUTED_OPTIONS = {
     cwd: PACKAGE_DIR || process.cwd(),
@@ -71,8 +71,8 @@ function internalRunCommand(spawn:Function, cmd:string, options?:RunOptions) {
 
   const RESULT = spawn(cmd, args, COMPUTED_OPTIONS)
 
-  LOG('COMPUTED_OPTIONS: ', prettyFormat(COMPUTED_OPTIONS))
-  LOG('Result: ', prettyFormat(RESULT))
+  log('COMPUTED_OPTIONS: ', prettyFormat(COMPUTED_OPTIONS))
+  log('Result: ', prettyFormat(RESULT))
 
   return RESULT
 }

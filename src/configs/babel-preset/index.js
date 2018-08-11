@@ -22,7 +22,7 @@ import {addSideEffect} from '@babel/helper-module-imports'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
 
-const LOG = debug('borela-js-toolbox:config:babel')
+const log = debug('borela-js-toolbox:config:babel')
 
 module.exports = function () {
   let {
@@ -33,11 +33,11 @@ module.exports = function () {
     production,
   } = getSettings()
 
-  LOG('browsers: ', prettyFormat(browsers))
-  LOG('minify: ', prettyFormat(minify))
-  LOG('node: ', prettyFormat(node))
-  LOG('platforms: ', prettyFormat(platforms))
-  LOG('production: ', prettyFormat(production))
+  log('browsers: ', prettyFormat(browsers))
+  log('minify: ', prettyFormat(minify))
+  log('node: ', prettyFormat(node))
+  log('platforms: ', prettyFormat(platforms))
+  log('production: ', prettyFormat(production))
 
   let result = {
     plugins: [],
@@ -70,6 +70,6 @@ module.exports = function () {
     }))
   }
 
-  LOG(prettyFormat(result))
+  log(prettyFormat(result))
   return result
 }
