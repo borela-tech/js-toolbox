@@ -19,7 +19,7 @@ import {
   react,
   typeScript,
 } from '../flags'
-import {CONFIGS_DIR, getPackageDir} from '../paths'
+import {CONFIGS_DIR, getPackageDir, setTargetDir} from '../paths'
 import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
