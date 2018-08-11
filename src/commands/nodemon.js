@@ -12,6 +12,7 @@
 
 import {appArgs, inspect} from '../flags'
 import {exitOnError, runCommandSync} from '../system'
+import {exitOnPackageNotFound} from '../util'
 import {getPackageDir} from '../paths'
 
 function builder(yargs) {
@@ -20,6 +21,9 @@ function builder(yargs) {
 }
 
 function handler(args) {
+  setTargetDir(args.dir)
+  exitOnPackageNotFound()
+
   let {appArgs, inspect} = args
   let nodemonArgs = [`"${getPackageDir()}"`]
 
@@ -33,7 +37,7 @@ function handler(args) {
 }
 
 export default {
-  command: 'nodemon',
+  command: 'nodemon [dir]',
   description: 'Run the project using nodemon.',
   builder,
   handler,
