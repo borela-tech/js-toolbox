@@ -25,10 +25,6 @@ import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
-const BASIC_ARGS = [
-  `--config "${CONFIG_PATH}"`,
-  `"${join(getPackageDir(), 'src')}"`,
-]
 
 function builder(yargs) {
   browsers(yargs)
@@ -48,7 +44,8 @@ function lintSources(args) {
   let eslintArgs = [
     '--ignore-pattern "src/**/__tests__"',
     '--ignore-pattern "src/**/__tests__/**"',
-    ...BASIC_ARGS,
+    `--config "${CONFIG_PATH}"`,
+    `"${join(getPackageDir(), 'src')}"`,
   ]
 
   let {fix} = args
@@ -66,7 +63,8 @@ function lintTests(args) {
     '--ignore-pattern "src/**"',
     '--ignore-pattern "!**/__tests__"',
     '--ignore-pattern "!**/__tests__/**"',
-    ...BASIC_ARGS,
+    `--config "${CONFIG_PATH}"`,
+    `"${join(getPackageDir(), 'src')}"`,
   ]
 
   let {fix} = args
