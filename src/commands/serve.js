@@ -10,12 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {CONFIGS_DIR, setTargetDir} from '../paths'
+import {exitOnPackageNotFound} from '../util'
+
 function handler(args) {
+  setTargetDir(args.dir)
+  exitOnPackageNotFound()
   // TODO.
 }
 
 export default {
-  command: 'serve',
+  command: 'serve [dir]',
   description: 'Run Webpack’s dev server.',
   handler,
 }

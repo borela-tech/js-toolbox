@@ -10,18 +10,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {disableFlowTyped} from '../flags'
+import {exitOnPackageNotFound} from '../util'
 
 function builder(yargs) {
   disableFlowTyped(yargs)
 }
 
 function handler(args) {
-  // TODO
+  setTargetDir(args.dir)
+  exitOnPackageNotFound()
+  // TODO.
 }
 
 export default {
-  command: 'flow',
+  command: 'flow [dir]',
   description: 'Run Flow.',
   builder,
   handler,
