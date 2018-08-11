@@ -16,6 +16,7 @@ import {exitOnError, runCommandSync} from '../system'
 import {TEMPLATES_DIR} from '../paths'
 
 const IS_WINDOWS = process.platform === 'win32'
+const SHARED_FILES_DIR = join(TEMPLATES_DIR, 'shared')
 
 function copyDirContents(source, destination) {
   if (IS_WINDOWS) {
@@ -24,9 +25,19 @@ function copyDirContents(source, destination) {
     exitOnError(runCommandSync('echo d | xcopy', {
       args: [`"${source}" "${destination}" /S`],
     }))
+
+    // Shared files.
+    exitOnError(runCommandSync('echo d | xcopy', {
+      args: [`"${SHARED_FILES_DIR}" "${destination}" /S`],
+    }))
   } else {
     exitOnError(runCommandSync('cp', {
       args: [`-R "${source}" "${destination}"`],
+    }))
+
+    // Shared files.
+    exitOnError(runCommandSync('cp', {
+      args: [`-R "${SHARED_FILES_DIR}" "${destination}"`],
     }))
   }
 }
