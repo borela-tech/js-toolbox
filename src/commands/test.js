@@ -21,7 +21,7 @@ import {
   typeScript,
   watchTests,
 } from '../flags'
-import {CONFIGS_DIR} from '../paths'
+import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
@@ -41,6 +41,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
+  setTargetDir(args.dir)
   exitOnPackageNotFound()
 
   let jestArgs = [`--config="${CONFIG_PATH}"`]
@@ -54,7 +55,7 @@ function handler(args) {
 }
 
 export default {
-  command: 'test',
+  command: 'test [dir]',
   description: 'Run Jest.',
   builder,
   handler,

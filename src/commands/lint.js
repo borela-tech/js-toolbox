@@ -80,6 +80,7 @@ function lintTests(args) {
 }
 
 function handler(args) {
+  setTargetDir(args.dir)
   exitOnPackageNotFound()
 
   const STDOUT = process.stdout
@@ -94,7 +95,7 @@ function handler(args) {
 }
 
 export default {
-  command: 'lint',
+  command: 'lint [dir]',
   description: 'Run ESLint',
   builder,
   handler,

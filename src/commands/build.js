@@ -25,7 +25,7 @@ import {
   typeScript,
   watchBuild,
 } from '../flags'
-import {CONFIGS_DIR} from '../paths'
+import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
@@ -55,6 +55,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
+  setTargetDir(args.dir)
   exitOnPackageNotFound()
 
   let {disableSourceMaps, watch} = args
@@ -71,7 +72,7 @@ function handler(args) {
 }
 
 export default {
-  command: 'build',
+  command: 'build [dir]',
   description: 'Build the project.',
   builder,
   handler,
