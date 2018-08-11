@@ -12,7 +12,7 @@
 
 import {appArgs, inspect} from '../flags'
 import {exitOnError, runCommandSync} from '../system'
-import {PACKAGE_DIR} from '../paths'
+import {getPackageDir} from '../paths'
 
 function builder(yargs) {
   appArgs(yargs)
@@ -21,7 +21,7 @@ function builder(yargs) {
 
 function handler(args) {
   let {appArgs, inspect} = args
-  let nodemonArgs = [`"${PACKAGE_DIR}"`]
+  let nodemonArgs = [`"${getPackageDir()}"`]
 
   // Inspect needs to be passed before the script.
   if (inspect) nodemonArgs.unshift('--inspect')

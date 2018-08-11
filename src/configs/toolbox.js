@@ -10,14 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {
-  BORELA_JSON as BORELA_JSON_PATH,
-  BORELARC as BORELARC_PATH,
-  PACKAGE_JSON as PACKAGE_JSON_PATH,
-} from '../paths'
-
 import {camelizeKeys} from 'humps'
 import {existsSync, readFileSync} from 'fs'
+import {getPackageDir} from '../paths'
+import {join} from 'path'
 
 const ENV_VAR = /^BORELA_JS_TOOLBOX_(.+)$/
 
@@ -30,6 +26,11 @@ export function getEnvFlags() {
   }
   return camelizeKeys(result)
 }
+
+const PACKAGE_DIR = getPackageDir()
+const PACKAGE_JSON_PATH = join(PACKAGE_DIR, 'package.json')
+const BORELARC_PATH = join(PACKAGE_DIR, 'borelarc')
+const BORELA_JSON_PATH = join(PACKAGE_DIR, 'borela.json')
 
 export const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
   ? camelizeKeys(require(PACKAGE_JSON_PATH).borela)

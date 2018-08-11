@@ -11,7 +11,11 @@
 // the License.
 
 function stubPackageDir(dir) {
-  jest.doMock('../../paths', () => ({PACKAGE_DIR: dir}))
+  jest.doMock('../../paths', () => ({
+    getPackageDir() {
+      return dir
+    },
+  }))
 }
 
 const STDOUT_SPY = jest.spyOn(process.stdout, 'write')

@@ -12,6 +12,26 @@
 
 import {join} from 'path'
 
+afterEach(() => {
+  jest.restoreAllMocks()
+  jest.resetModules()
+})
+
+describe('getTargetDir()', () => {
+  test('It has the dir set by “setTargetDir”', () => {
+    const {getTargetDir, setTargetDir} = require('../../paths')
+
+    setTargetDir('foo')
+    expect(getTargetDir()).toBe('foo')
+
+    setTargetDir('bar')
+    expect(getTargetDir()).toBe('bar')
+
+    setTargetDir('baz')
+    expect(getTargetDir()).toBe('baz')
+  })
+})
+
 const FIXTURE = join(__dirname, '__fixture__')
 const FOO = join(FIXTURE, 'foo')
 const FOO_PACKAGE = join(FIXTURE, 'foo-package')
@@ -26,89 +46,22 @@ describe.each([
   [FOO_BAR, FIXTURE],
   [FOO_BAR_PACKAGE, FOO_BAR_PACKAGE],
   [FOO_BAR_PACKAGE_BAZ, FOO_BAR_PACKAGE],
-])('Package path helpers', (cwd, root) => {
+])('Different values for “process.cwd”', (cwd, root) => {
   beforeEach(() => {
     jest.spyOn(process, 'cwd').mockImplementation(() => cwd)
   })
 
-  afterEach(() => {
-    jest.restoreAllMocks()
-    jest.resetModules()
-  })
-
-  // The CLI’s current working directory is set to be the target package, this
-  // test makes sure we are getting the correct package root.
-  describe('PACKAGE_DIR', () => {
+  describe('getPackageDir()', () => {
     test('It has the package’s root', () => {
-      const {PACKAGE_DIR} = require('../../paths')
-      expect(PACKAGE_DIR).toBe(root)
+      const {getPackageDir} = require('../../paths')
+      expect(getPackageDir()).toBe(root)
     })
   })
 
-  describe('BORELARC', () => {
-    test('It has the path to a “borelarc” file at the package’s root', () => {
-      const {BORELARC} = require('../../paths')
-      expect(BORELARC).toBe(join(root, 'borelarc'))
-    })
-  })
-
-  describe('BORELA_JSON', () => {
-    test('It has the path to a “borela.json” file at the package’s root', () => {
-      const {BORELA_JSON} = require('../../paths')
-      expect(BORELA_JSON).toBe(join(root, 'borela.json'))
-    })
-  })
-
-  describe('PACKAGE_JSON', () => {
-    test('It has the path to package’s “package.json”', () => {
-      const {PACKAGE_JSON} = require('../../paths')
-      expect(PACKAGE_JSON).toBe(join(root, 'package.json'))
-    })
-  })
-})
-
-// The following tests can be considered unnecessary but I added them to prevent
-// accidental changes to the paths which could make the CLI hard to debug.
-
-const TOOLBOX_ROOT = join(__dirname, '..', '..', '..')
-const TOOLBOX_BIN = join(TOOLBOX_ROOT, 'node_modules', '.bin')
-const TOOLBOX_CONFIGS = join(TOOLBOX_ROOT, 'build', 'configs')
-const TOOLBOX_MODULES = join(TOOLBOX_ROOT, 'node_modules')
-const TOOLBOX_TEMPLATES = join(TOOLBOX_ROOT, 'templates')
-
-describe('Toolbox path helpers', () => {
-  describe('TOOLBOX_DIR', () => {
-    test('It has the toolbox’s root path', () => {
-      const {TOOLBOX_DIR} = require('../../paths')
-      expect(TOOLBOX_DIR).toBe(TOOLBOX_ROOT)
-    })
-  })
-
-  describe('BIN_DIR', () => {
-    test('It has the toolbox’s “.bin” path', () => {
-      const {BIN_DIR} = require('../../paths')
-      expect(BIN_DIR).toBe(TOOLBOX_BIN)
-    })
-  })
-
-  describe('CONFIGS_DIR', () => {
-    test('It has the toolbox’s configs path', () => {
-      const {CONFIGS_DIR} = require('../../paths')
-      expect(CONFIGS_DIR).toBe(TOOLBOX_CONFIGS)
-    })
-  })
-
-  describe('MODULES_DIR', () => {
-    test('It has the toolbox’s “node_modules” path', () => {
-      const {MODULES_DIR} = require('../../paths')
-      expect(MODULES_DIR).toBe(TOOLBOX_MODULES)
-    })
-  })
-
-  describe('MODULES_DIR', () => {
-    test('It has the toolbox’s templates path', () => {
-      const {TEMPLATES_DIR} = require('../../paths')
-      expect(TEMPLATES_DIR).toBe(TOOLBOX_TEMPLATES)
+  describe('getTargetDir()', () => {
+    test('It has the process’s cwd', () => {
+      const {getTargetDir} = require('../../paths')
+      expect(getTargetDir()).toBe(cwd)
     })
   })
 })

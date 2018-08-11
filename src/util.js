@@ -10,10 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {PACKAGE_DIR} from './paths'
+import {getPackageDir} from './paths'
 
 export function exitOnPackageNotFound() {
-  if (PACKAGE_DIR)
+  if (getPackageDir())
     return
   process.stdout.write('No valid “package.json” found.')
   process.exit(1)

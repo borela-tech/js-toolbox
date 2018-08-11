@@ -16,9 +16,9 @@ const FIXTURES_PATH = join(__dirname, '__fixtures__')
 
 function setFixture(fixture) {
   jest.doMock('../../../paths', () => ({
-    BORELA_JSON: join(FIXTURES_PATH, fixture, 'borela.json'),
-    BORELARC: join(FIXTURES_PATH, fixture, 'borelarc'),
-    PACKAGE_JSON: join(FIXTURES_PATH, fixture, 'package.json'),
+    getPackageDir() {
+      return join(FIXTURES_PATH, fixture)
+    },
   }))
 }
 

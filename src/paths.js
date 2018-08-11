@@ -13,13 +13,19 @@
 import pkgDir from 'pkg-dir'
 import {join} from 'path'
 
-// This is the path to target package being manipulated by the toolbox.
-export const PACKAGE_DIR = pkgDir.sync(process.cwd()) || ''
+let targetDir = process.cwd()
 
-// The toolbox can be configured through these files.
-export const BORELARC = join(PACKAGE_DIR, 'borelarc')
-export const BORELA_JSON = join(PACKAGE_DIR, 'borela.json')
-export const PACKAGE_JSON = join(PACKAGE_DIR, 'package.json')
+export function getPackageDir():string {
+  return pkgDir.sync(targetDir) || ''
+}
+
+export function getTargetDir():string {
+  return targetDir
+}
+
+export function setTargetDir(dir:string):string {
+  targetDir = dir
+}
 
 // This is the path to the toolbox itself.
 export const TOOLBOX_DIR = join(__dirname, '..')

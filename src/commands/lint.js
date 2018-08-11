@@ -19,7 +19,7 @@ import {
   react,
   typeScript,
 } from '../flags'
-import {CONFIGS_DIR, PACKAGE_DIR} from '../paths'
+import {CONFIGS_DIR, getPackageDir} from '../paths'
 import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
@@ -27,7 +27,7 @@ import {exitOnPackageNotFound} from '../util'
 const CONFIG_PATH = join(CONFIGS_DIR, 'eslint', 'index.js')
 const BASIC_ARGS = [
   `--config "${CONFIG_PATH}"`,
-  `"${join(PACKAGE_DIR, 'src')}"`,
+  `"${join(getPackageDir(), 'src')}"`,
 ]
 
 function builder(yargs) {
