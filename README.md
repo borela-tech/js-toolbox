@@ -114,7 +114,7 @@ The commands to *test*, *lint* and *build* are the same but this time, you can
 also:
 
 ```sh
-bb serve
+bb webpack-dev-server
 ```
 
 This command will spin up [Webpack’s Development Server][webpack-dev-server] to
