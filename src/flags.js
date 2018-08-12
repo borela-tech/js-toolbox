@@ -86,7 +86,7 @@ export function minify(yargs) {
 export function node(yargs) {
   yargs.option('node', {
     description: 'Minimum NodeJS version supported by the project.',
-    default: '8.5.0',
+    default: '8.9',
     type: 'string',
   })
 }
