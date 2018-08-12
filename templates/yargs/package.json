@@ -4,8 +4,8 @@
   "description": "",
   "license": "Apache-2.0",
   "bin": {
-    "foo": "build/index.js",
-    "bar": "build/index.js"
+    "foo": "build/main.js",
+    "bar": "build/main.js"
   },
   "scripts": {
     "build": "bb build --production",

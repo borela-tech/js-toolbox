@@ -4,7 +4,7 @@
   "description": "CLI tool to simplify the development of JavaScript apps/libraries with little to no configuration.",
   "license": "Apache-2.0",
   "bin": {
-    "bb": "build/index.js"
+    "bb": "build/main.js"
   },
   "scripts": {
     "clean": "rimraf build",
