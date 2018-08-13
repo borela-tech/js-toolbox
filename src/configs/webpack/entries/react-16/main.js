@@ -11,8 +11,8 @@
 // the License.
 
 import App from 'App'
+import ErrorBoundary from './ErrorBoundary'
 import React from 'react'
-// import Redbox from 'redbox-react'
 import {AppContainer} from 'react-hot-loader'
 import {render} from 'react-dom'
 
@@ -23,9 +23,11 @@ if (module.hot) {
   module.hot.accept('App', () => {
     let ReloadedApp = require('App').default
     render(
-      <AppContainer>
-        <ReloadedApp/>
-      </AppContainer>,
+      <ErrorBoundary>
+        <AppContainer>
+          <ReloadedApp/>
+        </AppContainer>
+      </ErrorBoundary>,
       HTML_ROOT,
     )
   })
@@ -34,10 +36,11 @@ if (module.hot) {
 // Render the page after all resources in the header loads.
 window.addEventListener('load', () => {
   render(
-    <AppContainer>
-      <App/>
-    </AppContainer>,
+    <ErrorBoundary>
+      <AppContainer>
+        <App/>
+      </AppContainer>
+    </ErrorBoundary>,
     HTML_ROOT,
   )
 })
-

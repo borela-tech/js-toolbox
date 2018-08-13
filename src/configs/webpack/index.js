@@ -102,8 +102,11 @@ const CONFIG = {
 // Prints readable module names in the browser console on HMR updates.
 // CONFIG.plugins.push(new NamedModulesPlugin())
 
+const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
+const REACT_16_ENTRY = join(ENTRIES_DIR, 'react-16')
+
 // Use the default “main” entry point if a custom one is not found.
-const DEFAULT_ENTRY = join(WEBPACK_CONFIG_DIR, 'main.js')
+const DEFAULT_ENTRY = join(REACT_16_ENTRY, 'main.js')
 const CUSTOM_ENTRY = join(PROJECT_DIR, 'src', 'main.js')
 
 if (existsSync(CUSTOM_ENTRY))
@@ -112,7 +115,7 @@ else
   CONFIG.entry.push(DEFAULT_ENTRY)
 
 // Template used to render the app.
-const DEFAULT_TEMPLATE = join(WEBPACK_CONFIG_DIR, 'index.html')
+const DEFAULT_TEMPLATE = join(REACT_16_ENTRY, 'index.html')
 const CUSTOM_TEMPLATE = join(PROJECT_DIR, 'src', 'index.html')
 
 CONFIG.plugins.push(new HtmlPlugin({
