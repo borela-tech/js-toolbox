@@ -88,7 +88,7 @@ function runWebpack(args) {
 
 export default {
   command: 'build [dir]',
-  description: 'Build the project.',
+  description: 'Build using Webpack.',
   builder,
   handler,
 }

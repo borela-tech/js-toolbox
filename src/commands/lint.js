@@ -94,7 +94,7 @@ function handler(args) {
 
 export default {
   command: 'lint [dir]',
-  description: 'Run ESLint',
+  description: 'Lint using ESLint.',
   builder,
   handler,
 }

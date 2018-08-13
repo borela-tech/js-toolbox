@@ -26,7 +26,7 @@ function handler(args) {
 
 export default {
   command: 'flow [dir]',
-  description: 'Run Flow.',
+  description: 'Type check using Flow.',
   builder,
   handler,
 }

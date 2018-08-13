@@ -28,7 +28,7 @@ function handler(args) {
 }
 
 export default {
-  command: 'webpack-dev-server [dir]',
-  description: 'Run Webpack’s dev server.',
+  command: 'serve [dir]',
+  description: 'Serve using Webpack’s dev server.',
   handler,
 }

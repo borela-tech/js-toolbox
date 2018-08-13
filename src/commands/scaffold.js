@@ -54,7 +54,7 @@ function handler(args) {
 }
 
 export default {
-  command: 'scaffold-project <template> [dir]',
-  description: 'Generate a project.',
+  command: 'scaffold <template> [dir]',
+  description: 'Copy the template to the directory.',
   handler,
 }

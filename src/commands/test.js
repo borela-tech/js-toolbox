@@ -56,7 +56,7 @@ function handler(args) {
 
 export default {
   command: 'test [dir]',
-  description: 'Run Jest.',
+  description: 'Run tests using Jest.',
   builder,
   handler,
 }

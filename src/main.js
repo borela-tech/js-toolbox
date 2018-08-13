@@ -19,10 +19,10 @@ import {
   flow,
   lint,
   location,
-  nodemon,
-  scaffoldProject,
+  scaffold,
+  serve,
+  start,
   test,
-  webpackDevServer,
 } from './commands'
 import {EPILOG, PROLOG} from './banner'
 
@@ -36,10 +36,10 @@ const PARSER = Yargs.scriptName('bb')
   .command(flow)
   .command(lint)
   .command(location)
-  .command(nodemon)
-  .command(scaffoldProject)
+  .command(scaffold)
+  .command(serve)
+  .command(start)
   .command(test)
-  .command(webpackDevServer)
   .demandCommand(1, 'Error: Use one of the commands available.')
   .recommendCommands()
 

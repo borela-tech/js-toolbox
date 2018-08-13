@@ -11,10 +11,10 @@
 // the License.
 
 export build from './build'
-export lint from './lint'
 export flow from './flow'
+export lint from './lint'
 export location from './location'
-export nodemon from './nodemon'
-export scaffoldProject from './scaffold-project'
+export scaffold from './scaffold'
+export serve from './serve'
+export start from './start'
 export test from './test'
-export webpackDevServer from './webpack-dev-server'

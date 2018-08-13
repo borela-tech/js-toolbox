@@ -37,8 +37,8 @@ function handler(args) {
 }
 
 export default {
-  command: 'nodemon [dir]',
-  description: 'Run the project using nodemon.',
+  command: 'start [dir]',
+  description: 'Start using nodemon.',
   builder,
   handler,
 }
