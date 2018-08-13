@@ -10,10 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {getSettings} from '../../toolbox'
-
-let {production} = getSettings()
-const IS_DEV = !production
+const PRODUCTION = process.env.NODE_ENV === 'production'
+const IS_DEV = !PRODUCTION
 
 export default {
   test: /\.module\.css$/,

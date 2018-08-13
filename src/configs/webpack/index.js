@@ -33,7 +33,7 @@ import jsRule from './rules/js'
 
 let log = debug('borela-js-toolbox:config:webpack')
 
-let {production} = getSettings()
+const PRODUCTION = process.env.NODE_ENV === 'production'
 const PROJECT_DIR = getPackageDir()
 const BUILD_DIR = join(PROJECT_DIR, 'build')
 const WEBPACK_CONFIG_DIR = join(CONFIGS_DIR, 'webpack')
@@ -59,7 +59,7 @@ const CONFIG = {
   devtool: 'source-map',
   entry: [],
   externals: ['fs', 'module'],
-  mode: production ? 'production' : 'development',
+  mode: PRODUCTION ? 'production' : 'development',
   module: {
     rules: [
       assetRule,

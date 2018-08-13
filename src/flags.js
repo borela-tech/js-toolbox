@@ -100,13 +100,6 @@ export function platforms(yargs) {
   })
 }
 
-export function production(yargs) {
-  yargs.option('production', {
-    description: 'Remove debug plugins.',
-    type: 'boolean',
-  })
-}
-
 export function react(yargs) {
   yargs.option('react', {
     description: 'Enable React transformations.',

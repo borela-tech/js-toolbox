@@ -31,7 +31,6 @@ module.exports = function () {
     minify,
     node,
     platforms = [],
-    production,
   } = getSettings()
 
   let result = {
@@ -56,7 +55,8 @@ module.exports = function () {
   // IMPORTANT: This plugin will enable source map on stack traces but only if
   // babel generate inline source maps. This will only work locally and requires
   // the toolbox to be installed.
-  if (!production && !disableSourceMaps) {
+  const PRODUCTION = process.env.NODE_ENV === 'production'
+  if (!PRODUCTION && !disableSourceMaps) {
     result.plugins.push(() => ({
       visitor: {
         Program(path) {
