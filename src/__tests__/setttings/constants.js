@@ -15,7 +15,7 @@ import {join} from 'path'
 const FIXTURES_PATH = join(__dirname, '__fixtures__')
 
 function setFixture(fixture) {
-  jest.doMock('../../../paths', () => ({
+  jest.doMock('../../paths', () => ({
     getPackageDir() {
       return join(FIXTURES_PATH, fixture)
     },
@@ -63,19 +63,19 @@ const BORELA_JSON_CONTENTS = {
 
 test('“PACKAGE_JSON” has the borela key inside the “package.json”', () => {
   setFixture('package-json')
-  const {PACKAGE_JSON} = require('../../toolbox')
+  const {PACKAGE_JSON} = require('../../settings')
   expect(PACKAGE_JSON).toEqual(PACKAGE_JSON_CONTENTS)
 })
 
 test('“BORELARC” has the contents of the “borelarc”', () => {
   setFixture('borelarc')
-  const {BORELARC} = require('../../toolbox')
+  const {BORELARC} = require('../../settings')
   expect(BORELARC).toEqual(BORELARC_CONTENTS)
 })
 
 test('“BORELA_JSON” has the contents of the “borela.json”', () => {
   setFixture('borela-json')
-  const {BORELA_JSON} = require('../../toolbox')
+  const {BORELA_JSON} = require('../../settings')
   expect(BORELA_JSON).toEqual(BORELA_JSON_CONTENTS)
 })
 
@@ -89,7 +89,7 @@ describe('CLI_ENV', () => {
   })
 
   test('It has the combined object from env vars', () => {
-    const {CLI_ENV} = require('../../toolbox')
+    const {CLI_ENV} = require('../../settings')
     expect(CLI_ENV).toEqual({
       foo: true,
       fooBar: 42,

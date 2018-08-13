@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {getEnvFlags} from '../../toolbox'
+import {getEnvFlags} from '../../settings'
 
 const ORIGINAL = process.env
 
