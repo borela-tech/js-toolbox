@@ -15,7 +15,6 @@ import {getSettings} from '../../toolbox'
 
 export default function (plugins) {
   let {jsx, production, react} = getSettings()
-
   if (!react)
     return
 
