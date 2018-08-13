@@ -89,15 +89,15 @@ bb build
 # development and some of them require the toolbox to be installed. Set
 # NODE_ENV to production to remove them:
 
-# Bash.
+# Bash:
 NODE_ENV = "production"
 bb build
 
-# Windows CMD
+# Windows CMD:
 set NODE_ENV=production
 bb build
 
-# Windows Powershell
+# Windows PowerShell:
 $env:NODE_ENV = "production"
 bb build
 ```
