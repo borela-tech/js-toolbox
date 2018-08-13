@@ -20,7 +20,7 @@ import react from './plugins/react'
 import typeScript from './plugins/typeScript'
 import {addSideEffect} from '@babel/helper-module-imports'
 import {getModulePath} from '../../modules'
-import {getSettings} from '../toolbox'
+import {getSettings} from '../../settings'
 
 let log = debug('borela-js-toolbox:config:babel')
 

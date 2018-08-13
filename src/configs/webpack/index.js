@@ -20,7 +20,7 @@ import debug from 'debug'
 import HtmlPlugin from 'html-webpack-plugin'
 import prettyFormat from 'pretty-format'
 import {existsSync} from 'fs'
-import {getSettings} from '../toolbox'
+import {getSettings} from '../../settings'
 import {join} from 'path'
 import {NamedModulesPlugin} from 'webpack'
 

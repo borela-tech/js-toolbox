@@ -13,7 +13,7 @@
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR} from '../../paths'
-import {getSettings} from '../toolbox'
+import {getSettings} from '../../settings'
 import {join} from 'path'
 
 let log = debug('borela-js-toolbox:config:eslint')

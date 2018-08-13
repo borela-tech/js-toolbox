@@ -11,7 +11,7 @@
 // the License.
 
 import {babelSyntaxPlugin} from '../../../modules'
-import {getSettings} from '../../toolbox'
+import {getSettings} from '../../../settings'
 
 export default function (plugins) {
   let {jsx} = getSettings()
