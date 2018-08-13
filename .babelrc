@@ -31,8 +31,7 @@
     "@babel/plugin-proposal-optional-chaining",
     "@babel/plugin-proposal-throw-expressions",
     "@babel/plugin-proposal-unicode-property-regex",
-    "@babel/plugin-syntax-jsx",
-    "@babel/plugin-transform-react-jsx",
+    "babel-plugin-source-map-support",
     ["@babel/plugin-proposal-pipeline-operator", {"proposal": "minimal"}]
   ],
   "presets": [
