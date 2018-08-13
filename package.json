@@ -9,11 +9,11 @@
   "scripts": {
     "clean": "rimraf build",
     "dev": "npm run clean && run-p dev:*",
-    "dev:build": "babel src -d build --ignore **/__tests__ --source-maps",
+    "dev:build": "babel src -d build --ignore **/__tests__ --ignore **/webpack/entries --source-maps",
     "dev:banner-assets": "cpx src/banner/*.txt build/banner",
     "dev:webpack-entries": "cpx src/**/webpack/entries/**/* build",
     "dev-w": "npm run clean && run-p dev-w:*",
-    "dev-w:build": "babel src -d build --ignore **/__tests__ --source-maps --watch",
+    "dev-w:build": "babel src -d build --ignore **/__tests__ --ignore **/webpack/entries --source-maps --watch",
     "dev-w:banner-assets": "cpx src/banner/*.txt build/banner --watch",
     "dev-w:webpack-entries": "cpx src/**/webpack/entries/**/* build --watch",
     "lint": "bb lint",
