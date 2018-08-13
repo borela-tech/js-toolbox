@@ -1,2 +1,2 @@
 --------------------------------------------------------------------------------
-                     https://github.com/borela-tech/toolbox
+                  https://github.com/borela-tech/js-toolbox
