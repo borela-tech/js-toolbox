@@ -62,7 +62,7 @@ bb --help
 ## Creating a simple JS library
 
 1. Navigate to the directory you want to create the project;
-2. Run the command `bb scaffold-project lib`;
+2. Run the command `bb scaffold lib`;
 
 Run the tests:
 
@@ -86,8 +86,20 @@ And finally, to build:
 ```sh
 bb build
 # The previous command includes a lot of stuff that’s only needed during
-# development, to build without them, run:
-bb build --production
+# development and some of them require the toolbox to be installed. Set
+NODE_ENV to production to remove them:
+
+# Bash.
+NODE_ENV = "production"
+bb build
+
+# Windows CMD
+set NODE_ENV=production
+bb build
+
+# Windows Powershell
+$env:NODE_ENV = "production"
+bb build
 ```
 
 ## Creating an [Express][express] server
@@ -99,7 +111,7 @@ The commands to *test*, *lint* and *build* are the same but this time, you can
 also:
 
 ```sh
-bb nodemon
+bb start
 ```
 
 This command will start the server using [nodemon][nodemon] and any changes to
@@ -114,7 +126,7 @@ The commands to *test*, *lint* and *build* are the same but this time, you can
 also:
 
 ```sh
-bb webpack-dev-server
+bb serve
 ```
 
 This command will spin up [Webpack’s Development Server][webpack-dev-server] to
