@@ -22,22 +22,17 @@ import {addSideEffect} from '@babel/helper-module-imports'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../toolbox'
 
-const log = debug('borela-js-toolbox:config:babel')
+let log = debug('borela-js-toolbox:config:babel')
 
 module.exports = function () {
   let {
     browsers,
+    disableSourceMaps,
     minify,
     node,
     platforms = [],
     production,
   } = getSettings()
-
-  log('browsers: ', prettyFormat(browsers))
-  log('minify: ', prettyFormat(minify))
-  log('node: ', prettyFormat(node))
-  log('platforms: ', prettyFormat(platforms))
-  log('production: ', prettyFormat(production))
 
   let result = {
     plugins: [],
@@ -59,11 +54,14 @@ module.exports = function () {
   typeScript(result.plugins)
 
   // IMPORTANT: This plugin will enable source map on stack traces but only if
-  // babel generate inline source maps.
-  if (!production) {
+  // babel generate inline source maps. This will only work locally and requires
+  // the toolbox to be installed.
+  if (!production && !disableSourceMaps) {
     result.plugins.push(() => ({
       visitor: {
         Program(path) {
+          // TODO: Make the path to source-map-support dynamic by querying the
+          // toolbox’s location at runtime.
           addSideEffect(path, getModulePath('source-map-support/register'))
         },
       },
