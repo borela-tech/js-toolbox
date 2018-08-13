@@ -10,17 +10,25 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {join} from 'path'
 import {CONFIGS_DIR, setTargetDir} from '../paths'
+import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
+
+const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
 
 function handler(args) {
   setTargetDir(args.dir)
   exitOnPackageNotFound()
-  // TODO.
+
+  exitOnError(runCommandSync('webpack-dev-server', {
+    args: [`--config "${WEBPACK_CONFIG_PATH}"`],
+    env: args,
+  }))
 }
 
 export default {
-  command: 'serve [dir]',
+  command: 'webpack-dev-server [dir]',
   description: 'Run Webpack’s dev server.',
   handler,
 }
