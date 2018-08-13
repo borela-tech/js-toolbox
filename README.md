@@ -12,6 +12,7 @@
 [![David](https://img.shields.io/david/borela-tech/js-toolbox.svg?style=flat-square)][david-dm]
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20OSX-ff4081.svg?style=flat-square)][toolbox]
 [![License](https://img.shields.io/badge/license-Apache%202.0-ba68c8.svg?style=flat-square)][toolbox]
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 Develop JavaScript apps/libraries with little to no configuration and still be
 allowed to use all bleeding edge features available through  [Babel][babel] and
@@ -148,6 +149,22 @@ bb test --help
 # Etc...
 ```
 
+## Contributors
+
+Thanks goes to these wonderful people ([emoji legend][emoji-legend]):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars3.githubusercontent.com/u/11317458?v=4" width="100px;"/><br /><sub><b>Alexandre Borela</b></sub>](https://github.com/borela)<br />[💻](https://github.com/borela-tech/js-toolbox/commits?author=borela "Code") [🎨](#design-borela "Design") [📖](https://github.com/borela-tech/js-toolbox/commits?author=borela "Documentation") [👀](#review-borela "Reviewed Pull Requests") [⚠️](https://github.com/borela-tech/js-toolbox/commits?author=borela "Tests") | [<img src="https://avatars3.githubusercontent.com/u/41051393?v=4" width="100px;"/><br /><sub><b>Batarian711</b></sub>](https://github.com/Batarian711)<br />[🎨](#design-Batarian711 "Design") |
+| :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors][all-contributors] specification.
+Contributions of any kind welcome!
+
+If you are not included but created bug reports, sent ideas or patches please
+send a pull request to the `.all-contributorsrc` file.
+
 [forks]: //github.com/borela-tech/js-toolbox/network/members
 [issues]: //github.com/borela-tech/js-toolbox/issues
 [pulls]: //github.com/borela-tech/js-toolbox/pulls
@@ -167,8 +184,10 @@ bb test --help
 [typescript]: //www.typescriptlang.org
 [webpack]: //webpack.js.org
 
+[all-contributors]: //github.com/kentcdodds/all-contributors
 [appveyor-build]: //ci.appveyor.com/project/borela/js-toolbox
-[experimental-plugins]: //babeljs.io/docs/en/plugins#experimental
 [david-dm]: //david-dm.org/borela-tech/js-toolbox
+[emoji-legend]: //github.com/kentcdodds/all-contributors#emoji-key
+[experimental-plugins]: //babeljs.io/docs/en/plugins#experimental
 [travis-build]: //travis-ci.org/borela-tech/js-toolbox
 [webpack-dev-server]: //webpack.js.org/configuration/dev-server/

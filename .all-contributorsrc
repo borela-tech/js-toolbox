@@ -1,0 +1,35 @@
+{
+  "projectName": "js-toolbox",
+  "projectOwner": "borela-tech",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "borela",
+      "name": "Alexandre Borela",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11317458?v=4",
+      "profile": "https://github.com/borela",
+      "contributions": [
+        "code",
+        "design",
+        "doc",
+        "review",
+        "test"
+      ]
+    },
+    {
+      "login": "Batarian711",
+      "name": "Batarian711",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/41051393?v=4",
+      "profile": "https://github.com/Batarian711",
+      "contributions": [
+        "design"
+      ]
+    }
+  ]
+}
