@@ -122,7 +122,7 @@ serve your application on `localhost:9000`. Features included:
 
 * [React Hot Loader][react-hot-loader] to enable hot reload of react components
   without losing state;
-* [RedBox][red-box-react] to make error messages pretty;
+* Pretty error messages;
 
 ## More information
 
@@ -151,7 +151,6 @@ bb test --help
 [nodemon]: //nodemon.io
 [react]: //reactjs.org
 [react-hot-loader]: //github.com/gaearon/react-hot-loader
-[red-box-react]: //github.com/commissure/redbox-react
 [toolbox]: //github.com/borela-tech/js-toolbox
 [typescript]: //www.typescriptlang.org
 [webpack]: //webpack.js.org
