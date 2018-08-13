@@ -87,7 +87,7 @@ And finally, to build:
 bb build
 # The previous command includes a lot of stuff that’s only needed during
 # development and some of them require the toolbox to be installed. Set
-NODE_ENV to production to remove them:
+# NODE_ENV to production to remove them:
 
 # Bash.
 NODE_ENV = "production"
