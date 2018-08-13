@@ -12,7 +12,7 @@
 
 import {camelizeKeys} from 'humps'
 import {existsSync, readFileSync} from 'fs'
-import {getPackageDir} from '../paths'
+import {getPackageDir} from './paths'
 import {join} from 'path'
 
 const ENV_VAR = /^BORELA_JS_TOOLBOX_(.+)$/
