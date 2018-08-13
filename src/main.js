@@ -21,8 +21,8 @@ import {
   location,
   nodemon,
   scaffoldProject,
-  serve,
   test,
+  webpackDevServer,
 } from './commands'
 import {EPILOG, PROLOG} from './banner'
 
@@ -38,9 +38,15 @@ const PARSER = Yargs.scriptName('bb')
   .command(location)
   .command(nodemon)
   .command(scaffoldProject)
-  .command(serve)
   .command(test)
+  .command(webpackDevServer)
   .demandCommand(1, 'Error: Use one of the commands available.')
   .recommendCommands()
+
+// Enable source map on stack traces.
+if (process.env.DEBUG) {
+  let {install} = require('source-map-support')
+  install()
+}
 
 PARSER.parse()
