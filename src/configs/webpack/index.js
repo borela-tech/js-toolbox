@@ -33,18 +33,20 @@ import jsRule from './rules/js'
 
 let log = debug('borela-js-toolbox:config:webpack')
 
+let {
+  bundle,
+  disableSourceMaps,
+  react,
+} = getSettings()
+
 const PRODUCTION = process.env.NODE_ENV === 'production'
 const PROJECT_DIR = getPackageDir()
 const BUILD_DIR = join(PROJECT_DIR, 'build')
 const WEBPACK_CONFIG_DIR = join(CONFIGS_DIR, 'webpack')
+const BUILTIN_ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
 
-// Paths used to search for modules and project’s files. It’ll first try to find
-// any module on the project’s directory and then fallback to the toolbox, this
-// should work for most cases as the toolbox only contain dependencies that
-// would usually go into the “devDependencies” section.
 const MODULE_PATHS = [
   join(PROJECT_DIR, 'node_modules'),
-  join(TOOLBOX_DIR, 'node_modules'),
   join(PROJECT_DIR, 'src'),
   'node_modules',
   'src',
@@ -58,7 +60,7 @@ const CONFIG = {
   },
   devtool: 'source-map',
   entry: [],
-  externals: ['fs', 'module'],
+  externals: [],
   mode: PRODUCTION ? 'production' : 'development',
   module: {
     rules: [
@@ -76,7 +78,7 @@ const CONFIG = {
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].js?[contenthash]',
+    // filename: '[name].js?[contenthash]',
   },
   performance: {
     hints: false,
@@ -102,27 +104,28 @@ const CONFIG = {
 // Prints readable module names in the browser console on HMR updates.
 // CONFIG.plugins.push(new NamedModulesPlugin())
 
-const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
-const REACT_16_ENTRY = join(ENTRIES_DIR, 'react-16')
+function setReact16Entry(config) {
+  const REACT_16_ENTRY = join(BUILTIN_ENTRIES_DIR, 'react-16')
 
-// Use the default “main” entry point if a custom one is not found.
-const DEFAULT_ENTRY = join(REACT_16_ENTRY, 'main.js')
-const CUSTOM_ENTRY = join(PROJECT_DIR, 'src', 'main.js')
+  // Use the default “main” entry point if a custom one is not found.
+  const DEFAULT_ENTRY = join(REACT_16_ENTRY, 'main.js')
+  const CUSTOM_ENTRY = join(PROJECT_DIR, 'src', 'main.js')
 
-if (existsSync(CUSTOM_ENTRY))
-  CONFIG.entry.push(CUSTOM_ENTRY)
-else
-  CONFIG.entry.push(DEFAULT_ENTRY)
+  if (existsSync(CUSTOM_ENTRY))
+    config.entry.push(CUSTOM_ENTRY)
+  else
+    config.entry.push(DEFAULT_ENTRY)
 
-// Template used to render the app.
-const DEFAULT_TEMPLATE = join(REACT_16_ENTRY, 'index.html')
-const CUSTOM_TEMPLATE = join(PROJECT_DIR, 'src', 'index.html')
+  // Template used to render the app.
+  const DEFAULT_TEMPLATE = join(REACT_16_ENTRY, 'index.html')
+  const CUSTOM_TEMPLATE = join(PROJECT_DIR, 'src', 'index.html')
 
-CONFIG.plugins.push(new HtmlPlugin({
-  template: existsSync(CUSTOM_TEMPLATE)
-    ? CUSTOM_TEMPLATE
-    : DEFAULT_TEMPLATE
-}))
+  config.plugins.push(new HtmlPlugin({
+    template: existsSync(CUSTOM_TEMPLATE)
+      ? CUSTOM_TEMPLATE
+      : DEFAULT_TEMPLATE
+  }))
+}
 
 log(prettyFormat(CONFIG))
 module.exports = CONFIG
