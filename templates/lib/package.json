@@ -1,8 +1,9 @@
 {
-  "name": "",
+  "name": "my-lib",
   "version": "1.0.0",
   "description": "",
   "license": "Apache-2.0",
+  "main": "build/main",
   "scripts": {
     "build": "bb build --production",
     "dev": "bb build",
