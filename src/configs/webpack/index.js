@@ -10,122 +10,50 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {
-  CONFIGS_DIR,
-  getPackageDir,
-  TOOLBOX_DIR,
-} from '../../paths'
-
+import basic from './basic'
 import debug from 'debug'
-import HtmlPlugin from 'html-webpack-plugin'
 import prettyFormat from 'pretty-format'
-import {existsSync} from 'fs'
+import {getProjectName} from '../../util'
 import {getSettings} from '../../settings'
 import {join} from 'path'
-import {NamedModulesPlugin} from 'webpack'
 
-// Webpack’s loaders.
-import assetRule from './rules/asset'
-import cssModuleRule from './rules/css-module'
-import cssRule from './rules/css'
-import htmlRule from './rules/html'
-import jsRule from './rules/js'
+let log = debug('bb:config:webpack')
 
-let log = debug('borela-js-toolbox:config:webpack')
-
-let {
-  bundle,
-  disableSourceMaps,
-  react,
-} = getSettings()
-
-const PRODUCTION = process.env.NODE_ENV === 'production'
-const PROJECT_DIR = getPackageDir()
-const BUILD_DIR = join(PROJECT_DIR, 'build')
-const WEBPACK_CONFIG_DIR = join(CONFIGS_DIR, 'webpack')
-const BUILTIN_ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
-
-const MODULE_PATHS = [
-  join(PROJECT_DIR, 'node_modules'),
-  join(PROJECT_DIR, 'src'),
-  'node_modules',
-  'src',
-]
-
-const CONFIG = {
-  devServer: {
-    contentBase: BUILD_DIR,
-    historyApiFallback: true,
-    port: 9000,
-  },
-  devtool: 'source-map',
-  entry: [],
-  externals: [],
-  mode: PRODUCTION ? 'production' : 'development',
-  module: {
-    rules: [
-      assetRule,
-      cssModuleRule,
-      cssRule,
-      htmlRule,
-      jsRule,
-    ],
-  },
-  node: {
-    // Disable polyfills.
-    __dirname: false,
-    __filename: false,
-  },
-  output: {
-    path: BUILD_DIR,
-    // filename: '[name].js?[contenthash]',
-  },
-  performance: {
-    hints: false,
-  },
-  plugins: [],
-  resolve: {
-    extensions: [
-      '.css',
-      '.html',
-      '.js',
-      '.json',
-      '.jsx',
-      '.module.css',
-    ],
-    modules: MODULE_PATHS,
-  },
-  resolveLoader: {
-    modules: MODULE_PATHS,
-  },
-  target: 'web',
+function platformToTarget(platform) {
+  switch (platform) {
+    case 'browser':
+      return 'web'
+    case 'node':
+      return platform
+  }
+  throw new Error(`Unsupported platform “${platform}”.`)
 }
 
-// Prints readable module names in the browser console on HMR updates.
-// CONFIG.plugins.push(new NamedModulesPlugin())
+let configs = []
+let {platforms, projectType} = getSettings()
 
-function setReact16Entry(config) {
-  const REACT_16_ENTRY = join(BUILTIN_ENTRIES_DIR, 'react-16')
-
-  // Use the default “main” entry point if a custom one is not found.
-  const DEFAULT_ENTRY = join(REACT_16_ENTRY, 'main.js')
-  const CUSTOM_ENTRY = join(PROJECT_DIR, 'src', 'main.js')
-
-  if (existsSync(CUSTOM_ENTRY))
-    config.entry.push(CUSTOM_ENTRY)
-  else
-    config.entry.push(DEFAULT_ENTRY)
-
-  // Template used to render the app.
-  const DEFAULT_TEMPLATE = join(REACT_16_ENTRY, 'index.html')
-  const CUSTOM_TEMPLATE = join(PROJECT_DIR, 'src', 'index.html')
-
-  config.plugins.push(new HtmlPlugin({
-    template: existsSync(CUSTOM_TEMPLATE)
-      ? CUSTOM_TEMPLATE
-      : DEFAULT_TEMPLATE
-  }))
+if (projectType === 'library') {
+  let config = basic()
+  config.output = {
+    ...config.output,
+    library: getProjectName(),
+    libraryTarget: 'umd',
+  }
+  configs.push(config)
 }
 
-log(prettyFormat(CONFIG))
-module.exports = CONFIG
+// // Set target platform.
+// for (let platform of platforms) {
+//   let config = basic()
+//   config.target = platformToTarget(platform)
+//   configs.push(config)
+// }
+//
+// // Add target to output directory path if the are multiple platforms.
+// if (configs.length > 1) {
+//   for (let config of configs)
+//     config.output.path = join(config.output.path, config.target)
+// }
+
+log(prettyFormat(configs))
+module.exports = configs
