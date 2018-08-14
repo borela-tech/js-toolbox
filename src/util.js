@@ -11,12 +11,18 @@
 // the License.
 
 import {getPackageDir} from './paths'
+import {join} from 'path'
 
 export function exitOnPackageNotFound() {
   if (getPackageDir())
     return
   process.stdout.write('No valid “package.json” found.')
   process.exit(1)
+}
+
+export function getProjectName() {
+  const PACKAGE_JSON = join(getPackageDir(), 'package.json')
+  return require(PACKAGE_JSON).name
 }
 
 export function pickNonFalsy(obj:Object):Object {
