@@ -16,7 +16,7 @@ import {CONFIGS_DIR} from '../../paths'
 import {getSettings} from '../../settings'
 import {join} from 'path'
 
-let log = debug('borela-js-toolbox:config:eslint')
+let log = debug('bb:config:eslint')
 
 let {
   flow,

@@ -22,7 +22,7 @@ import {addSideEffect} from '@babel/helper-module-imports'
 import {getModulePath} from '../../modules'
 import {getSettings} from '../../settings'
 
-let log = debug('borela-js-toolbox:config:babel')
+let log = debug('bb:config:babel')
 
 module.exports = function () {
   let {

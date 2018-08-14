@@ -16,7 +16,7 @@ import {CONFIGS_DIR, getPackageDir} from '../../paths'
 import {getSettings} from '../../settings'
 import {join} from 'path'
 
-let log = debug('borela-js-toolbox:config:jest')
+let log = debug('bb:config:jest')
 
 let {platforms = []} = getSettings()
 const BROWSER = platforms.includes('browser')
