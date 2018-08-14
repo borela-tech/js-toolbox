@@ -30,13 +30,7 @@ import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
 
-const PRESET_LOCATION = join(CONFIGS_DIR, 'babel-preset', 'index.js')
-const BASIC_ARGS = [
-  '"src"',
-  '-d "build"',
-  '--ignore "**/__tests__"',
-  `--presets="${PRESET_LOCATION}"`,
-]
+const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
 
 function builder(yargs) {
   browsers(yargs)
@@ -58,32 +52,10 @@ function handler(args) {
   exitOnPackageNotFound()
 
   exitOnError(runCommandSync('rimraf', {args: ['"build"']}))
-
-  let {bundle} = getSettings()
-  if (bundle)
-    runWebpack(args)
-  else
-    runBabel(args)
-}
-
-function runBabel(args) {
-  let {disableSourceMaps, watch} = args
-  let babelArgs = [...BASIC_ARGS]
-
-  if (!disableSourceMaps)
-    babelArgs.push('--source-maps')
-
-  if (watch)
-    babelArgs.push('--watch')
-
-  exitOnError(runCommandSync('babel', {
-    args: babelArgs,
-    env: args
+  exitOnError(runCommandSync('webpack', {
+    args: [`--config "${WEBPACK_CONFIG_PATH}"`],
+    env: args,
   }))
-}
-
-function runWebpack(args) {
-  exitOnError(runCommandSync('webpack', {env: args}))
 }
 
 export default {
