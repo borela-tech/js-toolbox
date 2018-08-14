@@ -10,12 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export default {
-  test: /\.html$/,
-  use: [{
-    loader: 'html-loader',
-    options: {
-      attrs: ['img:src', 'link:href'],
-    },
-  }],
+export default function () {
+  return {
+    test: /\.html$/,
+    use: [{
+      loader: 'html-loader',
+      options: {
+        attrs: ['img:src', 'link:href'],
+      },
+    }],
+  }
 }

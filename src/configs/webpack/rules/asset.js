@@ -10,11 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export default {
-  exclude: /node_modules/,
-  test: /\.(jpg|png|svg)$/,
-  use: [{
-    loader: 'url-loader',
-    // options: {limit: 0},
-  }],
+export default function () {
+  return {
+    exclude: /node_modules/,
+    test: /\.(jpg|png|svg)$/,
+    use: [{
+      loader: 'url-loader',
+      // options: {limit: 0},
+    }],
+  }
 }

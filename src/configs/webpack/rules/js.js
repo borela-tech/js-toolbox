@@ -10,15 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export default {
-  exclude: /node_modules/,
-  test: /\.jsx?$/,
-  use: [{
-    loader: 'babel-loader',
-    options: {
-      presets: [require('../../babel-preset')],
-    },
-  }, {
-    loader: 'source-map-loader',
-  }]
+export default function () {
+  return {
+    exclude: /node_modules/,
+    test: /\.jsx?$/,
+    use: [{
+      loader: 'babel-loader',
+      options: {
+        presets: [require('../../babel-preset')],
+      },
+    }, {
+      loader: 'source-map-loader',
+    }]
+  }
 }

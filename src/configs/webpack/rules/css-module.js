@@ -10,23 +10,25 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-const PRODUCTION = process.env.NODE_ENV === 'production'
-const IS_DEV = !PRODUCTION
+import {getSettings} from '../../../settings'
+let {disableSourceMaps} = getSettings()
 
-export default {
-  test: /\.module\.css$/,
-  use: [{
-    loader: 'style-loader',
-    options: {sourceMap: IS_DEV},
-  },{
-    loader: 'css-loader',
-    options: {
-      localIdentName: '[sha512:hash:base32]-[name]-[local]',
-      modules: true,
-      sourceMap: IS_DEV,
-    },
-  }, {
-    loader: 'postcss-loader',
-    options: {sourceMap: IS_DEV},
-  }],
+export default function () {
+  return {
+    test: /\.module\.css$/,
+    use: [{
+      loader: 'style-loader',
+      options: {sourceMap: !disableSourceMaps},
+    },{
+      loader: 'css-loader',
+      options: {
+        localIdentName: '[sha512:hash:base32]-[name]-[local]',
+        modules: true,
+        sourceMap: !disableSourceMaps,
+      },
+    }, {
+      loader: 'postcss-loader',
+      options: {sourceMap: !disableSourceMaps},
+    }],
+  }
 }
