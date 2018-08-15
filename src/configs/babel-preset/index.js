@@ -14,7 +14,6 @@ import debug from 'debug'
 import experimental from './plugins/experimental'
 import flow from './plugins/flow'
 import jsx from './plugins/jsx'
-import minifyPreset from 'babel-preset-minify'
 import prettyFormat from 'pretty-format'
 import react from './plugins/react'
 import typeScript from './plugins/typeScript'
@@ -27,8 +26,6 @@ let log = debug('bb:config:babel')
 module.exports = function () {
   let {
     browsers,
-    // disableSourceMaps,
-    // minify,
     node,
     platforms = [],
   } = getSettings()
@@ -42,9 +39,6 @@ module.exports = function () {
       },
     }]],
   }
-
-  // if (minify)
-  //   result.presets.push(minifyPreset)
 
   experimental(result.plugins)
   flow(result.plugins)

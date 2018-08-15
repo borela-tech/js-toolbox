@@ -78,7 +78,6 @@
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.0-beta.3",
     "babel-plugin-source-map-support": "^2.0.1",
-    "babel-preset-minify": "^0.5.0-alpha.3cc09dcf",
     "cpx": "^1.5.0",
     "css-loader": "^1.0.0",
     "debug": "^3.1.0",
