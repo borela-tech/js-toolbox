@@ -100,6 +100,13 @@ export function platforms(yargs) {
   })
 }
 
+export function production(yargs) {
+  yargs.option('production', {
+    description: 'Set NODE_ENV to production.',
+    type: 'boolean',
+  })
+}
+
 export function react(yargs) {
   yargs.option('react', {
     description: 'Enable React transformations.',
