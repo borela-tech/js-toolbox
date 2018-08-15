@@ -37,6 +37,7 @@ const MODULE_PATHS = [
 
 let {
   disableSourceMaps,
+  minify = false,
   multiEntry,
 } = getSettings()
 
@@ -74,6 +75,9 @@ export default function (){
       // Disable polyfills.
       __dirname: false,
       __filename: false,
+    },
+    optimization: {
+      minimize: minify,
     },
     output: {
       path: BUILD_DIR,
