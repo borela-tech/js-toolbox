@@ -86,21 +86,12 @@ And finally, to build:
 
 ```sh
 bb build
+
 # The previous command includes a lot of stuff that’s only needed during
-# development and some of them require the toolbox to be installed. Set
-# NODE_ENV to production to remove them:
+# development and some of them require the toolbox to be installed. You
+# need to set NODE_ENV to production to remove them:
 
-# Bash:
-NODE_ENV = "production"
-bb build
-
-# Windows CMD:
-set NODE_ENV=production
-bb build
-
-# Windows PowerShell:
-$env:NODE_ENV = "production"
-bb build
+bb build --production
 ```
 
 ## Creating an [Express][express] server
