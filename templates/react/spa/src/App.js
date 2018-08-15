@@ -8,7 +8,7 @@
 // or reproduction of this material is strictly forbidden unless prior written
 // permission is obtained from Alexandre Borela.
 
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 export default class App extends Component {
   render() {
