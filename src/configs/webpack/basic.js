@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {existsSync} from 'fs'
 import {getPackageDir} from '../../paths'
 import {getPorjectName} from '../../util'
 import {getSettings} from '../../settings'
@@ -35,9 +36,19 @@ const MODULE_PATHS = [
 ]
 
 let {
-  bundle,
   disableSourceMaps,
+  multiEntry,
 } = getSettings()
+
+function getEntry() {
+  if (!multiEntry) {
+    return existsSync(join(PROJECT_DIR, 'src', 'main.js'))
+      ? {main: 'main'}
+      : {index: 'index'}
+  }
+  // TODO.
+  throw Error('Multi entry not supported yet.')
+}
 
 export default function (){
   return {
@@ -47,7 +58,7 @@ export default function (){
       port: 9000,
     },
     devtool: !disableSourceMaps && 'source-map',
-    entry: ['main'],
+    entry: getEntry(),
     externals: [],
     mode: PRODUCTION ? 'production' : 'development',
     module: {
@@ -66,7 +77,7 @@ export default function (){
     },
     output: {
       path: BUILD_DIR,
-      // filename: bundle
+      filename: '[name].js',
       //   ? 'script.js?[contenthash]'
       //   : '[name].js',
     },
