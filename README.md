@@ -69,6 +69,7 @@ Run the tests:
 
 ```sh
 bb test
+
 # Or in watch mode.
 bb test --watch
 ```
@@ -77,6 +78,7 @@ Lint the sources and tests:
 
 ```sh
 bb lint
+
 # ESLint will try to fix linting errors but be aware that not all of them can
 # be fixed automatically.
 bb lint --fix
@@ -90,7 +92,6 @@ bb build
 # The previous command includes a lot of stuff that’s only needed during
 # development and some of them require the toolbox to be installed. You
 # need to set NODE_ENV to production to remove them:
-
 bb build --production
 ```
 
