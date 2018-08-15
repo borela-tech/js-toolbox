@@ -53,15 +53,13 @@ function handler(args) {
   setTargetDir(args.dir)
   exitOnPackageNotFound()
 
+  if (args.production)
+    process.env.NODE_ENV = 'production'
+
   exitOnError(runCommandSync('rimraf', {args: ['"build"']}))
   exitOnError(runCommandSync('webpack', {
     args: [`--config "${WEBPACK_CONFIG_PATH}"`],
-    env: {
-      ...args,
-      NODE_ENV: args.production
-        ? 'production'
-        : 'development'
-    }
+    env: {...args},
   }))
 }
 
