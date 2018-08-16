@@ -1,4 +1,5 @@
 {
   "node": "8.9",
-  "platforms": ["node"]
+  "platforms": ["node"],
+  "project-type": "app"
 }
