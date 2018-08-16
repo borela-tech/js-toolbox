@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {existsSync} from 'fs'
 import {getPackageDir} from '../../paths'
 import {getSettings} from '../../settings'
@@ -51,6 +52,10 @@ function getEntry() {
 }
 
 export default function () {
+  const MINIMIZER = {
+    minimizer: [new UglifyJsPlugin()]
+  }
+
   return {
     devServer: {
       contentBase: BUILD_DIR,
@@ -77,6 +82,7 @@ export default function () {
     },
     optimization: {
       minimize: minify,
+      ...minify && MINIMIZER,
     },
     output: {
       path: BUILD_DIR,
