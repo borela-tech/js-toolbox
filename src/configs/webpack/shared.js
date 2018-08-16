@@ -12,7 +12,6 @@
 
 import {existsSync} from 'fs'
 import {getPackageDir} from '../../paths'
-import {getPorjectName} from '../../util'
 import {getSettings} from '../../settings'
 import {join} from 'path'
 import {NamedModulesPlugin} from 'webpack'
@@ -51,7 +50,7 @@ function getEntry() {
   throw Error('Multi entry not supported yet.')
 }
 
-export default function (){
+export default function () {
   return {
     devServer: {
       contentBase: BUILD_DIR,
@@ -83,7 +82,6 @@ export default function (){
       path: BUILD_DIR,
       filename: '[name].js',
       //   ? 'script.js?[contenthash]'
-      //   : '[name].js',
     },
     performance: {
       hints: false,

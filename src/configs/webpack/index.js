@@ -10,50 +10,36 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import basic from './basic'
 import debug from 'debug'
+import libraryConfig from './library'
+import nodeAppConfig from './node-app'
 import prettyFormat from 'pretty-format'
-import {getProjectName} from '../../util'
 import {getSettings} from '../../settings'
-import {join} from 'path'
+import {resolve} from 'path'
 
 let log = debug('bb:config:webpack')
 
-function platformToTarget(platform) {
-  switch (platform) {
-    case 'browser':
-      return 'web'
-    case 'node':
-      return platform
-  }
-  throw new Error(`Unsupported platform “${platform}”.`)
+let {projectType} = getSettings()
+let compositeConfig
+
+switch (projectType) {
+  case 'app':
+    compositeConfig = nodeAppConfig()
+    break
+  case 'library':
+    compositeConfig = libraryConfig()
+    break
+  default:
+    throw new Error(`Unsupported project type “${projectType}”.`)
 }
 
-let configs = []
-let {platforms, projectType} = getSettings()
-
-if (projectType === 'library') {
-  let config = basic()
-  config.output = {
-    ...config.output,
-    library: getProjectName(),
-    libraryTarget: 'umd',
-  }
-  configs.push(config)
+// By default, all settings are generated where the output has a directory for
+// each platform supported, but, if we are targetting only 1 platform, this
+// convention is not necessary.
+if (compositeConfig.length < 2) {
+  compositeConfig = compositeConfig[0]
+  compositeConfig.output.path = resolve(compositeConfig.output.path, '..')
 }
 
-// // Set target platform.
-// for (let platform of platforms) {
-//   let config = basic()
-//   config.target = platformToTarget(platform)
-//   configs.push(config)
-// }
-//
-// // Add target to output directory path if the are multiple platforms.
-// if (configs.length > 1) {
-//   for (let config of configs)
-//     config.output.path = join(config.output.path, config.target)
-// }
-
-log(prettyFormat(configs))
-module.exports = configs
+log(prettyFormat(compositeConfig))
+module.exports = compositeConfig
