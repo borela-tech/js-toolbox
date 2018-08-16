@@ -17,13 +17,15 @@ import {
   disableSourceMaps,
   jsx,
   minify,
+  multiEntry,
   node,
   platforms,
   production,
+  projectType,
   react,
   removeFlow,
   typeScript,
-  watchBuild,
+  watch,
 } from '../flags'
 import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {getSettings} from '../settings'
@@ -40,13 +42,15 @@ function builder(yargs) {
   disableSourceMaps(yargs)
   jsx(yargs)
   minify(yargs)
+  multiEntry(yargs)
   node(yargs)
   platforms(yargs)
   production(yargs)
+  projectType(yargs)
   react(yargs)
   removeFlow(yargs)
   typeScript(yargs)
-  watchBuild(yargs)
+  watch(yargs)
 }
 
 function handler(args) {

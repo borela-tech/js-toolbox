@@ -19,7 +19,7 @@ import {
   platforms,
   react,
   typeScript,
-  watchTests,
+  watch,
 } from '../flags'
 import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {join} from 'path'
@@ -37,7 +37,7 @@ function builder(yargs) {
   platforms(yargs)
   react(yargs)
   typeScript(yargs)
-  watchTests(yargs)
+  watch(yargs)
 }
 
 function handler(args) {

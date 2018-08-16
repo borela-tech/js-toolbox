@@ -19,8 +19,7 @@ export function appArgs(yargs) {
 
 export function browsers(yargs) {
   yargs.option('browsers', {
-    description: 'Browsers supported by the project.',
-    default: ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'],
+    description: 'Browsers supported.',
     type: 'array',
   })
 }
@@ -83,10 +82,16 @@ export function minify(yargs) {
   })
 }
 
+export function multiEntry(yargs) {
+  yargs.option('multi-entry', {
+    description: 'Enable default multi entries.',
+    type: 'boolean',
+  })
+}
+
 export function node(yargs) {
   yargs.option('node', {
-    description: 'Minimum NodeJS version supported by the project.',
-    default: '8.9',
+    description: 'Minimum NodeJS version supported.',
     type: 'string',
   })
 }
@@ -94,8 +99,7 @@ export function node(yargs) {
 export function platforms(yargs) {
   yargs.option('platforms', {
     choices: ['browser', 'node'],
-    description: 'Used to determine the polyfills and fine tune the linter.',
-    default: ['browser', 'node'],
+    description: 'Fine tune polyfills and linter.',
     type: 'array',
   })
 }
@@ -104,6 +108,14 @@ export function production(yargs) {
   yargs.option('production', {
     description: 'Set NODE_ENV to production.',
     type: 'boolean',
+  })
+}
+
+export function projectType(yargs) {
+  yargs.option('project-type', {
+    choices: ['app', 'library'],
+    description: 'Affects the build output.',
+    type: 'string',
   })
 }
 
@@ -130,21 +142,11 @@ export function typeScript(yargs) {
     .alias('t', 'type-script')
 }
 
-export function watchBuild(yargs) {
+export function watch(yargs) {
   yargs.options({
     watch: {
       default: false,
-      description: 'Watch for changes and rebuild files automatically.',
-      type: 'boolean',
-    },
-  })
-}
-
-export function watchTests(yargs) {
-  yargs.options({
-    watch: {
-      default: false,
-      description: 'Watch for changes and run tests automatically.',
+      description: 'Watch for changes.',
       type: 'boolean',
     },
   })
