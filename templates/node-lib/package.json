@@ -1,0 +1,27 @@
+{
+  "name": "my-node-lib",
+  "version": "1.0.0",
+  "description": "",
+  "license": "Apache-2.0",
+  "main": "build",
+  "scripts": {
+    "build": "bb build --production",
+    "dev": "bb build",
+    "dev-w": "bb build --watch",
+    "lint": "bb lint",
+    "test": "bb test",
+    "test-w": "bb test --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a/b.git"
+  },
+  "bugs": {
+    "url": "https://github.com/a/b/issues"
+  },
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  }
+}
