@@ -27,13 +27,13 @@ function stubEnv(env = {}) {
 
   afterEach(() => {
     Object.defineProperty(process, 'env', {
-      get: () => ORIGINAL
+      get: () => ORIGINAL,
     })
   })
 
   beforeEach(() => {
     Object.defineProperty(process, 'env', {
-      get: () => env
+      get: () => env,
     })
   })
 }
@@ -44,21 +44,21 @@ afterEach(() => {
 })
 
 const PACKAGE_JSON_CONTENTS = {
-  "foo": 1,
-  "bar": 1,
-  "baz": 1,
-  "fooBar": 1,
+  foo: 1,
+  bar: 1,
+  baz: 1,
+  fooBar: 1,
 }
 
 const BORELARC_CONTENTS = {
-  "bar": 2,
-  "baz": 2,
-  "fooBar": 2,
+  bar: 2,
+  baz: 2,
+  fooBar: 2,
 }
 
 const BORELA_JSON_CONTENTS = {
-  "baz": 3,
-  "fooBbar": 3,
+  baz: 3,
+  fooBbar: 3,
 }
 
 test('“PACKAGE_JSON” has the borela key inside the “package.json”', () => {

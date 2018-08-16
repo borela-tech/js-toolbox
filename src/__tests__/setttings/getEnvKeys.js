@@ -28,7 +28,7 @@ describe('getEnvFlags()', () => {
         BORELA_JS_TOOLBOX_1: 1,
         BORELA_JS_TOOLBOX_FOO: 2,
         BORELA_JS_TOOLBOX_FOO_BAR: 3,
-      })
+      }),
     })
     expect(getEnvFlags()).toEqual({1: 1, foo: 2, fooBar: 3})
   })

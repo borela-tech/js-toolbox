@@ -19,13 +19,13 @@ export default function () {
     test: /\.css$/,
     use: [{
       loader: 'style-loader',
-      options: {sourceMap: !disableSourceMaps}
+      options: {sourceMap: !disableSourceMaps},
     }, {
       loader: 'css-loader',
-      options: {sourceMap: !disableSourceMaps}
+      options: {sourceMap: !disableSourceMaps},
     }, {
       loader: 'postcss-loader',
-      options: {sourceMap: !disableSourceMaps}
-    }]
+      options: {sourceMap: !disableSourceMaps},
+    }],
   }
 }

@@ -28,7 +28,6 @@ import {
   watch,
 } from '../flags'
 import {CONFIGS_DIR, setTargetDir} from '../paths'
-import {getSettings} from '../settings'
 import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'

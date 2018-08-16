@@ -21,6 +21,6 @@ export default function () {
       },
     }, {
       loader: 'source-map-loader',
-    }]
+    }],
   }
 }

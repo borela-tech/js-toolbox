@@ -13,7 +13,7 @@
 import {appArgs, inspect} from '../flags'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
-import {getPackageDir} from '../paths'
+import {getPackageDir, setTargetDir} from '../paths'
 
 function builder(yargs) {
   appArgs(yargs)

@@ -19,7 +19,7 @@ export default function () {
     use: [{
       loader: 'style-loader',
       options: {sourceMap: !disableSourceMaps},
-    },{
+    }, {
       loader: 'css-loader',
       options: {
         localIdentName: '[sha512:hash:base32]-[name]-[local]',
