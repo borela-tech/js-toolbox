@@ -11,7 +11,6 @@
 // the License.
 
 export build from './build'
-export flow from './flow'
 export lint from './lint'
 export location from './location'
 export scaffold from './scaffold'

@@ -88,8 +88,6 @@
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-jest": "^21.21.0",
     "eslint-plugin-react": "^7.11.1",
-    "flow-bin": "^0.79.0",
-    "flow-typed": "^2.5.1",
     "html-loader": "^1.0.0-alpha.0",
     "html-webpack-plugin": "^4.0.0-alpha",
     "humps": "^2.0.1",
