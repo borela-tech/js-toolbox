@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import cliAppConfig from './cli-app'
 import debug from 'debug'
 import libraryConfig from './library'
 import nodeAppConfig from './node-app'
@@ -25,6 +26,9 @@ let compositeConfig
 switch (projectType) {
   case 'app':
     compositeConfig = nodeAppConfig()
+    break
+  case 'cli':
+    compositeConfig = cliAppConfig()
     break
   case 'library':
     compositeConfig = libraryConfig()
