@@ -53,7 +53,7 @@ function getEntry() {
 
 export default function () {
   const MINIMIZER = {
-    minimizer: [new UglifyJsPlugin()]
+    minimizer: [new UglifyJsPlugin()],
   }
 
   return {
