@@ -14,7 +14,7 @@
     "dev:webpack-entries": "cpx \"src/**/webpack/entries/**/*\" build",
     "dev-w": "npm run clean && run-p dev-w:*",
     "dev-w:build": "babel src -d build --ignore \"**/__tests__\" --ignore \"**/webpack/entries\" --source-maps --watch",
-    "dev-w:banner-assets": "cpx \"src/banner/*.txt build/banner\" --watch",
+    "dev-w:banner-assets": "cpx \"src/banner/*.txt\" build/banner --watch",
     "dev-w:webpack-entries": "cpx \"src/**/webpack/entries/**/*\" build --watch",
     "lint": "bb lint",
     "test": "bb test",
