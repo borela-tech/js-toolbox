@@ -64,7 +64,6 @@ export default function () {
     },
     devtool: !disableSourceMaps && 'source-map',
     entry: getEntry(),
-    externals: [],
     mode: PRODUCTION ? 'production' : 'development',
     module: {
       rules: [

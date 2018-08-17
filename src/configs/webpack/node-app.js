@@ -10,7 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import nodeExternals from 'webpack-node-externals'
 import shared from './shared'
 import {getSettings} from '../../settings'
 import {join} from 'path'
@@ -25,7 +24,9 @@ function nodeAppConfig() {
     path: join(config.output.path, 'node'),
   }
 
-  config.externals.push(nodeExternals())
+  // Exclude any non relative imports.
+  config.externals = /^[a-z\-0-9]+$/
+
   config.target = 'node'
   return config
 }
