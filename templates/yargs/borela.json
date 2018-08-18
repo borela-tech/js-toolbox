@@ -1,5 +1,3 @@
 {
-  "node": "8.9",
-  "platforms": ["node"],
   "project-type": "cli"
 }

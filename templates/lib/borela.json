@@ -1,6 +1,5 @@
 {
-  "browser": ["chrome >= 49", ">= 0.5%", "last 2 versions", "not dead"],
+  "browsers": ["chrome >= 49", ">= 0.5%", "last 2 versions", "not dead"],
   "node": "8.9",
-  "platforms": ["browser", "node"],
   "project-type": "library"
 }
