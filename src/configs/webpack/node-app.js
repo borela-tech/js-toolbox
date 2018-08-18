@@ -12,12 +12,9 @@
 
 import nodeExternals from './node-externals'
 import shared from './shared'
-import {getSettings} from '../../settings'
 import {join} from 'path'
 
-let {platforms} = getSettings()
-
-function nodeAppConfig() {
+export default function () {
   let config = shared()
 
   config.output = {
@@ -28,35 +25,4 @@ function nodeAppConfig() {
   config.externals = [nodeExternals]
   config.target = 'node'
   return config
-}
-
-function webAppConfig() {
-  let config = shared()
-
-  config.output = {
-    ...config.output,
-    path: join(config.output.path, 'web'),
-  }
-
-  config.target = 'web'
-  return config
-}
-
-export default function () {
-  let result = []
-
-  for (let platform of platforms) {
-    switch (platform) {
-      case 'browser':
-        result.push(webAppConfig())
-        break
-      case 'node':
-        result.push(nodeAppConfig())
-        break
-      default:
-        throw new Error(`Unsupported platform “${platform}”.`)
-    }
-  }
-
-  return result
 }

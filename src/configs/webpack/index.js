@@ -10,10 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import appConfig from './app'
 import cliAppConfig from './cli-app'
 import debug from 'debug'
 import libraryConfig from './library'
+import nodeAppConfig from './node-app'
 import prettyFormat from 'pretty-format'
 import {getSettings} from '../../settings'
 import {resolve} from 'path'
@@ -24,14 +24,14 @@ let {projectType} = getSettings()
 let compositeConfig
 
 switch (projectType) {
-  case 'app':
-    compositeConfig = appConfig()
-    break
   case 'cli':
     compositeConfig = cliAppConfig()
     break
   case 'library':
     compositeConfig = libraryConfig()
+    break
+  case 'node-app':
+    compositeConfig = nodeAppConfig()
     break
   default:
     throw new Error(`Unsupported project type “${projectType}”.`)
