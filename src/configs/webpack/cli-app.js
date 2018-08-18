@@ -10,8 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import nodeExternals from './node-externals'
 import shared from './shared'
-import {getPackageDir} from '../../paths'
 import {BannerPlugin} from 'webpack'
 import {join} from 'path'
 
@@ -23,8 +23,7 @@ export default function () {
     path: join(config.output.path, 'node'),
   }
 
-  // Exclude any non relative imports.
-  config.externals = /^(?!index|main)[a-z\-0-9]+$/
+  config.externals = [nodeExternals]
 
   // Include the shebang.
   config.plugins.push(new BannerPlugin({

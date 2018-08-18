@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import nodeExternals from './node-externals'
 import shared from './shared'
 import {getSettings} from '../../settings'
 import {join} from 'path'
@@ -24,9 +25,7 @@ function nodeAppConfig() {
     path: join(config.output.path, 'node'),
   }
 
-  // Exclude any non relative imports.
-  config.externals = /^(?!index|main)[a-z\-0-9]+$/
-
+  config.externals = [nodeExternals]
   config.target = 'node'
   return config
 }
