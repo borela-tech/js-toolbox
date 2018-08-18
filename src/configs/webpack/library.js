@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import nodeExternals from './node-externals'
+import externals from './externals'
 import shared from './shared'
 import {getProjectName} from '../../util'
 import {getSettings} from '../../settings'
@@ -30,7 +30,7 @@ function nodeLibConfig() {
     path: join(config.output.path, 'node'),
   }
 
-  config.externals = [nodeExternals]
+  config.externals = [externals()]
   config.target = 'node'
   return config
 }
