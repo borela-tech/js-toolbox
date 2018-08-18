@@ -24,7 +24,7 @@ export default function () {
   }
 
   // Exclude any non relative imports.
-  config.externals = /^[a-z\-0-9]+$/
+  config.externals = /^(?!index|main)[a-z\-0-9]+$/
 
   // Include the shebang.
   config.plugins.push(new BannerPlugin({

@@ -30,7 +30,7 @@ function nodeLibConfig() {
   }
 
   // Exclude any non relative imports.
-  config.externals = /^[a-z\-0-9]+$/
+  config.externals = /^(?!index|main)[a-z\-0-9]+$/
 
   config.target = 'node'
   return config
