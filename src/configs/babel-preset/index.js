@@ -27,7 +27,7 @@ module.exports = function () {
   let {
     browsers,
     node,
-    platforms = [],
+    platforms,
   } = getSettings()
 
   let result = {

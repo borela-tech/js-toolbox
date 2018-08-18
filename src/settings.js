@@ -49,11 +49,34 @@ export const CLI_ENV = process.env.TEMP_BORELA_JS_TOOLBOX
   : {}
 
 export function getSettings() {
-  return {
+  let result = {
     ...getEnvFlags(),
     ...PACKAGE_JSON,
     ...BORELARC,
     ...BORELA_JSON,
     ...CLI_ENV,
   }
+
+  // Default platforms inferred by the project’s type.
+  if (!result.platforms) {
+    switch (result.projectType) {
+      case 'app':
+      case 'cli':
+        result.platforms = ['node']
+        break
+      case 'library':
+        result.platforms = ['browsers', 'node']
+        break
+    }
+  }
+
+  // Default supported browsers inferred by the platform.
+  if (result.platforms.includes('browsers') && !result.browsers)
+    result.browsers = ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead']
+
+  // Default supported NodeJS inferred by the platform.
+  if (result.platforms.includes('node') && !result.node)
+    result.node = '8.9'
+
+  return result
 }
