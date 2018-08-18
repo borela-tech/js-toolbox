@@ -65,7 +65,7 @@ export function getSettings() {
         result.platforms = ['node']
         break
       case 'library':
-        result.platforms = ['browsers', 'node']
+        result.platforms = ['browser', 'node']
         break
     }
   }
