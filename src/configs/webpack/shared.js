@@ -26,6 +26,7 @@ import jsRule from './rules/js'
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
 const PROJECT_DIR = getPackageDir()
+const SRC_DIR = join(PROJECT_DIR, 'src')
 const BUILD_DIR = join(PROJECT_DIR, 'build')
 
 const MODULE_PATHS = [
@@ -38,17 +39,18 @@ const MODULE_PATHS = [
 let {
   disableSourceMaps,
   minify = false,
-  multiEntry,
 } = getSettings()
 
-function getEntry() {
-  if (!multiEntry) {
-    return existsSync(join(PROJECT_DIR, 'src', 'main.js'))
-      ? {main: 'main'}
-      : {index: 'index'}
-  }
-  // TODO.
-  throw Error('Multi entry not supported yet.')
+function getDefaultEntries() {
+  let result = {}
+
+  if (existsSync(join(SRC_DIR, 'main.js')))
+    result.main = 'main'
+
+  if (existsSync(join(SRC_DIR, 'index.js')))
+    result.index = 'index'
+
+  return result
 }
 
 export default function () {
@@ -63,7 +65,7 @@ export default function () {
       port: 9000,
     },
     devtool: !disableSourceMaps && 'source-map',
-    entry: getEntry(),
+    entry: getDefaultEntries(),
     mode: PRODUCTION ? 'production' : 'development',
     module: {
       rules: [
@@ -86,7 +88,6 @@ export default function () {
     output: {
       path: BUILD_DIR,
       filename: '[name].js',
-      //   ? 'script.js?[contenthash]'
     },
     performance: {
       hints: false,
