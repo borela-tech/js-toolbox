@@ -23,14 +23,13 @@ export default function () {
     path: join(config.output.path, 'node'),
   }
 
-  config.externals = [nodeExternals]
-
   // Include the shebang.
   config.plugins.push(new BannerPlugin({
     banner: '#!/usr/bin/env node',
     raw: true,
   }))
 
+  config.externals = [nodeExternals]
   config.target = 'node'
   return [config]
 }
