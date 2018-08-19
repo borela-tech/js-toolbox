@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "Apache-2.0",
+  "main": "build",
   "bin": {
     "foo": "build/main.js",
     "bar": "build/main.js"

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "Apache-2.0",
-  "main": "build/main.js",
+  "main": "build",
   "scripts": {
     "build": "bb build --production",
     "dev": "bb build",

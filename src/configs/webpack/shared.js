@@ -41,6 +41,11 @@ let {
   minify = false,
 } = getSettings()
 
+/**
+ * By default, the shared configuration look for 2 entries, this is useful when
+ * your project act both as an app by running the “main.js” and a library by
+ * allowing the “index.js” to be imported.
+ */
 function getDefaultEntries() {
   let result = {}
 
@@ -53,6 +58,9 @@ function getDefaultEntries() {
   return result
 }
 
+/**
+ * This configuration holds the logic shared across all project types.
+ */
 export default function () {
   const MINIMIZER = {
     minimizer: [new UglifyJsPlugin()],
