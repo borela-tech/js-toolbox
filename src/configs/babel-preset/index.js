@@ -46,22 +46,6 @@ module.exports = function () {
   react(result.plugins)
   typeScript(result.plugins)
 
-  // IMPORTANT: This plugin will enable source map on stack traces but only if
-  // babel generate inline source maps. This will only work locally and requires
-  // the toolbox to be installed.
-  // const PRODUCTION = process.env.NODE_ENV === 'production'
-  // if (!PRODUCTION && !disableSourceMaps) {
-  //   result.plugins.push(() => ({
-  //     visitor: {
-  //       Program(path) {
-  //         // TODO: Make the path to source-map-support dynamic by querying the
-  //         // toolbox’s location at runtime.
-  //         addSideEffect(path, getModulePath('source-map-support/register'))
-  //       },
-  //     },
-  //   }))
-  // }
-
   log(prettyFormat(result))
   return result
 }

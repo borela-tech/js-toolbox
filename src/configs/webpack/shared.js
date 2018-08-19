@@ -26,8 +26,8 @@ import htmlRule from './rules/html'
 import jsRule from './rules/js'
 
 const PROJECT_DIR = getProjectDir()
-const SRC_DIR = join(PROJECT_DIR, 'src')
-const BUILD_DIR = join(PROJECT_DIR, 'build')
+const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
+const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build')
 
 const MODULE_PATHS = [
   join(PROJECT_DIR, 'node_modules'),
@@ -44,10 +44,10 @@ let {
 function getDefaultEntries() {
   let result = {}
 
-  if (existsSync(join(SRC_DIR, 'main.js')))
+  if (existsSync(join(PROJECT_SRC_DIR, 'main.js')))
     result.main = 'main'
 
-  if (existsSync(join(SRC_DIR, 'index.js')))
+  if (existsSync(join(PROJECT_SRC_DIR, 'index.js')))
     result.index = 'index'
 
   return result
@@ -60,7 +60,7 @@ export default function () {
 
   return {
     devServer: {
-      contentBase: BUILD_DIR,
+      contentBase: PROJECT_BUILD_DIR,
       historyApiFallback: true,
       port: 9000,
     },
@@ -86,7 +86,7 @@ export default function () {
       ...minify && MINIMIZER,
     },
     output: {
-      path: BUILD_DIR,
+      path: PROJECT_BUILD_DIR,
       filename: '[name].js',
     },
     performance: {
