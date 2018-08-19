@@ -24,5 +24,5 @@ export default function () {
 
   config.externals = [externals()]
   config.target = 'node'
-  return config
+  return [config]
 }
