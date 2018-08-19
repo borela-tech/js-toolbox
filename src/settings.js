@@ -67,6 +67,9 @@ export function getSettings() {
       case 'library':
         result.platforms = ['browser', 'node']
         break
+      case 'react':
+        result.platforms = ['browser']
+        break
     }
   }
 
@@ -77,6 +80,12 @@ export function getSettings() {
   // Default supported NodeJS inferred by the platform.
   if (result.platforms.includes('node') && !result.node)
     result.node = '8.9'
+
+  // Default settings for react project’s.
+  if (result.projectType === 'react')
+      result.jsx = true
+      result.react = true
+  }
 
   return result
 }
