@@ -10,32 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import externals from './externals'
 import shared from './shared'
 import {getProjectName} from '../../util'
 import {getSettings} from '../../settings'
 import {join} from 'path'
 
-let {minify, platforms} = getSettings()
+let {minify} = getSettings()
 const PROJECT_NAME = getProjectName()
 
-function nodeLibConfig() {
-  let config = shared()
-
-  config.output = {
-    ...config.output,
-    filename: 'index.js',
-    library: PROJECT_NAME,
-    libraryTarget: 'umd',
-    path: join(config.output.path, 'node'),
-  }
-
-  config.externals = [externals()]
-  config.target = 'node'
-  return config
-}
-
-function webLibConfig() {
+export default function () {
   let config = shared()
 
   config.output = {
@@ -49,24 +32,5 @@ function webLibConfig() {
   }
 
   config.target = 'web'
-  return config
-}
-
-export default function () {
-  let result = []
-
-  for (let platform of platforms) {
-    switch (platform) {
-      case 'browser':
-        result.push(webLibConfig())
-        break
-      case 'node':
-        result.push(nodeLibConfig())
-        break
-      default:
-        throw new Error(`Unsupported platform “${platform}”.`)
-    }
-  }
-
-  return result
+  return [config]
 }

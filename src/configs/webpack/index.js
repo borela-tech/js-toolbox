@@ -12,27 +12,47 @@
 
 import cliAppConfig from './cli-app'
 import debug from 'debug'
-import libraryConfig from './library'
 import nodeAppConfig from './node-app'
+import nodeLibConfig from './node-lib'
 import prettyFormat from 'pretty-format'
+import reactAppConfig from './react-app'
+import webLibConfig from './web-lib'
 import {getSettings} from '../../settings'
 import {resolve} from 'path'
 
 let log = debug('bb:config:webpack')
 
 let {projectType} = getSettings()
-let compositeConfig
+let config
 
 switch (projectType) {
   case 'cli':
-    compositeConfig = cliAppConfig()
+    config = cliAppConfig()
     break
-  case 'library':
-    compositeConfig = libraryConfig()
+
+  case 'lib':
+    config = [
+      ...nodeLibConfig(),
+      ...webLibConfig(),
+    ]
     break
+
+  case 'node-lib':
+    config = nodeLibConfig()
+    break
+
   case 'node-app':
-    compositeConfig = nodeAppConfig()
+    config = nodeAppConfig()
     break
+
+  case 'react':
+    config = reactAppConfig()
+    break
+
+  case 'web-lib':
+    config = webLibConfig()
+    break
+
   default:
     throw new Error(`Unsupported project type “${projectType}”.`)
 }
@@ -40,10 +60,10 @@ switch (projectType) {
 // By default, all settings are generated where the output has a directory for
 // each platform supported, but, if we are targetting only 1 platform, this
 // convention is not necessary.
-if (compositeConfig.length < 2) {
-  compositeConfig = compositeConfig[0]
-  compositeConfig.output.path = resolve(compositeConfig.output.path, '..')
+if (config.length < 2) {
+  config = config[0]
+  config.output.path = resolve(config.output.path, '..')
 }
 
-log(prettyFormat(compositeConfig))
-module.exports = compositeConfig
+log(prettyFormat(config))
+module.exports = config
