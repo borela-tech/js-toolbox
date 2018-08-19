@@ -39,8 +39,8 @@ dependencies drastically.
 * Polyfills are included based on the browsers and minimum NodeJS version
   supported by your project;
 
-Some features must be enabled explicitly either through command flags or
-configuration:
+Some features must be enabled explicitly either through command flags,
+configuration or project type:
 
 * [Flow][flow];
 * [React][react];
