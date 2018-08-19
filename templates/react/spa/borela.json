@@ -1,6 +1,3 @@
 {
-  "bundle": true,
-  "jsx": true,
-  "react": true,
-  "platforms": ["browser"]
+  "project-type": "react"
 }

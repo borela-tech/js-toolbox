@@ -1,5 +1,4 @@
 {
   "browsers": ["chrome >= 49", ">= 0.5%", "last 2 versions", "not dead"],
-  "platforms": ["browser"],
-  "project-type": "library"
+  "project-type": "web-lib"
 }
