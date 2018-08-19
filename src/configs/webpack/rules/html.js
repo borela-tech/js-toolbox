@@ -10,13 +10,19 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {getSettings} from '../../../settings'
+let {minify = false} = getSettings()
+
 export default function () {
   return {
     test: /\.html$/,
     use: [{
       loader: 'html-loader',
       options: {
-        attrs: ['img:src', 'link:href'],
+        import: true,
+        minimize: minify,
+        template: false,
+        url: true,
       },
     }],
   }
