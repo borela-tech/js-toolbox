@@ -12,7 +12,7 @@
 
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
-import {BIN_DIR, getPackageDir} from './paths'
+import {BIN_DIR, getProjectDir} from './paths'
 import {delimiter as PATH_DELIMITER} from 'path'
 import {pickNonFalsy} from './util'
 import {spawn, spawnSync} from 'child_process'
@@ -63,7 +63,7 @@ function internalRunCommand(spawn:Function, cmd:string, options?:RunOptions) {
   log('options: ', prettyFormat(options))
 
   const COMPUTED_OPTIONS = {
-    cwd: getPackageDir() || process.cwd(),
+    cwd: getProjectDir() || process.cwd(),
     env: calculateEnv(env),
     shell: true,
     stdio,

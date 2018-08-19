@@ -12,13 +12,13 @@
 
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
-import {getPackageDir} from '../../paths'
+import {getProjectDir} from '../../paths'
 import {join, relative} from 'path'
 
 let logIncluded = debug('bb:config:webpack:included')
 let logExcluded = debug('bb:config:webpack:excluded')
 
-const PROJECT_DIR = getPackageDir()
+const PROJECT_DIR = getProjectDir()
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 
 /**

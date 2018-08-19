@@ -12,7 +12,7 @@
 
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {existsSync} from 'fs'
-import {getPackageDir} from '../../paths'
+import {getProjectDir} from '../../paths'
 import {getSettings} from '../../settings'
 import {isProduction} from '../../util'
 import {join} from 'path'
@@ -25,7 +25,7 @@ import cssRule from './rules/css'
 import htmlRule from './rules/html'
 import jsRule from './rules/js'
 
-const PROJECT_DIR = getPackageDir()
+const PROJECT_DIR = getProjectDir()
 const SRC_DIR = join(PROJECT_DIR, 'src')
 const BUILD_DIR = join(PROJECT_DIR, 'build')
 

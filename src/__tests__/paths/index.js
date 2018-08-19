@@ -51,10 +51,10 @@ describe.each([
     jest.spyOn(process, 'cwd').mockImplementation(() => cwd)
   })
 
-  describe('getPackageDir()', () => {
+  describe('getProjectDir()', () => {
     test('It has the package’s root', () => {
-      const {getPackageDir} = require('../../paths')
-      expect(getPackageDir()).toBe(root)
+      const {getProjectDir} = require('../../paths')
+      expect(getProjectDir()).toBe(root)
     })
   })
 

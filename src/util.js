@@ -10,18 +10,18 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {getPackageDir} from './paths'
+import {getProjectDir} from './paths'
 import {join} from 'path'
 
 export function exitOnPackageNotFound() {
-  if (getPackageDir())
+  if (getProjectDir())
     return
   process.stdout.write('No valid “package.json” found.')
   process.exit(1)
 }
 
 export function getProjectName() {
-  const PACKAGE_JSON = join(getPackageDir(), 'package.json')
+  const PACKAGE_JSON = join(getProjectDir(), 'package.json')
   return require(PACKAGE_JSON).name
 }
 

@@ -19,7 +19,7 @@ import {
   react,
   typeScript,
 } from '../flags'
-import {CONFIGS_DIR, getPackageDir, setTargetDir} from '../paths'
+import {CONFIGS_DIR, getProjectDir, setTargetDir} from '../paths'
 import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
@@ -45,7 +45,7 @@ function lintSources(args) {
     '--ignore-pattern "src/**/__tests__"',
     '--ignore-pattern "src/**/__tests__/**"',
     `--config "${CONFIG_PATH}"`,
-    `"${join(getPackageDir(), 'src')}"`,
+    `"${join(getProjectDir(), 'src')}"`,
   ]
 
   let {fix} = args
@@ -64,7 +64,7 @@ function lintTests(args) {
     '--ignore-pattern "!**/__tests__"',
     '--ignore-pattern "!**/__tests__/**"',
     `--config "${CONFIG_PATH}"`,
-    `"${join(getPackageDir(), 'src')}"`,
+    `"${join(getProjectDir(), 'src')}"`,
   ]
 
   let {fix} = args

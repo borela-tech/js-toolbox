@@ -12,7 +12,7 @@
 
 function stubPackageDir(dir) {
   jest.doMock('../../paths', () => ({
-    getPackageDir() {
+    getProjectDir() {
       return dir
     },
   }))

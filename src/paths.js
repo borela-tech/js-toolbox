@@ -15,7 +15,7 @@ import {join} from 'path'
 
 let targetDir = process.cwd()
 
-export function getPackageDir():string {
+export function getProjectDir():string {
   return pkgDir.sync(targetDir) || ''
 }
 

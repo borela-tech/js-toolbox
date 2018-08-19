@@ -16,7 +16,7 @@ const FIXTURES_PATH = join(__dirname, '__fixtures__')
 
 function setFixture(fixture) {
   jest.doMock('../../paths', () => ({
-    getPackageDir() {
+    getProjectDir() {
       return join(FIXTURES_PATH, fixture)
     },
   }))

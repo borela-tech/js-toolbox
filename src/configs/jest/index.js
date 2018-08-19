@@ -12,7 +12,7 @@
 
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
-import {CONFIGS_DIR, getPackageDir} from '../../paths'
+import {CONFIGS_DIR, getProjectDir} from '../../paths'
 import {getSettings} from '../../settings'
 import {join} from 'path'
 
@@ -22,7 +22,7 @@ let {platforms = []} = getSettings()
 const BROWSER = platforms.includes('browser')
 
 const CONFIG = {
-  rootDir: join(getPackageDir(), 'src'),
+  rootDir: join(getProjectDir(), 'src'),
   modulePathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
   testEnvironment: BROWSER ? 'jsdom' : 'node',
   testRegex: '__tests__',
