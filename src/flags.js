@@ -115,9 +115,11 @@ export function projectType(yargs) {
   yargs.option('project-type', {
     choices: [
       'cli',
-      'library',
+      'lib',
       'node-app',
+      'node-lib',
       'react',
+      'web-lib',
     ],
     description: 'Affects the build output.',
     type: 'string',
