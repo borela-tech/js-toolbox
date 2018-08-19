@@ -57,35 +57,38 @@ export function getSettings() {
     ...CLI_ENV,
   }
 
-  // Default platforms inferred by the project’s type.
-  if (!result.platforms) {
-    switch (result.projectType) {
-      case 'app':
-      case 'cli':
-        result.platforms = ['node']
-        break
-      case 'library':
-        result.platforms = ['browser', 'node']
-        break
-      case 'react':
-        result.platforms = ['browser']
-        break
-    }
+  // Default settings for each project type.
+  switch (result.projectType) {
+    case 'cli':
+    case 'node-app':
+    case 'node-lib':
+      result.platforms ??= ['node']
+      break
+
+    case 'lib':
+      result.platforms ??= ['browser', 'node']
+      break
+
+    case 'react':
+      result.platforms ??= ['browser']
+      result.jsx ??= true
+      result.react ??= true
+      break
+
+    case 'web-lib':
+      result.platforms ??= ['browser']
+      break
   }
 
   // Default supported browsers inferred by the platform.
-  if (result.platforms.includes('browsers') && !result.browsers)
-    result.browsers = ['chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead']
+  if (result.platforms.includes('browsers'))
+    result.browsers ??= [
+      'chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'
+    ]
 
   // Default supported NodeJS inferred by the platform.
-  if (result.platforms.includes('node') && !result.node)
-    result.node = '8.9'
-
-  // Default settings for react project’s.
-  if (result.projectType === 'react')
-      result.jsx = true
-      result.react = true
-  }
+  if (result.platforms.includes('node'))
+    result.node ??= '8.9'
 
   return result
 }
