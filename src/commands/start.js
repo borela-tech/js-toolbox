@@ -11,9 +11,11 @@
 // the License.
 
 import {appArgs, inspect} from '../flags'
+import {existsSync} from 'fs'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
 import {getProjectDir, setTargetDir} from '../paths'
+import {join} from 'path'
 
 function builder(yargs) {
   appArgs(yargs)
@@ -24,8 +26,14 @@ function handler(args) {
   setTargetDir(args.dir)
   exitOnPackageNotFound()
 
+  const DIRECT_MAIN = join(getProjectDir(), 'build', 'main.js')
+  const NODE_MAIN = join(getProjectDir(), 'build', 'main.js')
+  const MAIN = existsSync(DIRECT_MAIN)
+    ? DIRECT_MAIN
+    : NODE_MAIN
+
   let {appArgs, inspect} = args
-  let nodemonArgs = [`"${getProjectDir()}"`]
+  let nodemonArgs = [`"${MAIN}"`]
 
   // Inspect needs to be passed before the script.
   if (inspect) nodemonArgs.unshift('--inspect')
