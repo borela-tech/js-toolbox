@@ -14,6 +14,7 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {existsSync} from 'fs'
 import {getPackageDir} from '../../paths'
 import {getSettings} from '../../settings'
+import {isProduction} from '../../util'
 import {join} from 'path'
 import {NamedModulesPlugin} from 'webpack'
 
@@ -24,7 +25,6 @@ import cssRule from './rules/css'
 import htmlRule from './rules/html'
 import jsRule from './rules/js'
 
-const PRODUCTION = process.env.NODE_ENV === 'production'
 const PROJECT_DIR = getPackageDir()
 const SRC_DIR = join(PROJECT_DIR, 'src')
 const BUILD_DIR = join(PROJECT_DIR, 'build')
@@ -66,7 +66,7 @@ export default function () {
     },
     devtool: !disableSourceMaps && 'source-map',
     entry: getDefaultEntries(),
-    mode: PRODUCTION ? 'production' : 'development',
+    mode: isProduction() ? 'production' : 'development',
     module: {
       rules: [
         assetRule(),

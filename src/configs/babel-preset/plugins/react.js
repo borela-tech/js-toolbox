@@ -12,6 +12,7 @@
 
 import {babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../../settings'
+import {isProduction} from '../../../util'
 
 export default function (plugins) {
   let {jsx, react} = getSettings()
@@ -27,8 +28,7 @@ export default function (plugins) {
   plugins.push(babelTransformPlugin('react-display-name'))
 
   // Plugins used during development only.
-  const PRODUCTION = process.env.NODE_ENV === 'production'
-  if (!PRODUCTION) {
+  if (!isProduction()) {
     // Add “__self” property to JSX elements which React will use to generate
     // runtime warnings.
     plugins.push(babelTransformPlugin('react-jsx-self'))

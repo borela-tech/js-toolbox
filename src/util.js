@@ -25,6 +25,17 @@ export function getProjectName() {
   return require(PACKAGE_JSON).name
 }
 
+export function isProduction() {
+  let {NODE_ENV} = process.env
+  return isString(NODE_ENV)
+    ? NODE_ENV === 'production'
+    : false
+}
+
+export function isString(value) {
+  return typeof value === 'string' || value instanceof String
+}
+
 export function pickNonFalsy(obj:Object):Object {
   let result = {}
   for (let prop in obj) {
