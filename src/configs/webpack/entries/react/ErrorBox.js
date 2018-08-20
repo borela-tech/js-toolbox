@@ -11,10 +11,11 @@
 // the License.
 
 import React, {Component} from 'react'
+import style from './ErrorBox.module.css'
 
 export default class ErrorBox extends Component {
   render() {
-    return <div>
+    return <div className={style.root}>
         Test
     </div>
   }
