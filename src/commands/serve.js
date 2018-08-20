@@ -22,7 +22,10 @@ function handler(args) {
   exitOnPackageNotFound()
 
   exitOnError(runCommandSync('webpack-dev-server', {
-    args: [`--config "${WEBPACK_CONFIG_PATH}"`],
+    args: [
+      `--config "${WEBPACK_CONFIG_PATH}"`,
+      '--progress',
+    ],
     env: args,
   }))
 }

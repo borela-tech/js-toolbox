@@ -61,7 +61,10 @@ function handler(args) {
 
   exitOnError(runCommandSync('rimraf', {args: ['"build"']}))
   exitOnError(runCommandSync('webpack', {
-    args: [`--config "${WEBPACK_CONFIG_PATH}"`],
+    args: [
+      `--config "${WEBPACK_CONFIG_PATH}"`,
+      '--progress',
+    ],
     env: {...args},
   }))
 }
