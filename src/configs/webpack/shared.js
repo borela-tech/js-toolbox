@@ -91,6 +91,9 @@ export default function () {
       __filename: false,
     },
     optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
       minimize: minify,
       ...minify && MINIMIZER,
     },
