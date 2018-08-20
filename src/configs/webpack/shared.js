@@ -39,6 +39,7 @@ const MODULE_PATHS = [
 let {
   disableSourceMaps,
   minify = false,
+  watch = false,
 } = getSettings()
 
 /**
@@ -98,7 +99,7 @@ export default function () {
       filename: '[name].js',
     },
     performance: {
-      hints: false,
+      hints: isProduction(),
     },
     plugins: [new NamedModulesPlugin()],
     resolve: {
@@ -115,5 +116,6 @@ export default function () {
     resolveLoader: {
       modules: MODULE_PATHS,
     },
+    watch,
   }
 }
