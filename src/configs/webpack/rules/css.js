@@ -28,7 +28,7 @@ export default function () {
     }, {
       loader: 'postcss-loader',
       options: {
-        plugins: () => [pluginAutoPrefixer({})],
+        plugins: [pluginAutoPrefixer],
         sourceMap: !disableSourceMaps
       },
     }],
