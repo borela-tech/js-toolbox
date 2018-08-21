@@ -12,7 +12,7 @@
 
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {existsSync} from 'fs'
-import {getProjectDir} from '../../paths'
+import {getProjectDir, TOOLBOX_DIR} from '../../paths'
 import {getSettings} from '../../settings'
 import {isProduction} from '../../util'
 import {join} from 'path'
@@ -31,6 +31,7 @@ const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build')
 
 const MODULE_PATHS = [
   join(PROJECT_DIR, 'node_modules'),
+  join(TOOLBOX_DIR, 'node_modules'),
   join(PROJECT_DIR, 'src'),
   'node_modules',
   'src',

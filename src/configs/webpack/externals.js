@@ -57,6 +57,12 @@ export default function (options = {}) {
       return
     }
 
+    // Polyfills.
+    if (request.includes('@babel/runtime')) {
+      callback()
+      return
+    }
+
     // Exclude everything else.
     callback(null, `commonjs ${request}`)
     logExcluded(prettyFormat({context, request}))
