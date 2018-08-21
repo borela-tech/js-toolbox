@@ -11,6 +11,8 @@
 // the License.
 
 import {getSettings} from '../../../settings'
+import pluginAutoPrefixer from 'autoprefixer'
+
 let {disableSourceMaps} = getSettings()
 
 export default function () {
@@ -25,7 +27,10 @@ export default function () {
       options: {sourceMap: !disableSourceMaps},
     }, {
       loader: 'postcss-loader',
-      options: {sourceMap: !disableSourceMaps},
+      options: {
+        plugins: () => [pluginAutoPrefixer({})],
+        sourceMap: !disableSourceMaps
+      },
     }],
   }
 }
