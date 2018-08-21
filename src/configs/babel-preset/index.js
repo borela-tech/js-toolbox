@@ -18,7 +18,7 @@ import prettyFormat from 'pretty-format'
 import react from './plugins/react'
 import typeScript from './plugins/typeScript'
 import {addSideEffect} from '@babel/helper-module-imports'
-import {getModulePath} from '../../modules'
+import {babelPlugin, getModulePath} from '../../modules'
 import {getSettings} from '../../settings'
 
 let log = debug('bb:config:babel')
@@ -31,7 +31,7 @@ module.exports = function () {
   } = getSettings()
 
   let result = {
-    plugins: [],
+    plugins: [babelPlugin('transform-runtime')],
     presets: [[getModulePath('@babel/preset-env'), {
       targets: {
         ...platforms.includes('browser') && browsers && {browsers},
