@@ -120,6 +120,29 @@ export default function () {
     resolveLoader: {
       modules: MODULE_PATHS,
     },
+    stats: {
+      // Hide everything first, any property following this one will enable only
+      // the features we want.
+      all: false,
+
+      // Asset table.
+      assets: true,
+
+      // Build date and time.
+      builtAt: true,
+
+      // Show errors.
+      errors: true,
+
+      // Performance hints.
+      performance: isProduction(),
+
+      // Build time.
+      timings: true,
+
+      // Webpack version.
+      version: true,
+    },
     watch,
   }
 }

@@ -10,6 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import babelPreset from '../../babel-preset'
+
 export default function () {
   return {
     exclude: /node_modules/,
@@ -17,7 +19,7 @@ export default function () {
     use: [{
       loader: 'babel-loader',
       options: {
-        presets: [require('../../babel-preset')],
+        presets: [babelPreset],
       },
     }, {
       loader: 'source-map-loader',
