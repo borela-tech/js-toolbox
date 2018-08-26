@@ -32,7 +32,7 @@ export default function () {
       loader: 'postcss-loader',
       options: {
         plugins: [pluginAutoPrefixer],
-        sourceMap: !disableSourceMaps
+        sourceMap: !disableSourceMaps,
       },
     }],
   }

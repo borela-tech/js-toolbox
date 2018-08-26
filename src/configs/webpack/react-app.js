@@ -51,7 +51,7 @@ function setHtmlTemplate(config) {
   config.plugins.push(new HtmlPlugin({
     template: existsSync(CUSTOM_TEMPLATE)
       ? CUSTOM_TEMPLATE
-      : DEFAULT_TEMPLATE
+      : DEFAULT_TEMPLATE,
   }))
 }
 

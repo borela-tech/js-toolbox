@@ -81,10 +81,11 @@ export function getSettings() {
   }
 
   // Default supported browsers inferred by the platform.
-  if (result.platforms.includes('browsers'))
+  if (result.platforms.includes('browsers')) {
     result.browsers ??= [
-      'chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead'
+      'chrome >= 49', '>= 0.5%', 'last 2 versions', 'not dead',
     ]
+  }
 
   // Default supported NodeJS inferred by the platform.
   if (result.platforms.includes('node'))
