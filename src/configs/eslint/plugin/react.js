@@ -290,7 +290,7 @@ module.exports = {
     'react/jsx-no-undef': 'error',
 
     // This option limits every line in JSX to one expression each.
-    'react/jsx-one-expression-per-line': 'error',
+    'react/jsx-one-expression-per-line': 'off',
 
     // Enforce PascalCase for user-defined JSX components.
     'react/jsx-pascal-case': 'error',
