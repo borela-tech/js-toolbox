@@ -47,12 +47,10 @@ function setEntryPoint(config) {
 function setHtmlTemplate(config) {
   const DEFAULT_TEMPLATE = join(REACT_ENTRY_DIR, 'index.html')
   const CUSTOM_TEMPLATE = join(PROJECT_SRC_DIR, 'index.html')
-
-  config.plugins.push(new HtmlPlugin({
-    template: existsSync(CUSTOM_TEMPLATE)
-      ? CUSTOM_TEMPLATE
-      : DEFAULT_TEMPLATE
-  }))
+  let template = existsSync(CUSTOM_TEMPLATE)
+    ? CUSTOM_TEMPLATE
+    : DEFAULT_TEMPLATE
+  config.plugins.push(new HtmlPlugin({template}))
 }
 
 /**

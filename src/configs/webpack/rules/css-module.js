@@ -24,7 +24,7 @@ export default function () {
     }, {
       loader: 'css-loader',
       options: {
-        localIdentName: '[name]-[local]-[hash:base64]',
+        localIdentName: '[local]---[name]---[hash:base64]',
         modules: true,
         sourceMap: !disableSourceMaps,
       },
@@ -32,7 +32,7 @@ export default function () {
       loader: 'postcss-loader',
       options: {
         plugins: [pluginAutoPrefixer],
-        sourceMap: !disableSourceMaps
+        sourceMap: !disableSourceMaps,
       },
     }],
   }
