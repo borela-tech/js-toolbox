@@ -104,6 +104,7 @@
     "rimraf": "^2.6.2",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.8",
+    "sourcemapped-stacktrace": "^1.1.8",
     "style-loader": "^0.22.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
