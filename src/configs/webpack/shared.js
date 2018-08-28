@@ -10,12 +10,18 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {
+  getProjectName,
+  isPathSubDirOf,
+  isProduction,
+  isWindows,
+} from '../../util'
+
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {existsSync} from 'fs'
-import {getProjectDir, TOOLBOX_DIR} from '../../paths'
+import {getProjectDir, TOOLBOX_DIR, TOOLBOX_SRC_DIR} from '../../paths'
 import {getSettings} from '../../settings'
-import {isProduction} from '../../util'
-import {join} from 'path'
+import {join, relative} from 'path'
 import {NamedModulesPlugin} from 'webpack'
 
 // Webpack’s loaders.
@@ -60,6 +66,30 @@ function getDefaultEntries() {
   return result
 }
 
+const STATS = {
+  // Hide everything first, any property following this one will enable only
+  // the features we want.
+  all: false,
+
+  // Asset table.
+  assets: true,
+
+  // Build date and time.
+  builtAt: true,
+
+  // Show errors.
+  errors: true,
+
+  // Performance hints.
+  performance: isProduction(),
+
+  // Build time.
+  timings: true,
+
+  // Webpack version.
+  version: true,
+}
+
 /**
  * This configuration holds the logic shared across all project types.
  */
@@ -73,6 +103,7 @@ export default function () {
       contentBase: PROJECT_BUILD_DIR,
       historyApiFallback: true,
       port: 9000,
+      stats: STATS,
     },
     devtool: !disableSourceMaps && 'source-map',
     entry: getDefaultEntries(),
@@ -101,18 +132,37 @@ export default function () {
     output: {
       path: PROJECT_BUILD_DIR,
       filename: '[name].js',
-    },
-    performance: {
-      hints: isProduction(),
+      devtoolModuleFilenameTemplate: info => {
+        const PROJECT_NAME = getProjectName()
+        let identifier = info.identifier
+        let path = info.absoluteResourcePath
+
+        // If the path does not exist on the file system, it is webpack’s URL.
+        if (!existsSync(path))
+          return `webpack:///${identifier}`
+
+        // Project sources.
+        if (isPathSubDirOf(path, PROJECT_DIR)) {
+          path = relative(PROJECT_DIR, path)
+          return `${PROJECT_NAME}:///${path}`
+        }
+
+        // Toolbox sources.
+        if (isPathSubDirOf(path, TOOLBOX_DIR)) {
+          path = relative(TOOLBOX_DIR, path)
+          return `borela:///${path}`
+        }
+
+        throw new Error(`Invalid resource path “${path}”.`)
+      },
     },
     plugins: [new NamedModulesPlugin()],
     resolve: {
       extensions: [
-        '.css',
-        '.html',
         '.js',
-        '.json',
         '.jsx',
+        '.mjs',
+        '.json',
         '.module.css',
       ],
       modules: MODULE_PATHS,
@@ -120,29 +170,7 @@ export default function () {
     resolveLoader: {
       modules: MODULE_PATHS,
     },
-    stats: {
-      // Hide everything first, any property following this one will enable only
-      // the features we want.
-      all: false,
-
-      // Asset table.
-      assets: true,
-
-      // Build date and time.
-      builtAt: true,
-
-      // Show errors.
-      errors: true,
-
-      // Performance hints.
-      performance: isProduction(),
-
-      // Build time.
-      timings: true,
-
-      // Webpack version.
-      version: true,
-    },
+    stats: STATS,
     watch,
   }
 }
