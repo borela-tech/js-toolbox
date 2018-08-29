@@ -26,7 +26,10 @@ function handler(args) {
       `--config "${WEBPACK_CONFIG_PATH}"`,
       '--progress',
     ],
-    env: args,
+    env: {
+      enableDevServer: true,
+      ...args
+    },
   }))
 }
 
