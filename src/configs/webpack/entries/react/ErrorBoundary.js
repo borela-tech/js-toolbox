@@ -22,7 +22,7 @@ function preparedMappedStack(stack) {
   let result = []
   for (let line of stack) {
     // at ... (file:///namespace/path:line:column)
-    const MATCHED = line.match(/\(file:\/{3}(.+?)\/(.+):(.+):(.+)\)/)
+    const MATCHED = line.match(/\(.+?:\/{3}(.+?)\/(.+):(.+):(.+)\)/)
 
     // Ignore any line that is not expected.
     if (!MATCHED)
