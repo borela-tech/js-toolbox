@@ -145,6 +145,10 @@ export default function () {
         const PROJECT_NAME = getProjectName()
         let path = info.absoluteResourcePath
 
+        // When hot reloading, path is already correct.
+        if (/\w+:\/{3}/.test(path))
+          return path
+
         // Project sources.
         if (isPathSubDirOf(path, PROJECT_DIR)) {
           path = relative(PROJECT_DIR, path)
