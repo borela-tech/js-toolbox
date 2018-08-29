@@ -60,6 +60,57 @@ function getDefaultEntries() {
 }
 
 /**
+ * This function is used in “devtoolModuleFilenameTemplate” to create consistent
+ * module paths and simplify the file structure on the browser’s debugger to be
+ * as follows:
+ *
+ *     file://
+ *       borela-js-toolbox
+ *          entry
+ *          node_modules
+ *
+ *       project-name
+ *          node_modules
+ *          src
+ *
+ *     webpack://
+ *        ...
+ */
+function normalizeModulePath(info) {
+  let identifier = info.identifier
+
+  if (/^(webpack|\(webpack\))/.test(identifier))
+    return `webpack:///${identifier}`
+
+  const PROJECT_NAME = getProjectName()
+  let path = info.absoluteResourcePath
+
+  // When hot reloading, path is already correct.
+  if (/\w+:\/{3}/.test(path))
+    return path
+
+  // Project sources.
+  if (isPathSubDirOf(path, PROJECT_DIR)) {
+    path = relative(PROJECT_DIR, path)
+    path = path.replace(/\\/g, '/')
+    return `file:///${PROJECT_NAME}/${path}`
+  }
+
+  // Toolbox sources.
+  if (isPathSubDirOf(path, TOOLBOX_DIR)) {
+    path = relative(TOOLBOX_DIR, path)
+    path = path.replace(/\\/g, '/')
+
+    // Simplify entry path.
+    path = path.replace(/build\/configs\/webpack\/entries\/\w+/g, 'entry')
+
+    return `file:///borela-js-toolbox/${path}`
+  }
+
+  throw new Error(`Invalid resource path “${path}”.`)
+}
+
+/**
  * This configuration holds the logic shared across all project types.
  */
 export default function () {
@@ -136,35 +187,7 @@ export default function () {
     output: {
       path: PROJECT_BUILD_DIR,
       filename: '[name].js',
-      devtoolModuleFilenameTemplate: info => {
-        let identifier = info.identifier
-
-        if (/^(webpack|\(webpack\))/.test(identifier))
-          return `webpack:///${identifier}`
-
-        const PROJECT_NAME = getProjectName()
-        let path = info.absoluteResourcePath
-
-        // When hot reloading, path is already correct.
-        if (/\w+:\/{3}/.test(path))
-          return path
-
-        // Project sources.
-        if (isPathSubDirOf(path, PROJECT_DIR)) {
-          path = relative(PROJECT_DIR, path)
-          path = path.replace(/\\/g, '/')
-          return `file:///${PROJECT_NAME}/${path}`
-        }
-
-        // Toolbox sources.
-        if (isPathSubDirOf(path, TOOLBOX_DIR)) {
-          path = relative(TOOLBOX_DIR, path)
-          path = path.replace(/\\/g, '/')
-          return `file:///borela-js-toolbox/${path}`
-        }
-
-        throw new Error(`Invalid resource path “${path}”.`)
-      },
+      devtoolModuleFilenameTemplate: normalizeModulePath,
     },
     plugins: [new NamedModulesPlugin()],
     resolve: {
