@@ -12,17 +12,54 @@
 
 import ErrorBox from './ErrorBox'
 import React, {Component} from 'react'
+import {mapStackTrace} from 'sourcemapped-stacktrace'
+
+/**
+ * Return the a new mapped stack where each item is an object with properties
+ * for line, column and file path.
+ */
+function preparedMappedStack(stack) {
+  let result = []
+
+  for (let line of stack) {
+    // at ... (webpack:///path:line:column)
+    const MATCHED = line.match(/\(webpack:\/{3}(.+):(.+):(.+)\)/)
+
+    // Ignore any line that is not expected.
+    if (!MATCHED)
+      continue
+
+    result.push({
+      path: MATCHED[1],
+      line: MATCHED[2],
+      column: MATCHED[3],
+    })
+  }
+
+  return stack
+}
 
 export default class ErrorBoundary extends Component {
   state = {hasError: false}
 
   componentDidCatch(error, info) {
-    this.setState({hasError: true, error, info})
+    mapStackTrace(error.stack, mappedStack => {
+      // Prepare the mapped stack.
+      error.stack = mappedStack
+        |> preparedMappedStack
+
+      // Show the error box.
+      this.setState({
+        hasError: true,
+        error,
+        info,
+      })
+    })
   }
 
   render() {
     return this.state.hasError
-      ? <ErrorBox/>
+      ? <ErrorBox {...this.state}/>
       : this.props.children
   }
 }
