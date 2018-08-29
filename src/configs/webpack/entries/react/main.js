@@ -23,11 +23,11 @@ if (module.hot) {
   module.hot.accept('App', () => {
     let ReloadedApp = require('App').default
     render(
-      <ErrorBoundary>
-        <AppContainer>
+      <AppContainer>
+        <ErrorBoundary>
           <ReloadedApp/>
-        </AppContainer>
-      </ErrorBoundary>,
+        </ErrorBoundary>
+      </AppContainer>,
       HTML_ROOT,
     )
   })
@@ -36,11 +36,11 @@ if (module.hot) {
 // Render the page after all resources in the header loads.
 window.addEventListener('load', () => {
   render(
-    <ErrorBoundary>
-      <AppContainer>
+    <AppContainer>
+      <ErrorBoundary>
         <App/>
-      </AppContainer>
-    </ErrorBoundary>,
+      </ErrorBoundary>
+    </AppContainer>,
     HTML_ROOT,
   )
 })

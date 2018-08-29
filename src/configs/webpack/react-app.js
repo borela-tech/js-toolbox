@@ -61,7 +61,7 @@ export default function () {
 
   config.output = {
     ...config.output,
-    filename: 'script.js?[contenthash]',
+    filename: 'script.js?[hash]',
     path: join(config.output.path, 'web'),
   }
 

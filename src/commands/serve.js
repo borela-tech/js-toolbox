@@ -24,6 +24,7 @@ function handler(args) {
   exitOnError(runCommandSync('webpack-dev-server', {
     args: [
       `--config "${WEBPACK_CONFIG_PATH}"`,
+      '--hot --inline',
       '--progress',
     ],
     env: {
