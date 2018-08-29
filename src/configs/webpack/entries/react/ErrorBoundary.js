@@ -20,23 +20,22 @@ import {mapStackTrace} from 'sourcemapped-stacktrace'
  */
 function preparedMappedStack(stack) {
   let result = []
-
   for (let line of stack) {
-    // at ... (webpack:///path:line:column)
-    const MATCHED = line.match(/\(webpack:\/{3}(.+):(.+):(.+)\)/)
+    // at ... (file:///namespace/path:line:column)
+    const MATCHED = line.match(/\(file:\/{3}(.+?)\/(.+):(.+):(.+)\)/)
 
     // Ignore any line that is not expected.
     if (!MATCHED)
       continue
 
     result.push({
-      path: MATCHED[1],
-      line: MATCHED[2],
-      column: MATCHED[3],
+      column: MATCHED[4],
+      line: MATCHED[3],
+      namespace: MATCHED[1],
+      path: MATCHED[2],
     })
   }
-
-  return stack
+  return result
 }
 
 export default class ErrorBoundary extends Component {
@@ -47,13 +46,8 @@ export default class ErrorBoundary extends Component {
       // Prepare the mapped stack.
       error.stack = mappedStack
         |> preparedMappedStack
-
       // Show the error box.
-      this.setState({
-        hasError: true,
-        error,
-        info,
-      })
+      this.setState({error, hasError: true})
     })
   }
 
