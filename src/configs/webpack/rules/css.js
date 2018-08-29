@@ -24,7 +24,10 @@ export default function () {
       options: {sourceMap: !disableSourceMaps},
     }, {
       loader: 'css-loader',
-      options: {sourceMap: !disableSourceMaps},
+      options: {
+        importLoaders: 1,
+        sourceMap: !disableSourceMaps,
+      },
     }, {
       loader: 'postcss-loader',
       options: {

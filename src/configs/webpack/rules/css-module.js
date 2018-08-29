@@ -24,6 +24,7 @@ export default function () {
     }, {
       loader: 'css-loader',
       options: {
+        importLoaders: 1,
         localIdentName: '[local]---[name]---[hash:base64]',
         modules: true,
         sourceMap: !disableSourceMaps,
