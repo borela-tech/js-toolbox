@@ -33,7 +33,7 @@ if (module.hot) {
   })
 }
 
-// Render the page after all resources in the header loads.
+// Render the page after all resources load.
 window.addEventListener('load', () => {
   render(
     <AppContainer>
