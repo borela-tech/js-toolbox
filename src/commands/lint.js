@@ -60,11 +60,12 @@ function lintSources(args) {
 
 function lintTests(args) {
   let eslintArgs = [
-    '--ignore-pattern "src/**"',
-    '--ignore-pattern "!**/__tests__"',
-    '--ignore-pattern "!**/__tests__/**"',
+    '--ignore-pattern "**/__fixture__"',
+    '--ignore-pattern "**/__fixture__/**"',
+    '--ignore-pattern "**/__fixtures__"',
+    '--ignore-pattern "**/__fixtures__/**"',
     `--config "${CONFIG_PATH}"`,
-    `"${join(getProjectDir(), 'src')}"`,
+    `"${join(getProjectDir(), 'src')}/**/__tests__/**"`,
   ]
 
   let {fix} = args
