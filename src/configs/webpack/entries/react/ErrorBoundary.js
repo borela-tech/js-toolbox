@@ -16,7 +16,7 @@ import {mapStackTrace} from 'sourcemapped-stacktrace'
 
 /**
  * Return the a new mapped stack where each item is an object with properties
- * for line, column and file path.
+ * for line, column, namespace and file path.
  */
 function preparedMappedStack(stack) {
   let result = []
@@ -41,7 +41,7 @@ function preparedMappedStack(stack) {
 export default class ErrorBoundary extends Component {
   state = {hasError: false}
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error) {
     mapStackTrace(error.stack, mappedStack => {
       // Prepare the mapped stack.
       error.stack = mappedStack
