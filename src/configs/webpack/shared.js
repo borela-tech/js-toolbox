@@ -123,6 +123,7 @@ export default function () {
   ]
 
   const MINIMIZER = {
+    minimize: true,
     minimizer: [new UglifyJsPlugin()],
   }
 
@@ -181,7 +182,6 @@ export default function () {
       splitChunks: {
         chunks: 'all',
       },
-      minimize: minify,
       ...minify && MINIMIZER,
     },
     output: {
