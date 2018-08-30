@@ -40,7 +40,7 @@ export function isPathSubDirOf(path, parent) {
   let result = relative(parent, path)
 
   // Returns an empty string when “parent” is the same as the “path”.
-  if (result == '')
+  if (!result)
     return false
 
   // Windows: If the result is an absolute path, this means that paths are on

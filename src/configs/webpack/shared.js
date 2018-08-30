@@ -148,9 +148,10 @@ export default function () {
   const DEV_SERVER = {
     devServer: {
       contentBase: PROJECT_BUILD_DIR,
+      index: 'index.html',
       port: 9000,
       stats: STATS,
-    }
+    },
   }
 
   return {

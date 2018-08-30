@@ -29,7 +29,7 @@ function handler(args) {
     ],
     env: {
       enableDevServer: true,
-      ...args
+      ...args,
     },
   }))
 }
