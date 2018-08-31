@@ -15,8 +15,17 @@ import style from './ErrorBox.module.css'
 
 export default class ErrorBox extends Component {
   render() {
+    let {error:{stack}} = this.props
     return <div className={style.root}>
-        Test
+      {stack.map((x, index) =>
+        <div key={index}>
+            <div>{x.namespace}</div>
+            <br/>
+            <div>{x.path}</div>
+            <br/>
+            <br/>
+        </div>
+      )}
     </div>
   }
 }
