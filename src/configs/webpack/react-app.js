@@ -10,13 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import HtmlPlugin from 'html-webpack-plugin'
+import HtmlPlugin from './plugins/Html'
 import shared from './shared'
 import {CONFIGS_DIR, getProjectDir} from '../../paths'
 import {existsSync} from 'fs'
 import {join} from 'path'
 
 const PROJECT_DIR = getProjectDir()
+const PROJECT_NODE_MODULES_DIR = join(PROJECT_DIR, 'node_modules')
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const WEBPACK_CONFIG_DIR = join(CONFIGS_DIR, 'webpack')
 const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
