@@ -62,6 +62,7 @@
     "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
     "@babel/plugin-proposal-throw-expressions": "^7.0.0",
     "@babel/plugin-proposal-unicode-property-regex": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-flow": "^7.0.0",
     "@babel/plugin-syntax-jsx": "^7.0.0",
     "@babel/plugin-transform-flow-comments": "^7.0.0",
