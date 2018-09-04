@@ -15,8 +15,52 @@ import {existsSync, readFileSync} from 'fs'
 import {getProjectDir} from './paths'
 import {join} from 'path'
 
+const PACKAGE_DIR = getProjectDir()
+const PACKAGE_JSON_PATH = join(PACKAGE_DIR, 'package.json')
+const BORELARC_PATH = join(PACKAGE_DIR, 'borelarc')
+const BORELA_JSON_PATH = join(PACKAGE_DIR, 'borela.json')
+
+/**
+ * Each tool will run on its own process, this means that the configuration
+ * files will not have any knowledge of the flags passed to the toolbox, to
+ * solve that, they are passed as a JSON string in the env variable
+ * “TEMP_BORELA_JS_TOOLBOX” which is loaded here.
+ */
+export const CLI_ENV = process.env.TEMP_BORELA_JS_TOOLBOX
+  ? camelizeKeys(JSON.parse(process.env.TEMP_BORELA_JS_TOOLBOX))
+  : {}
+
+/**
+ * The contents of the “borela” key inside the project’s “package.json”.
+ */
+export const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
+  ? camelizeKeys(require(PACKAGE_JSON_PATH).borela)
+  : {}
+
+/**
+ * The contents of “borelarc” in the project’s root.
+ */
+export const BORELARC = existsSync(BORELARC_PATH)
+  ? camelizeKeys(JSON.parse(readFileSync(BORELARC_PATH)))
+  : {}
+
+/**
+ * The contents of “borela.json” in the project’s root.
+ */
+export const BORELA_JSON = existsSync(BORELA_JSON_PATH)
+  ? camelizeKeys(require(BORELA_JSON_PATH))
+  : {}
+
+// Helper for the “getEnvFlags” function.
 const ENV_VAR = /^BORELA_JS_TOOLBOX_(.+)$/
 
+/**
+ * Returns the environment flags that follows the format:
+ *
+ *   BORELA_JS_TOOLBOX_FOO
+ *   BORELA_JS_TOOLBOX_BAR
+ *   BORELA_JS_TOOLBOX_...
+ */
 export function getEnvFlags() {
   let result = {}
   for (let prop in process.env) {
@@ -27,27 +71,10 @@ export function getEnvFlags() {
   return camelizeKeys(result)
 }
 
-const PACKAGE_DIR = getProjectDir()
-const PACKAGE_JSON_PATH = join(PACKAGE_DIR, 'package.json')
-const BORELARC_PATH = join(PACKAGE_DIR, 'borelarc')
-const BORELA_JSON_PATH = join(PACKAGE_DIR, 'borela.json')
-
-export const PACKAGE_JSON = existsSync(PACKAGE_JSON_PATH)
-  ? camelizeKeys(require(PACKAGE_JSON_PATH).borela)
-  : {}
-
-export const BORELARC = existsSync(BORELARC_PATH)
-  ? camelizeKeys(JSON.parse(readFileSync(BORELARC_PATH)))
-  : {}
-
-export const BORELA_JSON = existsSync(BORELA_JSON_PATH)
-  ? camelizeKeys(require(BORELA_JSON_PATH))
-  : {}
-
-export const CLI_ENV = process.env.TEMP_BORELA_JS_TOOLBOX
-  ? camelizeKeys(JSON.parse(process.env.TEMP_BORELA_JS_TOOLBOX))
-  : {}
-
+/**
+ * Combines the flags gathered from the different ways that the toolbox can be
+ * configured, set some defaults and returns the result.
+ */
 export function getSettings() {
   let result = {
     ...getEnvFlags(),
