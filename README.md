@@ -15,12 +15,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 Develop JavaScript apps/libraries with little to no configuration and still be
-allowed to use all bleeding edge features available through  [Babel][babel] and
+allowed to use all bleeding edge features available through [Babel][babel] and
 [Webpack][webpack].
 
-This tool can be installed globally, be used to compile any project that follows
-the expected directory structure which will help you reduce the development
-dependencies drastically.
+This tool can be installed globally and be used to compile any project that
+follows the expected directory structure.
 
 ## Table of contents
 
