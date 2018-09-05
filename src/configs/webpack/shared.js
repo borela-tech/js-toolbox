@@ -167,7 +167,16 @@ export default function () {
       __dirname: false,
       __filename: false,
     },
-    optimization: {},
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendors: {
+            test: /node_modules/,
+            chunks: 'all',
+          },
+        },
+      },
+    },
     output: {
       path: PROJECT_BUILD_DIR,
       filename: '[name].js',
