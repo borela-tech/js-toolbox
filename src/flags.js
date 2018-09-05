@@ -24,6 +24,13 @@ export function browsers(yargs) {
   })
 }
 
+export function bundleStats(yargs) {
+  yargs.option('bundle-stats', {
+    description: 'Generate a “stats.json” file.',
+    type: 'boolean',
+  })
+}
+
 export function commentFlow(yargs) {
   yargs.option('comment-flow', {
     description: 'Convert Flow annotations to comments.',

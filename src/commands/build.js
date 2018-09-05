@@ -12,6 +12,7 @@
 
 import {
   browsers,
+  bundleStats,
   commentFlow,
   disableExperimentalPlugins,
   disableSourceMaps,
@@ -36,6 +37,7 @@ const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
 
 function builder(yargs) {
   browsers(yargs)
+  bundleStats(yargs)
   commentFlow(yargs)
   disableExperimentalPlugins(yargs)
   disableSourceMaps(yargs)

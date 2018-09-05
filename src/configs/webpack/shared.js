@@ -22,7 +22,7 @@ import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR, TOOLBOX_SRC_DIR} from '../../paths'
 import {getSettings} from '../../settings'
 import {join, relative, resolve} from 'path'
-import {NamedModulesPlugin} from 'webpack'
+import {StatsWriterPlugin} from 'webpack-stats-plugin'
 
 // Webpack’s loaders.
 import assetRule from './rules/asset'
@@ -36,7 +36,8 @@ const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build')
 
 let {
-  disableSourceMaps,
+  bundleStats = false,
+  disableSourceMaps = false,
   configDevServer = false,
   minify = false,
   port = 9000,
@@ -126,11 +127,6 @@ export default function () {
     'src',
   ]
 
-  const MINIMIZER = {
-    minimize: true,
-    minimizer: [new UglifyJsPlugin()],
-  }
-
   const STATS = {
     // Hide everything first, any property following this one will enable only
     // the features we want.
@@ -151,17 +147,7 @@ export default function () {
     version: true,
   }
 
-  const DEV_SERVER = {
-    devServer: {
-      contentBase: PROJECT_BUILD_DIR,
-      index: 'index.html',
-      port: port,
-      stats: STATS,
-    },
-  }
-
-  return {
-    ...configDevServer && DEV_SERVER,
+  let result = {
     devtool: !disableSourceMaps && 'source-map',
     entry: getDefaultEntries(),
     mode: isProduction() ? 'production' : 'development',
@@ -179,18 +165,13 @@ export default function () {
       __dirname: false,
       __filename: false,
     },
-    optimization: {
-      splitChunks: {
-        chunks: 'all',
-      },
-      ...minify && MINIMIZER,
-    },
+    optimization: {},
     output: {
       path: PROJECT_BUILD_DIR,
       filename: '[name].js',
       devtoolModuleFilenameTemplate: normalizeModulePath,
     },
-    plugins: [new NamedModulesPlugin()],
+    plugins: [],
     resolve: {
       extensions: [
         '.js',
@@ -207,4 +188,32 @@ export default function () {
     stats: STATS,
     watch,
   }
+
+  // Webpack’s development server.
+  if (configDevServer)
+    result.devServer = {
+      contentBase: PROJECT_BUILD_DIR,
+      index: 'index.html',
+      port: port,
+      stats: STATS,
+    }
+
+
+  // Minimification settings.
+  if (minify)
+    result.optimization = {
+      ...result.optimization,
+      minimize: true,
+      minimizer: [new UglifyJsPlugin],
+    }
+
+  // Generate a JSON file to make it easier to analyse bundles.
+  if (bundleStats)
+    result.plugins.push(new StatsWriterPlugin({
+      filename: 'bundle-stats.json',
+      // Include everything.
+      fields: null,
+    }))
+
+  return result
 }
