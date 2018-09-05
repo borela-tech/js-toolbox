@@ -102,6 +102,13 @@ export function platforms(yargs) {
   })
 }
 
+export function port(yargs) {
+  yargs.option('port', {
+    description: 'Port used to serve the app.',
+    type: 'number',
+  })
+}
+
 export function production(yargs) {
   yargs.option('production', {
     description: 'Set NODE_ENV to production.',

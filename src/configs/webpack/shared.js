@@ -37,8 +37,9 @@ const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build')
 
 let {
   disableSourceMaps,
-  enableDevServer = false,
+  configDevServer = false,
   minify = false,
+  port = 9000,
   watch = false,
 } = getSettings()
 
@@ -149,13 +150,13 @@ export default function () {
     devServer: {
       contentBase: PROJECT_BUILD_DIR,
       index: 'index.html',
-      port: 9000,
+      port: port,
       stats: STATS,
     },
   }
 
   return {
-    ...enableDevServer && DEV_SERVER,
+    ...configDevServer && DEV_SERVER,
     devtool: !disableSourceMaps && 'source-map',
     entry: getDefaultEntries(),
     mode: isProduction() ? 'production' : 'development',
