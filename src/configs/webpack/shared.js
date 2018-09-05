@@ -51,11 +51,14 @@ let {
 function getDefaultEntries() {
   let result = {}
 
-  if (existsSync(join(PROJECT_SRC_DIR, 'main.js')))
-    result.main = 'main'
+  const PROJECT_MAIN = join(PROJECT_SRC_DIR, 'main.js')
+  const PROJECT_INDEX = join(PROJECT_SRC_DIR, 'index.js')
 
-  if (existsSync(join(PROJECT_SRC_DIR, 'index.js')))
-    result.index = 'index'
+  if (existsSync(PROJECT_MAIN))
+    result.main = PROJECT_MAIN
+
+  if (existsSync(PROJECT_INDEX))
+    result.index = PROJECT_INDEX
 
   return result
 }
