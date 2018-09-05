@@ -138,6 +138,8 @@ export default function () {
     builtAt: true,
     // Show errors.
     errors: true,
+    // Build hash.
+    hash: true,
     // Performance hints.
     performance: isProduction(),
     // Build time.
