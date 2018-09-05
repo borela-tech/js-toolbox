@@ -198,14 +198,17 @@ export default function () {
       stats: STATS,
     }
 
-
   // Minimification settings.
+  result.optimization.minimize = minify
+
   if (minify)
-    result.optimization = {
-      ...result.optimization,
-      minimize: true,
-      minimizer: [new UglifyJsPlugin],
-    }
+    result.optimization.minimizer = [new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: false,
+        },
+      },
+    })]
 
   // Generate a JSON file to make it easier to analyse bundles.
   if (bundleStats)
