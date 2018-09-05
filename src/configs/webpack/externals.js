@@ -32,8 +32,8 @@ export default function (options = {}) {
       switch (request) {
         case 'index':
         case 'main':
-          callback()
           logIncluded(prettyFormat({context, request}))
+          callback()
           return
       }
     }
@@ -45,26 +45,28 @@ export default function (options = {}) {
       // If it starts with a “..”, then the file is outside the project’s “src”
       // directory and can be ignored.
       if (!RELATIVE_TO_SRC.startsWith('..')) {
-        callback()
         logIncluded(prettyFormat({context, request}))
+        callback()
         return
       }
     }
 
     // Whitelisted modules.
     if (whitelist.includes(request)) {
+      logIncluded(prettyFormat({context, request}))
       callback()
       return
     }
 
     // Polyfills.
     if (request.includes('@babel/runtime')) {
+      logIncluded(prettyFormat({context, request}))
       callback()
       return
     }
 
     // Exclude everything else.
-    callback(null, `commonjs ${request}`)
     logExcluded(prettyFormat({context, request}))
+    callback(null, `commonjs ${request}`)
   }
 }
