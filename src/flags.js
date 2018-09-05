@@ -26,7 +26,7 @@ export function browsers(yargs) {
 
 export function bundleStats(yargs) {
   yargs.option('bundle-stats', {
-    description: 'Generate a “stats.json” file.',
+    description: 'Generate a “bundle-stats.json” file.',
     type: 'boolean',
   })
 }
@@ -76,6 +76,13 @@ export function inspect(yargs) {
 export function jsx(yargs) {
   yargs.option('jsx', {
     description: 'Enable JSX.',
+    type: 'boolean',
+  })
+}
+
+export function interactiveBundleStats(yargs) {
+  yargs.option('interactive-bundle-stats', {
+    description: 'Generate an interactive tree map of the bundle.',
     type: 'boolean',
   })
 }

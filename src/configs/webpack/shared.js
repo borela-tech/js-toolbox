@@ -18,6 +18,7 @@ import {
 } from '../../util'
 
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR, TOOLBOX_SRC_DIR} from '../../paths'
 import {getSettings} from '../../settings'
@@ -39,6 +40,7 @@ let {
   bundleStats = false,
   disableSourceMaps = false,
   configDevServer = false,
+  interactiveBundleStats = false,
   minify = false,
   port = 9000,
   watch = false,
@@ -210,13 +212,18 @@ export default function () {
       },
     })]
 
-  // Generate a JSON file to make it easier to analyse bundles.
-  if (bundleStats)
+  // Interactive tree map of the bundle.
+  if (interactiveBundleStats)
+    result.plugins.push(new BundleAnalyzerPlugin)
+
+  // JSON file containing the bundle stats.
+  if (bundleStats) {
     result.plugins.push(new StatsWriterPlugin({
       filename: 'bundle-stats.json',
       // Include everything.
       fields: null,
     }))
+  }
 
   return result
 }

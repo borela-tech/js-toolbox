@@ -17,6 +17,7 @@ import {
   disableExperimentalPlugins,
   disableSourceMaps,
   jsx,
+  interactiveBundleStats,
   minify,
   multiEntry,
   node,
@@ -41,6 +42,7 @@ function builder(yargs) {
   commentFlow(yargs)
   disableExperimentalPlugins(yargs)
   disableSourceMaps(yargs)
+  interactiveBundleStats(yargs)
   jsx(yargs)
   minify(yargs)
   multiEntry(yargs)
