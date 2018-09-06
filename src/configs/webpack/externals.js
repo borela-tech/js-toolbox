@@ -14,7 +14,7 @@ import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR, getProjectDir} from '../../paths'
 import {isPathSubDirOf} from '../../util'
-import {join, resolve} from 'path'
+import {isAbsolute, join, resolve} from 'path'
 
 let logIncluded = debug('bb:config:webpack:included')
 let logExcluded = debug('bb:config:webpack:excluded')
@@ -37,19 +37,20 @@ export default function (options = {}) {
       return
     }
 
-    // Relative requests.
-    if (request.startsWith('.')) {
-      const FULL_REQUEST_PATH = resolve(context, request)
+    if (request.startsWith('.'))
+      request = resolve(context, request)
 
+    // Absolute or relative.
+    if (isAbsolute(request)) {
       // Include default entry points.
-      if (isPathSubDirOf(FULL_REQUEST_PATH, ENTRIES_DIR)) {
+      if (isPathSubDirOf(request, ENTRIES_DIR)) {
         logIncluded(prettyFormat({context, request}))
         callback()
         return
       }
 
       // Include files from the project.
-      if (isPathSubDirOf(FULL_REQUEST_PATH, PROJECT_SRC_DIR)) {
+      if (isPathSubDirOf(request, PROJECT_SRC_DIR)) {
         logIncluded(prettyFormat({context, request}))
         callback()
         return
