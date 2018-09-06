@@ -10,22 +10,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
+
 export default class HtmlPlugin {
-  constructor (options = {}) {
+  constructor(options = {}) {
     this.options = options
   }
 
-  apply (compiler) {
-    // compiler.hooks.run.tapPromise('MyPlugin', async compiler => {
-    //   await new Promise(resolve => setTimeout(resolve, 1000));
-    //   console.log('Asynchronously tapping the run hook with a delay.')
-    //   console.log(compiler)
-    // })
+  apply(compiler) {
+    compiler.hooks.emit.tapAsync(
+      PLUGIN_NAME,
+      this.emit.bind(this),
+    )
+  }
 
-    compiler.hooks.compile.tap('Borela', params => {
-      console.log('Synchronously tapping the compile hook.')
-      // console.log(params)
-      // process.exit()
-    })
+  async emit(compilation, done) {
+    console.log('Emitting...', this)
+    done()
   }
 }
