@@ -12,56 +12,61 @@
 
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
-import {getProjectDir} from '../../paths'
-import {join, relative} from 'path'
+import {CONFIGS_DIR, getProjectDir} from '../../paths'
+import {isPathSubDirOf} from '../../util'
+import {join, resolve} from 'path'
 
 let logIncluded = debug('bb:config:webpack:included')
 let logExcluded = debug('bb:config:webpack:excluded')
 
 const PROJECT_DIR = getProjectDir()
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
+const WEBPACK_CONFIG_DIR = join(CONFIGS_DIR, 'webpack')
+const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
 
 /**
  * Function used to exclude “node_modules” dependencies from being bundled.
  */
 export default function (options = {}) {
-  let {whitelist = []} = options
+  let {include, exclude} = options
   return function (context, request, callback) {
-    // Default entry points.
-    if (context === PROJECT_DIR) {
-      switch (request) {
-        case 'index':
-        case 'main':
-          logIncluded(prettyFormat({context, request}))
-          callback()
-          return
-      }
+    // Include polyfills.
+    if (request.includes('@babel/runtime')) {
+      logIncluded(prettyFormat({context, request}))
+      callback()
+      return
     }
 
-    // Check if it is a file from the project.
+    // Relative requests.
     if (request.startsWith('.')) {
-      const FULL_REQUEST_PATH = join(context, request)
-      const RELATIVE_TO_SRC = relative(PROJECT_SRC_DIR, FULL_REQUEST_PATH)
-      // If it starts with a “..”, then the file is outside the project’s “src”
-      // directory and can be ignored.
-      if (!RELATIVE_TO_SRC.startsWith('..')) {
+      const FULL_REQUEST_PATH = resolve(context, request)
+
+      // Include default entry points.
+      if (isPathSubDirOf(FULL_REQUEST_PATH, ENTRIES_DIR)) {
+        logIncluded(prettyFormat({context, request}))
+        callback()
+        return
+      }
+
+      // Include files from the project.
+      if (isPathSubDirOf(FULL_REQUEST_PATH, PROJECT_SRC_DIR)) {
         logIncluded(prettyFormat({context, request}))
         callback()
         return
       }
     }
 
-    // Whitelisted modules.
-    if (whitelist.includes(request)) {
+    // Custom inclusions.
+    if (include && include(context, request)) {
       logIncluded(prettyFormat({context, request}))
       callback()
       return
     }
 
-    // Polyfills.
-    if (request.includes('@babel/runtime')) {
-      logIncluded(prettyFormat({context, request}))
-      callback()
+    // Custom exclusions.
+    if (exclude && exclude(context, request)) {
+      logExcluded(prettyFormat({context, request}))
+      callback(null, `commonjs ${request}`)
       return
     }
 
