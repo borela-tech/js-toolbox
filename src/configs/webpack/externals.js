@@ -67,12 +67,12 @@ export default function (options = {}) {
     // Custom exclusions.
     if (exclude && exclude(context, request)) {
       logExcluded(prettyFormat({context, request}))
-      callback(null, `commonjs ${request}`)
+      callback(null, `commonjs2 ${request}`)
       return
     }
 
     // Exclude everything else.
     logExcluded(prettyFormat({context, request}))
-    callback(null, `commonjs ${request}`)
+    callback(null, `commonjs2 ${request}`)
   }
 }
