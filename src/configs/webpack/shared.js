@@ -169,12 +169,7 @@ export default function () {
     },
     optimization: {
       splitChunks: {
-        cacheGroups: {
-          vendors: {
-            test: /node_modules/,
-            chunks: 'all',
-          },
-        },
+        chunks: 'all',
       },
     },
     output: {
