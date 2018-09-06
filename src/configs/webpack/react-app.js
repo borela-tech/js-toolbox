@@ -34,9 +34,9 @@ function setEntryPoint(config) {
   const CUSTOM_ENTRY = join(PROJECT_SRC_DIR, 'main.js')
 
   if (existsSync(CUSTOM_ENTRY))
-    config.entry = [CUSTOM_ENTRY]
+    config.entry.main = CUSTOM_ENTRY
   else
-    config.entry = [DEFAULT_ENTRY]
+    config.entry.main = DEFAULT_ENTRY
 }
 
 /**
