@@ -27,7 +27,7 @@ import {getSettings} from '../../settings'
 
 let log = debug('bb:config:babel')
 
-module.exports = function () {
+export default function () {
   let {
     browsers,
     node,
