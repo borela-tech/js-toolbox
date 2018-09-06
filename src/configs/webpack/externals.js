@@ -37,10 +37,10 @@ export default function (options = {}) {
       return
     }
 
+    // Turn relative requests into absolute ones.
     if (request.startsWith('.'))
       request = resolve(context, request)
 
-    // Absolute or relative.
     if (isAbsolute(request)) {
       // Include default entry points.
       if (isPathSubDirOf(request, ENTRIES_DIR)) {
