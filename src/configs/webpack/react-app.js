@@ -26,9 +26,10 @@ const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react')
 
 /**
  * This function will check if there’s an entry point “main.js” in the project’s
- * directory if it doesn’t find it, set to the default one. In 99% of the cases
- * the custom entry will not be needed specially because the default one wires
- * a bunch of helpers to trace bugs and enable hot reloading.
+ * directory and if it doesn’t find it, set to the default one. In 99% of the
+ * cases the custom entry will not be needed specially because the default one
+ * wires a bunch of helpers to trace bugs and enable hot reloading during
+ * development.
  */
 function setEntryPoint(config) {
   const CUSTOM_ENTRY = join(PROJECT_SRC_DIR, 'main.js')
