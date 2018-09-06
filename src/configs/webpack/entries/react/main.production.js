@@ -11,7 +11,6 @@
 // the License.
 
 import App from 'App'
-import ErrorBoundary from './ErrorBoundary'
 import React from 'react'
 import {render} from 'react-dom'
 
@@ -19,10 +18,5 @@ const HTML_ROOT = document.getElementById('root')
 
 // Render the page after all resources load.
 window.addEventListener('load', () => {
-  render(
-    <ErrorBoundary>
-      <App/>
-    </ErrorBoundary>,
-    HTML_ROOT,
-  )
+  render(<App/>, HTML_ROOT)
 })

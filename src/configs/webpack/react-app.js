@@ -14,6 +14,7 @@ import HtmlPlugin from './plugins/Html'
 import shared from './shared'
 import {CONFIGS_DIR, getProjectDir} from '../../paths'
 import {existsSync} from 'fs'
+import {isProduction} from '../../util'
 import {join} from 'path'
 
 const PROJECT_DIR = getProjectDir()
@@ -30,13 +31,15 @@ const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react')
  * a bunch of helpers to trace bugs and enable hot reloading.
  */
 function setEntryPoint(config) {
-  const DEFAULT_ENTRY = join(REACT_ENTRY_DIR, 'main.js')
   const CUSTOM_ENTRY = join(PROJECT_SRC_DIR, 'main.js')
 
-  if (existsSync(CUSTOM_ENTRY))
+  if (!existsSync(CUSTOM_ENTRY)) {
+    const ENV = isProduction()
+      ? 'production'
+      : 'development'
+    config.entry.main = join(REACT_ENTRY_DIR, `main.${ENV}.js`)
+  } else
     config.entry.main = CUSTOM_ENTRY
-  else
-    config.entry.main = DEFAULT_ENTRY
 }
 
 /**
