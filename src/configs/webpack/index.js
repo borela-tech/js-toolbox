@@ -66,4 +66,4 @@ if (config.length < 2) {
 }
 
 log(prettyFormat(config))
-module.exports = config
+export default config

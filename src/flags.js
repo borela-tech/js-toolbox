@@ -24,6 +24,13 @@ export function browsers(yargs) {
   })
 }
 
+export function bundleStats(yargs) {
+  yargs.option('bundle-stats', {
+    description: 'Generate a “bundle-stats.json” file.',
+    type: 'boolean',
+  })
+}
+
 export function commentFlow(yargs) {
   yargs.option('comment-flow', {
     description: 'Convert Flow annotations to comments.',
@@ -34,13 +41,6 @@ export function commentFlow(yargs) {
 export function disableExperimentalPlugins(yargs) {
   yargs.option('disable-experimental-plugins', {
     description: 'Disable Babel’s experimental plugins.',
-    type: 'boolean',
-  })
-}
-
-export function disableFlowTyped(yargs) {
-  yargs.option('disable-flow-typed', {
-    description: 'Disable FlowTyped.',
     type: 'boolean',
   })
 }
@@ -73,6 +73,13 @@ export function jsx(yargs) {
   })
 }
 
+export function interactiveBundleStats(yargs) {
+  yargs.option('interactive-bundle-stats', {
+    description: 'Generate an interactive tree map of the bundle.',
+    type: 'boolean',
+  })
+}
+
 export function minify(yargs) {
   yargs.option('minify', {
     description: 'Minify source.',
@@ -99,6 +106,13 @@ export function platforms(yargs) {
     choices: ['browser', 'node'],
     description: 'Fine tune polyfills and linter.',
     type: 'array',
+  })
+}
+
+export function port(yargs) {
+  yargs.option('port', {
+    description: 'Port used to serve the app.',
+    type: 'number',
   })
 }
 

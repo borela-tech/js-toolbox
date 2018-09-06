@@ -10,22 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import React, {Component} from 'react'
-import style from './ErrorBox.module.css'
+import App from 'App'
+import React from 'react'
+import {render} from 'react-dom'
 
-export default class ErrorBox extends Component {
-  render() {
-    let {error:{stack}} = this.props
-    return <div className={style.root}>
-      {stack.map((x, index) =>
-        <div key={index}>
-            <div>{x.namespace}</div>
-            <br/>
-            <div>{x.path}</div>
-            <br/>
-            <br/>
-        </div>
-      )}
-    </div>
-  }
-}
+const HTML_ROOT = document.getElementById('root')
+
+// Render the page after all resources load.
+window.addEventListener('load', () => {
+  render(<App/>, HTML_ROOT)
+})

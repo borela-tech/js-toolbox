@@ -29,6 +29,7 @@ export function setTargetDir(dir:string):string {
 
 // This is the path to the toolbox itself.
 export const TOOLBOX_DIR = join(__dirname, '..')
+export const TOOLBOX_SRC_DIR = join(TOOLBOX_DIR, 'src')
 
 // Other helpers to locate the assets.
 export const BIN_DIR = join(TOOLBOX_DIR, 'node_modules', '.bin')

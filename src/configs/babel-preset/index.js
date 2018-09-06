@@ -10,6 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {
+  babelPlugin,
+  babelSyntaxPlugin,
+  getModulePath,
+} from '../../modules'
+
 import debug from 'debug'
 import experimental from './plugins/experimental'
 import flow from './plugins/flow'
@@ -17,13 +23,11 @@ import jsx from './plugins/jsx'
 import prettyFormat from 'pretty-format'
 import react from './plugins/react'
 import typeScript from './plugins/typeScript'
-import {addSideEffect} from '@babel/helper-module-imports'
-import {babelPlugin, getModulePath} from '../../modules'
 import {getSettings} from '../../settings'
 
 let log = debug('bb:config:babel')
 
-module.exports = function () {
+export default function () {
   let {
     browsers,
     node,
@@ -31,7 +35,10 @@ module.exports = function () {
   } = getSettings()
 
   let result = {
-    plugins: [babelPlugin('transform-runtime')],
+    plugins: [
+      babelSyntaxPlugin('dynamic-import'),
+      babelPlugin('transform-runtime'),
+    ],
     presets: [[getModulePath('@babel/preset-env'), {
       targets: {
         ...platforms.includes('browser') && browsers && {browsers},

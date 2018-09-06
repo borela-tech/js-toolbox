@@ -12,10 +12,12 @@
 
 import {
   browsers,
+  bundleStats,
   commentFlow,
   disableExperimentalPlugins,
   disableSourceMaps,
   jsx,
+  interactiveBundleStats,
   minify,
   multiEntry,
   node,
@@ -36,9 +38,11 @@ const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
 
 function builder(yargs) {
   browsers(yargs)
+  bundleStats(yargs)
   commentFlow(yargs)
   disableExperimentalPlugins(yargs)
   disableSourceMaps(yargs)
+  interactiveBundleStats(yargs)
   jsx(yargs)
   minify(yargs)
   multiEntry(yargs)

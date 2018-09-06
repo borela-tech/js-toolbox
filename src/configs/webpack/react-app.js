@@ -10,13 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import HtmlPlugin from 'html-webpack-plugin'
+import HtmlPlugin from './plugins/Html'
 import shared from './shared'
 import {CONFIGS_DIR, getProjectDir} from '../../paths'
 import {existsSync} from 'fs'
+import {isProduction} from '../../util'
 import {join} from 'path'
 
 const PROJECT_DIR = getProjectDir()
+const PROJECT_NODE_MODULES_DIR = join(PROJECT_DIR, 'node_modules')
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const WEBPACK_CONFIG_DIR = join(CONFIGS_DIR, 'webpack')
 const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
@@ -24,18 +26,21 @@ const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react')
 
 /**
  * This function will check if there’s an entry point “main.js” in the project’s
- * directory if it doesn’t find it, set to the default one. In 99% of the cases
- * the custom entry will not be needed specially because the default one wires
- * a bunch of helpers to trace bugs.
+ * directory and if it doesn’t find it, set to the default one. In 99% of the
+ * cases the custom entry will not be needed specially because the default one
+ * wires a bunch of helpers to trace bugs and enable hot reloading during
+ * development.
  */
 function setEntryPoint(config) {
-  const DEFAULT_ENTRY = join(REACT_ENTRY_DIR, 'main.js')
   const CUSTOM_ENTRY = join(PROJECT_SRC_DIR, 'main.js')
 
-  if (existsSync(CUSTOM_ENTRY))
-    config.entry = [CUSTOM_ENTRY]
-  else
-    config.entry = [DEFAULT_ENTRY]
+  if (!existsSync(CUSTOM_ENTRY)) {
+    const ENV = isProduction()
+      ? 'production'
+      : 'development'
+    config.entry.main = join(REACT_ENTRY_DIR, `main.${ENV}.js`)
+  } else
+    config.entry.main = CUSTOM_ENTRY
 }
 
 /**
@@ -47,12 +52,10 @@ function setEntryPoint(config) {
 function setHtmlTemplate(config) {
   const DEFAULT_TEMPLATE = join(REACT_ENTRY_DIR, 'index.html')
   const CUSTOM_TEMPLATE = join(PROJECT_SRC_DIR, 'index.html')
-
-  config.plugins.push(new HtmlPlugin({
-    template: existsSync(CUSTOM_TEMPLATE)
-      ? CUSTOM_TEMPLATE
-      : DEFAULT_TEMPLATE,
-  }))
+  let template = existsSync(CUSTOM_TEMPLATE)
+    ? CUSTOM_TEMPLATE
+    : DEFAULT_TEMPLATE
+  config.plugins.push(new HtmlPlugin({template}))
 }
 
 /**
@@ -63,12 +66,16 @@ export default function () {
 
   config.output = {
     ...config.output,
-    filename: 'script.js?[contenthash]',
     path: join(config.output.path, 'web'),
   }
 
   setEntryPoint(config)
   setHtmlTemplate(config)
+
+  config.externals = {
+    react: 'commonjs react',
+    'react-dom': 'commonjs react-dom',
+  }
 
   config.target = 'web'
   return [config]

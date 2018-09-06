@@ -19,9 +19,7 @@ export default function () {
     use: [{
       loader: 'html-loader',
       options: {
-        import: true,
         minimize: minify,
-        template: false,
         url: true,
       },
     }],

@@ -10,12 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {join} from 'path'
 import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../util'
+import {join} from 'path'
+import {port} from '../flags'
 
 const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
+
+function builder(yargs) {
+  port(yargs)
+}
 
 function handler(args) {
   setTargetDir(args.dir)
@@ -24,14 +29,19 @@ function handler(args) {
   exitOnError(runCommandSync('webpack-dev-server', {
     args: [
       `--config "${WEBPACK_CONFIG_PATH}"`,
+      '--hot --inline',
       '--progress',
     ],
-    env: args,
+    env: {
+      configDevServer: true,
+      ...args,
+    },
   }))
 }
 
 export default {
   command: 'serve [dir]',
   description: 'Serve using Webpack’s dev server.',
+  builder,
   handler,
 }

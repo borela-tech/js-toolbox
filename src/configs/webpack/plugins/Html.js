@@ -10,22 +10,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import React, {Component} from 'react'
-import style from './ErrorBox.module.css'
+const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
 
-export default class ErrorBox extends Component {
-  render() {
-    let {error:{stack}} = this.props
-    return <div className={style.root}>
-      {stack.map((x, index) =>
-        <div key={index}>
-            <div>{x.namespace}</div>
-            <br/>
-            <div>{x.path}</div>
-            <br/>
-            <br/>
-        </div>
-      )}
-    </div>
+export default class HtmlPlugin {
+  constructor(options = {}) {
+    this.options = options
+  }
+
+  apply(compiler) {
+    compiler.hooks.emit.tapAsync(
+      PLUGIN_NAME,
+      this.emit.bind(this),
+    )
+  }
+
+  async emit(compilation, done) {
+    console.log('Emitting...', this)
+    done()
   }
 }

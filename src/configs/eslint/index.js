@@ -63,4 +63,6 @@ const CONFIG = {
 }
 
 log(prettyFormat(CONFIG))
+
+// We can’t “export default CONFIG” because ESLint doesn’t support it.
 module.exports = CONFIG

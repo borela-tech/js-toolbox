@@ -23,24 +23,24 @@ if (module.hot) {
   module.hot.accept('App', () => {
     let ReloadedApp = require('App').default
     render(
-      <ErrorBoundary>
-        <AppContainer>
+      <AppContainer>
+        <ErrorBoundary>
           <ReloadedApp/>
-        </AppContainer>
-      </ErrorBoundary>,
+        </ErrorBoundary>
+      </AppContainer>,
       HTML_ROOT,
     )
   })
 }
 
-// Render the page after all resources in the header loads.
+// Render the page after all resources load.
 window.addEventListener('load', () => {
   render(
-    <ErrorBoundary>
-      <AppContainer>
+    <AppContainer>
+      <ErrorBoundary>
         <App/>
-      </AppContainer>
-    </ErrorBoundary>,
+      </ErrorBoundary>
+    </AppContainer>,
     HTML_ROOT,
   )
 })

@@ -11,7 +11,7 @@
 // the License.
 
 import {getProjectDir} from './paths'
-import {join} from 'path'
+import {isAbsolute, join, relative} from 'path'
 
 export function exitOnPackageNotFound() {
   if (getProjectDir())
@@ -34,6 +34,25 @@ export function isProduction() {
 
 export function isString(value) {
   return typeof value === 'string' || value instanceof String
+}
+
+export function isPathSubDirOf(path, parent) {
+  let result = relative(parent, path)
+
+  // Returns an empty string when “parent” is the same as the “path”.
+  if (!result)
+    return false
+
+  // Windows: If the result is an absolute path, this means that paths are on
+  // different drive letters.
+  if (isAbsolute(result))
+    return false
+
+  return !result.startsWith('..')
+}
+
+export function isWindows() {
+  return process.platform === 'win32'
 }
 
 export function pickNonFalsy(obj:Object):Object {

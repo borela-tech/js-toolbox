@@ -35,4 +35,6 @@ const CONFIG = {
 }
 
 log(prettyFormat(CONFIG))
+
+// We can’t “export default CONFIG” because Jest doesn’t support it.
 module.exports = CONFIG
