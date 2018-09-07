@@ -88,7 +88,7 @@ describe('CLI_ENV', () => {
     }),
   })
 
-  test('It has the combined object from env vars', () => {
+  test('It has the the contents from “TEMP_BORELA_JS_TOOLBOX”', () => {
     const {CLI_ENV} = require('../../settings')
     expect(CLI_ENV).toEqual({
       foo: true,
