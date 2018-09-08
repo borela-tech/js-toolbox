@@ -16,7 +16,7 @@ import React from 'react'
 import {AppContainer} from 'react-hot-loader'
 import {render} from 'react-dom'
 
-const HTML_ROOT = document.getElementById('root')
+const HTML_ROOT = document.getElementById('app')
 
 // Enable hot reloading.
 if (module.hot) {

@@ -14,7 +14,7 @@ import App from 'App'
 import React from 'react'
 import {render} from 'react-dom'
 
-const HTML_ROOT = document.getElementById('root')
+const HTML_ROOT = document.getElementById('app')
 
 // Render the page after all resources load.
 window.addEventListener('load', () => {
