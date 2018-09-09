@@ -10,7 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import HtmlPlugin from './plugins/Html'
 import {
   CONFIGS_DIR,
   getProjectDir,
@@ -18,6 +17,7 @@ import {
 } from '../../paths'
 
 import shared from './shared'
+import SpaHtml from './plugins/SpaHtml'
 import {existsSync} from 'fs'
 import {isProduction} from '../../util'
 import {join} from 'path'
@@ -58,7 +58,7 @@ function setHtmlTemplate(config) {
   let template = existsSync(CUSTOM_TEMPLATE)
     ? CUSTOM_TEMPLATE
     : DEFAULT_TEMPLATE
-  config.plugins.push(new HtmlPlugin({template}))
+  config.plugins.push(new SpaHtml({template}))
 }
 
 /**

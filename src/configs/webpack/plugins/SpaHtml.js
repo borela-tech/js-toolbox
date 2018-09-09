@@ -10,11 +10,16 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import debug from 'debug'
+import {readFileSync} from 'fs'
+
+let log = debug('bb:config:webpack:plugin:html')
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
 
-export default class HtmlPlugin {
+export default class SpaHtml {
   constructor(options = {}) {
     this.options = options
+    this.source = readFileSync(options.template, 'utf8')
   }
 
   apply(compiler) {
@@ -25,7 +30,10 @@ export default class HtmlPlugin {
   }
 
   async emit(compilation, done) {
-    console.log('Emitting...', this)
+    compilation.assets['index.html'] = {
+      source: () => this.source,
+      size: () => this.source.length,
+    }
     done()
   }
 }
