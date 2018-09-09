@@ -9,13 +9,11 @@
   "scripts": {
     "clean": "rimraf build",
     "dev": "npm run clean && run-p dev:*",
-    "dev:build": "babel src -d build --ignore \"**/__tests__\" --ignore \"**/webpack/entries\" --source-maps",
+    "dev:build": "babel src -d build --ignore \"**/__tests__\" --source-maps",
     "dev:banner-assets": "cpx \"src/banner/*.txt\" build/banner",
-    "dev:webpack-entries": "cpx \"src/**/webpack/entries/**/*\" build",
     "dev-w": "npm run clean && run-p dev-w:*",
-    "dev-w:build": "babel src -d build --ignore \"**/__tests__\" --ignore \"**/webpack/entries\" --source-maps --watch",
+    "dev-w:build": "babel src -d build --ignore \"**/__tests__\" --source-maps --watch",
     "dev-w:banner-assets": "cpx \"src/banner/*.txt\" build/banner --watch",
-    "dev-w:webpack-entries": "cpx \"src/**/webpack/entries/**/*\" build --watch",
     "lint": "bb lint",
     "test": "bb test",
     "test-w": "bb test --watch"
@@ -95,6 +93,7 @@
     "html-loader": "^1.0.0-alpha.0",
     "humps": "^2.0.1",
     "jest": "^23.5.0",
+    "jsdom": "^12.0.0",
     "nodemon": "^1.18.3",
     "npm-run-all": "^4.1.3",
     "pkg-dir": "^3.0.0",
