@@ -11,8 +11,13 @@
 // the License.
 
 import HtmlPlugin from './plugins/Html'
+import {
+  CONFIGS_DIR,
+  getProjectDir,
+  TOOLBOX_DIR,
+} from '../../paths'
+
 import shared from './shared'
-import {CONFIGS_DIR, getProjectDir} from '../../paths'
 import {existsSync} from 'fs'
 import {isProduction} from '../../util'
 import {join} from 'path'
@@ -20,9 +25,7 @@ import {join} from 'path'
 const PROJECT_DIR = getProjectDir()
 const PROJECT_NODE_MODULES_DIR = join(PROJECT_DIR, 'node_modules')
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
-const WEBPACK_CONFIG_DIR = join(CONFIGS_DIR, 'webpack')
-const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
-const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react')
+const REACT_ENTRY_DIR = join(TOOLBOX_DIR, 'entries', 'react')
 
 /**
  * This function will check if there’s an entry point “main.js” in the project’s
