@@ -189,7 +189,10 @@ export default function () {
       modules: MODULE_PATHS,
     },
     resolveLoader: {
-      modules: MODULE_PATHS,
+      modules: [
+        join(__dirname, 'loaders'),
+        ...MODULE_PATHS,
+      ],
     },
     stats: STATS,
     watch,
