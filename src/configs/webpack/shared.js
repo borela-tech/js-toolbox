@@ -28,7 +28,6 @@ import {StatsWriterPlugin} from 'webpack-stats-plugin'
 // Webpack’s loaders.
 import cssModuleRule from './rules/css-module'
 import cssRule from './rules/css'
-import htmlRule from './rules/html'
 import jsRule from './rules/js'
 import defaultRule from './rules/default'
 
@@ -158,7 +157,6 @@ export default function () {
         oneOf: [
           cssModuleRule(),
           cssRule(),
-          htmlRule(),
           jsRule(),
           // Fallback, just copy the files if the previous rules didn’t catch
           // the module.

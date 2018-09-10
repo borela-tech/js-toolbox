@@ -11,12 +11,10 @@
 // the License.
 
 const CSS = ['css']
-const HTML = ['html']
 const JS = ['mjs', 'jsx?']
 
 const ALL_EXTENSIONS = [
   ...CSS,
-  ...HTML,
   ...JS,
 ].concat('|')
 
