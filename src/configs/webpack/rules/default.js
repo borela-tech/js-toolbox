@@ -10,12 +10,11 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-const ASSETS = ['jpg', 'png', 'svg']
 const CSS = ['css']
 const HTML = ['html']
 const JS = ['mjs', 'jsx?']
+
 const ALL_EXTENSIONS = [
-  ...ASSETS,
   ...CSS,
   ...HTML,
   ...JS,
@@ -26,7 +25,6 @@ export default function () {
     exclude: new RegExp(`.(${ALL_EXTENSIONS})$`),
     use: [{
       loader: 'file-loader',
-      options: {emit: true},
     }],
   }
 }

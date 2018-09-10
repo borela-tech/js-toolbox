@@ -26,7 +26,6 @@ import {join, relative, resolve} from 'path'
 import {StatsWriterPlugin} from 'webpack-stats-plugin'
 
 // Webpack’s loaders.
-import assetRule from './rules/asset'
 import cssModuleRule from './rules/css-module'
 import cssRule from './rules/css'
 import htmlRule from './rules/html'
@@ -157,7 +156,6 @@ export default function () {
     module: {
       rules: [{
         oneOf: [
-          assetRule(),
           cssModuleRule(),
           cssRule(),
           htmlRule(),
