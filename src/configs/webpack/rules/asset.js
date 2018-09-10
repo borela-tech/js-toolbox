@@ -16,6 +16,7 @@ export default function () {
     test: /\.(jpg|png|svg)$/,
     use: [{
       loader: 'url-loader',
+      options: {limit: 0},
     }],
   }
 }
