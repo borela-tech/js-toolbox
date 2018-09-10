@@ -11,29 +11,71 @@
 // the License.
 
 import debug from 'debug'
+import parse from 'posthtml-parser'
+import validateOptions from 'schema-utils'
 import {readFileSync} from 'fs'
+import prettyFormat from 'pretty-format'
 
 let log = debug('bb:config:webpack:plugin:html')
-const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
+const PLUGIN_NAME = 'SPA HTML Plugin'
 
+/**
+ * This schema is used to validate the plugin’s options, right now, all it does
+ * is requiring the template property.
+ */
+const OPTIONS_SCHEMA = {
+  additionalProperties: false,
+  type: 'object',
+  properties: {
+    template: {
+      type: 'string',
+    },
+  },
+  required: ['template'],
+}
+
+/**
+ * Actual Webpack plugin that generates an HTML from a template, add the script
+ * bundles and and loads any local assets referenced in the code.
+ */
 export default class SpaHtml {
-  constructor(options = {}) {
+  /**
+   * Options passed to the plugin.
+   */
+  options = undefined
+
+  /**
+   * Contains the HTML source.
+   */
+  source = 'test'
+
+  constructor(options) {
     this.options = options
-    this.source = readFileSync(options.template, 'utf8')
+    validateOptions(OPTIONS_SCHEMA, this.options, PLUGIN_NAME)
   }
 
   apply(compiler) {
-    compiler.hooks.emit.tapAsync(
-      PLUGIN_NAME,
-      this.emit.bind(this),
-    )
+    compiler.hooks.make.tapAsync(PLUGIN_NAME, this.tapMake.bind(this))
+    compiler.hooks.emit.tapAsync(PLUGIN_NAME, this.tapEmit.bind(this))
   }
 
-  async emit(compilation, done) {
+  async tapEmit(compilation, done) {
+    // Add the template to the dependencies to trigger a rebuild on change in
+    // watch mode.
+    compilation.fileDependencies.add(this.options.template)
+
+    // Emit the final HTML.
     compilation.assets['index.html'] = {
       source: () => this.source,
       size: () => this.source.length,
     }
+
+    done()
+  }
+
+  async tapMake(compilation, done) {
+    this.source = readFileSync(this.options.template, 'utf8')
+    let ast = parse(this.source)
     done()
   }
 }
