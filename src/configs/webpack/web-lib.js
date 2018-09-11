@@ -15,7 +15,7 @@ import {getProjectName} from '../../util'
 import {getSettings} from '../../settings'
 import {join} from 'path'
 
-let {minify} = getSettings()
+let {minify = false} = getSettings()
 const PROJECT_NAME = getProjectName()
 
 export default function () {
