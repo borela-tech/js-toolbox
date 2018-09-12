@@ -10,19 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-const CSS = ['css']
-const JS = ['mjs', 'jsx?']
-
-const ALL_EXTENSIONS = [
-  ...CSS,
-  ...JS,
-].concat('|')
-
 export default function () {
   return {
-    exclude: new RegExp(`.(${ALL_EXTENSIONS})$`),
+    exclude: /\.(css|jsx?|mjs)$/,
     use: [{
       loader: 'file-loader',
+      options: {name: '[path][name].[ext]?[hash]'},
     }],
   }
 }
