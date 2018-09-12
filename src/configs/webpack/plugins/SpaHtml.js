@@ -11,9 +11,10 @@
 // the License.
 
 import debug from 'debug'
+import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
-import {dirname, resolve} from 'path'
-import {existsSync, readFileSync} from 'fs'
+import {dirname} from 'path'
+import {readFileSync} from 'fs'
 import {getSettings} from '../../../settings'
 import {html as beautifyHtml} from 'js-beautify'
 import {minify as minifyHtml} from 'html-minifier'
@@ -45,9 +46,10 @@ const OPTIONS_SCHEMA = {
  * attribute is not found.
  */
 function getAttributeValue(node, attributeName) {
-  for (let attribute of node.attrs)
+  for (let attribute of node.attrs) {
     if (attribute.name === attributeName)
       return attribute.value
+  }
   return undefined
 }
 
@@ -55,16 +57,15 @@ function getAttributeValue(node, attributeName) {
  * Recursively walks the parsed tree. It should work in 99.9% of the cases but
  * it needs to be replaced with a non recursive version.
  */
-function* walk(node) {
+function * walk(node) {
   yield node
 
   if (!node.childNodes)
     return
 
   for (let child of node.childNodes)
-    yield* walk(child)
+    yield * walk(child)
 }
-
 
 /**
  * Actual Webpack plugin that generates an HTML from a template, add the script
@@ -91,19 +92,19 @@ export default class SpaHtml {
    * compiler’s events.
    */
   apply(compiler) {
-    compiler.hooks.beforeRun.tapAsync(PLUGIN_NAME, this.tapBeforeRun.bind(this))
-    compiler.hooks.emit.tapAsync(PLUGIN_NAME, this.tapEmit.bind(this))
-
-    // Load the template and the assets.
-    const SOURCE = readFileSync(this.options.template, 'utf8')
-    this.tree = parse(SOURCE)
+    let {hooks} = compiler
+    hooks.afterCompile.tapAsync(PLUGIN_NAME, this.tapAfterCompile.bind(this))
+    hooks.beforeRun.tapAsync(PLUGIN_NAME, this.tapBeforeRun.bind(this))
   }
 
   /**
    * Include referenced assets in the bundle.
    */
-  fetchAssets(compiler) {
+  * extractAssetPaths() {
+    log('Extracting asset paths...')
+
     const URL = /^(https?:)?\/\//
+    const TEMPLATE_DIR = dirname(this.options.template)
 
     for (let node of walk(this.tree)) {
       let {tagName} = node
@@ -124,20 +125,25 @@ export default class SpaHtml {
       if (!assetPath || URL.test(assetPath))
         continue
 
-      const TEMPLATE_DIR = dirname(this.options.template)
-      new PrefetchPlugin(TEMPLATE_DIR, assetPath)
-        .apply(compiler)
+      const RESULT = {
+        context: TEMPLATE_DIR,
+        path: assetPath,
+      }
+
+      log(`Asset found: ${prettyFormat(RESULT)}`)
+      yield RESULT
     }
+
+    log('Done extracting assets.')
   }
 
   /**
    * Returns the current DOM’s HTML as a beautified or minified string.
    */
-  getDomHtml() {
-    // Modified HTML.
+  getHtmlString() {
     let serialized = serialize(this.tree)
 
-    // We pass the serialized HTML from JSDOM through the minifier to remove any
+    // We pass the serialized HTML through the minifier to remove any
     // unnecessary whitespace that could affect the beautifier. When we are
     // actually trying to minify, comments will be removed too. Options can be
     // found in:
@@ -193,12 +199,15 @@ export default class SpaHtml {
     return serialized
   }
 
-  async tapBeforeRun(compiler, done) {
-    this.fetchAssets(compiler)
-    done()
+  parseTemplate() {
+    log('Loading template...')
+    const SOURCE = readFileSync(this.options.template, 'utf8')
+    log('Parsing template...')
+    this.tree = parse(SOURCE)
+    log('Done loading and parsing template.')
   }
 
-  async tapEmit(compilation, done) {
+  async tapAfterCompile(compilation, done) {
     // TODO: Inject the JS bundles.
 
     // Add the template to the dependencies to trigger a rebuild on change in
@@ -206,10 +215,22 @@ export default class SpaHtml {
     compilation.fileDependencies.add(this.options.template)
 
     // Emit the final HTML.
-    let source = this.getDomHtml()
+    const FINAL_HTML = this.getHtmlString()
     compilation.assets['index.html'] = {
-      source: () => source,
-      size: () => source.length,
+      source: () => FINAL_HTML,
+      size: () => FINAL_HTML.length,
+    }
+
+    done()
+  }
+
+  async tapBeforeRun(compiler, done) {
+    this.parseTemplate()
+
+    // Add assets to the compilation.
+    for (let {context, path} of this.extractAssetPaths()) {
+      new PrefetchPlugin(context, path)
+        .apply(compiler)
     }
 
     done()
