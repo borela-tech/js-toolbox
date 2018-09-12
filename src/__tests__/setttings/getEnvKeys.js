@@ -19,12 +19,12 @@ describe('getEnvFlags()', () => {
     Object.defineProperty(process, 'env', {
       get: () => ({
         ...ORIGINAL,
-        // Ignored keys.
+        // Wrong format, ignored keys.
         _BORELA_JS_TOOLBOX: 42,
         _BORELA_JS_TOOLBOX_: 42,
         BORELA_JS_TOOLBOX_: 42,
         TEMP_BORELA_JS_TOOLBOX: 42,
-        // Not ignored keys.
+        // Correct format.
         BORELA_JS_TOOLBOX_1: 1,
         BORELA_JS_TOOLBOX_FOO: 2,
         BORELA_JS_TOOLBOX_FOO_BAR: 3,

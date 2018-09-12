@@ -10,4 +10,5 @@ The `settings.js` file loads the flags in sequence from:
 * `package.json` file;
 * `borelarc` file;
 * `borela.json` file;
-* `TEMP_BORELA_JS_TOOLBOX` env variable.
+* `TEMP_BORELA_JS_TOOLBOX` env variable which contains the settings passed
+  directly to the CLI.
