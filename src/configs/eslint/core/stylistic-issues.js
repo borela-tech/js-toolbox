@@ -366,8 +366,10 @@ module.exports = {
 
     // This rule enforces consistency regarding the spaces after words unary
     // operators and after/before non words unary operators.
-    'space-unary-ops': ['error', {nonwords: false,
-      words: true}],
+    'space-unary-ops': ['error', {
+      nonwords: false,
+      words: true,
+    }],
 
     // This rule will enforce consistency of spacing after the start of a
     // comment “//” or “/*”. It also provides several exceptions for various

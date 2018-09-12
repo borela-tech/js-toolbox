@@ -22,15 +22,19 @@ module.exports = {
     'arrow-parens': ['error', 'as-needed'],
 
     // This rule normalize style of spacing before/after “=>”.
-    'arrow-spacing': ['error', {after: true,
-      before: true}],
+    'arrow-spacing': ['error', {
+      after: true,
+      before: true,
+    }],
 
     // This rule is aimed to flag invalid/missing “super” calls.
     'constructor-super': 'error',
 
     // His rule aims to enforce spacing around the “*” of generator functions.
-    'generator-star-spacing': ['error', {before: false,
-      after: true}],
+    'generator-star-spacing': ['error', {
+      after: true,
+      before: true,
+    }],
 
     // This rule is aimed to flag modifying variables of class declarations.
     'no-class-assign': 'error',
@@ -128,7 +132,9 @@ module.exports = {
     'template-curly-spacing': ['error', 'never'],
 
     // This rule enforces spacing around the “*” in “yield*” expressions.
-    'yield-star-spacing': ['error', {before: true,
-      after: false}],
+    'yield-star-spacing': ['error', {
+      after: true,
+      before: true,
+    }],
   },
 }
