@@ -10,20 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {
-  CONFIGS_DIR,
-  getProjectDir,
-  TOOLBOX_DIR,
-} from '../../paths'
-
 import shared from './shared'
 import SpaHtml from './plugins/SpaHtml'
 import {existsSync} from 'fs'
+import {getProjectDir, TOOLBOX_DIR} from '../../paths'
 import {isProduction} from '../../util'
 import {join} from 'path'
 
 const PROJECT_DIR = getProjectDir()
-const PROJECT_NODE_MODULES_DIR = join(PROJECT_DIR, 'node_modules')
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const REACT_ENTRY_DIR = join(TOOLBOX_DIR, 'entries', 'react')
 

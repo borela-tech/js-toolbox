@@ -14,15 +14,14 @@ import {
   getProjectName,
   isPathSubDirOf,
   isProduction,
-  isWindows,
 } from '../../util'
 
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import {existsSync} from 'fs'
-import {getProjectDir, TOOLBOX_DIR, TOOLBOX_SRC_DIR} from '../../paths'
+import {getProjectDir, TOOLBOX_DIR} from '../../paths'
 import {getSettings} from '../../settings'
-import {join, relative, resolve} from 'path'
+import {join, relative} from 'path'
 import {StatsWriterPlugin} from 'webpack-stats-plugin'
 
 // Webpack’s loaders.
@@ -201,18 +200,19 @@ export default function () {
   }
 
   // Webpack’s development server.
-  if (configDevServer)
+  if (configDevServer) {
     result.devServer = {
       contentBase: PROJECT_BUILD_DIR,
       index: 'index.html',
-      port: port,
       stats: STATS,
+      port,
     }
+  }
 
   // Minimification settings.
   result.optimization.minimize = minify
 
-  if (minify)
+  if (minify) {
     result.optimization.minimizer = [new UglifyJsPlugin({
       sourceMap: !disableSourceMaps,
       uglifyOptions: {
@@ -221,6 +221,7 @@ export default function () {
         },
       },
     })]
+  }
 
   // Interactive tree map of the bundle.
   if (interactiveBundleStats)
