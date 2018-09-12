@@ -12,11 +12,13 @@
 
 import debug from 'debug'
 import validateOptions from 'schema-utils'
+import {dirname, resolve} from 'path'
+import {existsSync, readFileSync} from 'fs'
 import {getSettings} from '../../../settings'
 import {html as beautifyHtml} from 'js-beautify'
-import {JSDOM} from 'jsdom'
 import {minify as minifyHtml} from 'html-minifier'
-import {readFileSync} from 'fs'
+import {parse, serialize} from 'parse5'
+import {PrefetchPlugin} from 'webpack'
 
 let log = debug('bb:config:webpack:plugin:html')
 
@@ -39,37 +41,101 @@ const OPTIONS_SCHEMA = {
 }
 
 /**
+ * Extract an attribute’s value from the node; Returns undefined if the
+ * attribute is not found.
+ */
+function getAttributeValue(node, attributeName) {
+  for (let attribute of node.attrs)
+    if (attribute.name === attributeName)
+      return attribute.value
+  return undefined
+}
+
+/**
+ * Recursively walks the parsed tree. It should work in 99.9% of the cases but
+ * it needs to be replaced with a non recursive version.
+ */
+function* walk(node) {
+  yield node
+
+  if (!node.childNodes)
+    return
+
+  for (let child of node.childNodes)
+    yield* walk(child)
+}
+
+
+/**
  * Actual Webpack plugin that generates an HTML from a template, add the script
  * bundles and and loads any local assets referenced in the code.
  */
 export default class SpaHtml {
   /**
-   * DOM of the loaded template.
-   */
-  dom = undefined
-
-  /**
    * Options passed to the plugin.
    */
-  options = undefined
+  options = null
+
+  /**
+   * Parsed tree of the template.
+   */
+  tree = null
 
   constructor(options) {
     this.options = options
     validateOptions(OPTIONS_SCHEMA, this.options, PLUGIN_NAME)
-
-    // Load the template.
-    const SOURCE = readFileSync(this.options.template, 'utf8')
-    this.DOM = new JSDOM(SOURCE)
   }
 
+  /**
+   * Webpack will call this method to allow the plugin to hook to the
+   * compiler’s events.
+   */
   apply(compiler) {
-    compiler.hooks.make.tapAsync(PLUGIN_NAME, this.tapMake.bind(this))
+    compiler.hooks.beforeRun.tapAsync(PLUGIN_NAME, this.tapBeforeRun.bind(this))
     compiler.hooks.emit.tapAsync(PLUGIN_NAME, this.tapEmit.bind(this))
+
+    // Load the template and the assets.
+    const SOURCE = readFileSync(this.options.template, 'utf8')
+    this.tree = parse(SOURCE)
   }
 
-  getFinalHtml() {
+  /**
+   * Include referenced assets in the bundle.
+   */
+  fetchAssets(compiler) {
+    const URL = /^(https?:)?\/\//
+
+    for (let node of walk(this.tree)) {
+      let {tagName} = node
+      if (!tagName)
+        continue
+
+      let assetPath
+      switch (tagName) {
+        case 'link':
+          assetPath = getAttributeValue(node, 'href')
+          break
+        case 'img':
+          assetPath = getAttributeValue(node, 'src')
+          break
+      }
+
+      // Ignore empty paths and URLs.
+      if (!assetPath || URL.test(assetPath))
+        continue
+
+      const TEMPLATE_DIR = dirname(this.options.template)
+      new PrefetchPlugin(TEMPLATE_DIR, assetPath)
+        .apply(compiler)
+    }
+  }
+
+  /**
+   * Returns the current DOM’s HTML as a beautified or minified string.
+   */
+  getDomHtml() {
     // Modified HTML.
-    let serialized = DOM.serialize()
+    let serialized = serialize(this.tree)
 
     // We pass the serialized HTML from JSDOM through the minifier to remove any
     // unnecessary whitespace that could affect the beautifier. When we are
@@ -127,6 +193,11 @@ export default class SpaHtml {
     return serialized
   }
 
+  async tapBeforeRun(compiler, done) {
+    this.fetchAssets(compiler)
+    done()
+  }
+
   async tapEmit(compilation, done) {
     // TODO: Inject the JS bundles.
 
@@ -135,17 +206,12 @@ export default class SpaHtml {
     compilation.fileDependencies.add(this.options.template)
 
     // Emit the final HTML.
-    let source = this.getFinalHtml()
+    let source = this.getDomHtml()
     compilation.assets['index.html'] = {
       source: () => source,
       size: () => source.length,
     }
 
-    done()
-  }
-
-  async tapMake(compilation, done) {
-    // TODO: Load any assets from the template.
     done()
   }
 }
