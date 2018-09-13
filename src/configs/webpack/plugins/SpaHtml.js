@@ -14,7 +14,6 @@ import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
 import {dirname} from 'path'
-import {getSettings} from '../../../settings'
 import {html as beautifyHtml} from 'js-beautify'
 import {minify as minifyHtml} from 'html-minifier'
 import {parse, serialize} from 'parse5'
@@ -23,7 +22,6 @@ import {readFileSync} from 'fs'
 
 let log = debug('bb:config:webpack:plugin:html')
 
-let {minify = false} = getSettings()
 const PLUGIN_NAME = 'SPA HTML Plugin'
 
 /**
@@ -34,6 +32,9 @@ const OPTIONS_SCHEMA = {
   additionalProperties: false,
   type: 'object',
   properties: {
+    minify: {
+      type: 'boolean',
+    },
     template: {
       type: 'string',
     },
@@ -176,6 +177,7 @@ export default class SpaHtml {
       useShortDoctype: true,
     }
 
+    let {minify} = this.options
     if (minify) {
       // Minify.
       serialized = minifyHtml(serialized, {
