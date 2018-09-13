@@ -14,9 +14,11 @@ import shared from './shared'
 import SpaHtml from './plugins/SpaHtml'
 import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR} from '../../paths'
+import {getSettings} from '../../settings'
 import {isProduction} from '../../util'
 import {join} from 'path'
 
+let {minify = false} = getSettings()
 const PROJECT_DIR = getProjectDir()
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const REACT_ENTRY_DIR = join(TOOLBOX_DIR, 'entries', 'react')
@@ -49,10 +51,15 @@ function setEntryPoint(config) {
 function setHtmlTemplate(config) {
   const DEFAULT_TEMPLATE = join(REACT_ENTRY_DIR, 'index.html')
   const CUSTOM_TEMPLATE = join(PROJECT_SRC_DIR, 'index.html')
+
   let template = existsSync(CUSTOM_TEMPLATE)
     ? CUSTOM_TEMPLATE
     : DEFAULT_TEMPLATE
-  config.plugins.push(new SpaHtml({template}))
+
+  config.plugins.push(new SpaHtml({
+    minify,
+    template,
+  }))
 }
 
 /**
