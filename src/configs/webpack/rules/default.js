@@ -10,12 +10,29 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {join, relative, sep} from 'path'
+import {getProjectDir} from '../../../paths'
+
+const PROJECT_DIR = getProjectDir()
+
+function fileName(file) {
+  const RELATIVE = relative(PROJECT_DIR, file)
+  let nodes = RELATIVE.split(sep)
+
+  if (nodes[0] === 'src')
+    nodes.shift()
+
+  return nodes.join(sep)
+}
+
 export default function () {
   return {
     exclude: /\.(css|jsx?|mjs)$/,
     use: [{
       loader: 'file-loader',
-      options: {name: '[path][name].[ext]?[hash]'},
+      options: {
+        name: fileName,
+      },
     }],
   }
 }
