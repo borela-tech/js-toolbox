@@ -14,12 +14,12 @@ import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
 import {dirname} from 'path'
-import {readFileSync} from 'fs'
 import {getSettings} from '../../../settings'
 import {html as beautifyHtml} from 'js-beautify'
 import {minify as minifyHtml} from 'html-minifier'
 import {parse, serialize} from 'parse5'
 import {PrefetchPlugin} from 'webpack'
+import {readFileSync} from 'fs'
 
 let log = debug('bb:config:webpack:plugin:html')
 
@@ -98,7 +98,7 @@ export default class SpaHtml {
   }
 
   /**
-   * Include referenced assets in the bundle.
+   * Return the extracted the asset paths from the tree.
    */
   * extractAssetPaths() {
     log('Extracting asset paths...')
@@ -138,7 +138,7 @@ export default class SpaHtml {
   }
 
   /**
-   * Returns the current DOM’s HTML as a beautified or minified string.
+   * Returns the current tree as a beautified or minified HTML string.
    */
   getHtmlString() {
     let serialized = serialize(this.tree)
@@ -199,6 +199,9 @@ export default class SpaHtml {
     return serialized
   }
 
+  /**
+   * Load the template and parse it using Parse5.
+   */
   parseTemplate() {
     log('Loading template...')
     const SOURCE = readFileSync(this.options.template, 'utf8')
