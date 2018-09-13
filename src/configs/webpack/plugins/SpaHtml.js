@@ -194,7 +194,7 @@ export default class SpaHtml {
         indent_inner_html: true,
         indent_size: 2,
         sep: '\n',
-        unformatted: ['code', 'pre', 'em', 'strong', 'span'],
+        unformatted: ['code', 'pre'],
       })
     }
 
