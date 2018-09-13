@@ -22,7 +22,7 @@ function fileName(file) {
   if (nodes[0] === 'src')
     nodes.shift()
 
-  return nodes.join(sep)
+  return `${nodes.join(sep)}?[sha512:hash:base64:8]`
 }
 
 export default function () {
