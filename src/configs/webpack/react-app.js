@@ -37,9 +37,9 @@ function setEntryPoint(config) {
     const ENV = isProduction()
       ? 'production'
       : 'development'
-    config.entry.main = join(REACT_ENTRY_DIR, `main.${ENV}.js`)
+    config.entry.index = join(REACT_ENTRY_DIR, `main.${ENV}.js`)
   } else
-    config.entry.main = CUSTOM_ENTRY
+    config.entry.index = CUSTOM_ENTRY
 }
 
 /**
