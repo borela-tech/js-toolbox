@@ -27,6 +27,9 @@ import {getSettings} from '../../settings'
 
 let log = debug('bb:config:babel')
 
+/**
+ * The final Babel preset.
+ */
 export default function () {
   let {
     browsers,
@@ -37,16 +40,30 @@ export default function () {
   let result = {
     plugins: [
       babelSyntaxPlugin('dynamic-import'),
+      // This plugin will prevent the Babel’s runtime from being inserted on
+      // every module which should reduce the bundle size drastically.
       babelPlugin('transform-runtime'),
     ],
-    presets: [[getModulePath('@babel/preset-env'), {
-      targets: {
-        ...platforms.includes('browser') && browsers && {browsers},
-        ...platforms.includes('node') && node && {node},
-      },
-    }]],
+    presets: [],
   }
 
+  // The preset env will check the “browsers” and “node” values to enable the
+  // necessary transformations.
+  let presetEnvOptions = {targets:{}}
+
+  if (platforms.includes('browser'))
+    presetEnvOptions.targets.browsers = browsers
+
+  if (platforms.includes('node'))
+    presetEnvOptions.targets.node = node
+
+  result.presets.push([
+    getModulePath('@babel/preset-env'),
+    presetEnvOptions
+  ])
+
+  // Each of these functions will check the toolbox’s settings and add the
+  // necessary plugins.
   experimental(result.plugins)
   flow(result.plugins)
   jsx(result.plugins)
