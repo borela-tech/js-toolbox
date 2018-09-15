@@ -191,7 +191,10 @@ export default function () {
     },
     resolveLoader: {
       modules: [
+        // For now we don’t have any custom loaders, but this is here just in
+        // case one is needed.
         join(__dirname, 'loaders'),
+        // The other loaders will be searched like any other modules.
         ...MODULE_PATHS,
       ],
     },

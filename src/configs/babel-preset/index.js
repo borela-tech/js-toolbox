@@ -41,7 +41,9 @@ export default function () {
     plugins: [
       babelSyntaxPlugin('dynamic-import'),
       // This plugin will prevent the Babel’s runtime from being inserted on
-      // every module which should reduce the bundle size drastically.
+      // every module which should reduce Webpack’s bundle size drastically.
+      // The plugin alone will not work, the “@babel/runtime” still must be
+      // included in the bundle.
       babelPlugin('transform-runtime'),
     ],
     presets: [],
@@ -59,7 +61,7 @@ export default function () {
 
   result.presets.push([
     getModulePath('@babel/preset-env'),
-    presetEnvOptions
+    presetEnvOptions,
   ])
 
   // Each of these functions will check the toolbox’s settings and add the

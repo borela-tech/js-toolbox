@@ -30,7 +30,7 @@ const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
 export default function (options = {}) {
   let {include, exclude} = options
   return function (context, request, callback) {
-    // Include polyfills.
+    // Include runtime removed using the “@babel/plugin-transform-runtime”.
     if (request.includes('@babel/runtime')) {
       logIncluded(prettyFormat({context, request}))
       callback()
