@@ -12,23 +12,40 @@
 
 import {
   getAttributeValue,
+  getResourceRequest,
   minifiedHtmlString,
   prettifiedHtmlString,
+  setResourceRequest,
   walk,
 } from './parse5-util'
 
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
-import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
-import {dirname, resolve} from 'path'
+import {dirname} from 'path'
 import {parse} from 'parse5'
 import {PrefetchPlugin} from 'webpack'
 import {readFileSync} from 'fs'
+import {Script} from 'vm'
 
 let log = debug('bb:config:webpack:plugin:html')
 
 const PLUGIN_NAME = 'HTML Plugin'
+
+/**
+ * Execute the asset’s generated source and return the result.
+ */
+const execAsset = (code, path) => {
+  let script = new Script(code)
+  let exports = {}
+  let sandbox = {
+    __webpack_public_path__: '',
+    module: {exports},
+    exports,
+  }
+  script.runInNewContext(sandbox)
+  return sandbox.module.exports
+}
 
 /**
  * Actual Webpack plugin that generates an HTML from a template, add the script
@@ -36,18 +53,29 @@ const PLUGIN_NAME = 'HTML Plugin'
  */
 export default class SpaHtml {
   /**
+   * We use a child compiler to process the assets requested by the template.
+   */
+  _childCompiler = null
+
+  /**
    * Options passed to the plugin.
    */
-  options = null
+  _options = null
 
   /**
    * Parsed tree of the template.
    */
-  tree = null
+  _tree = null
 
   constructor(options) {
-    this.options = options
-    validateOptions(OPTIONS_SCHEMA, this.options, PLUGIN_NAME)
+    this._options = options
+    validateOptions(OPTIONS_SCHEMA, this._options, PLUGIN_NAME)
+
+    log('Loading template...')
+    const SOURCE = readFileSync(this._options.template, 'utf8')
+    log('Parsing template...')
+    this._tree = parse(SOURCE)
+    log('Done loading and parsing template.')
   }
 
   /**
@@ -56,69 +84,46 @@ export default class SpaHtml {
    */
   apply(compiler) {
     let {hooks} = compiler
-    hooks.afterCompile.tapAsync(PLUGIN_NAME, this.tapAfterCompile.bind(this))
-    hooks.beforeRun.tapAsync(PLUGIN_NAME, this.tapBeforeRun.bind(this))
+    hooks.make.tapAsync(PLUGIN_NAME, this._tapMake.bind(this))
+    hooks.afterCompile.tapAsync(PLUGIN_NAME, this._tapAfterCompile.bind(this))
   }
 
   /**
    * Return the extracted the asset paths from the tree.
    */
-  * extractAssetPaths() {
-    log('Extracting asset paths...')
+  * _extractAssetPaths() {
+    const URL = /^((https?:)?\/\/|data:)/
 
-    const URL = /^(https?:)?\/\//
-    const TEMPLATE_DIR = dirname(this.options.template)
+    for (let node of walk(this._tree)) {
+      let assetPath = getResourceRequest(node)
 
-    for (let node of walk(this.tree)) {
-      let {tagName} = node
-      if (!tagName)
-        continue
-
-      let assetPath
-      switch (tagName) {
-        case 'link':
-          assetPath = getAttributeValue(node, 'href')
-          break
-        case 'img':
-          assetPath = getAttributeValue(node, 'src')
-          break
-      }
-
-      // Ignore empty paths and URLs.
+      // Ignore empty paths, URLs and data URLs.
       if (!assetPath || URL.test(assetPath))
         continue
 
-      const RESULT = {
-        context: TEMPLATE_DIR,
-        path: assetPath,
-      }
-
-      log(`Asset found: ${prettyFormat(RESULT)}`)
-      yield RESULT
+      yield {path: assetPath, node}
     }
-
-    log('Done extracting assets.')
   }
 
   /**
    * Returns the current tree as a beautified or minified HTML string.
    */
-  getHtmlString() {
-    let {minify} = this.options
+  _getHtmlString() {
+    let {minify} = this._options
     if (minify)
-      return minifiedHtmlString(this.tree)
-    return prettifiedHtmlString(this.tree)
+      return minifiedHtmlString(this._tree)
+    return prettifiedHtmlString(this._tree)
   }
 
-  async tapAfterCompile(compilation, done) {
+  async _tapAfterCompile(compilation, done) {
     // TODO: Inject the JS bundles.
 
     // Add the template to the dependencies to trigger a rebuild on change in
     // watch mode.
-    compilation.fileDependencies.add(this.options.template)
+    compilation.fileDependencies.add(this._options.template)
 
     // Emit the final HTML.
-    const FINAL_HTML = this.getHtmlString()
+    const FINAL_HTML = this._getHtmlString()
     compilation.assets['index.html'] = {
       source: () => FINAL_HTML,
       size: () => FINAL_HTML.length,
@@ -127,19 +132,60 @@ export default class SpaHtml {
     done()
   }
 
-  async tapBeforeRun(compiler, done) {
-    log('Loading template...')
-    const SOURCE = readFileSync(this.options.template, 'utf8')
-    log('Parsing template...')
-    this.tree = parse(SOURCE)
-    log('Done loading and parsing template.')
+  /**
+   * The assets were processed in the child compiler, this method will update
+   * the asset paths in the template with the result.
+   */
+  async _tapChildAfterCompile(compilation, done) {
+    // Index assets by raw request.
+    let byRawRequest = new Map
+    for (let asset of compilation.modules)
+      byRawRequest.set(asset.rawRequest, asset)
 
-    // Add assets to the compilation.
-    for (let {context, path} of this.extractAssetPaths()) {
-      new PrefetchPlugin(context, path)
-        .apply(compiler)
+    // Update asset paths.
+    for (let {node, path} of this._extractAssetPaths()) {
+      if (!byRawRequest.has(path))
+        continue
+
+      const ASSET = byRawRequest.get(path)
+      const SOURCE = ASSET.originalSource().source()
+      const NEW_REQUEST = execAsset(SOURCE)
+      setResourceRequest(node, NEW_REQUEST)
     }
 
     done()
+  }
+
+  /**
+   * Set up the child compiler to process the assets.
+   */
+  async _tapMake(compilation, done) {
+    this._childCompiler = compilation.createChildCompiler(PLUGIN_NAME, {
+      path: compilation.outputOptions.path,
+    })
+
+    // Add the assets requested in the template to the child compiler.
+    log('Adding asssets to child compiler...')
+
+    const TEMPLATE_DIR = dirname(this._options.template)
+
+    for (let {path} of this._extractAssetPaths()) {
+      new PrefetchPlugin(TEMPLATE_DIR, path)
+        .apply(this._childCompiler)
+
+      log(`Asset added: ${path}`)
+    }
+
+    log('Done adding assets addded.')
+
+    // This hook will be used to update the asset paths in the template with
+    // the result from the child compilation.
+    this._childCompiler.hooks.afterCompile.tapAsync(
+      PLUGIN_NAME,
+      this._tapChildAfterCompile.bind(this),
+    )
+
+    // Finnally, run the child compiler to process the assets.
+    this._childCompiler.runAsChild(done)
   }
 }

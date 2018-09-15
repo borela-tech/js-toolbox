@@ -60,6 +60,24 @@ export function getAttributeValue(node, attributeName) {
 }
 
 /**
+ * Returns a resource request.
+ */
+export function getResourceRequest(node) {
+  let {tagName} = node
+  if (!tagName)
+    return undefined
+
+  switch (tagName) {
+    case 'link':
+      return getAttributeValue(node, 'href')
+    case 'img':
+      return getAttributeValue(node, 'src')
+  }
+
+  return undefined
+}
+
+/**
  * Returns a formatted HTML string.
  */
 export function minifiedHtmlString(tree) {
@@ -94,6 +112,24 @@ export function setAttributeValue(node, attributeName, value) {
   for (let attribute of node.attrs) {
     if (attribute.name === attributeName)
       attribute.value = value
+  }
+}
+
+/**
+ * Change the resource request.
+ */
+export function setResourceRequest(node, newRequest) {
+  let {tagName} = node
+  if (!tagName)
+    return undefined
+
+  switch (tagName) {
+    case 'link':
+      setAttributeValue(node, 'href', newRequest)
+      break
+    case 'img':
+      setAttributeValue(node, 'src', newRequest)
+      break
   }
 }
 
