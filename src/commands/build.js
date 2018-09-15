@@ -19,6 +19,9 @@ import {
   jsx,
   interactiveBundleStats,
   minify,
+  minifyCss,
+  minifyHtml,
+  minifyJs,
   multiEntry,
   node,
   platforms,
@@ -45,6 +48,9 @@ function builder(yargs) {
   interactiveBundleStats(yargs)
   jsx(yargs)
   minify(yargs)
+  minifyCss(yargs)
+  minifyHtml(yargs)
+  minifyJs(yargs)
   multiEntry(yargs)
   node(yargs)
   platforms(yargs)

@@ -87,6 +87,27 @@ export function minify(yargs) {
   })
 }
 
+export function minifyCss(yargs) {
+  yargs.option('minify-css', {
+    description: 'Minify CSS source.',
+    type: 'boolean',
+  })
+}
+
+export function minifyHtml(yargs) {
+  yargs.option('minify-html', {
+    description: 'Minify HTML source.',
+    type: 'boolean',
+  })
+}
+
+export function minifyJs(yargs) {
+  yargs.option('minify-js', {
+    description: 'Minify JS source.',
+    type: 'boolean',
+  })
+}
+
 export function multiEntry(yargs) {
   yargs.option('multi-entry', {
     description: 'Enable default multi entries.',

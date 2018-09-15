@@ -40,6 +40,7 @@ let {
   configDevServer = false,
   interactiveBundleStats = false,
   minify = false,
+  minifyJs = false,
   port = 9000,
   watch = false,
 } = getSettings()
@@ -212,10 +213,10 @@ export default function () {
     }
   }
 
-  // Minimification settings.
-  result.optimization.minimize = minify
+  // Minification settings.
+  result.optimization.minimize = minify || minifyJs
 
-  if (minify) {
+  if (minify || minifyJs) {
     result.optimization.minimizer = [new UglifyJsPlugin({
       sourceMap: !disableSourceMaps,
       uglifyOptions: {
