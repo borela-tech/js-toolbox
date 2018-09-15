@@ -10,8 +10,9 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {getSettings} from '../../../settings'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import pluginAutoPrefixer from 'autoprefixer'
+import {getSettings} from '../../../settings'
 
 let {disableSourceMaps} = getSettings()
 
@@ -19,9 +20,11 @@ export default function () {
   return {
     test: /\.module\.css$/,
     use: [{
-      loader: 'style-loader',
-      options: {sourceMap: !disableSourceMaps},
-    }, {
+      loader: MiniCssExtractPlugin.loader,
+    },{
+    //   loader: 'style-loader',
+    //   options: {sourceMap: !disableSourceMaps},
+    // }, {
       loader: 'css-loader',
       options: {
         importLoaders: 1,

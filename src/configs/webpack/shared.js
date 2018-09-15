@@ -16,6 +16,7 @@ import {
   isProduction,
 } from '../../util'
 
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import {existsSync} from 'fs'
@@ -179,7 +180,12 @@ export default function () {
       filename: '[name].js',
       devtoolModuleFilenameTemplate: normalizeModulePath,
     },
-    plugins: [],
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
+    ],
     resolve: {
       extensions: [
         '.js',
