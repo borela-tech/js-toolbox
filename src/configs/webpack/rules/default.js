@@ -29,8 +29,10 @@ export default function () {
   return {
     exclude: /\.(css|jsx?|mjs)$/,
     use: [{
-      loader: 'file-loader',
+      loader: 'url-loader',
       options: {
+        fallback: 'file-loader',
+        limit: 1024,
         name: fileName,
       },
     }],

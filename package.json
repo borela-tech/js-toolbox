@@ -109,6 +109,7 @@
     "source-map-support": "^0.5.9",
     "sourcemapped-stacktrace": "^1.1.8",
     "style-loader": "^0.23.0",
+    "url-loader": "^1.1.1",
     "webpack": "^4.17.1",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
