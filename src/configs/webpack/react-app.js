@@ -10,8 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import Html from './plugins/Html'
 import shared from './shared'
-import SpaHtml from './plugins/SpaHtml'
 import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR} from '../../paths'
 import {getSettings} from '../../settings'
@@ -56,10 +56,7 @@ function setHtmlTemplate(config) {
     ? CUSTOM_TEMPLATE
     : DEFAULT_TEMPLATE
 
-  config.plugins.push(new SpaHtml({
-    minify,
-    template,
-  }))
+  config.plugins.push(new Html({minify, template}))
 }
 
 /**

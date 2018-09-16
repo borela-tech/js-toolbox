@@ -29,7 +29,7 @@ import {Script} from 'vm'
 
 let log = debug('bb:config:webpack:plugin:html')
 
-const PLUGIN_NAME = 'HTML Plugin'
+const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
 
 /**
  * Execute the asset’s generated source and return the result.
