@@ -174,6 +174,9 @@ export default function () {
       splitChunks: {
         chunks: 'all',
       },
+      runtimeChunk: {
+        name: 'webpack-runtime',
+      },
     },
     output: {
       path: PROJECT_BUILD_DIR,
