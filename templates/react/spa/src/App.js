@@ -15,6 +15,7 @@ import React, {Component} from 'react'
 
 export default class App extends Component {
   render() {
+    throw new Error('Error test!')
     return <div>BORELA!</div>
   }
 }
