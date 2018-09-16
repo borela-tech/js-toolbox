@@ -29,7 +29,7 @@ module.exports = {
 
     // If a class method does not use this, it can safely be made a static
     // function.
-    'class-methods-use-this': 'warn',
+    'class-methods-use-this': 'off',
 
     // This rule is aimed at reducing code complexity by capping the amount of
     // cyclomatic complexity allowed in a program
