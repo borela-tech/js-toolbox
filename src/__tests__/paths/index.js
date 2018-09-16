@@ -39,6 +39,9 @@ const FOO_BAR = join(FIXTURE, 'foo', 'bar')
 const FOO_BAR_PACKAGE = join(FIXTURE, 'foo', 'bar-package')
 const FOO_BAR_PACKAGE_BAZ = join(FIXTURE, 'foo', 'bar-package', 'baz')
 
+// The “getProjectDir” function should try to find the nearest package directory
+// based on the current CWD. If the current directory does not contain a
+// “package.json” file, search the parent directory until one is found.
 describe.each([
   [FIXTURE, FIXTURE],
   [FOO, FIXTURE],

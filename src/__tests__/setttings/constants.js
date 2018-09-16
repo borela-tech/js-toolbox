@@ -16,6 +16,8 @@ const FIXTURES_PATH = join(__dirname, '__fixtures__')
 
 function setFixture(fixture) {
   jest.doMock('../../paths', () => ({
+    // It is expected that the constants will use the “getProjectDir” to find
+    // the package directory.
     getProjectDir() {
       return join(FIXTURES_PATH, fixture)
     },
