@@ -35,7 +35,9 @@ let log = debug('bb:config:webpack:plugin:html')
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
 
 /**
- * Execute the asset’s generated source and return the result.
+ * Each linked asset processed by the “url-loader” will generate a module that
+ * returns a path or a data URL, we will use this helper to execute that code
+ * and get the final value back.
  */
 function execAssetModule(code, path) {
   let script = new Script(code)
@@ -51,11 +53,13 @@ function execAssetModule(code, path) {
 
 /**
  * Actual Webpack plugin that generates an HTML from a template, add the script
- * bundles and and loads any local assets referenced in the code.
+ * bundles and loads any local linked assets referenced.
  */
 export default class SpaHtml {
   /**
-   * We use a child compiler to process the assets requested by the template.
+   * We use a child compiler to process the linked assets requested by the
+   * template, this makes it easier to filter the “compilation.modules” as it
+   * will only contain the modules we requested.
    */
   _childCompiler = null
 
@@ -65,7 +69,7 @@ export default class SpaHtml {
   _options = null
 
   /**
-   * Parsed tree of the template.
+   * Parse5 tree of the template.
    */
   _tree = null
 
@@ -79,7 +83,7 @@ export default class SpaHtml {
    * compiler’s events.
    */
   apply(compiler) {
-    log('Setting main compiler hooks.')
+    log('Setting target compiler hooks.')
 
     compiler.hooks.make.tapAsync(
       PLUGIN_NAME,
@@ -93,7 +97,7 @@ export default class SpaHtml {
   }
 
   /**
-   * Return the extracted the asset paths from the tree.
+   * Return the extracted linked asset paths from the tree.
    */
   * _extractAssetPaths() {
     const URL = /^((https?:)?\/\/|data:)/
@@ -119,11 +123,14 @@ export default class SpaHtml {
     return prettifiedHtmlString(this._tree)
   }
 
+  /**
+   * Emit the final HTML file.
+   */
   async _tapEmit(compilation, done) {
     let body = getNodeByTagName(this._tree, 'body')
     body.childNodes ??= []
 
-    log('Injecting chunks to template.')
+    log('Injecting chunks to the template.')
 
     for (let chunk of compilation.chunks.reverse()) {
       body.childNodes.push(createNode({
@@ -137,13 +144,10 @@ export default class SpaHtml {
 
     log('Adding template to dependencies.')
 
-    // Add the template to the dependencies to trigger a rebuild on change in
-    // watch mode.
     compilation.fileDependencies.add(this._options.template)
 
     log('Emitting final HTML.')
 
-    // Emit the final HTML.
     const FINAL_HTML = this._getHtmlString()
     compilation.assets['index.html'] = {
       source: () => FINAL_HTML,
@@ -154,26 +158,24 @@ export default class SpaHtml {
   }
 
   /**
-   * The assets were processed in the child compiler, this method will update
-   * the asset paths in the template with the result.
+   * The linked assets were processed in the child compiler, this method will
+   * update their paths in the template.
    */
   async _tapChildAfterCompile(compilation, done) {
     if (compilation.modules < 1) {
-      log('No assets requested in the template.')
+      log('No local linked assets found in the template.')
       done()
       return
     }
 
     log('Indexing loaded assets by raw request.')
 
-    // Index assets by raw request.
     let byRawRequest = new Map
     for (let asset of compilation.modules)
       byRawRequest.set(asset.rawRequest, asset)
 
     log('Updating asset paths in template.')
 
-    // Update asset paths.
     for (let {node, path} of this._extractAssetPaths()) {
       if (!byRawRequest.has(path))
         continue
@@ -190,7 +192,7 @@ export default class SpaHtml {
   }
 
   /**
-   * Set up the child compiler to process the assets.
+   * Set up the template and the child compiler to process the assets.
    */
   async _tapMake(compilation, done) {
     log('Loading template.')
@@ -206,22 +208,18 @@ export default class SpaHtml {
 
     this._childCompiler = compilation.createChildCompiler(PLUGIN_NAME)
 
-    // Add the assets requested in the template to the child compiler.
     log('Adding asssets to child compiler.')
 
     const TEMPLATE_DIR = dirname(this._options.template)
-
     for (let {path} of this._extractAssetPaths()) {
       new PrefetchPlugin(TEMPLATE_DIR, path)
         .apply(this._childCompiler)
 
-      log(`Asset added: ${path}`)
+      log(`Linked asset added: ${path}`)
     }
 
     log('Setting child compiler hooks.')
 
-    // This hook will be used to update the asset paths in the template with
-    // the result from the child compilation.
     this._childCompiler.hooks.afterCompile.tapAsync(
       PLUGIN_NAME,
       this._tapChildAfterCompile.bind(this),
@@ -229,7 +227,6 @@ export default class SpaHtml {
 
     log('Running child compiler.')
 
-    // Finnally, run the child compiler to process the assets.
     this._childCompiler.runAsChild(done)
   }
 }
