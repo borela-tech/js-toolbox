@@ -45,6 +45,7 @@ if (typeScript) {
 const CONFIG = {
   env: {
     jest,
+    es6: true,
     browser: platforms.includes('browser'),
     node: platforms.includes('node'),
   },
