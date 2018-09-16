@@ -83,6 +83,8 @@ export default class SpaHtml {
    * compiler’s events.
    */
   apply(compiler) {
+    log('Setting main compiler hooks.')
+
     compiler.hooks.make.tapAsync(
       PLUGIN_NAME,
       this._tapMake.bind(this),
