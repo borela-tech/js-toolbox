@@ -21,11 +21,11 @@ export default function () {
     exclude: /\.module\.css$/,
     test: /\.css$/,
     use: [{
-      loader: MiniCssExtractPlugin.loader,
-    },{
-    //   loader: 'style-loader',
-    //   options: {sourceMap: !disableSourceMaps},
-    // }, {
+    //   loader: MiniCssExtractPlugin.loader,
+    // },{
+      loader: 'style-loader',
+      options: {sourceMap: !disableSourceMaps},
+    }, {
       loader: 'css-loader',
       options: {
         importLoaders: 1,
