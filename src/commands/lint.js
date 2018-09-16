@@ -48,8 +48,7 @@ function lintSources(args) {
     `"${join(getProjectDir(), 'src')}"`,
   ]
 
-  let {fix} = args
-  if (fix)
+  if (args.fix)
     eslintArgs.push('--fix')
 
   return runCommandSync('eslint', {
@@ -68,8 +67,7 @@ function lintTests(args) {
     `"${join(getProjectDir(), 'src')}/**/__tests__/**"`,
   ]
 
-  let {fix} = args
-  if (fix)
+  if (args.fix)
     eslintArgs.push('--fix')
 
   return runCommandSync('eslint', {

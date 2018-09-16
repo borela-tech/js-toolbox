@@ -36,10 +36,12 @@ function handler(args) {
   let nodemonArgs = [`"${MAIN}"`]
 
   // Inspect needs to be passed before the script.
-  if (inspect) nodemonArgs.unshift('--inspect')
+  if (inspect)
+    nodemonArgs.unshift('--inspect')
 
   // The rest of the app args must be after the script.
-  if (appArgs) nodemonArgs.push(appArgs)
+  if (appArgs)
+    nodemonArgs.push(appArgs)
 
   exitOnError(runCommandSync('nodemon', {args: nodemonArgs}))
 }
