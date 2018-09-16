@@ -73,10 +73,10 @@ export default function () {
   setEntryPoint(config)
   setHtmlTemplate(config)
 
-  // config.externals = {
-  //   react: 'commonjs react',
-  //   'react-dom': 'commonjs react-dom',
-  // }
+  config.externals = {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  }
 
   config.target = 'web'
   return [config]
