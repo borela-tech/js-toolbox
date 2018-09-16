@@ -145,6 +145,11 @@ export default class SpaHtml {
    * the asset paths in the template with the result.
    */
   async _tapChildAfterCompile(compilation, done) {
+    if (compilation.modules < 1) {
+      log('No assets requested in the template.')
+      return
+    }
+
     log('Indexing loaded assets by raw request.')
 
     // Index assets by raw request.
@@ -176,9 +181,7 @@ export default class SpaHtml {
   async _tapMake(compilation, done) {
     log('Preparing the child compiler.')
 
-    this._childCompiler = compilation.createChildCompiler(PLUGIN_NAME, {
-      path: compilation.outputOptions.path,
-    })
+    this._childCompiler = compilation.createChildCompiler(PLUGIN_NAME)
 
     // Add the assets requested in the template to the child compiler.
     log('Adding asssets to child compiler.')
