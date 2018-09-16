@@ -34,7 +34,7 @@ const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
 /**
  * Execute the asset’s generated source and return the result.
  */
-const execAsset = (code, path) => {
+function execAssetModule(code, path) {
   let script = new Script(code)
   let exports = {}
   let sandbox = {
@@ -148,7 +148,7 @@ export default class SpaHtml {
 
       const ASSET = byRawRequest.get(path)
       const SOURCE = ASSET.originalSource().source()
-      const NEW_REQUEST = execAsset(SOURCE)
+      const NEW_REQUEST = execAssetModule(SOURCE)
       setResourceRequest(node, NEW_REQUEST)
     }
 
