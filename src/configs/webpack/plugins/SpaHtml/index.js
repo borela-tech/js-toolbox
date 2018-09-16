@@ -11,7 +11,6 @@
 // the License.
 
 import {
-  getAttributeValue,
   getResourceRequest,
   minifiedHtmlString,
   prettifiedHtmlString,

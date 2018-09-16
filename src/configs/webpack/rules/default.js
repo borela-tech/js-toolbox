@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {join, relative, sep} from 'path'
+import {relative, sep} from 'path'
 import {getProjectDir} from '../../../paths'
 
 const PROJECT_DIR = getProjectDir()

@@ -112,7 +112,7 @@ export function setAttributeValue(node, attributeName, value) {
 export function setResourceRequest(node, newRequest) {
   let {tagName} = node
   if (!tagName)
-    return undefined
+    return
 
   switch (tagName) {
     case 'link':
