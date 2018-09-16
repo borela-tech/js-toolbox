@@ -18,7 +18,7 @@ import {render} from 'react-dom'
 const HTML_ROOT = document.getElementById('app')
 
 if (module.hot) {
-  let {AppContainer} = import('react-hot-loader')
+  let {AppContainer} = require('react-hot-loader')
 
   window.addEventListener('load', () => {
     render(
