@@ -11,6 +11,8 @@
 // the License.
 
 import {
+  createNode,
+  getNodeByTagName,
   getResourceRequest,
   minifiedHtmlString,
   prettifiedHtmlString,
@@ -90,9 +92,9 @@ export default class SpaHtml {
       this._tapMake.bind(this),
     )
 
-    compiler.hooks.afterCompile.tapAsync(
+    compiler.hooks.emit.tapAsync(
       PLUGIN_NAME,
-      this._tapAfterCompile.bind(this),
+      this._tapEmit.bind(this),
     )
   }
 
@@ -123,12 +125,29 @@ export default class SpaHtml {
     return prettifiedHtmlString(this._tree)
   }
 
-  async _tapAfterCompile(compilation, done) {
-    // TODO: Inject the JS bundles.
+  async _tapEmit(compilation, done) {
+    let body = getNodeByTagName(this._tree, 'body')
+    body.childNodes ??= []
+
+    log('Injecting chunks to template.')
+
+    for (let chunk of compilation.chunks.reverse()) {
+      body.childNodes.push(createNode({
+        tagName: 'script',
+        attrs: [{
+          name: 'src',
+          value: `${chunk.id}.js`,
+        }],
+      }))
+    }
+
+    log('Adding template to dependencies.')
 
     // Add the template to the dependencies to trigger a rebuild on change in
     // watch mode.
     compilation.fileDependencies.add(this._options.template)
+
+    log('Emitting final HTML.')
 
     // Emit the final HTML.
     const FINAL_HTML = this._getHtmlString()
