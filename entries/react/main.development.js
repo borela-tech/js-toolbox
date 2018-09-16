@@ -13,13 +13,24 @@
 import App from 'App'
 import ErrorBoundary from './ErrorBoundary'
 import React from 'react'
-import {AppContainer} from 'react-hot-loader'
 import {render} from 'react-dom'
 
 const HTML_ROOT = document.getElementById('app')
 
-// Enable hot reloading.
 if (module.hot) {
+  let {AppContainer} = import('react-hot-loader')
+
+  window.addEventListener('load', () => {
+    render(
+      <AppContainer>
+        <ErrorBoundary>
+          <App/>
+        </ErrorBoundary>
+      </AppContainer>,
+      HTML_ROOT,
+    )
+  })
+
   module.hot.accept('App', () => {
     let ReloadedApp = require('App').default
     render(
@@ -31,16 +42,13 @@ if (module.hot) {
       HTML_ROOT,
     )
   })
-}
-
-// Render the page after all resources load.
-window.addEventListener('load', () => {
-  render(
-    <AppContainer>
+} else {
+  window.addEventListener('load', () => {
+    render(
       <ErrorBoundary>
         <App/>
-      </ErrorBoundary>
-    </AppContainer>,
-    HTML_ROOT,
-  )
-})
+      </ErrorBoundary>,
+      HTML_ROOT,
+    )
+  })
+}
