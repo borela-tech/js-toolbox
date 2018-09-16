@@ -35,6 +35,7 @@ export function createNode({tagName, ...other}) {
  * attribute is not found.
  */
 export function getAttributeValue(node, attributeName) {
+  node.attrs ??= []
   for (let attribute of node.attrs) {
     if (attribute.name === attributeName)
       return attribute.value
@@ -126,11 +127,19 @@ export function prettifiedHtmlString(tree) {
 /**
  * Update a node’s attribute value.
  */
-export function setAttributeValue(node, attributeName, value) {
+export function setAttributeValue(node, name, value) {
+  node.attrs ??= []
+  let changed = false
+
   for (let attribute of node.attrs) {
-    if (attribute.name === attributeName)
-      attribute.value = value
+    if (attribute.name !== name)
+      continue
+    attribute.value = value
+    changed = true
   }
+
+  if (!changed)
+    node.attrs.push({name, value})
 }
 
 /**
