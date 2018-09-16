@@ -72,12 +72,6 @@ export default class SpaHtml {
   constructor(options) {
     this._options = options
     validateOptions(OPTIONS_SCHEMA, this._options, PLUGIN_NAME)
-
-    log('Loading template.')
-    const SOURCE = readFileSync(this._options.template, 'utf8')
-    log('Parsing template.')
-    this._tree = parse(SOURCE)
-    log('Template ready.')
   }
 
   /**
@@ -199,6 +193,15 @@ export default class SpaHtml {
    * Set up the child compiler to process the assets.
    */
   async _tapMake(compilation, done) {
+    log('Loading template.')
+
+    const SOURCE = readFileSync(this._options.template, 'utf8')
+
+    log('Parsing template.')
+
+    this._tree = parse(SOURCE)
+
+    log('Template is ready.')
     log('Preparing the child compiler.')
 
     this._childCompiler = compilation.createChildCompiler(PLUGIN_NAME)
