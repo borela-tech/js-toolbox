@@ -14,7 +14,7 @@ import {join} from 'path'
 
 const FIXTURE_PATH = join(__dirname, '__fixture__')
 
-// This module exists.
+// This module exists in the fixture directory.
 const FOO_MODULE = join(FIXTURE_PATH, 'foo')
 
 // This module does not exist.
@@ -81,12 +81,10 @@ describe('Module helpers', () => {
 
 describe('Babel plugin helpers', () => {
   const OPTIONS = {a: 1, b: 2, c: 3}
-  const PLUGIN = join(FIXTURE_PATH, '@babel/plugin-foo')
-  const PROPOSAL = join(FIXTURE_PATH, '@babel/plugin-proposal-foo')
-  const SYNTAX = join(FIXTURE_PATH, '@babel/plugin-syntax-foo')
-  const TRANSFORM = join(FIXTURE_PATH, '@babel/plugin-transform-foo')
 
   describe('babelPlugin()', () => {
+    const PLUGIN = join(FIXTURE_PATH, '@babel/plugin-foo')
+
     test('Returns the full path to the plugin', () => {
       let {babelPlugin} = require('../../modules')
       expect(babelPlugin('foo')).toBe(PLUGIN)
@@ -99,6 +97,8 @@ describe('Babel plugin helpers', () => {
   })
 
   describe('babelProposalPlugin()', () => {
+    const PROPOSAL = join(FIXTURE_PATH, '@babel/plugin-proposal-foo')
+
     test('Returns the full path to the plugin', () => {
       let {babelProposalPlugin} = require('../../modules')
       expect(babelProposalPlugin('foo')).toBe(PROPOSAL)
@@ -112,6 +112,8 @@ describe('Babel plugin helpers', () => {
   })
 
   describe('babelSyntaxPlugin()', () => {
+    const SYNTAX = join(FIXTURE_PATH, '@babel/plugin-syntax-foo')
+
     test('Returns the full path to the plugin', () => {
       let {babelSyntaxPlugin} = require('../../modules')
       expect(babelSyntaxPlugin('foo')).toBe(SYNTAX)
@@ -124,6 +126,8 @@ describe('Babel plugin helpers', () => {
   })
 
   describe('babelTransformPlugin()', () => {
+    const TRANSFORM = join(FIXTURE_PATH, '@babel/plugin-transform-foo')
+
     test('Returns the full path to the plugin', () => {
       let {babelTransformPlugin} = require('../../modules')
       expect(babelTransformPlugin('foo')).toBe(TRANSFORM)
