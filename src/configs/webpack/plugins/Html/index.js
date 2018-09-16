@@ -20,6 +20,7 @@ import {
 
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
+import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
 import {dirname} from 'path'
 import {parse} from 'parse5'
@@ -70,11 +71,11 @@ export default class SpaHtml {
     this._options = options
     validateOptions(OPTIONS_SCHEMA, this._options, PLUGIN_NAME)
 
-    log('Loading template...')
+    log('Loading template.')
     const SOURCE = readFileSync(this._options.template, 'utf8')
-    log('Parsing template...')
+    log('Parsing template.')
     this._tree = parse(SOURCE)
-    log('Done loading and parsing template.')
+    log('Template ready.')
   }
 
   /**
@@ -136,10 +137,14 @@ export default class SpaHtml {
    * the asset paths in the template with the result.
    */
   async _tapChildAfterCompile(compilation, done) {
+    log('Indexing loaded assets by raw request.')
+
     // Index assets by raw request.
     let byRawRequest = new Map
     for (let asset of compilation.modules)
       byRawRequest.set(asset.rawRequest, asset)
+
+    log('Updating asset paths in template.')
 
     // Update asset paths.
     for (let {node, path} of this._extractAssetPaths()) {
@@ -150,6 +155,8 @@ export default class SpaHtml {
       const SOURCE = ASSET.originalSource().source()
       const NEW_REQUEST = execAssetModule(SOURCE)
       setResourceRequest(node, NEW_REQUEST)
+
+      log(`Changed: ${prettyFormat({from: path, to: NEW_REQUEST})}`)
     }
 
     done()
@@ -159,12 +166,14 @@ export default class SpaHtml {
    * Set up the child compiler to process the assets.
    */
   async _tapMake(compilation, done) {
+    log('Preparing the child compiler.')
+
     this._childCompiler = compilation.createChildCompiler(PLUGIN_NAME, {
       path: compilation.outputOptions.path,
     })
 
     // Add the assets requested in the template to the child compiler.
-    log('Adding asssets to child compiler...')
+    log('Adding asssets to child compiler.')
 
     const TEMPLATE_DIR = dirname(this._options.template)
 
@@ -175,7 +184,7 @@ export default class SpaHtml {
       log(`Asset added: ${path}`)
     }
 
-    log('Done adding assets addded.')
+    log('Setting child compiler hooks.')
 
     // This hook will be used to update the asset paths in the template with
     // the result from the child compilation.
@@ -183,6 +192,8 @@ export default class SpaHtml {
       PLUGIN_NAME,
       this._tapChildAfterCompile.bind(this),
     )
+
+    log('Running child compiler.')
 
     // Finnally, run the child compiler to process the assets.
     this._childCompiler.runAsChild(done)
