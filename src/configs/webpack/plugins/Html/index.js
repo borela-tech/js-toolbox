@@ -166,6 +166,7 @@ export default class SpaHtml {
   async _tapChildAfterCompile(compilation, done) {
     if (compilation.modules < 1) {
       log('No assets requested in the template.')
+      done()
       return
     }
 
