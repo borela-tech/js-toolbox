@@ -40,8 +40,8 @@ let {
   disableSourceMaps = false,
   configDevServer = false,
   interactiveBundleStats = false,
-  minify = false,
-  minifyJs = false,
+  minify,
+  minifyJs,
   port = 9000,
   watch = false,
 } = getSettings()
