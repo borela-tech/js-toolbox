@@ -14,6 +14,22 @@ import {html as beautifyHtml} from 'js-beautify'
 import {minify as minifyHtml} from 'html-minifier'
 import {serialize} from 'parse5'
 
+const HTML5_NAMESPACE = 'http://www.w3.org/1999/xhtml'
+
+/**
+ * Creates a Parse5 node.
+ */
+export function createNode({tagName, ...other}) {
+  return {
+    attrs: [],
+    childNodes: [],
+    namespaceURI: HTML5_NAMESPACE,
+    nodeName: tagName,
+    tagName: tagName,
+    ...other,
+  }
+}
+
 /**
  * Extract an attribute’s value from the node; Returns undefined if the
  * attribute is not found.
@@ -22,6 +38,17 @@ export function getAttributeValue(node, attributeName) {
   for (let attribute of node.attrs) {
     if (attribute.name === attributeName)
       return attribute.value
+  }
+  return undefined
+}
+
+/**
+ * Returns the node by its tag name.
+ */
+export function getNodeByTagName(tree, tagName) {
+  for (let node of walk(tree)) {
+    if (node.tagName === tagName)
+      return node
   }
   return undefined
 }
