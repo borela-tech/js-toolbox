@@ -20,11 +20,15 @@ import {
   walk,
 } from './parse5-util'
 
+import {
+  dirname,
+  parse as parsePath,
+} from 'path'
+
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
-import {dirname} from 'path'
 import {parse} from 'parse5'
 import {PrefetchPlugin} from 'webpack'
 import {readFileSync} from 'fs'
@@ -130,17 +134,34 @@ export default class SpaHtml {
     let body = getNodeByTagName(this._tree, 'body')
     body.childNodes ??= []
 
-    log('Injecting chunks to the template.')
+    log('Finding associated chunk.')
 
-    for (let chunk of compilation.chunks.reverse()) {
-      body.childNodes.push(createNode({
-        tagName: 'script',
-        attrs: [{
-          name: 'src',
-          value: `${chunk.id}.js`,
-        }],
-      }))
+    let associatedChunk = null
+    let {name: templateName} = parsePath(this._options.template)
+
+    for (let chunk of compilation.chunks) {
+      if (chunk.id == templateName) {
+        associatedChunk = chunk
+        break
+      }
     }
+
+    if (associatedChunk) {
+      log('Injecting chunks to the template.')
+
+      for (let group of associatedChunk._groups) {
+        for (let chunk of group.chunks) {
+          body.childNodes.push(createNode({
+            tagName: 'script',
+            attrs: [{
+              name: 'src',
+              value: `${chunk.id}.js?${chunk.hash}`,
+            }],
+          }))
+        }
+      }
+    } else
+      log('No associated chunk found.')
 
     log('Adding template to dependencies.')
 
