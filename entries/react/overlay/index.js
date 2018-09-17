@@ -13,19 +13,12 @@
 import React, {Component} from 'react'
 import style from './index.module.css'
 
-// {stack.map((x, index) =>
-//   <div key={index}>
-//       <div>{x.namespace}</div>
-//       <br/>
-//       <div>{x.path}</div>
-//       <br/>
-//       <br/>
-//   </div>
-// )}
-
 export default class ErrorBox extends Component {
   render() {
-    let {error:{stack}} = this.props
+    let {error} = this.props
+    if (!error)
+      return this.children
+
     return <div className={style.errorBox}>
       <div className={style.codeFrame}>
         codebox

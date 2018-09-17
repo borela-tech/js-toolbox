@@ -39,7 +39,7 @@ function preparedMappedStack(stack) {
 }
 
 export default class ErrorBoundary extends Component {
-  state = {hasError: false}
+  state = {}
 
   componentDidCatch(error) {
     mapStackTrace(error.stack, mappedStack => {
@@ -47,13 +47,13 @@ export default class ErrorBoundary extends Component {
       error.stack = mappedStack
         |> preparedMappedStack
       // Show the error box.
-      this.setState({error, hasError: true})
+      this.setState({error})
     })
   }
 
   render() {
-    return this.state.hasError
-      ? <Overlay {...this.state}/>
-      : this.props.children
+    return <Overlay {...this.state}>
+      {this.props.children}
+    </Overlay>
   }
 }
