@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import ErrorBox from './ErrorBox'
+import Overlay from './Overlay'
 import React, {Component} from 'react'
 import {mapStackTrace} from 'sourcemapped-stacktrace'
 
@@ -53,7 +53,7 @@ export default class ErrorBoundary extends Component {
 
   render() {
     return this.state.hasError
-      ? <ErrorBox {...this.state}/>
+      ? <Overlay {...this.state}/>
       : this.props.children
   }
 }

@@ -12,6 +12,20 @@
  * the License.
  */
 
-.root {
-  background: #f7df1e;
+:root {
+  --blue-gray-900: #263238;
+  --js-yellow: #f7df1e;
+}
+
+.errorBox {
+  background-color: var(--blue-gray-900);
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+}
+
+.codeFrame {
+  background-color: black;
+  margin: auto;
+  width: 600px;
 }

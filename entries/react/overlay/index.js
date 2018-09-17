@@ -11,21 +11,25 @@
 // the License.
 
 import React, {Component} from 'react'
-import style from './ErrorBox.module.css'
+import style from './index.module.css'
+
+// {stack.map((x, index) =>
+//   <div key={index}>
+//       <div>{x.namespace}</div>
+//       <br/>
+//       <div>{x.path}</div>
+//       <br/>
+//       <br/>
+//   </div>
+// )}
 
 export default class ErrorBox extends Component {
   render() {
     let {error:{stack}} = this.props
-    return <div className={style.root}>
-      {stack.map((x, index) =>
-        <div key={index}>
-            <div>{x.namespace}</div>
-            <br/>
-            <div>{x.path}</div>
-            <br/>
-            <br/>
-        </div>
-      )}
+    return <div className={style.errorBox}>
+      <div className={style.codeFrame}>
+        codebox
+      </div>
     </div>
   }
 }
