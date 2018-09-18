@@ -11,6 +11,7 @@
 // the License.
 
 import {
+  appendChild,
   createNode,
   getNodeByTagName,
   getResourceRequest,
@@ -39,9 +40,9 @@ let log = debug('bb:config:webpack:plugin:html')
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
 
 /**
- * Each linked asset processed by the “url-loader” will generate a module that
- * returns a path or a data URL, we will use this helper to execute that code
- * and get the final value back.
+ * Each asset processed by the “url-loader” will generate a module that returns
+ * a path or a data URL, we will use this helper to execute that code and get
+ * the final value back.
  */
 function execAssetModule(code, path) {
   let script = new Script(code)
@@ -56,14 +57,14 @@ function execAssetModule(code, path) {
 }
 
 /**
- * Actual Webpack plugin that generates an HTML from a template, add the script
- * bundles and loads any local linked assets referenced.
+ * Actual Webpack plugin that generates an HTML from a template, loads requests
+ * inside it and add the script bundles.
  */
-export default class SpaHtml {
+export default class HtmlPlugin {
   /**
-   * We use a child compiler to process the linked assets requested by the
-   * template, this makes it easier to filter the “compilation.modules” as it
-   * will only contain the modules we requested.
+   * We use a child compiler to process the assets requested by the template,
+   * this makes it easier to filter the “compilation.modules” as it will only
+   * contain the modules we requested.
    */
   _childCompiler = null
 
@@ -73,13 +74,31 @@ export default class SpaHtml {
   _options = null
 
   /**
-   * Parse5 tree of the template.
+   * Template location and path.
    */
-  _tree = null
+  _template = {
+    // Path to the directory that contains the template.
+    directory: null,
+    // Full path to the template.
+    fullPath: null,
+    // File name.
+    name: null,
+    // Parse5 tree of the template.
+    tree: null,
+  }
 
   constructor(options) {
+    validateOptions(OPTIONS_SCHEMA, options, PLUGIN_NAME)
+
+    let {dir, name} = parsePath(options.template)
+
     this._options = options
-    validateOptions(OPTIONS_SCHEMA, this._options, PLUGIN_NAME)
+    this._template = {
+      ...this._template,
+      directory: dir,
+      fullPath: options.template,
+      name,
+    }
   }
 
   /**
@@ -87,8 +106,6 @@ export default class SpaHtml {
    * compiler’s events.
    */
   apply(compiler) {
-    log('Setting target compiler hooks.')
-
     compiler.hooks.make.tapAsync(
       PLUGIN_NAME,
       this._tapMake.bind(this),
@@ -101,20 +118,51 @@ export default class SpaHtml {
   }
 
   /**
-   * Return the extracted linked asset paths from the tree.
+   * Returns the requests and node that generated it.
    */
-  * _extractAssetPaths() {
-    const URL = /^((https?:)?\/\/|data:)/
+  * _getAssetRequests() {
+    const URL = /^((\w*:)?\/\/|data:)/
 
-    for (let node of walk(this._tree)) {
-      let assetPath = getResourceRequest(node)
+    for (let node of walk(this._template.tree)) {
+      let request = getResourceRequest(node)
 
-      // Ignore empty paths, URLs and data URLs.
-      if (!assetPath || URL.test(assetPath))
+      // Ignore empty requests, URLs and data URLs.
+      if (!request || URL.test(request))
         continue
 
-      yield {path: assetPath, node}
+      yield {request, node}
     }
+  }
+
+  /**
+   * Get the chunk that has the same name as the template and the other chunks
+   * it depends on.
+   */
+  * _getCompanionChunks(chunks) {
+    const NAME = this._template.name
+
+    for (let chunk of chunks) {
+      if (chunk.id === NAME) {
+        if (chunk.getNumberOfGroups() > 1) {
+          log(`Companion chunk for “${NAME}” is inside multiple groups.`)
+          return
+        }
+
+        log(`Companion chunk found for “${NAME}”.`)
+
+        // The companion chunk must be on its own group, we that in mind, we are
+        // getting just 1 group from the groups set.
+        const GROUP = chunk.groupsIterable.values()
+          .next()
+          .value
+
+        // Yield chunks inside the group.
+        yield * GROUP.chunks
+        return
+      }
+    }
+
+    log(`Companion chunk NOT found for “${NAME}”.`)
   }
 
   /**
@@ -123,51 +171,24 @@ export default class SpaHtml {
   _getHtmlString() {
     let {minify} = this._options
     if (minify)
-      return minifiedHtmlString(this._tree)
-    return prettifiedHtmlString(this._tree)
+      return minifiedHtmlString(this._template.tree)
+    return prettifiedHtmlString(this._template.tree)
   }
 
   /**
    * Emit the final HTML file.
    */
   async _tapEmit(compilation, done) {
-    let body = getNodeByTagName(this._tree, 'body')
-    body.childNodes ??= []
-
-    log('Finding associated chunk.')
-
-    let associatedChunk = null
-    let {name: templateName} = parsePath(this._options.template)
-
-    for (let chunk of compilation.chunks) {
-      if (chunk.id == templateName) {
-        associatedChunk = chunk
-        break
-      }
+    const BODY = getNodeByTagName(this._template.tree, 'body')
+    for (let chunk of this._getCompanionChunks(compilation.chunks)) {
+      appendChild(BODY, createNode({
+        tagName: 'script',
+        attrs: [{
+          name: 'src',
+          value: `${chunk.id}.js?${chunk.hash}`,
+        }],
+      }))
     }
-
-    if (associatedChunk) {
-      log('Injecting chunks to the template.')
-
-      for (let group of associatedChunk._groups) {
-        for (let chunk of group.chunks) {
-          body.childNodes.push(createNode({
-            tagName: 'script',
-            attrs: [{
-              name: 'src',
-              value: `${chunk.id}.js?${chunk.hash}`,
-            }],
-          }))
-        }
-      }
-    } else
-      log('No associated chunk found.')
-
-    log('Adding template to dependencies.')
-
-    compilation.fileDependencies.add(this._options.template)
-
-    log('Emitting final HTML.')
 
     const FINAL_HTML = this._getHtmlString()
     compilation.assets['index.html'] = {
@@ -175,38 +196,38 @@ export default class SpaHtml {
       size: () => FINAL_HTML.length,
     }
 
+    compilation.fileDependencies.add(this._template.fullPath)
     done()
   }
 
   /**
-   * The linked assets were processed in the child compiler, this method will
-   * update their paths in the template.
+   * The requested assets were processed in the child compiler, this method
+   * will replace the request with the asset path/data URL in the template.
    */
   async _tapChildAfterCompile(compilation, done) {
+    // No modules generated so we will leave the template requests untouched.
     if (compilation.modules < 1) {
-      log('No local linked assets found in the template.')
       done()
       return
     }
 
-    log('Indexing loaded assets by raw request.')
-
+    // Index the modules generated in the child compiler by raw request.
     let byRawRequest = new Map
     for (let asset of compilation.modules)
       byRawRequest.set(asset.rawRequest, asset)
 
-    log('Updating asset paths in template.')
-
-    for (let {node, path} of this._extractAssetPaths()) {
-      if (!byRawRequest.has(path))
+    // Replace the template requests with the result from modules generated in
+    // the child compiler.
+    for (let {node, request} of this._getAssetRequests()) {
+      if (!byRawRequest.has(request))
         continue
 
-      const ASSET = byRawRequest.get(path)
+      const ASSET = byRawRequest.get(request)
       const SOURCE = ASSET.originalSource().source()
       const NEW_REQUEST = execAssetModule(SOURCE)
       setResourceRequest(node, NEW_REQUEST)
 
-      log(`Changed: ${prettyFormat({from: path, to: NEW_REQUEST})}`)
+      log(`Changed: ${prettyFormat({from: request, to: NEW_REQUEST})}`)
     }
 
     done()
@@ -216,37 +237,28 @@ export default class SpaHtml {
    * Set up the template and the child compiler to process the assets.
    */
   async _tapMake(compilation, done) {
-    log('Loading template.')
-
-    const SOURCE = readFileSync(this._options.template, 'utf8')
-
-    log('Parsing template.')
-
-    this._tree = parse(SOURCE)
-
-    log('Template is ready.')
-    log('Preparing the child compiler.')
-
     this._childCompiler = compilation.createChildCompiler(PLUGIN_NAME)
-
-    log('Adding asssets to child compiler.')
-
-    const TEMPLATE_DIR = dirname(this._options.template)
-    for (let {path} of this._extractAssetPaths()) {
-      new PrefetchPlugin(TEMPLATE_DIR, path)
-        .apply(this._childCompiler)
-
-      log(`Linked asset added: ${path}`)
-    }
-
-    log('Setting child compiler hooks.')
-
     this._childCompiler.hooks.afterCompile.tapAsync(
       PLUGIN_NAME,
       this._tapChildAfterCompile.bind(this),
     )
 
-    log('Running child compiler.')
+    log('Loading template.')
+    const SOURCE = readFileSync(this._template.fullPath, 'utf8')
+    log('Parsing template.')
+    this._template.tree = parse(SOURCE)
+    log('Template is ready.')
+
+    // The template was parsed and now we can walk through the tree and extract
+    // requests from “img” and “link” tags.
+    for (let {request} of this._getAssetRequests()) {
+      // We set the context to be the template’s directory to allow relative
+      // paths to work in a intuitive manner.
+      new PrefetchPlugin(this._template.directory, request)
+        .apply(this._childCompiler)
+
+      log(`Request added: ${request}`)
+    }
 
     this._childCompiler.runAsChild(done)
   }

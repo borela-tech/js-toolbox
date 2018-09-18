@@ -16,6 +16,11 @@ import {serialize} from 'parse5'
 
 const HTML5_NAMESPACE = 'http://www.w3.org/1999/xhtml'
 
+export function appendChild(node, child) {
+  node.childNodes ??= []
+  node.childNodes.push(child)
+}
+
 /**
  * Creates a Parse5 node.
  */
