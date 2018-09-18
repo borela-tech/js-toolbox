@@ -14,7 +14,7 @@ import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {BIN_DIR, getProjectDir} from './paths'
 import {delimiter as PATH_DELIMITER} from 'path'
-import {pickNonFalsy} from './util'
+import {pickNonFalsy} from './utils'
 import {spawn, spawnSync} from 'child_process'
 
 let log = debug('borela-js-toolbox')

@@ -11,7 +11,7 @@
 // the License.
 
 import shared from './shared'
-import {getProjectName} from '../../util'
+import {getProjectName} from '../../utils'
 import {getSettings} from '../../settings'
 import {join} from 'path'
 

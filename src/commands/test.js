@@ -24,7 +24,7 @@ import {
 import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {join} from 'path'
 import {exitOnError, runCommandSync} from '../system'
-import {exitOnPackageNotFound} from '../util'
+import {exitOnPackageNotFound} from '../utils'
 
 const CONFIG_PATH = join(CONFIGS_DIR, 'jest', 'index.js')
 

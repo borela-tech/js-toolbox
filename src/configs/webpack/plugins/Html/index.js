@@ -19,7 +19,7 @@ import {
   prettifiedHtmlString,
   setResourceRequest,
   walk,
-} from './parse5-util'
+} from './parse5-utils'
 
 import {
   dirname,

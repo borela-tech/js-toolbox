@@ -13,7 +13,7 @@
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR, getProjectDir} from '../../paths'
-import {isPathSubDirOf} from '../../util'
+import {isPathSubDirOf} from '../../utils'
 import {isAbsolute, join, resolve} from 'path'
 
 let logIncluded = debug('bb:config:webpack:included')

@@ -13,7 +13,7 @@
 import {appArgs, inspect} from '../flags'
 import {existsSync} from 'fs'
 import {exitOnError, runCommandSync} from '../system'
-import {exitOnPackageNotFound} from '../util'
+import {exitOnPackageNotFound} from '../utils'
 import {getProjectDir, setTargetDir} from '../paths'
 import {join} from 'path'
 

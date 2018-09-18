@@ -12,7 +12,7 @@
 
 import externals from './externals'
 import shared from './shared'
-import {getProjectName} from '../../util'
+import {getProjectName} from '../../utils'
 import {join} from 'path'
 
 const PROJECT_NAME = getProjectName()

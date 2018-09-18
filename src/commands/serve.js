@@ -12,7 +12,7 @@
 
 import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {exitOnError, runCommandSync} from '../system'
-import {exitOnPackageNotFound} from '../util'
+import {exitOnPackageNotFound} from '../utils'
 import {join} from 'path'
 import {port} from '../flags'
 

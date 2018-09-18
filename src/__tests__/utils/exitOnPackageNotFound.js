@@ -38,7 +38,7 @@ afterAll(() => {
 describe('exitOnPackageNotFound()', () => {
   test('Do nothing', () => {
     stubPackageDir('foo')
-    const {exitOnPackageNotFound} = require('../../util')
+    const {exitOnPackageNotFound} = require('../../utils')
     exitOnPackageNotFound()
     expect(STDOUT_SPY).not.toHaveBeenCalled()
     expect(EXIT_SPY).not.toHaveBeenCalled()
@@ -46,7 +46,7 @@ describe('exitOnPackageNotFound()', () => {
 
   test('Output error and exit', () => {
     stubPackageDir(undefined)
-    const {exitOnPackageNotFound} = require('../../util')
+    const {exitOnPackageNotFound} = require('../../utils')
     exitOnPackageNotFound()
     expect(STDOUT_SPY).toHaveBeenCalled()
     expect(EXIT_SPY).toHaveBeenCalledWith(1)

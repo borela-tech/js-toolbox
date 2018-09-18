@@ -14,7 +14,7 @@ import {
   getProjectName,
   isPathSubDirOf,
   isProduction,
-} from '../../util'
+} from '../../utils'
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'

@@ -15,7 +15,7 @@ import shared from './shared'
 import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR} from '../../paths'
 import {getSettings} from '../../settings'
-import {isProduction} from '../../util'
+import {isProduction} from '../../utils'
 import {join} from 'path'
 
 let {minify = false} = getSettings()

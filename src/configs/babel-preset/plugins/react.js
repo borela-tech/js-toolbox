@@ -12,7 +12,7 @@
 
 import {babelTransformPlugin} from '../../../modules'
 import {getSettings} from '../../../settings'
-import {isProduction} from '../../../util'
+import {isProduction} from '../../../utils'
 
 export default function (plugins) {
   let {jsx, react} = getSettings()
