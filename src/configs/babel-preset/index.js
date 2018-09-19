@@ -28,17 +28,61 @@ import {getSettings} from '../../settings'
 let log = debug('bb:config:babel')
 
 /**
- * The final Babel preset.
+ * Add “@babel/preset-env” to the final preset configured to include polyfills
+ * in the final bundle.
  */
-export default function () {
+function includePolyfills(preset) {
   let {
     browsers,
-    includePolyfills,
     node,
     platforms,
+  } = getSettings()
+
+  // The preset env will check the “browsers” and “node” values to enable the
+  // necessary transformations.
+  let presetEnvOptions = {
+    useBuiltIns: 'usage',
+    targets: {},
+  }
+
+  if (platforms.includes('browser'))
+    presetEnvOptions.targets.browsers = browsers
+
+  if (platforms.includes('node'))
+    presetEnvOptions.targets.node = node
+
+  preset.presets.push([
+    getModulePath('@babel/preset-env'),
+    presetEnvOptions,
+  ])
+}
+
+/**
+ * Checks if the polyfills needs to be included in the final bundle.
+ */
+function mustIncludePolyfills() {
+  let {
+    includePolyfills,
     projectType,
   } = getSettings()
 
+  if (typeof includePolyfills === 'boolean')
+    return includePolyfills
+
+  switch (projectType) {
+    case 'cli':
+    case 'node-app':
+    case 'react-app':
+      return true
+  }
+
+  return false
+}
+
+/**
+ * The final Babel preset.
+ */
+export default function () {
   let result = {
     plugins: [
       babelSyntaxPlugin('dynamic-import'),
@@ -51,40 +95,8 @@ export default function () {
     presets: [],
   }
 
-  if (includePolyfills === undefined) {
-    switch (projectType) {
-      case 'cli':
-      case 'node-app':
-      case 'react-app':
-        includePolyfills = true
-        break
-      case 'lib':
-      case 'node-lib':
-      case 'web-lib':
-        includePolyfills = false
-        break
-    }
-  }
-
-  if (includePolyfills) {
-    // The preset env will check the “browsers” and “node” values to enable the
-    // necessary transformations.
-    let presetEnvOptions = {
-      useBuiltIns: 'usage',
-      targets: {},
-    }
-
-    if (platforms.includes('browser'))
-      presetEnvOptions.targets.browsers = browsers
-
-    if (platforms.includes('node'))
-      presetEnvOptions.targets.node = node
-
-    result.presets.push([
-      getModulePath('@babel/preset-env'),
-      presetEnvOptions,
-    ])
-  }
+  if (mustIncludePolyfills())
+    includePolyfills(result)
 
   // Each of these functions will check the toolbox’s settings and add the
   // necessary plugins.

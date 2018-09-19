@@ -21,16 +21,12 @@ import {
   walk,
 } from './parse5-utils'
 
-import {
-  dirname,
-  parse as parsePath,
-} from 'path'
-
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
-import {parse} from 'parse5'
+import {parse as parsePath} from 'path'
+import {parse as parseHtml} from 'parse5'
 import {PrefetchPlugin} from 'webpack'
 import {readFileSync} from 'fs'
 import {Script} from 'vm'
@@ -272,7 +268,7 @@ export default class HtmlPlugin {
     log('Loading template.')
     const SOURCE = readFileSync(this._template.fullPath, 'utf8')
     log('Parsing template.')
-    this._template.tree = parse(SOURCE)
+    this._template.tree = parseHtml(SOURCE)
     log('Template is ready.')
 
     // The template was parsed and now we can walk through the tree and extract

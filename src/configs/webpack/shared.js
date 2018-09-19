@@ -211,13 +211,12 @@ export default function () {
   }
 
   if (externals) {
-    // Exclude the target module from the bundle and set the global variable that
-    // identifies it. This is usually used in conjuction with the HTML plugin to
-    // insert CDN links at the “head” tag.
+    // Exclude the target module from the bundle and set the global variable
+    // that identifies it. This is usually used in conjuction with the HTML
+    // plugin to insert CDN links at the “head” tag.
     result.externals = {}
-    for (let {globalIdentifier, importIdentifier} of externals) {
+    for (let {globalIdentifier, importIdentifier} of externals)
       result.externals[importIdentifier] = globalIdentifier
-    }
   }
 
   // Webpack’s development server.

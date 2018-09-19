@@ -30,7 +30,7 @@ export function createNode({tagName, ...other}) {
     childNodes: [],
     namespaceURI: HTML5_NAMESPACE,
     nodeName: tagName,
-    tagName: tagName,
+    tagName,
     ...other,
   }
 }
