@@ -11,6 +11,7 @@
 // the License.
 
 import React, {Component} from 'react'
+import negativeLogo from './negative-logo.svg'
 import style from './index.module.css'
 
 export default class ErrorBox extends Component {
@@ -20,6 +21,7 @@ export default class ErrorBox extends Component {
       return this.children
 
     return <div className={style.errorBox}>
+      <img src={negativeLogo}/>
       <div className={style.codeFrame}>
         codebox
       </div>
