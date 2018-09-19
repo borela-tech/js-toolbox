@@ -51,33 +51,12 @@ export const BORELA_JSON = existsSync(BORELA_JSON_PATH)
   ? camelizeKeys(require(BORELA_JSON_PATH))
   : {}
 
-// Helper for the “getEnvFlags” function.
-const ENV_VAR = /^BORELA_JS_TOOLBOX_(.+)$/
-
-/**
- * Returns the environment flags that follows the format:
- *
- *   BORELA_JS_TOOLBOX_FOO
- *   BORELA_JS_TOOLBOX_BAR
- *   BORELA_JS_TOOLBOX_...
- */
-export function getEnvFlags() {
-  let result = {}
-  for (let prop in process.env) {
-    const MATCH = prop.match(ENV_VAR)
-    if (MATCH)
-      result[MATCH[1].toLowerCase()] = process.env[prop]
-  }
-  return camelizeKeys(result)
-}
-
 /**
  * Combines the flags gathered from the different ways that the toolbox can be
  * configured, set some defaults and returns the result.
  */
 export function getSettings() {
   let result = {
-    ...getEnvFlags(),
     ...PACKAGE_JSON,
     ...BORELARC,
     ...BORELA_JSON,
