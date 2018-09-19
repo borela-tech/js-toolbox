@@ -27,12 +27,18 @@
   },
   "homepage": "//www.borela.tech/#/js-toolbox",
   "keywords": [
+    "babel",
     "borela",
+    "cli",
     "dev",
     "develop",
     "development",
+    "flow",
+    "react",
     "tool",
-    "toolbox"
+    "toolbox",
+    "typescript",
+    "webpack",
   ],
   "author": {
     "name": "Alexandre Borela",
