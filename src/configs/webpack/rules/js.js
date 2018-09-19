@@ -15,7 +15,7 @@ import babelPreset from '../../babel-preset'
 export default function () {
   return {
     exclude: /node_modules/,
-    test: /\.(jsx?|mjs)$/,
+    test: /\.(jsx?|mjs|tsx?)$/,
     use: [{
       loader: 'babel-loader',
       options: {
