@@ -89,10 +89,9 @@ export function getSettings() {
   // Default supported browsers inferred by the platform.
   if (result.platforms.includes('browsers')) {
     result.browsers ??= [
-      'chrome >= 49',
       '>= 0.5%',
-      'last 2 versions',
-      'not dead',
+      'not ie 11',
+      'not op_mini all',
     ]
   }
 
