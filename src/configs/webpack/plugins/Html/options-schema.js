@@ -18,11 +18,13 @@ export default {
   type: 'object',
   properties: {
     minify: {
+      description: 'True if the final HTML must be minified.',
       type: 'boolean',
     },
-    template: {
+    templatePath: {
+      description: 'Full path to the target template.',
       type: 'string',
     },
   },
-  required: ['template'],
+  required: ['templatePath'],
 }

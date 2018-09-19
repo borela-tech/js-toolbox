@@ -52,11 +52,11 @@ function setHtmlTemplate(config) {
   const DEFAULT_TEMPLATE = join(REACT_ENTRY_DIR, 'index.html')
   const CUSTOM_TEMPLATE = join(PROJECT_SRC_DIR, 'index.html')
 
-  let template = existsSync(CUSTOM_TEMPLATE)
+  let templatePath = existsSync(CUSTOM_TEMPLATE)
     ? CUSTOM_TEMPLATE
     : DEFAULT_TEMPLATE
 
-  config.plugins.push(new Html({minify, template}))
+  config.plugins.push(new Html({minify, templatePath}))
 }
 
 /**

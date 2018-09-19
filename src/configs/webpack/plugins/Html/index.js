@@ -90,13 +90,13 @@ export default class HtmlPlugin {
   constructor(options) {
     validateOptions(OPTIONS_SCHEMA, options, PLUGIN_NAME)
 
-    let {dir, name} = parsePath(options.template)
+    let {dir, name} = parsePath(options.templatePath)
 
     this._options = options
     this._template = {
       ...this._template,
       directory: dir,
-      fullPath: options.template,
+      fullPath: options.templatePath,
       name,
     }
   }
@@ -179,6 +179,10 @@ export default class HtmlPlugin {
    * Emit the final HTML file.
    */
   async _tapEmit(compilation, done) {
+    // Add external scripts from CDN.
+
+
+    // Add the chunk scripts to the end of the body.
     const BODY = getNodeByTagName(this._template.tree, 'body')
     for (let chunk of this._getCompanionChunks(compilation.chunks)) {
       appendChild(BODY, createNode({
