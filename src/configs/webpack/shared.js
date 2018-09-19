@@ -48,6 +48,74 @@ let {
 } = getSettings()
 
 /**
+ * Configure the stats generation.
+ */
+function configureBundleStats(config) {
+  // Interactive tree map of the bundle.
+  if (interactiveBundleStats)
+    config.plugins.push(new BundleAnalyzerPlugin)
+
+  // JSON file containing the bundle stats.
+  if (bundleStats) {
+    config.plugins.push(new StatsWriterPlugin({
+      filename: 'bundle-stats.json',
+      // Include everything.
+      fields: null,
+    }))
+  }
+}
+
+/**
+ * We are only including configuration for the dev server when requested by the
+ * CLI.
+ */
+function configureDevServer(config) {
+  if (!configDevServer)
+    return
+  config.devServer = {
+    contentBase: PROJECT_BUILD_DIR,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+    },
+    index: 'index.html',
+    stats: config.stats,
+    port,
+  }
+}
+
+/**
+ * Exclude the target module from the bundle and set the global variable that
+ * identifies it. This is usually used in conjuction with the HTML plugin to
+ * insert CDN links at the “head” tag.
+ */
+function configureExternals(config) {
+  if (!externals)
+    return
+  config.externals = {}
+  for (let {globalIdentifier, importIdentifier} of externals)
+    config.externals[importIdentifier] = globalIdentifier
+}
+
+/**
+ * Configure the minifier to compress the final bundle.
+ */
+function configureJsMinification(config) {
+  if (!(minify || minifyJs))
+    return
+  config.optimization.minimize = true
+  config.optimization.minimizer = [new UglifyJsPlugin({
+    sourceMap: !disableSourceMaps,
+    uglifyOptions: {
+      output: {
+        comments: false,
+      },
+    },
+  })]
+}
+
+/**
  * By default, the shared configuration look for 2 entries, this is useful when
  * your project act both as an app by running the “main.js” and a library by
  * allowing the “index.js” to be imported.
@@ -210,56 +278,10 @@ export default function () {
     watch,
   }
 
-  if (externals) {
-    // Exclude the target module from the bundle and set the global variable
-    // that identifies it. This is usually used in conjuction with the HTML
-    // plugin to insert CDN links at the “head” tag.
-    result.externals = {}
-    for (let {globalIdentifier, importIdentifier} of externals)
-      result.externals[importIdentifier] = globalIdentifier
-  }
-
-  // Webpack’s development server.
-  if (configDevServer) {
-    result.devServer = {
-      contentBase: PROJECT_BUILD_DIR,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-      },
-      index: 'index.html',
-      stats: STATS,
-      port,
-    }
-  }
-
-  // Minification settings.
-  result.optimization.minimize = minify || minifyJs
-
-  if (minify || minifyJs) {
-    result.optimization.minimizer = [new UglifyJsPlugin({
-      sourceMap: !disableSourceMaps,
-      uglifyOptions: {
-        output: {
-          comments: false,
-        },
-      },
-    })]
-  }
-
-  // Interactive tree map of the bundle.
-  if (interactiveBundleStats)
-    result.plugins.push(new BundleAnalyzerPlugin)
-
-  // JSON file containing the bundle stats.
-  if (bundleStats) {
-    result.plugins.push(new StatsWriterPlugin({
-      filename: 'bundle-stats.json',
-      // Include everything.
-      fields: null,
-    }))
-  }
+  configureExternals(result)
+  configureDevServer(result)
+  configureJsMinification(result)
+  configureBundleStats(result)
 
   return result
 }
