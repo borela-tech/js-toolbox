@@ -59,6 +59,13 @@ export function flow(yargs) {
   })
 }
 
+export function includePolyfills(yargs) {
+  yargs.option('include-polyfills', {
+    description: 'Include the required polyfills.',
+    type: 'boolean',
+  })
+}
+
 export function inspect(yargs) {
   yargs.option('inspect', {
     description: 'Enable NodeJS inspector.',

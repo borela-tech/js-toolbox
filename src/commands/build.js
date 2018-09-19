@@ -17,6 +17,7 @@ import {
   disableExperimentalPlugins,
   disableSourceMaps,
   jsx,
+  includePolyfills,
   interactiveBundleStats,
   minify,
   minifyCss,
@@ -45,6 +46,7 @@ function builder(yargs) {
   commentFlow(yargs)
   disableExperimentalPlugins(yargs)
   disableSourceMaps(yargs)
+  includePolyfills(yargs)
   interactiveBundleStats(yargs)
   jsx(yargs)
   minify(yargs)

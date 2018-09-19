@@ -14,6 +14,7 @@ import {
   browsers,
   disableExperimentalPlugins,
   flow,
+  includePolyfills,
   jsx,
   node,
   platforms,
@@ -32,6 +33,7 @@ function builder(yargs) {
   browsers(yargs)
   disableExperimentalPlugins(yargs)
   flow(yargs)
+  includePolyfills(yargs)
   jsx(yargs)
   node(yargs)
   platforms(yargs)
