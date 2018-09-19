@@ -69,9 +69,16 @@ export default class HtmlPlugin {
   _childCompiler = null
 
   /**
-   * Options passed to the plugin.
+   * Stuff that needs to be added to the “head” tag.
    */
-  _options = null
+  _head = {
+    appendScripts: [],
+  }
+
+  /**
+   * Minify the final HTML.
+   */
+  _minify = false
 
   /**
    * Template location and path.
@@ -92,7 +99,8 @@ export default class HtmlPlugin {
 
     let {dir, name} = parsePath(options.templatePath)
 
-    this._options = options
+    this._head.appendScripts = options?.head?.appendScripts || []
+    this._minify = options.minify
     this._template = {
       ...this._template,
       directory: dir,
@@ -169,8 +177,7 @@ export default class HtmlPlugin {
    * Returns the current tree as a beautified or minified HTML string.
    */
   _getHtmlString() {
-    let {minify} = this._options
-    if (minify)
+    if (this._minify)
       return minifiedHtmlString(this._template.tree)
     return prettifiedHtmlString(this._template.tree)
   }
@@ -179,11 +186,26 @@ export default class HtmlPlugin {
    * Emit the final HTML file.
    */
   async _tapEmit(compilation, done) {
-    // Add external scripts from CDN.
+    const HEAD = getNodeByTagName(this._template.tree, 'head')
+    const BODY = getNodeByTagName(this._template.tree, 'body')
 
+    // Add external scripts from CDN.
+    for (let script of this._head.appendScripts) {
+      appendChild(HEAD, createNode({
+        tagName: 'script',
+        attrs: [{
+          name: 'crossorigin',
+          value: 'anonymous',
+        }, {
+          name: 'src',
+          value: script,
+        }],
+      }))
+
+      log(`Script appended to the “head”: ${script}`)
+    }
 
     // Add the chunk scripts to the end of the body.
-    const BODY = getNodeByTagName(this._template.tree, 'body')
     for (let chunk of this._getCompanionChunks(compilation.chunks)) {
       appendChild(BODY, createNode({
         tagName: 'script',

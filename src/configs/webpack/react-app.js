@@ -18,7 +18,11 @@ import {getSettings} from '../../settings'
 import {isProduction} from '../../utils'
 import {join} from 'path'
 
-let {minify = false} = getSettings()
+let {
+  externals = {},
+  minify,
+} = getSettings()
+
 const PROJECT_DIR = getProjectDir()
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const REACT_ENTRY_DIR = join(TOOLBOX_DIR, 'entries', 'react')
@@ -56,7 +60,37 @@ function setHtmlTemplate(config) {
     ? CUSTOM_TEMPLATE
     : DEFAULT_TEMPLATE
 
-  config.plugins.push(new Html({minify, templatePath}))
+  let cdnScripts = []
+  for (let key in externals) {
+    let {cdn} = externals[key]
+
+    if (typeof cdn === 'string') {
+      cdnScripts.push(cdn)
+      continue
+    }
+
+    if (Array.isArray(cdn)) {
+      cdnScripts = [
+        ...cdnScripts,
+        ...cdn,
+      ]
+      continue
+    }
+
+    let {development, production} = cdn
+    if (isProduction())
+      cdnScripts.push(production)
+    else
+      cdnScripts.push(development)
+  }
+
+  config.plugins.push(new Html({
+    head: {
+      appendScripts: cdnScripts,
+    },
+    minify,
+    templatePath,
+  }))
 }
 
 /**
@@ -72,11 +106,6 @@ export default function () {
 
   setEntryPoint(config)
   setHtmlTemplate(config)
-
-  config.externals = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  }
 
   config.target = 'web'
   return [config]

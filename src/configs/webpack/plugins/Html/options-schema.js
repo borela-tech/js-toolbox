@@ -17,13 +17,23 @@ export default {
   additionalProperties: false,
   type: 'object',
   properties: {
+    head: {
+      type: 'object',
+      description: 'Stuff that needs to be added to the “head” tag.',
+      properties: {
+        appendScripts: {
+          type: 'array',
+          items: {type: 'string'},
+        },
+      },
+    },
     minify: {
-      description: 'True if the final HTML must be minified.',
       type: 'boolean',
+      description: 'True if the final HTML must be minified.',
     },
     templatePath: {
-      description: 'Full path to the target template.',
       type: 'string',
+      description: 'Full path to the target template.',
     },
   },
   required: ['templatePath'],
