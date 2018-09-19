@@ -21,6 +21,7 @@ import {join} from 'path'
 let {
   externals = {},
   minify,
+  minifyHtml,
 } = getSettings()
 
 const PROJECT_DIR = getProjectDir()
@@ -88,7 +89,7 @@ function setHtmlTemplate(config) {
     head: {
       appendScripts: cdnScripts,
     },
-    minify,
+    minify: minify || minifyHtml,
     templatePath,
   }))
 }
