@@ -33,8 +33,10 @@ let log = debug('bb:config:babel')
 export default function () {
   let {
     browsers,
+    includePolyfills,
     node,
     platforms,
+    projectType,
   } = getSettings()
 
   let result = {
@@ -49,23 +51,40 @@ export default function () {
     presets: [],
   }
 
-  // The preset env will check the “browsers” and “node” values to enable the
-  // necessary transformations.
-  let presetEnvOptions = {
-    useBuiltIns: 'usage',
-    targets: {},
+  if (includePolyfills === undefined) {
+    switch (projectType) {
+      case 'cli':
+      case 'node-app':
+      case 'react-app':
+        includePolyfills = true
+        break
+      case 'lib':
+      case 'node-lib':
+      case 'web-lib':
+        includePolyfills = false
+        break
+    }
   }
 
-  if (platforms.includes('browser'))
-    presetEnvOptions.targets.browsers = browsers
+  if (includePolyfills) {
+    // The preset env will check the “browsers” and “node” values to enable the
+    // necessary transformations.
+    let presetEnvOptions = {
+      useBuiltIns: 'usage',
+      targets: {},
+    }
 
-  if (platforms.includes('node'))
-    presetEnvOptions.targets.node = node
+    if (platforms.includes('browser'))
+      presetEnvOptions.targets.browsers = browsers
 
-  result.presets.push([
-    getModulePath('@babel/preset-env'),
-    presetEnvOptions,
-  ])
+    if (platforms.includes('node'))
+      presetEnvOptions.targets.node = node
+
+    result.presets.push([
+      getModulePath('@babel/preset-env'),
+      presetEnvOptions,
+    ])
+  }
 
   // Each of these functions will check the toolbox’s settings and add the
   // necessary plugins.
