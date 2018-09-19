@@ -51,7 +51,10 @@ export default function () {
 
   // The preset env will check the “browsers” and “node” values to enable the
   // necessary transformations.
-  let presetEnvOptions = {targets: {}}
+  let presetEnvOptions = {
+    useBuiltIns: 'usage',
+    targets: {},
+  }
 
   if (platforms.includes('browser'))
     presetEnvOptions.targets.browsers = browsers
