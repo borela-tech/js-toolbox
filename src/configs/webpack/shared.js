@@ -40,7 +40,7 @@ let {
   disableSourceMaps = false,
   configDevServer = false,
   interactiveBundleStats = false,
-  externals = {},
+  externals,
   minify,
   minifyJs,
   port = 9000,
@@ -213,12 +213,14 @@ export default function () {
     watch,
   }
 
-  // Exclude the target module from the bundle and set the global variable that
-  // identifies it. This is usually used in conjuction with the HTML plugin to
-  // insert CDN links at the “head” tag.
-  result.externals = {}
-  for (let {globalIdentifier, importIdentifier} of externals) {
-    result.externals[importIdentifier] = globalIdentifier
+  if (externals) {
+    // Exclude the target module from the bundle and set the global variable that
+    // identifies it. This is usually used in conjuction with the HTML plugin to
+    // insert CDN links at the “head” tag.
+    result.externals = {}
+    for (let {globalIdentifier, importIdentifier} of externals) {
+      result.externals[importIdentifier] = globalIdentifier
+    }
   }
 
   // Webpack’s development server.
