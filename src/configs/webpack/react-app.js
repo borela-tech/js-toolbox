@@ -26,7 +26,8 @@ let {
 
 const PROJECT_DIR = getProjectDir()
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
-const REACT_ENTRY_DIR = join(TOOLBOX_DIR, 'entries', 'react')
+const ENTRIES_DIR = join(TOOLBOX_DIR, 'entries')
+const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react')
 
 /**
  * This function will check if there’s an entry point “main.js” in the project’s
