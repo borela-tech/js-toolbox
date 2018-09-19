@@ -217,9 +217,8 @@ export default function () {
   // identifies it. This is usually used in conjuction with the HTML plugin to
   // insert CDN links at the “head” tag.
   result.externals = {}
-  for (let key in externals) {
-    const EXTERNAL = externals[key]
-    result.externals[key] = EXTERNAL.globalIdentifier
+  for (let {globalIdentifier, importIdentifier} of externals) {
+    result.externals[importIdentifier] = globalIdentifier
   }
 
   // Webpack’s development server.

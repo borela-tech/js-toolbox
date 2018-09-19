@@ -1,19 +1,18 @@
 {
   "project-type": "react",
-  "externals": {
-    "react": {
-      "global-identifier": "React",
-      "cdn": {
-        "development": "//unpkg.com/react@16/umd/react.development.js",
-        "production": "//unpkg.com/react@16/umd/react.production.min.js"
-      }
-    },
-    "react-dom": {
-      "global-identifier": "ReactDOM",
-      "cdn": {
-        "development": "//unpkg.com/react-dom@16/umd/react-dom.development.js",
-        "production": "//unpkg.com/react-dom@16/umd/react-dom.production.min.js"
-      }
+  "externals": [{
+    "global-identifier": "React",
+    "import-identifier": "react",
+    "cdn": {
+      "development": "//unpkg.com/react@16/umd/react.development.js",
+      "production": "//unpkg.com/react@16/umd/react.production.min.js"
     }
-  }
+  }, {
+    "global-identifier": "ReactDOM",
+    "import-identifier": "react-dom",
+    "cdn": {
+      "development": "//unpkg.com/react-dom@16/umd/react-dom.development.js",
+      "production": "//unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+    }
+  }]
 }

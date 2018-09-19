@@ -62,9 +62,7 @@ function setHtmlTemplate(config) {
     : DEFAULT_TEMPLATE
 
   let cdnScripts = []
-  for (let key in externals) {
-    let {cdn} = externals[key]
-
+  for (let {cdn} of externals) {
     if (typeof cdn === 'string') {
       cdnScripts.push(cdn)
       continue
