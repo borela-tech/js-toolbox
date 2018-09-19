@@ -1,5 +1,5 @@
 {
-  "project-type": "react",
+  "project-type": "react-app",
   "externals": [{
     "global-identifier": "React",
     "import-identifier": "react",

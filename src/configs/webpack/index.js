@@ -45,7 +45,7 @@ switch (projectType) {
     config = nodeAppConfig()
     break
 
-  case 'react':
+  case 'react-app':
     config = reactAppConfig()
     break
 

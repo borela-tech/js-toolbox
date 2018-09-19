@@ -75,7 +75,7 @@ export function getSettings() {
       result.platforms ??= ['browser', 'node']
       break
 
-    case 'react':
+    case 'react-app':
       result.platforms ??= ['browser']
       result.jsx ??= true
       result.react ??= true
