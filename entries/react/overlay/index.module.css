@@ -25,6 +25,10 @@
   width: 100vw;
 }
 
+.logo {
+  height: 70px;
+}
+
 .codeFrame {
   background-color: black;
   margin: auto;

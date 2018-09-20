@@ -14,17 +14,27 @@ import React, {Component} from 'react'
 import negativeLogo from './negative-logo.svg'
 import style from './index.module.css'
 
-export default class ErrorBox extends Component {
+export class Overlay extends Component {
   render() {
     let {error} = this.props
     if (!error)
       return this.children
 
-    return <div className={style.errorBox}>
-      <img src={negativeLogo}/>
-      <div className={style.codeFrame}>
-        codebox
+    return <>
+      {/* The actual app. */}
+      {this.children}
+
+      {/* Error information. */}
+      <div className={style.errorBox}>
+        <div className={style.mainFrame}>
+          <img
+            className={style.logo}
+            src={negativeLogo}
+          />
+        </div>
       </div>
-    </div>
+    </>
   }
 }
+
+export default Overlay

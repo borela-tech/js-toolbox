@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import Overlay from './Overlay'
+import Overlay from './overlay'
 import React, {Component} from 'react'
 import {mapStackTrace} from 'sourcemapped-stacktrace'
 
@@ -38,7 +38,7 @@ function preparedMappedStack(stack) {
   return result
 }
 
-export default class ErrorBoundary extends Component {
+export class ErrorBoundary extends Component {
   state = {}
 
   componentDidCatch(error) {
@@ -52,8 +52,12 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
-    return <Overlay {...this.state}>
-      {this.props.children}
-    </Overlay>
+    return (
+      <Overlay {...this.state}>
+        {this.props.children}
+      </Overlay>
+    )
   }
 }
+
+export default ErrorBoundary
