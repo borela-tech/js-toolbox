@@ -51,7 +51,7 @@ function fileName(file) {
 
 export default function () {
   return {
-    exclude: /\.(css|jsx?|mjs)$/,
+    exclude: /\.(css|jsx?|mjs|tsx?)$/,
     use: [{
       loader: 'url-loader',
       options: {
