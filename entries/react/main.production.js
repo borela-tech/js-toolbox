@@ -16,7 +16,6 @@ import {render} from 'react-dom'
 
 const HTML_ROOT = document.getElementById('app')
 
-// Render the page after all resources load.
 window.addEventListener('load', () => {
   render(<App/>, HTML_ROOT)
 })

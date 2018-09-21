@@ -17,23 +17,25 @@ import style from './index.module.css'
 export class Overlay extends Component {
   render() {
     let {error} = this.props
-    if (!error)
-      return this.children
-
-    return <>
-      {/* The actual app. */}
-      {this.children}
-
-      {/* Error information. */}
+    return (
       <div className={style.errorBox}>
         <div className={style.mainFrame}>
           <img
             className={style.logo}
             src={negativeLogo}
           />
+
+          <div className={style.errorMessage}>
+            {error.message}
+          </div>
+
+
+          <div>
+            stack
+          </div>
         </div>
       </div>
-    </>
+    )
   }
 }
 

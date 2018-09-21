@@ -46,7 +46,6 @@ export class ErrorBoundary extends Component {
       // Prepare the mapped stack.
       error.stack = mappedStack
         |> preparedMappedStack
-      // Show the error box.
       this.setState({error})
     })
   }
