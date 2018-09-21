@@ -52,11 +52,10 @@ export class ErrorBoundary extends Component {
   }
 
   render() {
-    return (
-      <Overlay {...this.state}>
-        {this.props.children}
-      </Overlay>
-    )
+    let {error} = this.state
+    return !error
+      ? this.props.children
+      : null
   }
 }
 
