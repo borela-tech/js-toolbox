@@ -25,6 +25,11 @@
   width: 100vw;
 }
 
+.mainFrame {
+  margin: 30px auto 30px auto;
+  width: 960px;
+}
+
 .logo {
   height: 70px;
 }
