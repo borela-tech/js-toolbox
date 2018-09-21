@@ -15,7 +15,7 @@ import ErrorBoundary from './ErrorBoundary'
 import React from 'react'
 import {render} from 'react-dom'
 
-const HTML_ROOT = document.getElementById('app')
+const ROOT = document.getElementById('root')
 
 if (module.hot) {
   let {AppContainer} = require('react-hot-loader')
@@ -27,7 +27,7 @@ if (module.hot) {
           <App/>
         </ErrorBoundary>
       </AppContainer>,
-      HTML_ROOT,
+      ROOT,
     )
   })
 
@@ -39,7 +39,7 @@ if (module.hot) {
           <ReloadedApp/>
         </ErrorBoundary>
       </AppContainer>,
-      HTML_ROOT,
+      ROOT,
     )
   })
 } else {
@@ -48,7 +48,7 @@ if (module.hot) {
       <ErrorBoundary>
         <App/>
       </ErrorBoundary>,
-      HTML_ROOT,
+      ROOT,
     )
   })
 }

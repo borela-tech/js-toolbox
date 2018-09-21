@@ -14,8 +14,8 @@ import App from 'App'
 import React from 'react'
 import {render} from 'react-dom'
 
-const HTML_ROOT = document.getElementById('app')
+const ROOT = document.getElementById('root')
 
 window.addEventListener('load', () => {
-  render(<App/>, HTML_ROOT)
+  render(<App/>, ROOT)
 })
