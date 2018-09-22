@@ -4,9 +4,6 @@ env variable as a JSON string.
 
 The `settings.js` file loads the flags in sequence from:
 
-* Env variables following the format `BORELA_JS_TOOOBOX_{flag}`. For example:
-  * `BORELA_JS_TOOLBOX_JSX`;
-  * `BORELA_JS_TOOLBOX_REACT`;
 * `package.json` file;
 * `borelarc` file;
 * `borela.json` file;
