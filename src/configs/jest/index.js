@@ -18,18 +18,20 @@ import {join} from 'path'
 
 let log = debug('bb:config:jest')
 
-let {platforms = []} = getSettings()
+let {
+  jsx,
+  platforms = [],
+  typeScript,
+} = getSettings()
 const BROWSER = platforms.includes('browser')
+const BABEL_TRANSFORM = join(CONFIGS_DIR, 'jest', 'babel-transform.js')
 
 const CONFIG = {
   rootDir: join(getProjectDir(), 'src'),
   moduleFileExtensions: [
     'js',
-    'jsx',
     'json',
     'mjs',
-    'ts',
-    'tsx',
   ],
   modulePathIgnorePatterns: [
     'node_modules',
@@ -45,12 +47,26 @@ const CONFIG = {
   ],
   testURL: 'http://localhost',
   transform: {
-    '^.+\\.(jsx?|mjs|tsx?)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
+    '\\.(js|mjs)$': BABEL_TRANSFORM,
   },
   verbose: true,
 }
 
-log(prettyFormat(CONFIG))
+if (jsx) {
+  CONFIG.moduleFileExtensions.push('jsx')
+  CONFIG.transform['\\.jsx$'] = BABEL_TRANSFORM
+}
 
+if (typeScript) {
+  CONFIG.moduleFileExtensions.push('ts')
+  CONFIG.transform['\\.ts$'] = BABEL_TRANSFORM
+
+  if (jsx) {
+    CONFIG.moduleFileExtensions.push('tsx')
+    CONFIG.transform['\\.tsx$'] = BABEL_TRANSFORM
+  }
+}
+
+log(prettyFormat(CONFIG))
 // We can’t “export default CONFIG” because Jest doesn’t support it.
 module.exports = CONFIG
