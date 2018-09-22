@@ -23,13 +23,29 @@ const BROWSER = platforms.includes('browser')
 
 const CONFIG = {
   rootDir: join(getProjectDir(), 'src'),
-  modulePathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
+  moduleFileExtensions: [
+    'js',
+    'jsx',
+    'json',
+    'mjs',
+    'ts',
+    'tsx',
+  ],
+  modulePathIgnorePatterns: [
+    'node_modules',
+    '__fixture__',
+    '__fixtures__',
+  ],
   testEnvironment: BROWSER ? 'jsdom' : 'node',
   testRegex: '__tests__',
-  testPathIgnorePatterns: ['node_modules', '__fixture__', '__fixtures__'],
+  testPathIgnorePatterns: [
+    'node_modules',
+    '__fixture__',
+    '__fixtures__',
+  ],
   testURL: 'http://localhost',
   transform: {
-    '^.+\\.(jsx?)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
+    '^.+\\.(jsx?|mjs|tsx?)$': join(CONFIGS_DIR, 'jest', 'babel-transform.js'),
   },
   verbose: true,
 }
