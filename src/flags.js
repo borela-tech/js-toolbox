@@ -188,9 +188,8 @@ export function typeScript(yargs) {
 }
 
 export function watch(yargs) {
-  yargs.options({
+  yargs.option({
     watch: {
-      default: false,
       description: 'Watch for changes.',
       type: 'boolean',
     },
