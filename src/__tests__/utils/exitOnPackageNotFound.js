@@ -48,7 +48,7 @@ describe('exitOnPackageNotFound()', () => {
     stubPackageDir(undefined)
     const {exitOnPackageNotFound} = require('../../utils')
     exitOnPackageNotFound()
-    expect(STDOUT_SPY).toHaveBeenCalled()
+    expect(STDOUT_SPY).toHaveBeenCalledWith('No valid “package.json” found.')
     expect(EXIT_SPY).toHaveBeenCalledWith(1)
   })
 })

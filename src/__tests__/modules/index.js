@@ -25,11 +25,11 @@ jest.doMock('../../paths', () => ({
 }))
 
 describe('Module helpers', () => {
-  describe('Module exists', () => {
+  describe('Module DOES exist', () => {
     describe('assertModuleExists()', () => {
       test('Do nothing', () => {
         let {assertModuleExists} = require('../../modules')
-        assertModuleExists('foo')
+        expect(assertModuleExists('foo')).toBeUndefined()
       })
     })
 
@@ -41,7 +41,7 @@ describe('Module helpers', () => {
     })
 
     describe('getModulePackageJson()', () => {
-      test('Returns the “package.json” from the module', () => {
+      test('Returns the module’s “package.json” contents', () => {
         let {getModulePackageJson} = require('../../modules')
         expect(getModulePackageJson('foo')).toEqual({
           name: 'foo',
@@ -62,7 +62,7 @@ describe('Module helpers', () => {
     })
   })
 
-  describe('Module does not exist', () => {
+  describe('Module DOES NOT exist', () => {
     describe('assertModuleExists()', () => {
       test('Throws an exception', () => {
         let {assertModuleExists} = require('../../modules')
