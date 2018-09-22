@@ -93,7 +93,7 @@ export default class HtmlPlugin {
   constructor(options) {
     validateOptions(OPTIONS_SCHEMA, options, PLUGIN_NAME)
 
-    let {dir, name} = parsePath(options.templatePath)
+    let {base, dir} = parsePath(options.templatePath)
 
     this._head.appendScripts = options?.head?.appendScripts || []
     this._minify = options.minify
@@ -101,7 +101,7 @@ export default class HtmlPlugin {
       ...this._template,
       directory: dir,
       fullPath: options.templatePath,
-      name,
+      name: base,
     }
   }
 
@@ -213,7 +213,7 @@ export default class HtmlPlugin {
     }
 
     const FINAL_HTML = this._getHtmlString()
-    compilation.assets['index.html'] = {
+    compilation.assets[this._template.name] = {
       source: () => FINAL_HTML,
       size: () => FINAL_HTML.length,
     }
