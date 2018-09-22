@@ -75,9 +75,9 @@ function configureDevServer(config) {
   config.devServer = {
     contentBase: PROJECT_BUILD_DIR,
     headers: {
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
     index: 'index.html',
     stats: config.stats,
