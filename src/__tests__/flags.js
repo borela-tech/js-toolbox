@@ -41,7 +41,7 @@ import {
 const YARGS_STUB = {
   option(value) {
     expect(value.default).toBeUndefined()
-  }
+  },
 }
 
 // Default values must be handled by the settings function alone, this is due
