@@ -29,7 +29,6 @@ export class Overlay extends Component {
             {error.message}
           </div>
 
-
           <div>
             stack
           </div>
