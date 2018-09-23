@@ -26,6 +26,7 @@ import {join, relative} from 'path'
 import {StatsWriterPlugin} from 'webpack-stats-plugin'
 
 // Webpack’s loaders.
+import bbHtmlRule from './rules/bb-html'
 import cssModuleRule from './rules/css-module'
 import cssRule from './rules/css'
 import jsRule from './rules/js'
@@ -227,6 +228,7 @@ export default function () {
         oneOf: [
           cssModuleRule(),
           cssRule(),
+          bbHtmlRule(),
           jsRule(),
           // Fallback, just copy the files if the previous rules didn’t catch
           // the module.
