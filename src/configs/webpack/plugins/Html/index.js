@@ -171,7 +171,11 @@ export default class HtmlPlugin {
    * Emit the final HTML file.
    */
   async _tapEmit(compilation, done) {
-    const TEMPLATE_MODULE = this.findProcessedTemplate(compilation)
+    const TEMPLATE_MODULE = findProcessedTemplate(
+      compilation,
+      this._template.fullPath,
+    )
+
     const TEMPLATE_SOURCE = execModule(
       TEMPLATE_MODULE
         .originalSource()
