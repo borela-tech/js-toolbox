@@ -24,7 +24,7 @@ if (module.hot) {
     render(
       <StrictMode>
         <AppContainer>
-          <ErrorBoundary>
+          <ErrorBoundary renderTime={new Date}>
             <App/>
           </ErrorBoundary>
         </AppContainer>
@@ -38,7 +38,7 @@ if (module.hot) {
     render(
       <StrictMode>
         <AppContainer>
-          <ErrorBoundary>
+          <ErrorBoundary renderTime={new Date}>
             <ReloadedApp/>
           </ErrorBoundary>
         </AppContainer>
@@ -50,7 +50,7 @@ if (module.hot) {
   window.addEventListener('load', () => {
     render(
       <StrictMode>
-        <ErrorBoundary>
+        <ErrorBoundary renderTime={new Date}>
           <App/>
         </ErrorBoundary>
       </StrictMode>,

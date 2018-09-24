@@ -42,11 +42,12 @@ function parseMappedStack(stack) {
 }
 
 export class ErrorBoundary extends Component {
-  state = {}
+  static defaultProps = {renderTime: 0}
+  state = {errorTime: 0}
 
   componentDidCatch(error) {
     // Stop rendering the UI immediately.
-    this.setState({hasError: true})
+    this.setState({errorTime: new Date})
 
     // Map the error stack to the available source maps.
     mapStackTrace(error.stack, mappedStack => {
@@ -58,9 +59,15 @@ export class ErrorBoundary extends Component {
   }
 
   render() {
-    return !this.state.hasError
-      ? this.props.children
-      : null
+    let {errorTime} = this.state
+    let {children, renderTime} = this.props
+
+    // An error occurred since the boundary was rendered.
+    if (errorTime > renderTime)
+      return null
+
+    // The error is stale.
+    return children
   }
 }
 
