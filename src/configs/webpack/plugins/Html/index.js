@@ -25,8 +25,9 @@ import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
-import {parse as parsePath} from 'path'
+import {getProjectDir} from '../../../../paths'
 import {parse as parseHtml} from 'parse5'
+import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
 import {readFileSync} from 'fs'
 import {Script} from 'vm'
@@ -53,23 +54,20 @@ function execModule(code) {
  * Get the resulting module from the target template.
  */
 function findProcessedTemplate(compilation, templatePath) {
-  log(`Finding processed template: “${templatePath}”.`)
-
   for (const MODULE of compilation.modules) {
     if (MODULE.resource === templatePath) {
-      log(`Template found: “${templatePath}”.`)
       return MODULE
     }
   }
 
-  new Error(`Result from template not found: “${templatePath}”.`)
+  new Error(`Result from template not found: ${prettyFormat(templatePath)}.`)
 }
 
 /**
  * Get the chunk that has the same name as the template and the other chunks
  * it depends on.
  */
-function * getCompanionChunks(chunks, templateName) {
+function * getCompanionChunks(chunks, templateName, templatePath) {
   let mainChunk
   for (let chunk of chunks) {
     if (chunk.id === templateName) {
@@ -79,13 +77,17 @@ function * getCompanionChunks(chunks, templateName) {
   }
 
   if (!mainChunk) {
-    log(`Companion chunk NOT found for “${templateName}”.`)
+    log(`Companion chunk NOT found for: ${prettyFormat(templatePath)}`)
     return
-  } else
-    log(`Companion chunk found for “${templateName}”.`)
+  } else {
+    log(`Companion chunk found for: ${prettyFormat({
+      chunk: mainChunk.id,
+      template: templatePath,
+    })}`)
+  }
 
   if (mainChunk.getNumberOfGroups() > 1) {
-    log(`Companion chunk for “${templateName}” is inside multiple groups.`)
+    log(`Companion chunk is inside multiple groups: ${prettyFormat(templatePath)}`)
     return
   }
 
@@ -104,6 +106,14 @@ function * getCompanionChunks(chunks, templateName) {
  * inside it and add the script bundles.
  */
 export default class HtmlPlugin {
+  /**
+   * Save dependencies’ timestamps after each build. In this case, dependencies
+   * means files directly referred in the template itself. Externals and head
+   * scripts added by the plugin are NOT take into consideration.
+   */
+  _fileDependencies = new Map
+  _contextDependencies = new Map
+
   /**
    * Stuff that needs to be added to the “head” tag.
    */
@@ -168,13 +178,60 @@ export default class HtmlPlugin {
   }
 
   /**
+   * Save the dependencies’ timestamps which is used later to prevent
+   * unnecessary compilations.
+   */
+  async _saveTimestamps(compilation) {
+    let {fileTimestamps} = compilation
+    if (fileTimestamps.length < 1)
+      return
+
+    const TEMPLATE_PATH = this._template.fullPath
+    const TEMPLATE_MODULE = findProcessedTemplate(
+      compilation,
+      TEMPLATE_PATH,
+    )
+
+    let {
+      contextDependencies,
+      fileDependencies,
+    } = TEMPLATE_MODULE.buildInfo
+
+    this._fileDependencies = new Map
+    for (let file of fileDependencies) {
+      const TIMESTAMP = fileTimestamps.get(file)
+      this._fileDependencies.set(file, TIMESTAMP)
+    }
+
+    this._contextDependencies = new Map
+    for (let file of contextDependencies) {
+      const TIMESTAMP = fileTimestamps.get(file)
+      this._contextDependencies.set(file, TIMESTAMP)
+    }
+  }
+
+  /**
    * Emit the final HTML file.
    */
   async _tapEmit(compilation, done) {
+    const TEMPLATE_PATH = this._template.fullPath
     const TEMPLATE_MODULE = findProcessedTemplate(
       compilation,
-      this._template.fullPath,
+      TEMPLATE_PATH,
     )
+
+    const MUST_COMPILE = TEMPLATE_MODULE.needRebuild(
+      this._fileDependencies,
+      this._contextDependencies,
+    )
+
+    if (!MUST_COMPILE) {
+      log(`Skipping compilation for: ${prettyFormat(TEMPLATE_PATH)}`)
+      done()
+      return
+    }
+
+    log(`Compiling: ${prettyFormat(TEMPLATE_PATH)}`)
 
     const TEMPLATE_SOURCE = execModule(
       TEMPLATE_MODULE
@@ -182,11 +239,11 @@ export default class HtmlPlugin {
         .source()
     )
 
-    log('Parsing template result.')
+    log(`Parsing template: ${prettyFormat(TEMPLATE_PATH)}`)
 
     let tree = parseHtml(TEMPLATE_SOURCE)
 
-    log('Template is ready.')
+    log(`Template parsed: ${prettyFormat(TEMPLATE_PATH)}`)
 
     const HEAD = getNodeByTagName(tree, 'head')
     const BODY = getNodeByTagName(tree, 'body')
@@ -204,13 +261,17 @@ export default class HtmlPlugin {
         }],
       }))
 
-      log(`Script appended to the “head”: ${script}`)
+      log(`Script appended to the “head”: ${prettyFormat({
+        template: TEMPLATE_PATH,
+        script,
+      })}`)
     }
 
     // Add the chunk scripts to the end of the body.
     const CHUNKS = getCompanionChunks(
       compilation.chunks,
       this._template.name,
+      TEMPLATE_PATH,
     )
 
     for (let chunk of CHUNKS) {
@@ -234,6 +295,7 @@ export default class HtmlPlugin {
       size: () => FINAL_HTML.length,
     }
 
+    this._saveTimestamps(compilation)
     done()
   }
 }
