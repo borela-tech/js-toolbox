@@ -14,11 +14,15 @@ import {CONFIGS_DIR, setTargetDir} from '../paths'
 import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../utils'
 import {join} from 'path'
-import {port} from '../flags'
+import {
+  progress,
+  port
+} from '../flags'
 
 const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
 
 function builder(yargs) {
+  progress(yargs)
   port(yargs)
 }
 
@@ -26,12 +30,16 @@ function handler(args) {
   setTargetDir(args.dir)
   exitOnPackageNotFound()
 
+  let webpackArgs = [
+    `--config "${WEBPACK_CONFIG_PATH}"`,
+    '--hot --inline',
+  ]
+
+  if (args.progress)
+    webpackArgs.push('--progress')
+
   exitOnError(runCommandSync('webpack-dev-server', {
-    args: [
-      `--config "${WEBPACK_CONFIG_PATH}"`,
-      '--hot --inline',
-      '--progress',
-    ],
+    args: webpackArgs,
     env: {
       configDevServer: true,
       ...args,

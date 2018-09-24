@@ -151,6 +151,13 @@ export function production(yargs) {
   })
 }
 
+export function progress(yargs) {
+  yargs.option('progress', {
+    description: 'Show progress indicator.',
+    type: 'boolean',
+  })
+}
+
 export function projectType(yargs) {
   yargs.option('project-type', {
     choices: [

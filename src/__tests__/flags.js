@@ -31,6 +31,7 @@ import {
   platforms,
   port,
   production,
+  progress,
   projectType,
   react,
   removeFlow,
@@ -69,6 +70,7 @@ test('None of them have a default value set', () => {
   platforms(YARGS_STUB)
   port(YARGS_STUB)
   production(YARGS_STUB)
+  progress(YARGS_STUB)
   projectType(YARGS_STUB)
   react(YARGS_STUB)
   removeFlow(YARGS_STUB)

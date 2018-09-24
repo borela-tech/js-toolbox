@@ -27,6 +27,7 @@ import {
   node,
   platforms,
   production,
+  progress,
   projectType,
   react,
   removeFlow,
@@ -57,6 +58,7 @@ function builder(yargs) {
   node(yargs)
   platforms(yargs)
   production(yargs)
+  progress(yargs)
   projectType(yargs)
   react(yargs)
   removeFlow(yargs)
@@ -71,12 +73,13 @@ function handler(args) {
   if (args.production)
     process.env.NODE_ENV = 'production'
 
+  let webpackArgs = [`--config "${WEBPACK_CONFIG_PATH}"`]
+  if (args.progress)
+    webpackArgs.push('--progress')
+
   exitOnError(runCommandSync('rimraf', {args: ['"build"']}))
   exitOnError(runCommandSync('webpack', {
-    args: [
-      `--config "${WEBPACK_CONFIG_PATH}"`,
-      '--progress',
-    ],
+    args: webpackArgs,
     env: {...args},
   }))
 }
