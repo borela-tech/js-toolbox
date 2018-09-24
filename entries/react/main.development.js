@@ -12,7 +12,7 @@
 
 import App from 'App'
 import ErrorBoundary from './ErrorBoundary'
-import React from 'react'
+import React, {StrictMode} from 'react'
 import {render} from 'react-dom'
 
 const ROOT = document.getElementById('root')
@@ -22,11 +22,13 @@ if (module.hot) {
 
   window.addEventListener('load', () => {
     render(
-      <AppContainer>
-        <ErrorBoundary>
-          <App/>
-        </ErrorBoundary>
-      </AppContainer>,
+      <StrictMode>
+        <AppContainer>
+          <ErrorBoundary>
+            <App/>
+          </ErrorBoundary>
+        </AppContainer>
+      </StrictMode>,
       ROOT,
     )
   })
@@ -34,20 +36,24 @@ if (module.hot) {
   module.hot.accept('App', () => {
     let ReloadedApp = require('App').default
     render(
-      <AppContainer>
-        <ErrorBoundary>
-          <ReloadedApp/>
-        </ErrorBoundary>
-      </AppContainer>,
+      <StrictMode>
+        <AppContainer>
+          <ErrorBoundary>
+            <ReloadedApp/>
+          </ErrorBoundary>
+        </AppContainer>
+      </StrictMode>,
       ROOT,
     )
   })
 } else {
   window.addEventListener('load', () => {
     render(
-      <ErrorBoundary>
-        <App/>
-      </ErrorBoundary>,
+      <StrictMode>
+        <ErrorBoundary>
+          <App/>
+        </ErrorBoundary>
+      </StrictMode>,
       ROOT,
     )
   })
