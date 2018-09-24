@@ -18,21 +18,24 @@ import {mapStackTrace} from 'sourcemapped-stacktrace'
  * Return the a new mapped stack where each item is an object with properties
  * for line, column, namespace and file path.
  */
-function preparedMappedStack(stack) {
+function parseMappedStack(stack) {
   let result = []
   for (let line of stack) {
     // at ... (file:///namespace/path:line:column)
-    const MATCHED = line.match(/\(.+?:\/{3}(.+?)\/(.+):(.+):(.+)\)/)
+    const MATCHED = line.match(/\(.*?:\/{3}(.*?)\/(.*):(.*?):(.*?)\)$/)
 
-    // Ignore any line that is not expected.
-    if (!MATCHED)
+    // The line couldn’t be parsed.
+    if (!MATCHED){
+      result.push({stackLine: line})
       continue
+    }
 
     result.push({
       column: MATCHED[4],
       line: MATCHED[3],
       namespace: MATCHED[1],
       path: MATCHED[2],
+      stackLine: line,
     })
   }
   return result
@@ -42,17 +45,20 @@ export class ErrorBoundary extends Component {
   state = {}
 
   componentDidCatch(error) {
+    // Stop rendering the UI immediately.
+    this.setState({hasError: true})
+
+    // Map the error stack to the available source maps.
     mapStackTrace(error.stack, mappedStack => {
       // Prepare the mapped stack.
       error.stack = mappedStack
-        |> preparedMappedStack
-      this.setState({error})
+        |> parseMappedStack
+      // window.__BORELA__.showOverlay(error)
     })
   }
 
   render() {
-    let {error} = this.state
-    return !error
+    return !this.state.hasError
       ? this.props.children
       : null
   }
