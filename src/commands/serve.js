@@ -16,7 +16,7 @@ import {exitOnPackageNotFound} from '../utils'
 import {join} from 'path'
 import {
   progress,
-  port
+  port,
 } from '../flags'
 
 const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
