@@ -14,22 +14,17 @@ import {
   appendChild,
   createNode,
   getNodeByTagName,
-  getResourceRequest,
   minifiedHtmlString,
   prettifiedHtmlString,
-  setResourceRequest,
-  walk,
 } from './parse5-utils'
 
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
-import {getProjectDir} from '../../../../paths'
 import {parse as parseHtml} from 'parse5'
 import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
-import {readFileSync} from 'fs'
 import {Script} from 'vm'
 
 let log = debug('bb:config:webpack:plugin:html')
@@ -53,14 +48,13 @@ function execModule(code) {
 /**
  * Get the resulting module from the target template.
  */
-function findProcessedTemplate(compilation, templatePath) {
-  for (const MODULE of compilation.modules) {
-    if (MODULE.resource === templatePath) {
+function findProcessedTemplate(modules, templatePath) {
+  for (const MODULE of modules) {
+    if (MODULE.resource === templatePath)
       return MODULE
-    }
   }
 
-  new Error(`Result from template not found: ${prettyFormat(templatePath)}.`)
+  throw new Error(`Template module not found: ${prettyFormat(templatePath)}.`)
 }
 
 /**
@@ -111,8 +105,8 @@ export default class HtmlPlugin {
    * means files directly referred in the template itself. Externals and head
    * scripts added by the plugin are NOT take into consideration.
    */
-  _fileDependencies = new Map
-  _contextDependencies = new Map
+  _contextTimestamps = new Map
+  _fileTimestamps = new Map
 
   /**
    * Stuff that needs to be added to the “head” tag.
@@ -175,39 +169,12 @@ export default class HtmlPlugin {
       PLUGIN_NAME,
       this._tapEmit.bind(this),
     )
-  }
 
-  /**
-   * Save the dependencies’ timestamps which is used later to prevent
-   * unnecessary compilations.
-   */
-  async _saveTimestamps(compilation) {
-    let {fileTimestamps} = compilation
-    if (fileTimestamps.length < 1)
-      return
-
-    const TEMPLATE_PATH = this._template.fullPath
-    const TEMPLATE_MODULE = findProcessedTemplate(
-      compilation,
-      TEMPLATE_PATH,
+    // Save timestamps.
+    compiler.hooks.watchRun.tapAsync(
+      PLUGIN_NAME,
+      this._tapWatchRun.bind(this),
     )
-
-    let {
-      contextDependencies,
-      fileDependencies,
-    } = TEMPLATE_MODULE.buildInfo
-
-    this._fileDependencies = new Map
-    for (let file of fileDependencies) {
-      const TIMESTAMP = fileTimestamps.get(file)
-      this._fileDependencies.set(file, TIMESTAMP)
-    }
-
-    this._contextDependencies = new Map
-    for (let file of contextDependencies) {
-      const TIMESTAMP = fileTimestamps.get(file)
-      this._contextDependencies.set(file, TIMESTAMP)
-    }
   }
 
   /**
@@ -216,13 +183,13 @@ export default class HtmlPlugin {
   async _tapEmit(compilation, done) {
     const TEMPLATE_PATH = this._template.fullPath
     const TEMPLATE_MODULE = findProcessedTemplate(
-      compilation,
+      compilation.modules,
       TEMPLATE_PATH,
     )
 
     const MUST_COMPILE = TEMPLATE_MODULE.needRebuild(
-      this._fileDependencies,
-      this._contextDependencies,
+      this._fileTimestamps,
+      this._contextTimestamps,
     )
 
     if (!MUST_COMPILE) {
@@ -295,7 +262,15 @@ export default class HtmlPlugin {
       size: () => FINAL_HTML.length,
     }
 
-    this._saveTimestamps(compilation)
+    done()
+  }
+
+  /**
+   * Save timestamps to skip unnecessary compilations.
+   */
+  async _tapWatchRun(compiler, done) {
+    this._contextTimestamps = compiler.contextTimestamps
+    this._fileTimestamps = compiler.fileTimestamps
     done()
   }
 }
