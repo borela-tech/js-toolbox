@@ -82,6 +82,7 @@ function configureDevServer(config) {
     },
     index: 'index.html',
     stats: config.stats,
+    watchContentBase: true,
     port,
   }
 }
