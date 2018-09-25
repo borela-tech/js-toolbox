@@ -105,8 +105,8 @@ export default class HtmlPlugin {
    * means files directly referred in the template itself. Externals and head
    * scripts added by the plugin are NOT take into consideration.
    */
-  _contextTimestamps = new Map
-  _fileTimestamps = new Map
+  _previousContextTimestamps = new Map
+  _previousFileTimestamps = new Map
 
   /**
    * Stuff that needs to be added to the “head” tag.
@@ -169,12 +169,41 @@ export default class HtmlPlugin {
       PLUGIN_NAME,
       this._tapEmit.bind(this),
     )
+  }
 
-    // Save timestamps.
-    compiler.hooks.watchRun.tapAsync(
-      PLUGIN_NAME,
-      this._tapWatchRun.bind(this),
-    )
+  _mustCompile({
+    contextDependencies,
+    contextTimestamps,
+    fileDependencies,
+    fileTimestamps,
+  }) {
+    // The amount of file dependencies changed.
+    if (this._previousFileTimestamps.length !== fileTimestamps.length)
+      return true
+
+    // The amount of context dependencies changed.
+    if (this._previousContextTimestamps.length !== contextTimestamps.length)
+      return true
+
+    // Check each file dependency.
+    for (let file of fileDependencies) {
+      let oldTimestamp = this._previousFileTimestamps.get(file) || 0
+      let newTimestamp = fileTimestamps.get(file) || 1
+
+      if (newTimestamp > oldTimestamp)
+        return true
+    }
+
+    // Check each context dependency.
+    for (let context of contextDependencies) {
+      let oldTimestamp = this._previousContextTimestamps.get(context) || 0
+      let newTimestamp = contextTimestamps.get(context) || 1
+
+      if (newTimestamp > oldTimestamp)
+        return true
+    }
+
+    return false
   }
 
   /**
@@ -187,10 +216,27 @@ export default class HtmlPlugin {
       TEMPLATE_PATH,
     )
 
-    const MUST_COMPILE = TEMPLATE_MODULE.needRebuild(
-      this._fileTimestamps,
-      this._contextTimestamps,
-    )
+    let {
+      contextDependencies,
+      fileDependencies,
+    } = TEMPLATE_MODULE.buildInfo
+
+    let {
+      contextTimestamps,
+      fileTimestamps,
+    } = compilation
+
+    // Check if the file and context dependencies changed.
+    const MUST_COMPILE = this._mustCompile({
+      contextDependencies,
+      contextTimestamps,
+      fileDependencies,
+      fileTimestamps,
+    })
+
+    // Save the current timestamps for the next compilation.
+    this._previousContextTimestamps = contextTimestamps
+    this._previousFileTimestamps = fileTimestamps
 
     if (!MUST_COMPILE) {
       log(`Skipping compilation for: ${prettyFormat(TEMPLATE_PATH)}`)
@@ -262,15 +308,6 @@ export default class HtmlPlugin {
       size: () => FINAL_HTML.length,
     }
 
-    done()
-  }
-
-  /**
-   * Save timestamps to skip unnecessary compilations.
-   */
-  async _tapWatchRun(compiler, done) {
-    this._contextTimestamps = compiler.contextTimestamps
-    this._fileTimestamps = compiler.fileTimestamps
     done()
   }
 }
