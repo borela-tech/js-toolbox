@@ -34,7 +34,7 @@ if (module.hot) {
   })
 
   module.hot.accept('App', () => {
-    let ReloadedApp = require('App').default
+    let {default: ReloadedApp} = require('App')
     render(
       <StrictMode>
         <AppContainer>

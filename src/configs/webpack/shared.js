@@ -23,6 +23,7 @@ import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR} from '../../paths'
 import {getSettings} from '../../settings'
 import {join, relative} from 'path'
+import {parse} from 'url'
 import {StatsWriterPlugin} from 'webpack-stats-plugin'
 
 // Webpack’s loaders.
@@ -163,7 +164,7 @@ function normalizeModulePath(info) {
   const PROJECT_NAME = getProjectName()
   let path = info.absoluteResourcePath
 
-  // When hot reloading, path is already correct.
+  // Hot reloading, path is already correct.
   if (/\w+:\/{3}/.test(path))
     return path
 
@@ -178,9 +179,6 @@ function normalizeModulePath(info) {
   if (isPathSubDirOf(path, TOOLBOX_DIR)) {
     path = relative(TOOLBOX_DIR, path)
     path = path.replace(/\\/g, '/')
-
-    // Simplify entry path.
-    path = path.replace(/build\/configs\/webpack\/entries\/\w+/g, 'entry')
 
     return `file:///borela-js-toolbox/${path}`
   }
