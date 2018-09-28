@@ -15,15 +15,50 @@ import {exitOnError, runCommandSync} from '../system'
 import {exitOnPackageNotFound} from '../utils'
 import {join} from 'path'
 import {
-  progress,
+  browsers,
+  bundleStats,
+  commentFlow,
+  disableExperimentalPlugins,
+  disableSourceMaps,
+  includePolyfills,
+  jsx,
+  minify,
+  minifyCss,
+  minifyHtml,
+  minifyJs,
+  multiEntry,
   port,
+  production,
+  progress,
+  projectType,
+  react,
+  removeFlow,
+  typeScript,
 } from '../flags'
 
 const WEBPACK_CONFIG_PATH = join(CONFIGS_DIR, 'webpack')
 
 function builder(yargs) {
-  progress(yargs)
+  browsers(yargs)
+  bundleStats(yargs)
+  commentFlow(yargs)
+  disableExperimentalPlugins(yargs)
+  disableSourceMaps(yargs)
+  includePolyfills(yargs)
+  jsx(yargs)
+  minify(yargs)
+  minifyCss(yargs)
+  minifyHtml(yargs)
+  minifyJs(yargs)
+  multiEntry(yargs)
   port(yargs)
+  production(yargs)
+  progress(yargs)
+  progress(yargs)
+  projectType(yargs)
+  react(yargs)
+  removeFlow(yargs)
+  typeScript(yargs)
 }
 
 function handler(args) {
