@@ -159,16 +159,35 @@ export default class HtmlPlugin {
    * compiler’s events.
    */
   apply(compiler) {
-    // Pass the template through a loader.
-    let {directory, base} = this._template
-    new PrefetchPlugin(directory, base)
-      .apply(compiler)
+    let {base, directory, fullPath} = this._template
+
+    // During development we need to include the template in the entry point to
+    // enable hot reload, the downside is that the processed HTML gets included
+    // in the final bundle. To solve that we only do it when the dev server is
+    // run(but how?).
+    // TODO: Fix this.
+    if (false) {
+      new PrefetchPlugin(directory, base)
+        .apply(compiler)
+    } else
+      this._includeAsEntry(compiler)
 
     // Emit the final HTML.
     compiler.hooks.emit.tapAsync(
       PLUGIN_NAME,
       this._tapEmit.bind(this),
     )
+  }
+
+  _includeAsEntry(compiler) {
+    const ENTRIES = compiler.options.entry
+    const ENTRY = ENTRIES[name]
+
+    if (ENTRY) {
+      if (!Array.isArray(ENTRY))
+        ENTRIES[name] = [ENTRY]
+      ENTRIES[name].unshift(fullPath)
+    }
   }
 
   _mustCompile({
