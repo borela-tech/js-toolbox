@@ -33,7 +33,7 @@ describe('Module helpers', () => {
       })
     })
 
-    describe('getBinaryPath()', () => {
+    describe('getModulePath()', () => {
       test('Returns the full path', () => {
         let {getModulePath} = require('../../modules')
         expect(getModulePath('foo')).toBe(FOO_MODULE)
@@ -70,7 +70,7 @@ describe('Module helpers', () => {
       })
     })
 
-    describe('getBinaryPath()', () => {
+    describe('getModulePath()', () => {
       test('Returns the full path', () => {
         let {getModulePath} = require('../../modules')
         expect(getModulePath('bar')).toBe(BAR_MODULE)
