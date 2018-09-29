@@ -48,40 +48,40 @@ function execModule(code) {
 /**
  * Get the resulting module from the target template.
  */
-function findProcessedTemplate(modules, templatePath) {
+function findTemplateModule(modules, {fullPath}) {
   for (const MODULE of modules) {
-    if (MODULE.resource === templatePath)
+    if (MODULE.resource === fullPath)
       return MODULE
   }
 
-  throw new Error(`Template module not found: ${prettyFormat(templatePath)}.`)
+  throw new Error(`Template module not found: ${prettyFormat(fullPath)}.`)
 }
 
 /**
  * Get the chunk that has the same name as the template and the other chunks
  * it depends on.
  */
-function * getCompanionChunks(chunks, templateName, templatePath) {
+function * getCompanionChunks(chunks, {name, fullPath}) {
   let mainChunk
   for (let chunk of chunks) {
-    if (chunk.id === templateName) {
+    if (chunk.id === name) {
       mainChunk = chunk
       break
     }
   }
 
   if (!mainChunk) {
-    log(`Companion chunk NOT found for: ${prettyFormat(templatePath)}`)
+    log(`Companion chunk NOT found for: ${prettyFormat(fullPath)}`)
     return
   } else {
     log(`Companion chunk found for: ${prettyFormat({
       chunk: mainChunk.id,
-      template: templatePath,
+      template: fullPath,
     })}`)
   }
 
   if (mainChunk.getNumberOfGroups() > 1) {
-    log(`Companion chunk is inside multiple groups: ${prettyFormat(templatePath)}`)
+    log(`Companion chunk is inside multiple groups: ${prettyFormat(fullPath)}`)
     return
   }
 
@@ -230,9 +230,9 @@ export default class HtmlPlugin {
    */
   async _tapEmit(compilation, done) {
     const TEMPLATE_PATH = this._template.fullPath
-    const TEMPLATE_MODULE = findProcessedTemplate(
+    const TEMPLATE_MODULE = findTemplateModule(
       compilation.modules,
-      TEMPLATE_PATH,
+      this._template,
     )
 
     let {
@@ -302,8 +302,7 @@ export default class HtmlPlugin {
     // Add the chunk scripts to the end of the body.
     const CHUNKS = getCompanionChunks(
       compilation.chunks,
-      this._template.name,
-      TEMPLATE_PATH,
+      this._template,
     )
 
     for (let chunk of CHUNKS) {
