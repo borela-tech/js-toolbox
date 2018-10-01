@@ -53,7 +53,8 @@ export default function () {
   return {
     exclude: [
       /\.css$/,
-      /\.html$/,
+      /\.bb.html$/,
+      /\.bb.pug$/,
       /\.jsx?$/,
       /\.mjs$/,
       /\.tsx?$/,
