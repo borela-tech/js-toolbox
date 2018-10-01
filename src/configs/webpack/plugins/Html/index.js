@@ -21,119 +21,28 @@ import {
 } from './parse5-utils'
 
 import {
-  join,
-  parse as parsePath,
-} from 'path'
+  execModule,
+  findCompanionModule,
+  findTemplateModule,
+  getCompanionChunks,
+} from './utils'
 
 import debug from 'debug'
 import CommonJsRequireDependency from 'webpack/lib/dependencies/CommonJsRequireDependency'
-import NormalModule from 'webpack/lib/NormalModule'
-import MultiModule from 'webpack/lib/MultiModule'
 import OPTIONS_SCHEMA from './options-schema'
-import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
+import prettyFormat from 'pretty-format'
 import {parse as parseHtml} from 'parse5'
+import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
-import {Script} from 'vm'
 
 let log = debug('bb:config:webpack:plugin:html')
 
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
 
 /**
- * Execute the code and returns the exported result.
- */
-function execModule(code) {
-  let script = new Script(code)
-  let exports = {}
-  let sandbox = {
-    module: {exports},
-    exports,
-  }
-  script.runInNewContext(sandbox)
-  return sandbox.module.exports
-}
-
-/**
- * Get the module that is entry point of the main companion chunk.
- */
-function findCompanionModule(chunks, template:LoadedTemplate) {
-  let targetModule = findMainCompanionChunk(chunks, template)
-    .entryModule
-
-  if (targetModule instanceof NormalModule) {
-    return targetModule
-  }
-
-  if (targetModule instanceof MultiModule) {
-    const LAST = targetModule.dependencies.length - 1
-    targetModule = targetModule.dependencies[LAST].module
-    return targetModule
-  }
-
-  throw new Error(`Unexpected module type: “${typeof MODULE}”`)
-}
-
-/**
- * Get the main companion chunk.
- */
-function findMainCompanionChunk(chunks, template:LoadedTemplate) {
-  let {name} = template
-  for (let chunk of chunks) {
-    if (chunk.id === name)
-      return chunk
-  }
-  return undefined
-}
-
-/**
- * Get the resulting module from the target template.
- */
-function findTemplateModule(modules, template:LoadedTemplate) {
-  let {fullPath} = template
-  for (const MODULE of modules) {
-    if (MODULE.resource === fullPath)
-      return MODULE
-  }
-  throw new Error(`Template module not found: ${prettyFormat(fullPath)}.`)
-}
-
-/**
- * Get the chunk that has the same name as the template and the other chunks
- * it depends on.
- */
-function * getCompanionChunks(chunks, template:LoadedTemplate) {
-  let {fullPath, name} = template
-  const MAIN_CHUNK = findMainCompanionChunk(chunks, template)
-
-  if (!MAIN_CHUNK) {
-    log(`Companion chunk NOT found for: ${prettyFormat(fullPath)}`)
-    return
-  } else {
-    log(`Companion chunk found for: ${prettyFormat({
-      chunk: MAIN_CHUNK.id,
-      template: fullPath,
-    })}`)
-  }
-
-  if (MAIN_CHUNK.getNumberOfGroups() > 1) {
-    log(`Companion chunk is inside multiple groups: ${prettyFormat(fullPath)}`)
-    return
-  }
-
-  // The companion chunk must be on its own group, with that in mind, we are
-  // getting the first group from the groups set.
-  const GROUP = MAIN_CHUNK.groupsIterable.values()
-    .next()
-    .value
-
-  // Yield chunks inside the group.
-  yield * GROUP.chunks
-}
-
-/**
  * Actual Webpack plugin that generates an HTML from a template, loads requests
- * inside it and add the script bundles.
+ * inside it and add the script bundles to the head and body.
  */
 export default class HtmlPlugin {
   /**
@@ -198,15 +107,6 @@ export default class HtmlPlugin {
     new PrefetchPlugin(directory, base)
       .apply(compiler)
 
-    // // During development we need to include the template in the entry point to
-    // // enable hot reload, the downside is that the processed HTML gets included
-    // // in the final bundle. To solve that we only do it when the dev server is
-    // // run(but how?).
-    // // TODO: Fix this.
-    // if (false) {
-    // } else
-    //   this._includeAsEntry(compiler)
-
     // Emit the final HTML.
     compiler.hooks.emit.tapAsync(
       PLUGIN_NAME,
@@ -214,39 +114,10 @@ export default class HtmlPlugin {
     )
   }
 
-  // _includeAsEntry(compiler) {
-  //   const ENTRIES = compiler.options.entry
-  //   const ENTRY = ENTRIES[name]
-
-  //   if (ENTRY) {
-  //     if (!Array.isArray(ENTRY))
-  //       ENTRIES[name] = [ENTRY]
-  //     ENTRIES[name].unshift(fullPath)
-  //   }
-  // }
-
-  _mustCompile({
-    contextDependencies,
-    contextTimestamps,
-    fileDependencies,
-    fileTimestamps,
-  }) {
-    // The amount of file dependencies changed.
-    if (this._previousFileTimestamps.length !== fileTimestamps.length)
-      return true
-
+  _contextChanged(contextDependencies, contextTimestamps) {
     // The amount of context dependencies changed.
     if (this._previousContextTimestamps.length !== contextTimestamps.length)
       return true
-
-    // Check each file dependency.
-    for (let file of fileDependencies) {
-      let oldTimestamp = this._previousFileTimestamps.get(file) || 0
-      let newTimestamp = fileTimestamps.get(file) || 1
-
-      if (newTimestamp > oldTimestamp)
-        return true
-    }
 
     // Check each context dependency.
     for (let context of contextDependencies) {
@@ -258,6 +129,33 @@ export default class HtmlPlugin {
     }
 
     return false
+  }
+
+  _filesChanged(fileDependencies, fileTimestamps) {
+    // The amount of file dependencies changed.
+    if (this._previousFileTimestamps.length !== fileTimestamps.length)
+      return true
+
+    // Check each file dependency.
+    for (let file of fileDependencies) {
+      let oldTimestamp = this._previousFileTimestamps.get(file) || 0
+      let newTimestamp = fileTimestamps.get(file) || 1
+
+      if (newTimestamp > oldTimestamp)
+        return true
+    }
+
+    return false
+  }
+
+  _mustCompile({
+    contextDependencies,
+    contextTimestamps,
+    fileDependencies,
+    fileTimestamps,
+  }) {
+    return this._filesChanged(fileDependencies, fileTimestamps)
+      || this._contextChanged(contextDependencies, contextTimestamps)
   }
 
   /**
@@ -368,12 +266,9 @@ export default class HtmlPlugin {
       this._template,
     )
 
-    // console.log(COMPANION_MODULE)
-    // process.exit()
     COMPANION_MODULE.dependencies.push(new CommonJsRequireDependency(
       this._template.fullPath,
     ))
-    // console.log(prettyFormat(COMPANION_MODULE))
 
     done()
   }

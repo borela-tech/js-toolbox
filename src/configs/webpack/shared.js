@@ -23,7 +23,6 @@ import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR} from '../../paths'
 import {getSettings} from '../../settings'
 import {join, relative} from 'path'
-import {parse} from 'url'
 import {StatsWriterPlugin} from 'webpack-stats-plugin'
 
 // Webpack’s loaders.
