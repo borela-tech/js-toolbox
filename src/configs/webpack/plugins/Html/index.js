@@ -148,16 +148,6 @@ export default class HtmlPlugin {
     return false
   }
 
-  _mustCompile({
-    contextDependencies,
-    contextTimestamps,
-    fileDependencies,
-    fileTimestamps,
-  }) {
-    return this._filesChanged(fileDependencies, fileTimestamps)
-      || this._contextChanged(contextDependencies, contextTimestamps)
-  }
-
   /**
    * Emit the final HTML file.
    */
@@ -179,12 +169,8 @@ export default class HtmlPlugin {
     } = compilation
 
     // Check if the file and context dependencies changed.
-    const MUST_COMPILE = this._mustCompile({
-      contextDependencies,
-      contextTimestamps,
-      fileDependencies,
-      fileTimestamps,
-    })
+    const MUST_COMPILE = this._filesChanged(fileDependencies, fileTimestamps)
+      || this._contextChanged(contextDependencies, contextTimestamps)
 
     // Save the current timestamps for the next compilation.
     this._previousContextTimestamps = contextTimestamps
