@@ -28,7 +28,7 @@ import {
 } from './utils'
 
 import debug from 'debug'
-import CommonJsRequireDependency from 'webpack/lib/dependencies/CommonJsRequireDependency'
+import ModuleDependency from 'webpack/lib/dependencies/ModuleDependency'
 import OPTIONS_SCHEMA from './options-schema'
 import validateOptions from 'schema-utils'
 import prettyFormat from 'pretty-format'
@@ -252,7 +252,7 @@ export default class HtmlPlugin {
       this._template,
     )
 
-    COMPANION_MODULE.dependencies.push(new CommonJsRequireDependency(
+    COMPANION_MODULE.dependencies.push(new ModuleDependency(
       this._template.fullPath,
     ))
 
