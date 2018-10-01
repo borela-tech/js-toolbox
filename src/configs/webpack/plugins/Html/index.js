@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import type LoadedTemplate from './LoadedTemplate'
+import type Template from './Template'
 
 import {
   appendChild,
@@ -69,7 +69,7 @@ export default class HtmlPlugin {
   /**
    * Date that faciliates locating the template.
    */
-  _template:LoadedTemplate = {
+  _template:Template = {
     base: null,
     directory: null,
     fullPath: null,

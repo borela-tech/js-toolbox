@@ -10,7 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export type LoadedTemplate = {
+/**
+ * Data used to locate the template in the file system.
+ */
+export type Template = {
   // File name with the extension.
   base: string|null,
   // Path to the directory that contains the template.

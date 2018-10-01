@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import type LoadedTemplate from './LoadedTemplate'
+import type Template from './Template'
 
 import debug from 'debug'
 import MultiModule from 'webpack/lib/MultiModule'
@@ -37,7 +37,7 @@ export function execModule(code) {
 /**
  * Get the module that is entry point of the main companion chunk.
  */
-export function findCompanionModule(chunks, template:LoadedTemplate) {
+export function findCompanionModule(chunks, template:Template) {
   let targetModule = findMainCompanionChunk(chunks, template)
     .entryModule
 
@@ -56,7 +56,7 @@ export function findCompanionModule(chunks, template:LoadedTemplate) {
 /**
  * Get the chunk that has the same name as the template.
  */
-export function findMainCompanionChunk(chunks, template:LoadedTemplate) {
+export function findMainCompanionChunk(chunks, template:Template) {
   let {name} = template
   for (let chunk of chunks) {
     if (chunk.id === name)
@@ -68,7 +68,7 @@ export function findMainCompanionChunk(chunks, template:LoadedTemplate) {
 /**
  * Get the resulting module from the target template.
  */
-export function findTemplateModule(modules, template:LoadedTemplate) {
+export function findTemplateModule(modules, template:Template) {
   let {fullPath} = template
   for (const MODULE of modules) {
     if (MODULE.resource === fullPath)
@@ -81,7 +81,7 @@ export function findTemplateModule(modules, template:LoadedTemplate) {
  * Get the chunk that has the same name as the template and the other chunks
  * it depends on.
  */
-export function * getCompanionChunks(chunks, template:LoadedTemplate) {
+export function * getCompanionChunks(chunks, template:Template) {
   let {fullPath} = template
   const MAIN_CHUNK = findMainCompanionChunk(chunks, template)
 
