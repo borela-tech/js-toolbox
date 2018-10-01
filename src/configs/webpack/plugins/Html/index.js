@@ -10,6 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import type LoadedTemplate from './LoadedTemplate'
+
 import {
   appendChild,
   createNode,
@@ -18,12 +20,19 @@ import {
   prettifiedHtmlString,
 } from './parse5-utils'
 
+import {
+  join,
+  parse as parsePath,
+} from 'path'
+
 import debug from 'debug'
+import CommonJsRequireDependency from 'webpack/lib/dependencies/CommonJsRequireDependency'
+import NormalModule from 'webpack/lib/NormalModule'
+import MultiModule from 'webpack/lib/MultiModule'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
 import {parse as parseHtml} from 'parse5'
-import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
 import {Script} from 'vm'
 
@@ -46,14 +55,46 @@ function execModule(code) {
 }
 
 /**
+ * Get the module that is entry point of the main companion chunk.
+ */
+function findCompanionModule(chunks, template:LoadedTemplate) {
+  let targetModule = findMainCompanionChunk(chunks, template)
+    .entryModule
+
+  if (targetModule instanceof NormalModule) {
+    return targetModule
+  }
+
+  if (targetModule instanceof MultiModule) {
+    const LAST = targetModule.dependencies.length - 1
+    targetModule = targetModule.dependencies[LAST].module
+    return targetModule
+  }
+
+  throw new Error(`Unexpected module type: “${typeof MODULE}”`)
+}
+
+/**
+ * Get the main companion chunk.
+ */
+function findMainCompanionChunk(chunks, template:LoadedTemplate) {
+  let {name} = template
+  for (let chunk of chunks) {
+    if (chunk.id === name)
+      return chunk
+  }
+  return undefined
+}
+
+/**
  * Get the resulting module from the target template.
  */
-function findTemplateModule(modules, {fullPath}) {
+function findTemplateModule(modules, template:LoadedTemplate) {
+  let {fullPath} = template
   for (const MODULE of modules) {
     if (MODULE.resource === fullPath)
       return MODULE
   }
-
   throw new Error(`Template module not found: ${prettyFormat(fullPath)}.`)
 }
 
@@ -61,33 +102,28 @@ function findTemplateModule(modules, {fullPath}) {
  * Get the chunk that has the same name as the template and the other chunks
  * it depends on.
  */
-function * getCompanionChunks(chunks, {name, fullPath}) {
-  let mainChunk
-  for (let chunk of chunks) {
-    if (chunk.id === name) {
-      mainChunk = chunk
-      break
-    }
-  }
+function * getCompanionChunks(chunks, template:LoadedTemplate) {
+  let {fullPath, name} = template
+  const MAIN_CHUNK = findMainCompanionChunk(chunks, template)
 
-  if (!mainChunk) {
+  if (!MAIN_CHUNK) {
     log(`Companion chunk NOT found for: ${prettyFormat(fullPath)}`)
     return
   } else {
     log(`Companion chunk found for: ${prettyFormat({
-      chunk: mainChunk.id,
+      chunk: MAIN_CHUNK.id,
       template: fullPath,
     })}`)
   }
 
-  if (mainChunk.getNumberOfGroups() > 1) {
+  if (MAIN_CHUNK.getNumberOfGroups() > 1) {
     log(`Companion chunk is inside multiple groups: ${prettyFormat(fullPath)}`)
     return
   }
 
   // The companion chunk must be on its own group, with that in mind, we are
   // getting the first group from the groups set.
-  const GROUP = mainChunk.groupsIterable.values()
+  const GROUP = MAIN_CHUNK.groupsIterable.values()
     .next()
     .value
 
@@ -122,16 +158,12 @@ export default class HtmlPlugin {
   _minify = false
 
   /**
-   * Template location and path.
+   * Date that faciliates locating the template.
    */
-  _template = {
-    // File name with the extension.
+  _template:LoadedTemplate = {
     base: null,
-    // Path to the directory that contains the template.
     directory: null,
-    // Full path to the template.
     fullPath: null,
-    // File name without extension.
     name: null,
   }
 
@@ -159,18 +191,21 @@ export default class HtmlPlugin {
    * compiler’s events.
    */
   apply(compiler) {
-    let {base, directory, fullPath} = this._template
+    let {base, directory} = this._template
 
-    // During development we need to include the template in the entry point to
-    // enable hot reload, the downside is that the processed HTML gets included
-    // in the final bundle. To solve that we only do it when the dev server is
-    // run(but how?).
-    // TODO: Fix this.
-    if (false) {
-      new PrefetchPlugin(directory, base)
-        .apply(compiler)
-    } else
-      this._includeAsEntry(compiler)
+    // Load the template through the loaders, unless a JS file require it, the
+    // result won’t be included in any bundle.
+    new PrefetchPlugin(directory, base)
+      .apply(compiler)
+
+    // // During development we need to include the template in the entry point to
+    // // enable hot reload, the downside is that the processed HTML gets included
+    // // in the final bundle. To solve that we only do it when the dev server is
+    // // run(but how?).
+    // // TODO: Fix this.
+    // if (false) {
+    // } else
+    //   this._includeAsEntry(compiler)
 
     // Emit the final HTML.
     compiler.hooks.emit.tapAsync(
@@ -179,16 +214,16 @@ export default class HtmlPlugin {
     )
   }
 
-  _includeAsEntry(compiler) {
-    const ENTRIES = compiler.options.entry
-    const ENTRY = ENTRIES[name]
+  // _includeAsEntry(compiler) {
+  //   const ENTRIES = compiler.options.entry
+  //   const ENTRY = ENTRIES[name]
 
-    if (ENTRY) {
-      if (!Array.isArray(ENTRY))
-        ENTRIES[name] = [ENTRY]
-      ENTRIES[name].unshift(fullPath)
-    }
-  }
+  //   if (ENTRY) {
+  //     if (!Array.isArray(ENTRY))
+  //       ENTRIES[name] = [ENTRY]
+  //     ENTRIES[name].unshift(fullPath)
+  //   }
+  // }
 
   _mustCompile({
     contextDependencies,
@@ -325,6 +360,20 @@ export default class HtmlPlugin {
       source: () => FINAL_HTML,
       size: () => FINAL_HTML.length,
     }
+
+    // Associate the template to a module that has the same name to trigger the
+    // hot reload when the template is changed too.
+    const COMPANION_MODULE = findCompanionModule(
+      compilation.chunks,
+      this._template,
+    )
+
+    // console.log(COMPANION_MODULE)
+    // process.exit()
+    COMPANION_MODULE.dependencies.push(new CommonJsRequireDependency(
+      this._template.fullPath,
+    ))
+    // console.log(prettyFormat(COMPANION_MODULE))
 
     done()
   }
