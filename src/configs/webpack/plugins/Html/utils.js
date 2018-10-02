@@ -35,11 +35,10 @@ export function execModule(code) {
 }
 
 /**
- * Get the module that is entry point of the main companion chunk.
+ * Get the module that is entry point of the chunk.
  */
-export function findCompanionModule(chunks, template:Template) {
-  let targetModule = findMainCompanionChunk(chunks, template)
-    .entryModule
+export function findEntryModule(chunk) {
+  let targetModule = chunk.entryModule
 
   if (targetModule instanceof NormalModule)
     return targetModule

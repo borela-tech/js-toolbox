@@ -22,19 +22,25 @@ import {
 
 import {
   execModule,
-  findCompanionModule,
+  findEntryModule,
+  findMainCompanionChunk,
   findTemplateModule,
   getCompanionChunks,
 } from './utils'
 
+import {
+  NormalModuleFactory,
+  PrefetchPlugin,
+} from 'webpack'
+
 import debug from 'debug'
-import ModuleDependency from 'webpack/lib/dependencies/ModuleDependency'
+import CommonJsRequireDependency from 'webpack/lib/dependencies/CommonJsRequireDependency'
 import OPTIONS_SCHEMA from './options-schema'
-import validateOptions from 'schema-utils'
 import prettyFormat from 'pretty-format'
+import validateOptions from 'schema-utils'
 import {parse as parseHtml} from 'parse5'
 import {parse as parsePath} from 'path'
-import {PrefetchPlugin} from 'webpack'
+import {RawSource} from 'webpack-sources'
 
 let log = debug('bb:config:webpack:plugin:html')
 
@@ -45,14 +51,6 @@ const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
  * inside it and add the script bundles to the head and body.
  */
 export default class HtmlPlugin {
-  /**
-   * Save dependencies’ timestamps after each build. In this case, dependencies
-   * means files directly referred in the template itself. Externals and head
-   * scripts added by the plugin are NOT take into consideration.
-   */
-  _previousContextTimestamps = new Map
-  _previousFileTimestamps = new Map
-
   /**
    * Stuff that needs to be added to the “head” tag.
    */
@@ -65,6 +63,14 @@ export default class HtmlPlugin {
    * Minify the final HTML.
    */
   _minify = false
+
+  /**
+   * Save dependencies’ timestamps after each build. In this case, dependencies
+   * means files directly referred in the template itself. Externals and head
+   * scripts added by the plugin are NOT take into consideration.
+   */
+  _previousContextTimestamps = new Map
+  _previousFileTimestamps = new Map
 
   /**
    * Date that faciliates locating the template.
@@ -234,27 +240,38 @@ export default class HtmlPlugin {
       }))
     }
 
-    // Emit the final HTML.
-    const NAME = `${this._template.name}.html`
-    const FINAL_HTML = this._minify
-      ? minifiedHtmlString(tree)
-      : prettifiedHtmlString(tree)
+    log(`Emitting final HTML: ${prettyFormat(TEMPLATE_PATH)}`)
 
-    compilation.assets[NAME] = {
-      source: () => FINAL_HTML,
-      size: () => FINAL_HTML.length,
+    // Emit the final HTML.
+    let {name} = this._template
+    compilation.assets[`${name}.html`] = new RawSource(
+      this._minify
+        ? minifiedHtmlString(tree)
+        : prettifiedHtmlString(tree)
+    )
+
+    // There’s no associated chunks.
+    if (CHUNKS.length < 1) {
+      done()
+      return
     }
 
-    // Associate the template to a module that has the same name to trigger the
-    // hot reload when the template is changed too.
-    const COMPANION_MODULE = findCompanionModule(
+    // Associate the template to the entry module of the main chunk.
+    const MAIN_CHUNK = findMainCompanionChunk(
       compilation.chunks,
       this._template,
     )
 
-    COMPANION_MODULE.dependencies.push(new ModuleDependency(
-      this._template.fullPath,
-    ))
+    const ENTRY_MODULE = findEntryModule(MAIN_CHUNK)
+
+    // The entry module is unchanged.
+    if (ENTRY_MODULE.built) {
+      done()
+      return
+    }
+
+    ENTRY_MODULE.dependencies
+      .push(new CommonJsRequireDependency(TEMPLATE_PATH))
 
     done()
   }
