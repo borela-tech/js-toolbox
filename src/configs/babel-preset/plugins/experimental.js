@@ -26,7 +26,7 @@ export default function (plugins) {
   plugins.push(babelProposalPlugin('decorators', {legacy: true}))
 
   // https://babeljs.io/docs/en/next/babel-plugin-proposal-class-properties
-  plugins.push(babelProposalPlugin('class-properties'))
+  plugins.push(babelProposalPlugin('class-properties', {loose: true}))
 
   // https://babeljs.io/docs/en/next/babel-plugin-proposal-do-expressions
   plugins.push(babelProposalPlugin('do-expressions'))
