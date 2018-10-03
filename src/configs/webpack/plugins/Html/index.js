@@ -265,7 +265,7 @@ export default class HtmlPlugin {
     const ENTRY_MODULE = findEntryModule(MAIN_CHUNK)
 
     // The entry module is unchanged.
-    if (ENTRY_MODULE.built) {
+    if (!ENTRY_MODULE.built) {
       done()
       return
     }
