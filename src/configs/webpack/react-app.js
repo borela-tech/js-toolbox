@@ -14,7 +14,7 @@ import Html from './plugins/Html'
 import shared from './shared'
 import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR} from '../../paths'
-import {getSettings} from '../../settings'
+import {getSettings} from '../toolbox-settings'
 import {isProduction} from '../../utils'
 import {join} from 'path'
 

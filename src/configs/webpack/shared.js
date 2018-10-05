@@ -21,7 +21,7 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import {existsSync} from 'fs'
 import {getProjectDir, TOOLBOX_DIR} from '../../paths'
-import {getSettings} from '../../settings'
+import {getSettings} from '../toolbox-settings'
 import {join, relative} from 'path'
 import {StatsWriterPlugin} from 'webpack-stats-plugin'
 

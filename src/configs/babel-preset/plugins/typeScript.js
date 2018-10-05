@@ -11,7 +11,7 @@
 // the License.
 
 import {babelTransformPlugin} from '../../../modules'
-import {getSettings} from '../../../settings'
+import {getSettings} from '../../toolbox-settings'
 
 export default function (plugins) {
   let {typeScript} = getSettings()

@@ -11,7 +11,7 @@
 // the License.
 
 import {babelProposalPlugin} from '../../../modules'
-import {getSettings} from '../../../settings'
+import {getSettings} from '../../toolbox-settings'
 
 export default function (plugins) {
   let {disableExperimentalPlugins} = getSettings()

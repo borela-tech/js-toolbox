@@ -23,7 +23,7 @@ import jsx from './plugins/jsx'
 import prettyFormat from 'pretty-format'
 import react from './plugins/react'
 import typeScript from './plugins/typeScript'
-import {getSettings} from '../../settings'
+import {getSettings} from '../toolbox-settings'
 
 let log = debug('bb:config:babel')
 

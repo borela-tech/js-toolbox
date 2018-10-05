@@ -12,7 +12,7 @@
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import pluginAutoPrefixer from 'autoprefixer'
-import {getSettings} from '../../../settings'
+import {getSettings} from '../../toolbox-settings'
 
 let {disableSourceMaps} = getSettings()
 

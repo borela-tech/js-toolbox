@@ -17,7 +17,7 @@ import nodeLibConfig from './node-lib'
 import prettyFormat from 'pretty-format'
 import reactAppConfig from './react-app'
 import webLibConfig from './web-lib'
-import {getSettings} from '../../settings'
+import {getSettings} from '../toolbox-settings'
 import {resolve} from 'path'
 
 let log = debug('bb:config:webpack')

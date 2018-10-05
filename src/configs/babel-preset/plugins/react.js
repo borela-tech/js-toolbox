@@ -11,7 +11,7 @@
 // the License.
 
 import {babelTransformPlugin} from '../../../modules'
-import {getSettings} from '../../../settings'
+import {getSettings} from '../../toolbox-settings'
 import {isProduction} from '../../../utils'
 
 export default function (plugins) {

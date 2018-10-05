@@ -13,7 +13,7 @@
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
 import {CONFIGS_DIR, getProjectDir} from '../../paths'
-import {getSettings} from '../../settings'
+import {getSettings} from '../toolbox-settings'
 import {join} from 'path'
 
 let log = debug('bb:config:jest')

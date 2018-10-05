@@ -12,7 +12,7 @@
 
 import {camelizeKeys} from 'humps'
 import {existsSync, readFileSync} from 'fs'
-import {getProjectDir} from './paths'
+import {getProjectDir} from '../paths'
 import {join} from 'path'
 
 const PACKAGE_DIR = getProjectDir()
@@ -26,7 +26,7 @@ const BORELA_JSON_PATH = join(PACKAGE_DIR, 'borela.json')
  * solve that, they are passed as a JSON string in the env variable
  * “TEMP_BORELA_JS_TOOLBOX” which is loaded here.
  */
-export const CLI_ENV = process.env.TEMP_BORELA_JS_TOOLBOX
+export const ENV = process.env.TEMP_BORELA_JS_TOOLBOX
   ? camelizeKeys(JSON.parse(process.env.TEMP_BORELA_JS_TOOLBOX))
   : {}
 
@@ -56,39 +56,49 @@ export const BORELA_JSON = existsSync(BORELA_JSON_PATH)
  * configured, set some defaults and returns the result.
  */
 export function getSettings() {
-  let result = {
+  let settings = {
     ...PACKAGE_JSON,
     ...BORELARC,
     ...BORELA_JSON,
-    ...CLI_ENV,
+    ...ENV,
   }
+  setDefaultSettings(settings)
+  return settings
+}
+
+/**
+ * Add missing settings with the default values.
+ */
+function setDefaultSettings(settings) {
+  if (!settings)
+    throw new Error('Settings must be an object.')
 
   // Default settings for each project type.
-  switch (result.projectType) {
+  switch (settings.projectType) {
     case 'cli':
     case 'node-app':
     case 'node-lib':
-      result.platforms ??= ['node']
+      settings.platforms ??= ['node']
       break
 
     case 'lib':
-      result.platforms ??= ['browser', 'node']
+      settings.platforms ??= ['browser', 'node']
       break
 
     case 'react-app':
-      result.platforms ??= ['browser']
-      result.jsx ??= true
-      result.react ??= true
+      settings.platforms ??= ['browser']
+      settings.jsx ??= true
+      settings.react ??= true
       break
 
     case 'web-lib':
-      result.platforms ??= ['browser']
+      settings.platforms ??= ['browser']
       break
   }
 
   // Default supported browsers inferred by the platform.
-  if (result.platforms.includes('browsers')) {
-    result.browsers ??= [
+  if (settings.platforms.includes('browsers')) {
+    settings.browsers ??= [
       '>= 0.5%',
       'not ie 11',
       'not op_mini all',
@@ -96,8 +106,6 @@ export function getSettings() {
   }
 
   // Default supported NodeJS inferred by the platform.
-  if (result.platforms.includes('node'))
-    result.node ??= '8.9'
-
-  return result
+  if (settings.platforms.includes('node'))
+    settings.node ??= '8.9'
 }

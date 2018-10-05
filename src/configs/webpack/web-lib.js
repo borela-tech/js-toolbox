@@ -12,7 +12,7 @@
 
 import shared from './shared'
 import {getProjectName} from '../../utils'
-import {getSettings} from '../../settings'
+import {getSettings} from '../toolbox-settings'
 import {join} from 'path'
 
 let {minify = false} = getSettings()

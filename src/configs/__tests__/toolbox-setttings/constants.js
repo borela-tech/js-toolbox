@@ -65,19 +65,19 @@ const BORELA_JSON_CONTENTS = {
 
 test('“PACKAGE_JSON” has the borela key inside the “package.json”', () => {
   setFixture('package-json')
-  const {PACKAGE_JSON} = require('../../settings')
+  const {PACKAGE_JSON} = require('../toolbox-settings')
   expect(PACKAGE_JSON).toEqual(PACKAGE_JSON_CONTENTS)
 })
 
 test('“BORELARC” has the contents of the “borelarc”', () => {
   setFixture('borelarc')
-  const {BORELARC} = require('../../settings')
+  const {BORELARC} = require('../toolbox-settings')
   expect(BORELARC).toEqual(BORELARC_CONTENTS)
 })
 
 test('“BORELA_JSON” has the contents of the “borela.json”', () => {
   setFixture('borela-json')
-  const {BORELA_JSON} = require('../../settings')
+  const {BORELA_JSON} = require('../toolbox-settings')
   expect(BORELA_JSON).toEqual(BORELA_JSON_CONTENTS)
 })
 
@@ -91,8 +91,8 @@ describe('CLI_ENV', () => {
   })
 
   test('It has the the contents from “TEMP_BORELA_JS_TOOLBOX”', () => {
-    const {CLI_ENV} = require('../../settings')
-    expect(CLI_ENV).toEqual({
+    const {ENV} = require('../toolbox-settings')
+    expect(ENV).toEqual({
       foo: true,
       fooBar: 42,
       fooBarBaz: 'Lorem ipsum.',
