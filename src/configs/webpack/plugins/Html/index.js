@@ -14,7 +14,8 @@ import type Template from './Template'
 
 import {
   appendChild,
-  createNode,
+  createTagNode,
+  createTextNode,
   getNodeByTagName,
   minifiedHtmlString,
   prettifiedHtmlString,
@@ -22,24 +23,17 @@ import {
 
 import {
   execModule,
-  findEntryModule,
-  findMainCompanionChunk,
   findTemplateModule,
   getCompanionChunks,
 } from './utils'
 
-import {
-  NormalModuleFactory,
-  PrefetchPlugin,
-} from 'webpack'
-
 import debug from 'debug'
-import CommonJsRequireDependency from 'webpack/lib/dependencies/CommonJsRequireDependency'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
 import validateOptions from 'schema-utils'
 import {parse as parseHtml} from 'parse5'
 import {parse as parsePath} from 'path'
+import {PrefetchPlugin} from 'webpack'
 import {RawSource} from 'webpack-sources'
 
 let log = debug('bb:config:webpack:plugin:html')
@@ -58,6 +52,12 @@ export default class HtmlPlugin {
     // An array containing the path to the scripts that needs to be added.
     appendScripts: [],
   }
+
+  /**
+   * If true, a script will be included in the final template to reload the
+   * page on changes.
+   */
+  _hot = false
 
   /**
    * Minify the final HTML.
@@ -91,6 +91,7 @@ export default class HtmlPlugin {
     let name = base.replace(EXT, '')
 
     this._head.appendScripts = options?.head?.appendScripts || []
+    this._hot = options.hot || true
     this._minify = options.minify
     this._template = {
       ...this._template,
@@ -178,10 +179,6 @@ export default class HtmlPlugin {
     const MUST_COMPILE = this._filesChanged(fileDependencies, fileTimestamps)
       || this._contextChanged(contextDependencies, contextTimestamps)
 
-    // Save the current timestamps for the next compilation.
-    this._previousContextTimestamps = contextTimestamps
-    this._previousFileTimestamps = fileTimestamps
-
     if (!MUST_COMPILE) {
       log(`Skipping compilation for: ${prettyFormat(TEMPLATE_PATH)}`)
       done()
@@ -207,7 +204,7 @@ export default class HtmlPlugin {
 
     // Add external scripts from CDN.
     for (let script of this._head.appendScripts) {
-      appendChild(HEAD, createNode({
+      appendChild(HEAD, createTagNode({
         tagName: 'script',
         attrs: [{
           name: 'crossorigin',
@@ -231,12 +228,21 @@ export default class HtmlPlugin {
     )
 
     for (let chunk of CHUNKS) {
-      appendChild(BODY, createNode({
+      appendChild(BODY, createTagNode({
         tagName: 'script',
         attrs: [{
           name: 'src',
           value: `${chunk.id}.js?${chunk.hash}`,
         }],
+      }))
+    }
+
+    if (this._hot) {
+      log(`Injecting ho t client in: ${prettyFormat(TEMPLATE_PATH)}`)
+
+      appendChild(BODY, createTagNode({
+        tagName: 'script',
+        childNodes: [createTextNode('console.log("test")')],
       }))
     }
 
@@ -250,28 +256,8 @@ export default class HtmlPlugin {
         : prettifiedHtmlString(tree)
     )
 
-    // There’s no associated chunks.
-    if (CHUNKS.length < 1) {
-      done()
-      return
-    }
-
-    // Associate the template to the entry module of the main chunk.
-    const MAIN_CHUNK = findMainCompanionChunk(
-      compilation.chunks,
-      this._template,
-    )
-
-    const ENTRY_MODULE = findEntryModule(MAIN_CHUNK)
-
-    // The entry module is unchanged.
-    if (!ENTRY_MODULE.built) {
-      done()
-      return
-    }
-
-    ENTRY_MODULE.dependencies
-      .push(new CommonJsRequireDependency(TEMPLATE_PATH))
+    this._previousContextTimestamps = contextTimestamps
+    this._previousFileTimestamps = fileTimestamps
 
     done()
   }

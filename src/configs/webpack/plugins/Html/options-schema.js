@@ -27,6 +27,10 @@ export default {
         },
       },
     },
+    hot: {
+      type: 'boolean',
+      description: 'True to refresh the page when the file is changed.',
+    },
     minify: {
       type: 'boolean',
       description: 'True if the final HTML must be minified.',

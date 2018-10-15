@@ -19,6 +19,7 @@ import {isProduction} from '../../utils'
 import {join} from 'path'
 
 let {
+  borela,
   externals = {},
   minify,
   minifyHtml,
@@ -88,6 +89,7 @@ function setHtmlTemplate(config) {
     head: {
       appendScripts: cdnScripts,
     },
+    hot: borela === 'serve',
     minify: minify || minifyHtml,
     templatePath,
   }))
