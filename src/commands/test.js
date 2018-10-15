@@ -52,7 +52,10 @@ function handler(args) {
 
   exitOnError(runCommandSync('jest', {
     args: jestArgs,
-    env: args,
+    env: {
+      borela: 'test',
+      ...args,
+    },
   }))
 }
 

@@ -43,7 +43,13 @@ function handler(args) {
   if (appArgs)
     nodemonArgs.push(appArgs)
 
-  exitOnError(runCommandSync('nodemon', {args: nodemonArgs}))
+  exitOnError(runCommandSync('nodemon', {
+    args: nodemonArgs,
+    env: {
+      borela: 'start',
+      ...args,
+    },
+  }))
 }
 
 export default {

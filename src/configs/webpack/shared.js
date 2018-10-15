@@ -38,9 +38,9 @@ const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build')
 
 let {
+  borela,
   bundleStats = false,
   disableSourceMaps = false,
-  configDevServer = false,
   interactiveBundleStats = false,
   externals,
   minify,
@@ -68,11 +68,11 @@ function configureBundleStats(config) {
 }
 
 /**
- * We are only including configuration for the dev server when requested by the
- * CLI.
+ * We are only including configuration for the dev server when the “serve”
+ * command is executed.
  */
 function configureDevServer(config) {
-  if (!configDevServer)
+  if (borela !== 'serve')
     return
   config.devServer = {
     contentBase: PROJECT_BUILD_DIR,
