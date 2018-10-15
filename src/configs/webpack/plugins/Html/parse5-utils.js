@@ -22,9 +22,9 @@ export function appendChild(node, child) {
 }
 
 /**
- * Creates a Parse5 node.
+ * Creates a Parse5 tag node.
  */
-export function createNode({tagName, ...other}) {
+export function createTagNode({tagName, ...other}) {
   return {
     attrs: [],
     childNodes: [],
@@ -32,6 +32,16 @@ export function createNode({tagName, ...other}) {
     nodeName: tagName,
     tagName,
     ...other,
+  }
+}
+
+/**
+ * Creates a Parse5 text node.
+ */
+export function createTextNode(content) {
+  return {
+    nodeName: '#text',
+    value: content,
   }
 }
 

@@ -53,7 +53,10 @@ function lintSources(args) {
 
   return runCommandSync('eslint', {
     args: eslintArgs,
-    env: args,
+    env: {
+      borela: 'lint',
+      ...args,
+    },
   })
 }
 

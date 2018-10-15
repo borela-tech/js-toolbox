@@ -38,9 +38,9 @@ const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build')
 
 let {
+  borela,
   bundleStats = false,
   disableSourceMaps = false,
-  configDevServer = false,
   interactiveBundleStats = false,
   externals,
   minify,
@@ -68,11 +68,11 @@ function configureBundleStats(config) {
 }
 
 /**
- * We are only including configuration for the dev server when requested by the
- * CLI.
+ * We are only including configuration for the dev server when the “serve”
+ * command is executed.
  */
 function configureDevServer(config) {
-  if (!configDevServer)
+  if (borela !== 'serve')
     return
   config.devServer = {
     contentBase: PROJECT_BUILD_DIR,
@@ -158,8 +158,11 @@ function getDefaultEntries() {
 function normalizeModulePath(info) {
   let identifier = info.identifier
 
-  if (/^(webpack|\(webpack\))/.test(identifier))
+  if (/^(webpack|\(webpack\))/.test(identifier)) {
+    if (identifier == 'webpack/bootstrap')
+      identifier = 'bootstrap.js'
     return `webpack:///${identifier}`
+  }
 
   const PROJECT_NAME = getProjectName()
   let path = info.absoluteResourcePath
@@ -172,7 +175,7 @@ function normalizeModulePath(info) {
   if (isPathSubDirOf(path, PROJECT_DIR)) {
     path = relative(PROJECT_DIR, path)
     path = path.replace(/\\/g, '/')
-    return `file:///${PROJECT_NAME}/${path}`
+    return `webpack:///${PROJECT_NAME}/${path}`
   }
 
   // Toolbox sources.
@@ -180,7 +183,7 @@ function normalizeModulePath(info) {
     path = relative(TOOLBOX_DIR, path)
     path = path.replace(/\\/g, '/')
 
-    return `file:///borela-js-toolbox/${path}`
+    return `webpack:///Borela JS Toolbox/${path}`
   }
 
   throw new Error(`Invalid resource path “${path}”.`)

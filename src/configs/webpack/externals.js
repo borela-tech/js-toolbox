@@ -30,7 +30,9 @@ const ENTRIES_DIR = join(WEBPACK_CONFIG_DIR, 'entries')
 export default function (options = {}) {
   let {include, exclude} = options
   return function (context, request, callback) {
-    // Include runtime removed using the “@babel/plugin-transform-runtime”.
+    // The necessary runtime for each module is removed using the plugin
+    // “@babel/plugin-transform-runtime”, this conditional will add it back to
+    // the bundle.
     if (request.includes('@babel/runtime')) {
       logIncluded(prettyFormat({context, request}))
       callback()

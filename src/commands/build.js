@@ -80,7 +80,10 @@ function handler(args) {
   exitOnError(runCommandSync('rimraf', {args: ['"build"']}))
   exitOnError(runCommandSync('webpack', {
     args: webpackArgs,
-    env: {...args},
+    env: {
+      borela: 'build',
+      ...args,
+    },
   }))
 }
 

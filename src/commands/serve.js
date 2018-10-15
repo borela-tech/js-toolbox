@@ -76,7 +76,7 @@ function handler(args) {
   exitOnError(runCommandSync('webpack-dev-server', {
     args: webpackArgs,
     env: {
-      configDevServer: true,
+      borela: 'serve',
       ...args,
     },
   }))
