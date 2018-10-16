@@ -56,6 +56,22 @@ export function findTemplateModule(modules, template:Template) {
   throw new Error(`Template module not found: ${prettyFormat(fullPath)}.`)
 }
 
+export function generateHotListener(template:Template) {
+  return `
+    (function() {
+      var path = '${template.fullPath.replace(/\\/g, '\\\\')}'
+      var socket = io.connect('//localhost:8196')
+
+      socket.on('Borela HTML Plugin', function(template) {
+        if (path === template) {
+          console.log('Template changed, reloading...')
+          window.location.reload()
+        }
+      })
+    })()
+  `
+}
+
 /**
  * Get the chunk that has the same name as the template and the other chunks
  * it depends on.

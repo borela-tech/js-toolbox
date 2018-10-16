@@ -115,6 +115,7 @@
     "react-hot-loader": "^4.3.11",
     "rimraf": "^2.6.2",
     "schema-utils": "^1.0.0",
+    "socket.io": "^2.1.1",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.9",
     "sourcemapped-stacktrace": "^1.1.9",
