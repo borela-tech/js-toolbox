@@ -31,14 +31,13 @@ import {
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
-import socketIo from 'socket.io'
+import socket from '../../../messaging-socket'
 import validateOptions from 'schema-utils'
 import {parse as parseHtml} from 'parse5'
 import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
 import {RawSource} from 'webpack-sources'
 
-let socket = socketIo(8196)
 let log = debug('bb:config:webpack:plugin:html')
 
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
