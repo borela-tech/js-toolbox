@@ -24,18 +24,21 @@ import {
 import {
   execModule,
   findTemplateModule,
+  generateHotListener,
   getCompanionChunks,
 } from './utils'
 
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
+import socketIo from 'socket.io'
 import validateOptions from 'schema-utils'
 import {parse as parseHtml} from 'parse5'
 import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
 import {RawSource} from 'webpack-sources'
 
+let socket = socketIo(8196)
 let log = debug('bb:config:webpack:plugin:html')
 
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
@@ -45,6 +48,8 @@ const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
  * inside it and add the script bundles to the head and body.
  */
 export default class HtmlPlugin {
+  _firstBuild = true
+
   /**
    * Stuff that needs to be added to the “head” tag.
    */
@@ -242,7 +247,15 @@ export default class HtmlPlugin {
 
       appendChild(BODY, createTagNode({
         tagName: 'script',
-        childNodes: [createTextNode('console.log("test")')],
+        attrs: [{
+          name: 'src',
+          value: '//localhost:8196/socket.io/socket.io.js',
+        }],
+      }))
+
+      appendChild(BODY, createTagNode({
+        tagName: 'script',
+        childNodes: [createTextNode(generateHotListener(this._template))],
       }))
     }
 
@@ -256,6 +269,10 @@ export default class HtmlPlugin {
         : prettifiedHtmlString(tree)
     )
 
+    if (!this._firstBuild)
+      socket.emit('Borela HTML Plugin', this._template.fullPath)
+
+    this._firstBuild = false
     this._previousContextTimestamps = contextTimestamps
     this._previousFileTimestamps = fileTimestamps
 

@@ -13,6 +13,8 @@
 import type Template from './Template'
 
 import debug from 'debug'
+import MultiModule from 'webpack/lib/MultiModule'
+import NormalModule from 'webpack/lib/NormalModule'
 import prettyFormat from 'pretty-format'
 import {Script} from 'vm'
 
@@ -30,6 +32,24 @@ export function execModule(code) {
   }
   script.runInNewContext(sandbox)
   return sandbox.module.exports
+}
+
+/**
+ * Get the module that is entry point of the chunk.
+ */
+export function findEntryModule(chunk) {
+  let targetModule = chunk.entryModule
+
+  if (targetModule instanceof NormalModule)
+    return targetModule
+
+  if (targetModule instanceof MultiModule) {
+    const LAST = targetModule.dependencies.length - 1
+    targetModule = targetModule.dependencies[LAST].module
+    return targetModule
+  }
+
+  throw new Error(`Unexpected module type: “${typeof targetModule}”`)
 }
 
 /**
@@ -54,6 +74,22 @@ export function findTemplateModule(modules, template:Template) {
       return MODULE
   }
   throw new Error(`Template module not found: ${prettyFormat(fullPath)}.`)
+}
+
+export function generateHotListener(template:Template) {
+  return `
+    (function() {
+      var path = '${template.fullPath.replace(/\\/g, '\\\\')}'
+      var socket = io.connect('//localhost:8196')
+
+      socket.on('Borela HTML Plugin', function(template) {
+        if (path === template) {
+          console.log('Template changed, reloading...')
+          window.location.reload()
+        }
+      })
+    })()
+  `
 }
 
 /**
