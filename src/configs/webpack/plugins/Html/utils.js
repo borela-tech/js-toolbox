@@ -76,14 +76,19 @@ export function findTemplateModule(modules, template:Template) {
   throw new Error(`Template module not found: ${prettyFormat(fullPath)}.`)
 }
 
+/**
+ * Returns a string containing a code to be embedded in the final HTML file that
+ * will connect back to the host and receive messages about templates being
+ * changed.
+ */
 export function generateHotListener(template:Template) {
   return `
     (function() {
-      var path = '${template.fullPath.replace(/\\/g, '\\\\')}'
+      var thisTemplate = '${template.fullPath.replace(/\\/g, '\\\\')}'
       var socket = io.connect('//localhost:8196')
 
-      socket.on('Borela HTML Plugin', function(template) {
-        if (path === template) {
+      socket.on('Template Emitted', function(templateChanged) {
+        if (thisTemplate === templateChanged) {
           console.log('Template changed, reloading...')
           window.location.reload()
         }
