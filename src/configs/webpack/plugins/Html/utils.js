@@ -21,6 +21,26 @@ import {Script} from 'vm'
 let log = debug('bb:config:webpack:plugin:html')
 
 /**
+ * Checks if the dependencies changed.
+ */
+function dependenciesChanged(dependencies, newTimestamps, oldTimestamps) {
+  // The amount of dependencies changed.
+  if (oldTimestamps.length !== newTimestamps.length)
+    return true
+
+  // Check each dependency.
+  for (let dependency of dependencies) {
+    let oldTimestamp = oldTimestamp.get(file) || 0
+    let newTimestamp = newTimestamp.get(file) || 1
+
+    if (newTimestamp > oldTimestamp)
+      return true
+  }
+
+  return false
+}
+
+/**
  * Execute the code and returns the exported result.
  */
 export function execModule(code) {

@@ -22,6 +22,7 @@ import {
 } from './parse5-utils'
 
 import {
+  dependenciesChanged,
   execModule,
   findTemplateModule,
   generateHotListener,
@@ -41,27 +42,6 @@ import {RawSource} from 'webpack-sources'
 let log = debug('bb:config:webpack:plugin:html')
 
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
-
-/**
- * Checks if the dependencies changed.
- */
-function dependenciesChanged(dependencies, newTimestamps, oldTimestamps) {
-  // The amount of dependencies changed.
-  if (oldTimestamps.length !== newTimestamps.length)
-    return true
-
-  // Check each dependency.
-  for (let dependency of dependencies) {
-    let oldTimestamp = oldTimestamp.get(file) || 0
-    let newTimestamp = newTimestamp.get(file) || 1
-
-    if (newTimestamp > oldTimestamp)
-      return true
-  }
-
-  return false
-}
-
 
 /**
  * Actual Webpack plugin that generates an HTML from a template, loads requests
