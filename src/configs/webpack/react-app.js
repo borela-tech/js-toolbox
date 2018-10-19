@@ -56,8 +56,8 @@ function setEntryPoint(config) {
  * load.
  */
 function setHtmlTemplate(config) {
-  const DEFAULT_TEMPLATE = join(REACT_ENTRY_DIR, 'index.bb.html')
-  const CUSTOM_TEMPLATE = join(PROJECT_SRC_DIR, 'index.bb.html')
+  const DEFAULT_TEMPLATE = join(REACT_ENTRY_DIR, 'index.html')
+  const CUSTOM_TEMPLATE = join(PROJECT_SRC_DIR, 'index.html')
 
   let templatePath = existsSync(CUSTOM_TEMPLATE)
     ? CUSTOM_TEMPLATE

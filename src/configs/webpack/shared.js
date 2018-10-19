@@ -26,12 +26,12 @@ import {join, relative} from 'path'
 import {StatsWriterPlugin} from 'webpack-stats-plugin'
 
 // Webpack’s loaders.
-import bbHtmlRule from './rules/bb-html'
-import bbPugRule from './rules/bb-pug'
 import cssModuleRule from './rules/css-module'
 import cssRule from './rules/css'
-import jsRule from './rules/js'
 import defaultRule from './rules/default'
+import htmlRule from './rules/html'
+import jsRule from './rules/js'
+import pugRule from './rules/pug'
 
 const PROJECT_DIR = getProjectDir()
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
@@ -229,9 +229,9 @@ export default function () {
       rules: [
         cssModuleRule(),
         cssRule(),
-        bbHtmlRule(),
-        bbPugRule(),
+        HtmlRule(),
         jsRule(),
+        pugRule(),
         // Fallback, just copy the files if the previous rules didn’t catch
         // the module.
         defaultRule(),

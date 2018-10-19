@@ -12,13 +12,13 @@
 
 export default function () {
   return {
-    test: /\.bb\.html$/,
+    test: /\.pug$/,
     use: [{
       loader: 'raw-loader',
     }, {
       loader: 'extract-loader',
     }, {
-      loader: 'html-loader',
+      loader: 'pug-loader',
     }],
   }
 }

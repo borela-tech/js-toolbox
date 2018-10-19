@@ -90,10 +90,7 @@ export default class HtmlPlugin {
   constructor(options) {
     validateOptions(OPTIONS_SCHEMA, options, PLUGIN_NAME)
 
-    let {base, dir} = parsePath(options.templatePath)
-    // Remove the “.bb.something” extension.
-    const EXT = /\.bb\.\w+$/
-    let name = base.replace(EXT, '')
+    let {base, dir, name} = parsePath(options.templatePath)
 
     this._head.appendScripts = options?.head?.appendScripts || []
     this._hot = options.hot || true

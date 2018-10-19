@@ -33,7 +33,7 @@ function fileName(file) {
     reference = PROJECT_DIR
   } else if (isPathSubDirOf(file, TOOLBOX_DIR)) {
     // Assets from the Toolbox.
-    prefix = ['borela-js-toolbox']
+    prefix = ['__borela__']
     reference = TOOLBOX_DIR
   }
 
@@ -53,10 +53,10 @@ export default function () {
   return {
     exclude: [
       /\.css$/,
-      /\.bb.html$/,
-      /\.bb.pug$/,
+      /\.html$/,
       /\.jsx?$/,
       /\.mjs$/,
+      /\.pug$/,
       /\.tsx?$/,
     ],
     use: [{
