@@ -18,7 +18,7 @@ export default function () {
     }, {
       loader: 'extract-loader',
     }, {
-      loader: 'pug-loader',
+      loader: 'pug-html-loader',
     }],
   }
 }

@@ -86,10 +86,10 @@ function setHtmlTemplate(config) {
   }
 
   config.plugins.push(new Html({
+    alwaysWriteToDisk: borela === 'serve',
     head: {
       appendScripts: cdnScripts,
     },
-    hot: borela === 'serve',
     minify: minify || minifyHtml,
     templatePath,
   }))

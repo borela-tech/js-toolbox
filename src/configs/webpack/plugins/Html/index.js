@@ -25,17 +25,26 @@ import {
   dependenciesChanged,
   execModule,
   findTemplateModule,
-  generateHotListener,
   getCompanionChunks,
 } from './utils'
+
+import {
+  join,
+  parse as parsePath,
+  relative,
+} from 'path'
+
+import {
+  mkdirSync,
+  writeFileSync,
+} from 'fs'
 
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
-import socket from '../../../messaging-socket'
 import validateOptions from 'schema-utils'
+import {getProjectDir} from '../../../../paths'
 import {parse as parseHtml} from 'parse5'
-import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
 import {RawSource} from 'webpack-sources'
 
@@ -48,6 +57,9 @@ const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
  * inside it and add the script bundles to the head and body.
  */
 export default class HtmlPlugin {
+  _alwaysWriteToDisk = false
+  _minify = false
+
   /**
    * Stuff that needs to be added to the “head” tag.
    */
@@ -55,17 +67,6 @@ export default class HtmlPlugin {
     // An array containing the path to the scripts that needs to be added.
     appendScripts: [],
   }
-
-  /**
-   * If true, a script will be included in the final template to reload the
-   * page on changes.
-   */
-  _hot = false
-
-  /**
-   * Minify the final HTML.
-   */
-  _minify = false
 
   /**
    * Save dependencies’ timestamps after each build. In this case, dependencies
@@ -90,12 +91,14 @@ export default class HtmlPlugin {
 
     let {base, dir, name} = parsePath(options.templatePath)
     let {
+      alwaysWriteToDisk,
       head: {appendScripts = []},
       hot,
       minify,
       templatePath,
     } = options
 
+    this._alwaysWriteToDisk = alwaysWriteToDisk || true
     this._head.appendScripts = appendScripts
     this._hot = hot
     this._minify = minify
@@ -235,17 +238,28 @@ export default class HtmlPlugin {
     log(`Emitting final HTML: ${prettyFormat(TEMPLATE_PATH)}`)
 
     let {name} = this._template
-    compilation.assets[`${name}.html`] = new RawSource(
-      this._minify
-        ? minifiedHtmlString(tree)
-        : prettifiedHtmlString(tree)
-    )
+    const SOURCE = this._minify
+      ? minifiedHtmlString(tree)
+      : prettifiedHtmlString(tree)
 
-    socket.emit('Template Emitted', this._template.fullPath)
+    compilation.assets[`${name}.html`] = new RawSource(SOURCE)
 
-    this._firstBuild = false
-    this._previousContextTimestamps = contextTimestamps
-    this._previousFileTimestamps = fileTimestamps
+    if (this._alwaysWriteToDisk) {
+      const PROJECT_DIR = join(getProjectDir(), 'src')
+      const PROJECT_OUTPUT_DIR = compilation.options.output.path
+
+      const TEMPLATE_RELATIVE_PATH = relative(PROJECT_DIR, TEMPLATE_PATH)
+      const TEMPLATE_RELATIVE_DIR = join(TEMPLATE_RELATIVE_PATH, '..')
+
+      const HTML_OUTPUT_DIR = join(PROJECT_OUTPUT_DIR, TEMPLATE_RELATIVE_DIR)
+      const HTML_OUTPUT_PATH = join(PROJECT_OUTPUT_DIR, TEMPLATE_RELATIVE_PATH)
+
+      mkdirSync(HTML_OUTPUT_DIR, {recursive: true})
+      writeFileSync(HTML_OUTPUT_PATH, SOURCE)
+    }
+
+    this._previousContextTimestamps = newContextTimestamps
+    this._previousFileTimestamps = newFileTimestamps
 
     done()
   }

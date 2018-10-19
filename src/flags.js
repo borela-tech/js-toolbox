@@ -87,13 +87,6 @@ export function interactiveBundleStats(yargs) {
   })
 }
 
-export function messagingPort(yargs) {
-  yargs.option('messaging-port', {
-    description: 'Port used to communicate extra state information.',
-    type: 'number',
-  })
-}
-
 export function minify(yargs) {
   yargs.option('minify', {
     description: 'Minify source.',

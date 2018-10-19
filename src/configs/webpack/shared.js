@@ -229,7 +229,7 @@ export default function () {
       rules: [
         cssModuleRule(),
         cssRule(),
-        HtmlRule(),
+        htmlRule(),
         jsRule(),
         pugRule(),
         // Fallback, just copy the files if the previous rules didn’t catch

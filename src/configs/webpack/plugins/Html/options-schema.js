@@ -17,6 +17,10 @@ export default {
   additionalProperties: false,
   type: 'object',
   properties: {
+    alwaysWriteToDisk: {
+      type: 'boolean',
+      description: 'Always write the final HTML to disk.',
+    },
     head: {
       type: 'object',
       description: 'Stuff that needs to be added to the “head” tag.',
@@ -26,10 +30,6 @@ export default {
           items: {type: 'string'},
         },
       },
-    },
-    hot: {
-      type: 'boolean',
-      description: 'True to refresh the page when the file is changed.',
     },
     minify: {
       type: 'boolean',

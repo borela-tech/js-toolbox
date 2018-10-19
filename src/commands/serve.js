@@ -22,7 +22,6 @@ import {
   disableSourceMaps,
   includePolyfills,
   jsx,
-  messagingPort,
   minify,
   minifyCss,
   minifyHtml,
@@ -47,7 +46,6 @@ function builder(yargs) {
   disableSourceMaps(yargs)
   includePolyfills(yargs)
   jsx(yargs)
-  messagingPort(yargs)
   minify(yargs)
   minifyCss(yargs)
   minifyHtml(yargs)

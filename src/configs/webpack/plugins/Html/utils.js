@@ -23,15 +23,15 @@ let log = debug('bb:config:webpack:plugin:html')
 /**
  * Checks if the dependencies changed.
  */
-function dependenciesChanged(dependencies, newTimestamps, oldTimestamps) {
+export function dependenciesChanged(dependencies, newTimestamps, oldTimestamps) {
   // The amount of dependencies changed.
   if (oldTimestamps.length !== newTimestamps.length)
     return true
 
   // Check each dependency.
   for (let dependency of dependencies) {
-    let oldTimestamp = oldTimestamp.get(file) || 0
-    let newTimestamp = newTimestamp.get(file) || 1
+    let oldTimestamp = oldTimestamps.get(dependency) || 0
+    let newTimestamp = newTimestamps.get(dependency) || 1
 
     if (newTimestamp > oldTimestamp)
       return true
@@ -94,27 +94,6 @@ export function findTemplateModule(modules, template:Template) {
       return MODULE
   }
   throw new Error(`Template module not found: ${prettyFormat(fullPath)}.`)
-}
-
-/**
- * Returns a string containing a code to be embedded in the final HTML file that
- * will connect back to the host and receive messages about templates being
- * changed.
- */
-export function generateHotListener(template:Template) {
-  return `
-    (function() {
-      var thisTemplate = '${template.fullPath.replace(/\\/g, '\\\\')}'
-      var socket = io.connect('//localhost:8196')
-
-      socket.on('Template Emitted', function(templateChanged) {
-        if (thisTemplate === templateChanged) {
-          console.log('Template changed, reloading...')
-          window.location.reload()
-        }
-      })
-    })()
-  `
 }
 
 /**
