@@ -89,14 +89,20 @@ export default class HtmlPlugin {
     validateOptions(OPTIONS_SCHEMA, options, PLUGIN_NAME)
 
     let {base, dir, name} = parsePath(options.templatePath)
+    let {
+      head: {appendScripts = []},
+      hot,
+      minify,
+      templatePath,
+    } = options
 
-    this._head.appendScripts = options?.head?.appendScripts || []
-    this._hot = options.hot || true
-    this._minify = options.minify
+    this._head.appendScripts = appendScripts
+    this._hot = hot
+    this._minify = minify
     this._template = {
       ...this._template,
       directory: dir,
-      fullPath: options.templatePath,
+      fullPath: templatePath,
       base,
       name,
     }
@@ -140,7 +146,6 @@ export default class HtmlPlugin {
       contextTimestamps: newContextTimestamps,
       fileTimestamps: newFileTimestamps,
     } = compilation
-
 
     const FILES_CHANGED = dependenciesChanged(
       fileDependencies,
