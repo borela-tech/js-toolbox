@@ -22,6 +22,7 @@ import {
 } from './parse5-utils'
 
 import {
+  dependenciesChanged,
   execModule,
   findTemplateModule,
   generateHotListener,
@@ -31,14 +32,13 @@ import {
 import debug from 'debug'
 import OPTIONS_SCHEMA from './options-schema'
 import prettyFormat from 'pretty-format'
-import socketIo from 'socket.io'
+import socket from '../../../messaging-socket'
 import validateOptions from 'schema-utils'
 import {parse as parseHtml} from 'parse5'
 import {parse as parsePath} from 'path'
 import {PrefetchPlugin} from 'webpack'
 import {RawSource} from 'webpack-sources'
 
-let socket = socketIo(8196)
 let log = debug('bb:config:webpack:plugin:html')
 
 const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
@@ -48,8 +48,6 @@ const PLUGIN_NAME = 'Borela JS Toolbox | HTML Plugin'
  * inside it and add the script bundles to the head and body.
  */
 export default class HtmlPlugin {
-  _firstBuild = true
-
   /**
    * Stuff that needs to be added to the “head” tag.
    */
@@ -123,40 +121,6 @@ export default class HtmlPlugin {
     )
   }
 
-  _contextChanged(contextDependencies, contextTimestamps) {
-    // The amount of context dependencies changed.
-    if (this._previousContextTimestamps.length !== contextTimestamps.length)
-      return true
-
-    // Check each context dependency.
-    for (let context of contextDependencies) {
-      let oldTimestamp = this._previousContextTimestamps.get(context) || 0
-      let newTimestamp = contextTimestamps.get(context) || 1
-
-      if (newTimestamp > oldTimestamp)
-        return true
-    }
-
-    return false
-  }
-
-  _filesChanged(fileDependencies, fileTimestamps) {
-    // The amount of file dependencies changed.
-    if (this._previousFileTimestamps.length !== fileTimestamps.length)
-      return true
-
-    // Check each file dependency.
-    for (let file of fileDependencies) {
-      let oldTimestamp = this._previousFileTimestamps.get(file) || 0
-      let newTimestamp = fileTimestamps.get(file) || 1
-
-      if (newTimestamp > oldTimestamp)
-        return true
-    }
-
-    return false
-  }
-
   /**
    * Emit the final HTML file.
    */
@@ -173,21 +137,28 @@ export default class HtmlPlugin {
     } = TEMPLATE_MODULE.buildInfo
 
     let {
-      contextTimestamps,
-      fileTimestamps,
+      contextTimestamps: newContextTimestamps,
+      fileTimestamps: newFileTimestamps,
     } = compilation
 
-    // Check if the file and context dependencies changed.
-    const MUST_COMPILE = this._filesChanged(fileDependencies, fileTimestamps)
-      || this._contextChanged(contextDependencies, contextTimestamps)
 
-    if (!MUST_COMPILE) {
+    const FILES_CHANGED = dependenciesChanged(
+      fileDependencies,
+      newFileTimestamps,
+      this._previousFileTimestamps,
+    )
+
+    const CONTEXT_CHANGED = dependenciesChanged(
+      contextDependencies,
+      newContextTimestamps,
+      this._previousContextTimestamps,
+    )
+
+    if (!FILES_CHANGED && !CONTEXT_CHANGED) {
       log(`Skipping compilation for: ${prettyFormat(TEMPLATE_PATH)}`)
       done()
       return
     }
-
-    log(`Compiling: ${prettyFormat(TEMPLATE_PATH)}`)
 
     const TEMPLATE_SOURCE = execModule(
       TEMPLATE_MODULE
@@ -223,12 +194,12 @@ export default class HtmlPlugin {
       })}`)
     }
 
-    // Add the chunk scripts to the end of the body.
     const CHUNKS = getCompanionChunks(
       compilation.chunks,
       this._template,
     )
 
+    // Add companion chunks to the end of the body.
     for (let chunk of CHUNKS) {
       appendChild(BODY, createTagNode({
         tagName: 'script',
@@ -240,7 +211,7 @@ export default class HtmlPlugin {
     }
 
     if (this._hot) {
-      log(`Injecting ho t client in: ${prettyFormat(TEMPLATE_PATH)}`)
+      log(`Injecting hot listener: ${prettyFormat(TEMPLATE_PATH)}`)
 
       appendChild(BODY, createTagNode({
         tagName: 'script',
@@ -258,7 +229,6 @@ export default class HtmlPlugin {
 
     log(`Emitting final HTML: ${prettyFormat(TEMPLATE_PATH)}`)
 
-    // Emit the final HTML.
     let {name} = this._template
     compilation.assets[`${name}.html`] = new RawSource(
       this._minify
@@ -266,8 +236,7 @@ export default class HtmlPlugin {
         : prettifiedHtmlString(tree)
     )
 
-    if (!this._firstBuild)
-      socket.emit('Borela HTML Plugin', this._template.fullPath)
+    socket.emit('Template Emitted', this._template.fullPath)
 
     this._firstBuild = false
     this._previousContextTimestamps = contextTimestamps
