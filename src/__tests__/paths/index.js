@@ -12,26 +12,6 @@
 
 import {join} from 'path'
 
-afterEach(() => {
-  jest.restoreAllMocks()
-  jest.resetModules()
-})
-
-describe('getTargetDir()', () => {
-  test('It has the dir set by “setTargetDir”', () => {
-    const {getTargetDir, setTargetDir} = require('../../paths')
-
-    setTargetDir('foo')
-    expect(getTargetDir()).toBe('foo')
-
-    setTargetDir('bar')
-    expect(getTargetDir()).toBe('bar')
-
-    setTargetDir('baz')
-    expect(getTargetDir()).toBe('baz')
-  })
-})
-
 const FIXTURE = join(__dirname, '__fixture__')
 const FOO = join(FIXTURE, 'foo')
 const FOO_PACKAGE = join(FIXTURE, 'foo-package')
@@ -54,6 +34,11 @@ describe.each([
     jest.spyOn(process, 'cwd').mockImplementation(() => cwd)
   })
 
+  afterEach(() => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+  })
+
   describe('getProjectDir()', () => {
     test('It has the package’s root', () => {
       const {getProjectDir} = require('../../paths')
@@ -62,9 +47,19 @@ describe.each([
   })
 
   describe('getTargetDir()', () => {
-    test('It has the process’s cwd', () => {
-      const {getTargetDir} = require('../../paths')
+    test('It has the process’s cwd and then the set target dir', () => {
+      const {getTargetDir, setTargetDir} = require('../../paths')
+
       expect(getTargetDir()).toBe(cwd)
+
+      setTargetDir('foo')
+      expect(getTargetDir()).toBe('foo')
+
+      setTargetDir('bar')
+      expect(getTargetDir()).toBe('bar')
+
+      setTargetDir('baz')
+      expect(getTargetDir()).toBe('baz')
     })
   })
 })
