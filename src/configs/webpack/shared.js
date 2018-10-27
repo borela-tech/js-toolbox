@@ -143,39 +143,80 @@ function getDefaultEntries() {
  * module paths and simplify the file structure on the browser’s debugger to be
  * as follows:
  *
- *     file://
- *       borela-js-toolbox
- *          entry
+ *     webpack://
+ *       Borela JS Toolbox
+ *          entries
  *          node_modules
  *
  *       project-name
  *          node_modules
  *          src
  *
- *     webpack://
- *        ...
+ *       Webpack
+ *         ...
+ *
+ *       Webpack Development Server
+ *         ...
+ *
  */
 function normalizeModulePath(info) {
-  let identifier = info.identifier
-
-  if (/^(webpack|\(webpack\))/.test(identifier)) {
-    if (identifier == 'webpack/bootstrap')
-      identifier = 'bootstrap.js'
-    return `webpack:///${identifier}`
-  }
-
-  const PROJECT_NAME = getProjectName()
-  let path = info.absoluteResourcePath
+  let {
+    absoluteResourcePath:path,
+    identifier,
+  } = info
 
   // Hot reloading, path is already correct.
   if (/\w+:\/{3}/.test(path))
     return path
 
+  // Webpack files comes as:
+  //
+  //    webpack/...
+  //    (wenpack)/...
+  //    (webpack)-dev-server/...
+  //
+  // This initial pass will normalize them to:
+  //
+  //    Webpack
+  //    Webpack Development Server
+  //
+  identifier = identifier.replace(
+    /\(webpack\)-dev-server/,
+    'Webpack Development Server',
+  )
+
+  identifier = identifier.replace(
+    /webpack|\(webpack\)/,
+    'Webpack',
+  )
+
+  // Adding missing “.js” extension will enable syntax highlighting on some
+  // browsers that requires it e.g.: Firefox.
+  if (identifier.includes('?')) {
+    // Query.
+    if (/(?<!\.\w+)\?/.test(identifier))
+      identifier = identifier.replace('?', '.js?')
+  } else {
+    if (identifier.endsWith('/')) {
+      // Transform the context require into a “file.js?sync...”.
+      let [, path, query] = identifier.match(/^(.+)\s(a?sync.+)$/)
+      identifier = `${path}.js?${query}`
+    } else {
+      // Add “.js” to files without extension.
+      if (!/\.\w+$/.test(identifier))
+        identifier += '.js'
+    }
+  }
+
+  // Webpack sources.
+  if (identifier.startsWith('Webpack'))
+    return `webpack:///${identifier}`
+
   // Project sources.
   if (isPathSubDirOf(path, PROJECT_DIR)) {
     path = relative(PROJECT_DIR, path)
     path = path.replace(/\\/g, '/')
-    return `webpack:///${PROJECT_NAME}/${path}`
+    return `webpack:///${getProjectName()}/${path}`
   }
 
   // Toolbox sources.
