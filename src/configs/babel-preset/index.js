@@ -72,7 +72,7 @@ function mustIncludePolyfills() {
   switch (projectType) {
     case 'cli':
     case 'node-app':
-    case 'react-app':
+    case 'react-spa':
       return true
   }
 

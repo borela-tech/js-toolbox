@@ -28,7 +28,7 @@ let {
 const PROJECT_DIR = getProjectDir()
 const PROJECT_SRC_DIR = join(PROJECT_DIR, 'src')
 const ENTRIES_DIR = join(TOOLBOX_DIR, 'entries')
-const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react')
+const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react', 'spa')
 
 /**
  * This function will check if there’s an entry point “main.js” in the project’s
@@ -37,7 +37,7 @@ const REACT_ENTRY_DIR = join(ENTRIES_DIR, 'react')
  * wires a bunch of helpers to trace bugs and enable hot reloading during
  * development.
  */
-function setEntryPoint(config) {
+function setEntryPoints(config) {
   const CUSTOM_ENTRY = join(PROJECT_SRC_DIR, 'main.js')
 
   if (!existsSync(CUSTOM_ENTRY)) {
@@ -106,7 +106,7 @@ export default function () {
     path: join(config.output.path, 'web'),
   }
 
-  setEntryPoint(config)
+  setEntryPoints(config)
   setHtmlTemplate(config)
 
   config.target = 'web'
