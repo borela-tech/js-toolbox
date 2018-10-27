@@ -23,7 +23,11 @@ let log = debug('bb:config:webpack:plugin:html')
 /**
  * Checks if the dependencies changed.
  */
-export function dependenciesChanged(dependencies, newTimestamps, oldTimestamps) {
+export function dependenciesChanged(
+  dependencies,
+  newTimestamps,
+  oldTimestamps,
+) {
   // The amount of dependencies changed.
   if (oldTimestamps.length !== newTimestamps.length)
     return true

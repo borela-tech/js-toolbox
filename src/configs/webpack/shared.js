@@ -161,7 +161,7 @@ function getDefaultEntries() {
  */
 function normalizeModulePath(info) {
   let {
-    absoluteResourcePath:path,
+    absoluteResourcePath: path,
     identifier,
   } = info
 
@@ -191,21 +191,18 @@ function normalizeModulePath(info) {
   )
 
   // Adding missing “.js” extension will enable syntax highlighting on some
-  // browsers that requires it e.g.: Firefox.
+  // browsers that requires it e.g. Firefox.
   if (identifier.includes('?')) {
     // Query.
     if (/(?<!\.\w+)\?/.test(identifier))
       identifier = identifier.replace('?', '.js?')
-  } else {
-    if (identifier.endsWith('/')) {
-      // Transform the context require into a “file.js?sync...”.
-      let [, path, query] = identifier.match(/^(.+)\s(a?sync.+)$/)
-      identifier = `${path}.js?${query}`
-    } else {
-      // Add “.js” to files without extension.
-      if (!/\.\w+$/.test(identifier))
-        identifier += '.js'
-    }
+  } else if (identifier.endsWith('/')) {
+    // Transform the context require into a “file.js?sync...”.
+    let [, path, query] = identifier.match(/^(.+)\s(a?sync.+)$/)
+    identifier = `${path}.js?${query}`
+  } else if (!/\.\w+$/.test(identifier)) {
+    // Add “.js” to files without extension.
+    identifier += '.js'
   }
 
   // Webpack sources.

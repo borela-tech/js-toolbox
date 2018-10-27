@@ -15,7 +15,6 @@ import type Template from './Template'
 import {
   appendChild,
   createTagNode,
-  createTextNode,
   getNodeByTagName,
   minifiedHtmlString,
   prettifiedHtmlString,
@@ -215,23 +214,6 @@ export default class HtmlPlugin {
           name: 'src',
           value: `${chunk.id}.js?${chunk.hash}`,
         }],
-      }))
-    }
-
-    if (this._hot) {
-      log(`Injecting hot listener: ${prettyFormat(TEMPLATE_PATH)}`)
-
-      appendChild(BODY, createTagNode({
-        tagName: 'script',
-        attrs: [{
-          name: 'src',
-          value: '//localhost:8196/socket.io/socket.io.js',
-        }],
-      }))
-
-      appendChild(BODY, createTagNode({
-        tagName: 'script',
-        childNodes: [createTextNode(generateHotListener(this._template))],
       }))
     }
 
