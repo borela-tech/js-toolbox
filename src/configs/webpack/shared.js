@@ -144,19 +144,22 @@ function getDefaultEntries() {
  * as follows:
  *
  *     webpack://
- *       Borela JS Toolbox
+ *       (Borela JS Toolbox)
  *          entries
  *          node_modules
+ *
+ *       (Externals)
+ *         ...
+ *
+ *       (Webpack)
+ *         ...
+ *
+ *       (Webpack Dev Server)
+ *         ...
  *
  *       project-name
  *          node_modules
  *          src
- *
- *       Webpack
- *         ...
- *
- *       Webpack Development Server
- *         ...
  *
  */
 function normalizeModulePath(info) {
@@ -165,9 +168,17 @@ function normalizeModulePath(info) {
     identifier,
   } = info
 
-  // Hot reloading, path is already correct.
+  // When hot reloading, the path is already correct.
   if (/\w+:\/{3}/.test(path))
     return path
+
+  // In some cases, the identifier will be the webpack request delimited by
+  // exclamation marks, the last item should be the path to the file.
+  identifier = identifier.split('!').pop()
+
+  // Sometimes the path also includes a query string, this can be removed as it
+  // is also in the identifier.
+  path = path.split('?').shift()
 
   // Webpack files comes as:
   //
@@ -177,36 +188,45 @@ function normalizeModulePath(info) {
   //
   // This initial pass will normalize them to:
   //
-  //    Webpack
-  //    Webpack Development Server
+  //    (Webpack)
+  //    (Webpack Development Server)
   //
   identifier = identifier.replace(
     /\(webpack\)-dev-server/,
-    'Webpack Development Server',
+    '(Webpack Dev Server)',
   )
 
   identifier = identifier.replace(
     /webpack|\(webpack\)/,
-    'Webpack',
+    '(Webpack)',
   )
 
-  // Adding missing “.js” extension will enable syntax highlighting on some
-  // browsers that requires it e.g. Firefox.
-  if (identifier.includes('?')) {
-    // Query.
-    if (/(?<!\.\w+)\?/.test(identifier))
-      identifier = identifier.replace('?', '.js?')
-  } else if (identifier.endsWith('/')) {
-    // Transform the context require into a “file.js?sync...”.
-    let [, path, query] = identifier.match(/^(.+)\s(a?sync.+)$/)
-    identifier = `${path}.js?${query}`
-  } else if (!/\.\w+$/.test(identifier)) {
-    // Add “.js” to files without extension.
-    identifier += '.js'
+  // Transform externals.
+  if (identifier.startsWith('external "')) {
+    let [, targetExternal] = identifier.match(/external "(.+)"/)
+    return `webpack:///(Externals)/${targetExternal}.js`
   }
 
+  // Transform the context require.
+  if (/\s\/\^.+\/$/.test(identifier)) {
+    let [, contextPath, contextQuery] = identifier.match(/^(.+)\s(a?sync.+)$/)
+    identifier = `${contextPath}/index.js?${contextQuery}`
+  }
+
+  let [identifierPath, query] = identifier.split('?')
+
+  // Add “/index.js” to paths without extension.
+  if (!/\.\w+$/.test(identifierPath))
+    identifierPath += '/index.js'
+
+  // Prepare the final identifier.
+  if (query)
+    identifier = `${identifierPath}?${query}`
+  else
+    identifier = identifierPath
+
   // Webpack sources.
-  if (identifier.startsWith('Webpack'))
+  if (identifier.startsWith('(Webpack'))
     return `webpack:///${identifier}`
 
   // Project sources.
@@ -220,8 +240,7 @@ function normalizeModulePath(info) {
   if (isPathSubDirOf(path, TOOLBOX_DIR)) {
     path = relative(TOOLBOX_DIR, path)
     path = path.replace(/\\/g, '/')
-
-    return `webpack:///Borela JS Toolbox/${path}`
+    return `webpack:///(Borela JS Toolbox)/${path}`
   }
 
   throw new Error(`Invalid resource path “${path}”.`)
