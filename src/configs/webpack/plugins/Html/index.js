@@ -227,6 +227,8 @@ export default class HtmlPlugin {
     compilation.assets[`${name}.html`] = new RawSource(SOURCE)
 
     if (this._alwaysWriteToDisk) {
+      log(`Writting HTML to disk: ${prettyFormat(TEMPLATE_PATH)}`)
+
       const PROJECT_DIR = join(getProjectDir(), 'src')
       const PROJECT_OUTPUT_DIR = compilation.options.output.path
 
@@ -243,6 +245,7 @@ export default class HtmlPlugin {
     this._previousContextTimestamps = newContextTimestamps
     this._previousFileTimestamps = newFileTimestamps
 
+    log(`Done processing template: ${prettyFormat(TEMPLATE_PATH)}`)
     done()
   }
 }
