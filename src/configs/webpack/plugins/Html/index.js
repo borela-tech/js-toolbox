@@ -25,6 +25,7 @@ import {
   execModule,
   findTemplateModule,
   getCompanionChunks,
+  getCompanionCss,
 } from './utils'
 
 import {
@@ -182,6 +183,30 @@ export default class HtmlPlugin {
     const HEAD = getNodeByTagName(tree, 'head')
     const BODY = getNodeByTagName(tree, 'body')
 
+    // Add CSS.
+    const CSS = getCompanionCss(
+      compilation.assets,
+      this._template
+    )
+
+    if (CSS) {
+      log(`Adding CSS to HTML: ${prettyFormat({
+        css: CSS,
+        template: TEMPLATE_PATH,
+      })}`)
+
+      appendChild(HEAD, createTagNode({
+        tagName: 'link',
+        attrs: [{
+          name: 'rel',
+          value: 'stylesheet',
+        }, {
+          name: 'src',
+          value: CSS,
+        }],
+      }))
+    }
+
     // Add external scripts from CDN.
     for (let script of this._head.appendScripts) {
       appendChild(HEAD, createTagNode({
@@ -201,12 +226,12 @@ export default class HtmlPlugin {
       })}`)
     }
 
+    // Add companion chunks to the end of the body.
     const CHUNKS = getCompanionChunks(
       compilation.chunks,
       this._template,
     )
 
-    // Add companion chunks to the end of the body.
     for (let chunk of CHUNKS) {
       appendChild(BODY, createTagNode({
         tagName: 'script',
