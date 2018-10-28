@@ -311,8 +311,8 @@ export default function () {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name].css',
-        chunkFilename: '[id].css',
+        filename: '[name].css?[contenthash]',
+        chunkFilename: '[id].css?[contenthash]',
       }),
     ],
     resolve: {
