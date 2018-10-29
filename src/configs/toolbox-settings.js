@@ -85,7 +85,7 @@ function setDefaultSettings(settings) {
       settings.platforms ??= ['browser', 'node']
       break
 
-    case 'react-app':
+    case 'react-spa':
       settings.platforms ??= ['browser']
       settings.jsx ??= true
       settings.react ??= true

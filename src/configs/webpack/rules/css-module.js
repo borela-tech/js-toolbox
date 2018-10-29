@@ -14,16 +14,25 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import pluginAutoPrefixer from 'autoprefixer'
 import {getSettings} from '../../toolbox-settings'
 
-let {disableSourceMaps} = getSettings()
+let {
+  borela,
+  disableSourceMaps,
+} = getSettings()
 
 export default function () {
+  let rootLoader = 'style-loader'
+  let rootOptions = {sourceMap: !disableSourceMaps}
+
+  if (borela !== 'serve') {
+    rootLoader = MiniCssExtractPlugin.loader
+    rootOptions = undefined
+  }
+
   return {
     test: /\.module\.css$/,
     use: [{
-    //   loader: MiniCssExtractPlugin.loader,
-    // },{
-      loader: 'style-loader',
-      options: {sourceMap: !disableSourceMaps},
+      loader: rootLoader,
+      options: rootOptions,
     }, {
       loader: 'css-loader',
       options: {

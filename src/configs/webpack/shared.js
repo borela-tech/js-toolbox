@@ -143,47 +143,104 @@ function getDefaultEntries() {
  * module paths and simplify the file structure on the browser’s debugger to be
  * as follows:
  *
- *     file://
- *       borela-js-toolbox
- *          entry
+ *     webpack://
+ *       (Borela JS Toolbox)
+ *          entries
  *          node_modules
+ *
+ *       (Externals)
+ *         ...
+ *
+ *       (Webpack)
+ *         ...
+ *
+ *       (Webpack Dev Server)
+ *         ...
  *
  *       project-name
  *          node_modules
  *          src
  *
- *     webpack://
- *        ...
  */
 function normalizeModulePath(info) {
-  let identifier = info.identifier
+  let {
+    absoluteResourcePath: path,
+    identifier,
+  } = info
 
-  if (/^(webpack|\(webpack\))/.test(identifier)) {
-    if (identifier == 'webpack/bootstrap')
-      identifier = 'bootstrap.js'
-    return `webpack:///${identifier}`
-  }
-
-  const PROJECT_NAME = getProjectName()
-  let path = info.absoluteResourcePath
-
-  // Hot reloading, path is already correct.
+  // When hot reloading, the path is already correct.
   if (/\w+:\/{3}/.test(path))
     return path
+
+  // In some cases, the identifier will be the webpack request delimited by
+  // exclamation marks, the last item should be the path to the file.
+  identifier = identifier.split('!').pop()
+
+  // Sometimes the path also includes a query string, this can be removed as it
+  // is also in the identifier.
+  path = path.split('?').shift()
+
+  // Webpack files comes as:
+  //
+  //    webpack/...
+  //    (wenpack)/...
+  //    (webpack)-dev-server/...
+  //
+  // This initial pass will normalize them to:
+  //
+  //    (Webpack)
+  //    (Webpack Development Server)
+  //
+  identifier = identifier.replace(
+    /\(webpack\)-dev-server/,
+    '(Webpack Dev Server)',
+  )
+
+  identifier = identifier.replace(
+    /webpack|\(webpack\)/,
+    '(Webpack)',
+  )
+
+  // Transform externals.
+  if (identifier.startsWith('external "')) {
+    let [, targetExternal] = identifier.match(/external "(.+)"/)
+    return `webpack:///(Externals)/${targetExternal}.js`
+  }
+
+  // Transform the context require.
+  if (/\s\/\^.+\/$/.test(identifier)) {
+    let [, contextPath, contextQuery] = identifier.match(/^(.+)\s(a?sync.+)$/)
+    identifier = `${contextPath}/index.js?${contextQuery}`
+  }
+
+  let [identifierPath, query] = identifier.split('?')
+
+  // Add “/index.js” to paths without extension.
+  if (!/\.\w+$/.test(identifierPath))
+    identifierPath += '/index.js'
+
+  // Prepare the final identifier.
+  if (query)
+    identifier = `${identifierPath}?${query}`
+  else
+    identifier = identifierPath
+
+  // Webpack sources.
+  if (identifier.startsWith('(Webpack'))
+    return `webpack:///${identifier}`
 
   // Project sources.
   if (isPathSubDirOf(path, PROJECT_DIR)) {
     path = relative(PROJECT_DIR, path)
     path = path.replace(/\\/g, '/')
-    return `webpack:///${PROJECT_NAME}/${path}`
+    return `webpack:///${getProjectName()}/${path}`
   }
 
   // Toolbox sources.
   if (isPathSubDirOf(path, TOOLBOX_DIR)) {
     path = relative(TOOLBOX_DIR, path)
     path = path.replace(/\\/g, '/')
-
-    return `webpack:///Borela JS Toolbox/${path}`
+    return `webpack:///(Borela JS Toolbox)/${path}`
   }
 
   throw new Error(`Invalid resource path “${path}”.`)
@@ -254,8 +311,8 @@ export default function () {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name].css',
-        chunkFilename: '[id].css',
+        filename: '[name].css?[contenthash]',
+        chunkFilename: '[id].css?[contenthash]',
       }),
     ],
     resolve: {

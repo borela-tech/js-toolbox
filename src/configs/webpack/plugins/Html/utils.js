@@ -23,7 +23,11 @@ let log = debug('bb:config:webpack:plugin:html')
 /**
  * Checks if the dependencies changed.
  */
-export function dependenciesChanged(dependencies, newTimestamps, oldTimestamps) {
+export function dependenciesChanged(
+  dependencies,
+  newTimestamps,
+  oldTimestamps,
+) {
   // The amount of dependencies changed.
   if (oldTimestamps.length !== newTimestamps.length)
     return true
@@ -127,4 +131,17 @@ export function * getCompanionChunks(chunks, template:Template) {
 
   // Yield chunks inside the group.
   yield * GROUP.chunks
+}
+
+/**
+ * Get the chunk that has the same name as the template.
+ */
+export function getCompanionCss(assets, template:Template) {
+  let {name} = template
+  name = `${name}.css?`
+  for (let asset in assets) {
+    if (asset.includes(name))
+      return asset
+  }
+  return undefined
 }

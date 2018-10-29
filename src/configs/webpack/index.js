@@ -15,7 +15,7 @@ import debug from 'debug'
 import nodeAppConfig from './node-app'
 import nodeLibConfig from './node-lib'
 import prettyFormat from 'pretty-format'
-import reactAppConfig from './react-app'
+import reactSpaConfig from './react-spa'
 import webLibConfig from './web-lib'
 import {getSettings} from '../toolbox-settings'
 import {resolve} from 'path'
@@ -45,8 +45,8 @@ switch (projectType) {
     config = nodeAppConfig()
     break
 
-  case 'react-app':
-    config = reactAppConfig()
+  case 'react-spa':
+    config = reactSpaConfig()
     break
 
   case 'web-lib':

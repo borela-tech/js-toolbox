@@ -15,7 +15,6 @@ import type Template from './Template'
 import {
   appendChild,
   createTagNode,
-  createTextNode,
   getNodeByTagName,
   minifiedHtmlString,
   prettifiedHtmlString,
@@ -26,6 +25,7 @@ import {
   execModule,
   findTemplateModule,
   getCompanionChunks,
+  getCompanionCss,
 } from './utils'
 
 import {
@@ -183,6 +183,30 @@ export default class HtmlPlugin {
     const HEAD = getNodeByTagName(tree, 'head')
     const BODY = getNodeByTagName(tree, 'body')
 
+    // Add CSS.
+    const CSS = getCompanionCss(
+      compilation.assets,
+      this._template
+    )
+
+    if (CSS) {
+      log(`Adding CSS to HTML: ${prettyFormat({
+        css: CSS,
+        template: TEMPLATE_PATH,
+      })}`)
+
+      appendChild(HEAD, createTagNode({
+        tagName: 'link',
+        attrs: [{
+          name: 'rel',
+          value: 'stylesheet',
+        }, {
+          name: 'src',
+          value: CSS,
+        }],
+      }))
+    }
+
     // Add external scripts from CDN.
     for (let script of this._head.appendScripts) {
       appendChild(HEAD, createTagNode({
@@ -202,12 +226,12 @@ export default class HtmlPlugin {
       })}`)
     }
 
+    // Add companion chunks to the end of the body.
     const CHUNKS = getCompanionChunks(
       compilation.chunks,
       this._template,
     )
 
-    // Add companion chunks to the end of the body.
     for (let chunk of CHUNKS) {
       appendChild(BODY, createTagNode({
         tagName: 'script',
@@ -215,23 +239,6 @@ export default class HtmlPlugin {
           name: 'src',
           value: `${chunk.id}.js?${chunk.hash}`,
         }],
-      }))
-    }
-
-    if (this._hot) {
-      log(`Injecting hot listener: ${prettyFormat(TEMPLATE_PATH)}`)
-
-      appendChild(BODY, createTagNode({
-        tagName: 'script',
-        attrs: [{
-          name: 'src',
-          value: '//localhost:8196/socket.io/socket.io.js',
-        }],
-      }))
-
-      appendChild(BODY, createTagNode({
-        tagName: 'script',
-        childNodes: [createTextNode(generateHotListener(this._template))],
       }))
     }
 
@@ -245,6 +252,8 @@ export default class HtmlPlugin {
     compilation.assets[`${name}.html`] = new RawSource(SOURCE)
 
     if (this._alwaysWriteToDisk) {
+      log(`Writting HTML to disk: ${prettyFormat(TEMPLATE_PATH)}`)
+
       const PROJECT_DIR = join(getProjectDir(), 'src')
       const PROJECT_OUTPUT_DIR = compilation.options.output.path
 
@@ -261,6 +270,7 @@ export default class HtmlPlugin {
     this._previousContextTimestamps = newContextTimestamps
     this._previousFileTimestamps = newFileTimestamps
 
+    log(`Done processing template: ${prettyFormat(TEMPLATE_PATH)}`)
     done()
   }
 }
