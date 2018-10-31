@@ -11,7 +11,7 @@
 // the License.
 
 import pkgDir from 'pkg-dir'
-import {join} from 'path'
+import {resolve} from 'path'
 
 let targetDir = process.cwd()
 
@@ -28,11 +28,11 @@ export function setTargetDir(dir:string):string {
 }
 
 // This is the path to the toolbox itself.
-export const TOOLBOX_DIR = join(__dirname, '..')
-export const TOOLBOX_SRC_DIR = join(TOOLBOX_DIR, 'src')
+export const TOOLBOX_DIR = resolve(__dirname, '..')
+export const TOOLBOX_SRC_DIR = resolve(TOOLBOX_DIR, 'src')
 
 // Other helpers to locate the assets.
-export const BIN_DIR = join(TOOLBOX_DIR, 'node_modules', '.bin')
-export const CONFIGS_DIR = join(TOOLBOX_DIR, 'build', 'configs')
-export const MODULES_DIR = join(TOOLBOX_DIR, 'node_modules')
-export const TEMPLATES_DIR = join(TOOLBOX_DIR, 'templates')
+export const BIN_DIR = resolve(TOOLBOX_DIR, 'node_modules', '.bin')
+export const CONFIGS_DIR = resolve(TOOLBOX_DIR, 'build', 'configs')
+export const MODULES_DIR = resolve(TOOLBOX_DIR, 'node_modules')
+export const TEMPLATES_DIR = resolve(TOOLBOX_DIR, 'templates')
