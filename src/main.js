@@ -12,4 +12,29 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import build from './commands/build'
+import packageInfo from '../package'
 import Yargs from 'yargs'
+import {getEpilog, getProlog} from './banner'
+
+const VERSION = packageInfo.version
+const PROLOG = getProlog(VERSION)
+const EPILOG = getEpilog()
+
+const PARSER = Yargs.scriptName('bb')
+  .usage(PROLOG)
+  .epilog(EPILOG)
+  .strict()
+  .help('help', 'Show usage instructions.')
+  .version('version', 'Show toolbox version.', VERSION)
+  .command(build)
+  // .command(lint)
+  // .command(location)
+  // .command(scaffold)
+  // .command(serve)
+  // .command(start)
+  // .command(test)
+  .demandCommand(1, 'Error: Use one of the commands available.')
+  .recommendCommands()
+
+PARSER.parse()
