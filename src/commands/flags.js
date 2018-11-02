@@ -11,11 +11,19 @@
 // the License.
 
 /**
+ * Add a single flag to yargs/yargs command.
+ */
+export function addFlag(yargs, {flag, ...options}) {
+  yargs.option(flag, options)
+}
+
+/**
  * Adds a list of flags to yargs/yargs command.
  */
 export function addFlags(yargs, flags) {
-  for (let {flag, ...options} of flags)
-    yargs.option(flag, options)
+  for (let flag of flags)
+    addFlag(yargs, flag)
+}
 
 export const APP_ARGS = {
   flag: 'app-args',
