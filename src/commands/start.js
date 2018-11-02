@@ -10,12 +10,28 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {addFlags} from './flags'
+
+import {
+  APP_ARGS,
+  DEBUG,
+} from './flags'
+
+function builder(yargs) {
+  addFlags(yargs, [
+    APP_ARGS,
+    DEBUG,
+  ])
+}
+
 function handler(args) {
   console.log('Start executed.')
+  console.log(args)
 }
 
 export default {
   command: 'start [dir]',
   description: 'Start using nodemon.',
+  builder,
   handler,
 }

@@ -16,6 +16,11 @@
 export function addFlags(yargs, flags) {
   for (let {flag, ...options} of flags)
     yargs.option(flag, options)
+
+export const APP_ARGS = {
+  flag: 'app-args',
+  description: 'Arguments to pass to the app.',
+  type: 'string',
 }
 
 export const BROWSERS = {
@@ -33,6 +38,12 @@ export const BUNDLE_STATS = {
 export const COMMENT_FLOW = {
   flag: 'comment-flow',
   description: 'Convert Flow annotations to comments.',
+  type: 'boolean',
+}
+
+export const DEBUG = {
+  flag: 'debug',
+  description: 'Enable NodeJS inspector.',
   type: 'boolean',
 }
 
