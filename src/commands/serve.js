@@ -10,7 +10,59 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {addFlags} from './flags'
+
+import {
+  BROWSERS,
+  BUNDLE_STATS,
+  COMMENT_FLOW,
+  DISABLE_EXPERIMENTAL_PLUGINS,
+  DISABLE_SOURCE_MAPS,
+  INCLUDE_POLYFILLS,
+  JSX,
+  MINIFY,
+  MINIFY_CSS,
+  MINIFY_HTML,
+  MINIFY_JS,
+  PORT,
+  PRODUCTION,
+  PROGRESS,
+  PROJECT_TYPE,
+  REACT,
+  REMOVE_FLOW,
+  TYPE_SCRIPT,
+} from './flags'
+
+function builder(yargs) {
+  addFlags(yargs, [
+    BROWSERS,
+    BUNDLE_STATS,
+    COMMENT_FLOW,
+    DISABLE_EXPERIMENTAL_PLUGINS,
+    DISABLE_SOURCE_MAPS,
+    INCLUDE_POLYFILLS,
+    JSX,
+    MINIFY,
+    MINIFY_CSS,
+    MINIFY_HTML,
+    MINIFY_JS,
+    PORT,
+    PRODUCTION,
+    PROGRESS,
+    PROJECT_TYPE,
+    REACT,
+    REMOVE_FLOW,
+    TYPE_SCRIPT,
+  ])
+}
+
+function handler(args) {
+  console.log('Serve executed.')
+}
+
 export default {
   command: 'serve [dir]',
   description: 'Serve using Webpack’s dev server.',
+  builder,
+  handler,
 }

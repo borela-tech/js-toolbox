@@ -10,7 +10,38 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {addFlags} from './flags'
+
+import {
+  DISABLE_EXPERIMENTAL_PLUGINS,
+  FLOW,
+  JSX,
+  PLATFORMS,
+  PROGRESS,
+  PROJECT_TYPE,
+  REACT,
+  TYPE_SCRIPT,
+} from './flags'
+
+function builder(yargs) {
+  addFlags(yargs, [
+    DISABLE_EXPERIMENTAL_PLUGINS,
+    FLOW,
+    JSX,
+    PLATFORMS,
+    PROGRESS,
+    PROJECT_TYPE,
+    REACT,
+    TYPE_SCRIPT,
+  ])
+}
+
+function handler(args) {
+  console.log('Lint executed.')
+}
+
 export default {
   command: 'lint [dir]',
   description: 'Lint using ESLint.',
+  builder,
 }

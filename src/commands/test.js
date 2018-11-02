@@ -10,7 +10,47 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {addFlags} from './flags'
+
+import {
+  COMMENT_FLOW,
+  DISABLE_EXPERIMENTAL_PLUGINS,
+  DISABLE_SOURCE_MAPS,
+  INCLUDE_POLYFILLS,
+  JSX,
+  NODE,
+  PROGRESS,
+  PROJECT_TYPE,
+  REACT,
+  REMOVE_FLOW,
+  TYPE_SCRIPT,
+  WATCH,
+} from './flags'
+
+function builder(yargs) {
+  addFlags(yargs, [
+    COMMENT_FLOW,
+    DISABLE_EXPERIMENTAL_PLUGINS,
+    DISABLE_SOURCE_MAPS,
+    INCLUDE_POLYFILLS,
+    JSX,
+    NODE,
+    PROGRESS,
+    PROJECT_TYPE,
+    REACT,
+    REMOVE_FLOW,
+    TYPE_SCRIPT,
+    WATCH,
+  ])
+}
+
+function handler(args) {
+  console.log('Test executed.')
+}
+
 export default {
   command: 'test [dir]',
   description: 'Run tests using Jest.',
+  builder,
+  handler,
 }

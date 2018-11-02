@@ -10,7 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+function handler(args) {
+  console.log('Scaffold executed.')
+}
+
 export default {
   command: 'scaffold <template> [dir]',
   description: 'Copy the template to the directory.',
+  handler,
 }

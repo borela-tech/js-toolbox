@@ -10,7 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+function handler(args) {
+  console.log('Start executed.')
+}
+
 export default {
   command: 'start [dir]',
   description: 'Start using nodemon.',
+  handler,
 }
