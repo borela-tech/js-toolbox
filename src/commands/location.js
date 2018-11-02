@@ -10,7 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import {resolve} from 'path'
+
+function handler() {
+  process.stdout.write(resolve(__dirname, '..', '..'))
+}
+
 export default {
   command: 'location',
   description: 'Print Toolbox’s location.',
+  handler,
 }
