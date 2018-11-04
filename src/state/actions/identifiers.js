@@ -10,29 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../state'
-
-import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
-
-function handler(args) {
-  let {
-    dir,
-    projectType,
-    ...options,
-  } = args
-
-  store.dispatch(setCommand('scaffold'))
-  store.dispatch(setTargetDirectory(dir))
-  console.log(store.getState())
-}
-
-export default {
-  command: 'scaffold <template> [dir]',
-  description: 'Copy the template to the directory.',
-  handler,
-}
+export const SET_COMMAND = 'SET_COMMAND'
+export const SET_OPTIONS = 'SET_OPTIONS'
+export const SET_PROJECT_TYPE = 'SET_PROJECT_TYPE'
+export const SET_TARGET_DIRECTORY = 'SET_TARGET_DIRECTORY'

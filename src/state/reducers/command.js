@@ -10,42 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../state'
-import {addFlags} from './flags'
+import {SET_COMMAND} from '../actions/identifiers'
 
-import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+export default function (state = null, action) {
+  let {payload, type} = action
 
-import {
-  APP_ARGS,
-  DEBUG,
-} from './flags'
+  switch (type) {
+    case SET_COMMAND:
+      return payload.command
+  }
 
-function builder(yargs) {
-  addFlags(yargs, [
-    APP_ARGS,
-    DEBUG,
-  ])
-}
-
-function handler(args) {
-  let {
-    dir,
-    projectType,
-    ...options,
-  } = args
-
-  store.dispatch(setCommand('start'))
-  store.dispatch(setTargetDirectory(dir))
-}
-
-export default {
-  command: 'start [dir]',
-  description: 'Start using nodemon.',
-  builder,
-  handler,
+  return state
 }

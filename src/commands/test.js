@@ -10,7 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import store from '../state'
 import {addFlags} from './flags'
+
+import {
+  setCommand,
+  setOptions,
+  setProjectType,
+  setTargetDirectory,
+} from '../state/actions'
 
 import {
   COMMENT_FLOW,
@@ -45,7 +53,14 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  console.log('Test executed.')
+  let {
+    dir,
+    projectType,
+    ...options,
+  } = args
+
+  store.dispatch(setCommand('test'))
+  store.dispatch(setTargetDirectory(dir))
 }
 
 export default {

@@ -10,13 +10,20 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import store from '../state'
 import {addFlags} from './flags'
+
+import {
+  setCommand,
+  setOptions,
+  setProjectType,
+  setTargetDirectory,
+} from '../state/actions'
 
 import {
   DISABLE_EXPERIMENTAL_PLUGINS,
   FLOW,
   JSX,
-  PLATFORMS,
   PROGRESS,
   PROJECT_TYPE,
   REACT,
@@ -28,7 +35,6 @@ function builder(yargs) {
     DISABLE_EXPERIMENTAL_PLUGINS,
     FLOW,
     JSX,
-    PLATFORMS,
     PROGRESS,
     PROJECT_TYPE,
     REACT,
@@ -37,7 +43,15 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  console.log('Lint executed.')
+  let {
+    dir,
+    projectType,
+    ...options,
+  } = args
+
+  store.dispatch(setCommand('lint'))
+  store.dispatch(setTargetDirectory(dir))
+  console.log(store.getState())
 }
 
 export default {

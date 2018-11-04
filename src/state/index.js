@@ -10,29 +10,20 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../state'
+import {createStore, combineReducers} from 'redux'
 
-import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+import command from './reducers/command'
+import options from './reducers/options'
+import projectType from './reducers/projectType'
+import targetDirectory from './reducers/targetDirectory'
 
-function handler(args) {
-  let {
-    dir,
-    projectType,
-    ...options,
-  } = args
+const REDUCERS = combineReducers({
+  command,
+  options,
+  projectType,
+  targetDirectory,
+})
 
-  store.dispatch(setCommand('scaffold'))
-  store.dispatch(setTargetDirectory(dir))
-  console.log(store.getState())
-}
+const STORE = createStore(REDUCERS)
 
-export default {
-  command: 'scaffold <template> [dir]',
-  description: 'Copy the template to the directory.',
-  handler,
-}
+export default STORE

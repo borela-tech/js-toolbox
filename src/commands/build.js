@@ -10,7 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import store from '../state'
 import {addFlags} from './flags'
+
+import {
+  setCommand,
+  setOptions,
+  setProjectType,
+  setTargetDirectory,
+} from '../state/actions'
 
 import {
   BROWSERS,
@@ -59,7 +67,15 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  console.log('Build executed.')
+  let {
+    dir,
+    projectType,
+    ...options,
+  } = args
+
+  store.dispatch(setCommand('build'))
+  store.dispatch(setTargetDirectory(dir))
+  console.log(store.getState())
 }
 
 export default {
