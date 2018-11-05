@@ -10,13 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {SET_PROJECT_TYPE} from '../actions/identifiers'
+import {PROJECT_TYPE_SET} from '../events/identifiers'
 
-export default function (state = null, action) {
-  let {payload, type} = action
+export default function (state = null, event) {
+  let {payload, type} = event
 
   switch (type) {
-    case SET_PROJECT_TYPE:
+    case PROJECT_TYPE_SET:
       let {projectType} = payload
       return projectType || state
   }

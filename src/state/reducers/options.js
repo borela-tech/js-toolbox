@@ -11,10 +11,10 @@
 // the License.
 
 import {
-  SET_COMMAND,
-  SET_PROJECT_TYPE,
-  SET_OPTIONS,
-} from '../actions/identifiers'
+  COMMAND_SET,
+  OPTIONS_SET,
+  PROJECT_TYPE_SET,
+} from '../events/identifiers'
 
 const BROWSERS = ['>= 0.5%', 'not ie 11', 'not op_mini all']
 const NODE = '10.13'
@@ -155,25 +155,27 @@ function leftAssign(left, right) {
 /**
  * Options reducer.
  */
-export default function (state = null, action) {
-  let {payload, type} = action
+export default function (state = null, event) {
+  let {payload, type} = event
 
   switch (type) {
     // Load the available options for each command.
-    case SET_COMMAND:
-      const COMMAND_OPTIONS = getCommandOptions(payload.command)
-      return {...COMMAND_OPTIONS}
+    case COMMAND_SET:
+      let {command} = payload
+      return {...getCommandOptions(command)}
 
     // Set options directly or by use a preset by project type.
-    case SET_PROJECT_TYPE:
-    case SET_OPTIONS:
+    case PROJECT_TYPE_SET:
+      let {projectType} = payload
+      payload = getProjecTypeOptions(projectType)
+      // Fallthrough.
+
+    case OPTIONS_SET:
       if (!state)
-        throw new Error('Available options not set.')
+        throw new Error('Command not set.')
 
       const OPTIONS = {...state}
-      let {minify, ...rest} = type == SET_PROJECT_TYPE
-        ? getProjecTypeOptions(payload)
-        : payload
+      let {minify, ...rest} = payload
 
       if (minify) {
         leftAssign(OPTIONS, {

@@ -10,10 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export const LOAD_PROJECT_CONFIG = 'LOAD_PROJECT_CONFIG'
-export const PROJECT_CONFIG_LOADED = 'PROJECT_CONFIG_LOADED'
-
-export const SET_COMMAND = 'SET_COMMAND'
-export const SET_OPTIONS = 'SET_OPTIONS'
-export const SET_PROJECT_TYPE = 'SET_PROJECT_TYPE'
-export const SET_TARGET_DIRECTORY = 'SET_TARGET_DIRECTORY'
+export const COMMAND_SET = 'COMMAND_SET'
+export const OPTIONS_SET = 'OPTIONS_SET'
+export const PROJECT_TYPE_SET = 'PROJECT_TYPE_SET'
+export const TARGET_DIRECTORY_SET = 'TARGET_DIRECTORY_SET'

@@ -14,12 +14,11 @@ import store from '../state'
 import {addFlags} from './flags'
 
 import {
-  loadProjectConfig,
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+  commandSet,
+  optionsSet,
+  projectTypeSet,
+  targetDirectorySet,
+} from '../state/events'
 
 import {
   BROWSERS,
@@ -70,14 +69,13 @@ function builder(yargs) {
 function handler(args) {
   let {dir, projectType, ...options} = args
 
-  store.dispatch(setCommand('build'))
-  store.dispatch(loadProjectConfig())
-  store.dispatch(setTargetDirectory(dir))
+  store.dispatch(commandSet('build'))
+  store.dispatch(targetDirectorySet(dir))
 
-  // if (projectType)
-  //   store.dispatch(setProjectType(projectType))
+  if (projectType)
+    store.dispatch(projectTypeSet(projectType))
 
-  // store.dispatch(setOptions(options))
+  store.dispatch(optionsSet(options))
 
   console.log(store.getState())
 }

@@ -11,36 +11,36 @@
 // the License.
 
 import {
-  SET_COMMAND,
-  SET_OPTIONS,
-  SET_PROJECT_TYPE,
-  SET_TARGET_DIRECTORY,
+  COMMAND_SET,
+  OPTIONS_SET,
+  PROJECT_TYPE_SET,
+  TARGET_DIRECTORY_SET,
 } from './identifiers'
 
-export function setCommand(command) {
+export function commandSet(command) {
   return {
-    type: SET_COMMAND,
+    type: COMMAND_SET,
     payload: {command},
   }
 }
 
-export function setOptions(options) {
+export function optionsSet(options) {
   return {
-    type: SET_OPTIONS,
+    type: OPTIONS_SET,
     payload: {...options},
   }
 }
 
-export function setTargetDirectory(directory) {
+export function projectTypeSet(projectType) {
   return {
-    type: SET_TARGET_DIRECTORY,
-    payload: {directory},
+    type: PROJECT_TYPE_SET,
+    payload: {projectType},
   }
 }
 
-export function setProjectType(projectType) {
+export function targetDirectorySet(directory) {
   return {
-    type: SET_PROJECT_TYPE,
-    payload: {projectType},
+    type: TARGET_DIRECTORY_SET,
+    payload: {directory},
   }
 }

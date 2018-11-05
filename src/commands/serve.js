@@ -14,11 +14,11 @@ import store from '../state'
 import {addFlags} from './flags'
 
 import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+  commandSet,
+  optionsSet,
+  projectTypeSet,
+  targetDirectorySet,
+} from '../state/events'
 
 import {
   BROWSERS,
@@ -67,8 +67,8 @@ function builder(yargs) {
 function handler(args) {
   let {dir, ...options} = args
 
-  store.dispatch(setCommand('serve'))
-  store.dispatch(setTargetDirectory(dir))
+  store.dispatch(commandSet('serve'))
+  store.dispatch(targetDirectorySet(dir))
 }
 
 export default {

@@ -10,13 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {SET_COMMAND} from '../actions/identifiers'
+import {COMMAND_SET} from '../events/identifiers'
 
-export default function (state = null, action) {
-  let {payload, type} = action
+export default function (state = null, event) {
+  let {payload, type} = event
 
   switch (type) {
-    case SET_COMMAND:
+    case COMMAND_SET:
       let {command} = payload
       return command || state
   }

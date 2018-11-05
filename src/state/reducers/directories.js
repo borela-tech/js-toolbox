@@ -11,13 +11,13 @@
 // the License.
 
 import pkgDir from 'pkg-dir'
-import {SET_TARGET_DIRECTORY} from '../actions/identifiers'
+import {TARGET_DIRECTORY_SET} from '../events/identifiers'
 
-export default function (state = null, action) {
-  let {payload, type} = action
+export default function (state = null, event) {
+  let {payload, type} = event
 
   switch (type) {
-    case SET_TARGET_DIRECTORY:
+    case TARGET_DIRECTORY_SET:
       let {directory} = payload
 
       if (!directory)

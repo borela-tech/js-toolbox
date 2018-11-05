@@ -14,11 +14,11 @@ import store from '../state'
 import {addFlags} from './flags'
 
 import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+  commandSet,
+  optionsSet,
+  projectTypeSet,
+  targetDirectorySet,
+} from '../state/events'
 
 import {
   DISABLE_EXPERIMENTAL_PLUGINS,
@@ -45,8 +45,9 @@ function builder(yargs) {
 function handler(args) {
   let {dir, ...options} = args
 
-  store.dispatch(setCommand('lint'))
-  store.dispatch(setTargetDirectory(dir))
+  store.dispatch(commandSet('lint'))
+  store.dispatch(targetDirectorySet(dir))
+
   console.log(store.getState())
 }
 

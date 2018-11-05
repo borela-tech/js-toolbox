@@ -14,11 +14,11 @@ import store from '../state'
 import {addFlags} from './flags'
 
 import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+  commandSet,
+  optionsSet,
+  projectTypeSet,
+  targetDirectorySet,
+} from '../state/events'
 
 import {
   COMMENT_FLOW,
@@ -55,8 +55,8 @@ function builder(yargs) {
 function handler(args) {
   let {dir, ...options} = args
 
-  store.dispatch(setCommand('test'))
-  store.dispatch(setTargetDirectory(dir))
+  store.dispatch(commandSet('test'))
+  store.dispatch(targetDirectorySet(dir))
 }
 
 export default {

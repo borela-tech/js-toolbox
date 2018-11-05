@@ -14,11 +14,11 @@ import store from '../state'
 import {addFlags} from './flags'
 
 import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+  commandSet,
+  optionsSet,
+  projectTypeSet,
+  targetDirectorySet,
+} from '../state/events'
 
 import {
   APP_ARGS,
@@ -35,8 +35,8 @@ function builder(yargs) {
 function handler(args) {
   let {dir, ...options} = args
 
-  store.dispatch(setCommand('start'))
-  store.dispatch(setTargetDirectory(dir))
+  store.dispatch(commandSet('start'))
+  store.dispatch(targetDirectorySet(dir))
 }
 
 export default {

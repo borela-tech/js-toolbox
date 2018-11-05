@@ -13,17 +13,17 @@
 import store from '../state'
 
 import {
-  setCommand,
-  setOptions,
-  setProjectType,
-  setTargetDirectory,
-} from '../state/actions'
+  commandSet,
+  optionsSet,
+  projectTypeSet,
+  targetDirectorySet,
+} from '../state/events'
 
 function handler(args) {
   let {dir, ...options} = args
 
-  store.dispatch(setCommand('scaffold'))
-  store.dispatch(setTargetDirectory(dir))
+  store.dispatch(commandSet('scaffold'))
+  store.dispatch(targetDirectorySet(dir))
 
   console.log(store.getState())
 }
