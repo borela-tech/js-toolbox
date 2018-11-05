@@ -10,14 +10,30 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import pkgDir from 'pkg-dir'
 import {SET_TARGET_DIRECTORY} from '../actions/identifiers'
 
-export default function (state = process.cwd(), action) {
+export default function (state = null, action) {
   let {payload, type} = action
 
   switch (type) {
     case SET_TARGET_DIRECTORY:
-      return payload.directory || state
+      let target = payload.directory
+
+      if (!target)
+        return state
+
+      return {
+        project: pkgDir.sync(target),
+        target,
+      }
+  }
+
+  if (!state) {
+    state = {
+      project: pkgDir.sync(),
+      target: process.cwd(),
+    }
   }
 
   return state

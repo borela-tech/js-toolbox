@@ -13,15 +13,15 @@
 import {createStore, combineReducers} from 'redux'
 
 import command from './reducers/command'
+import directories from './reducers/directories'
 import options from './reducers/options'
 import projectType from './reducers/projectType'
-import targetDirectory from './reducers/targetDirectory'
 
 const REDUCERS = combineReducers({
   command,
+  directories,
   options,
   projectType,
-  targetDirectory,
 })
 
 const STORE = createStore(REDUCERS)
