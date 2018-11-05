@@ -20,7 +20,7 @@ const BROWSERS = ['>= 0.5%', 'not ie 11', 'not op_mini all']
 const NODE = '10.13'
 
 /**
- * Initial options state for the “build” command.
+ * Available options for the “build” command.
  */
 const BUILD_OPTIONS = {
   browsers: BROWSERS,
@@ -43,7 +43,7 @@ const BUILD_OPTIONS = {
 }
 
 /**
- * Initial options state for the “lint” command.
+ * Available options for the “lint” command.
  */
 const LINT_OPTIONS = {
   disableExperimentalPlugins: false,
@@ -56,7 +56,7 @@ const LINT_OPTIONS = {
 }
 
 /**
- * Initial options state for the “serve” command.
+ * Available options for the “serve” command.
  */
 const SERVE_OPTIONS = {
   browsers: BROWSERS,
@@ -78,7 +78,7 @@ const SERVE_OPTIONS = {
 }
 
 /**
- * Initial options state for the “start” command.
+ * Available options for the “start” command.
  */
 const START_OPTIONS = {
   appArgs: undefined,
@@ -86,7 +86,7 @@ const START_OPTIONS = {
 }
 
 /**
- * Initial options state for the “test” command.
+ * Available options for the “test” command.
  */
 const TEST_OPTIONS = {
   browsers: BROWSERS,
@@ -166,6 +166,7 @@ export default function (state = null, action) {
       const COMMAND_OPTIONS = getCommandOptions(payload.command)
       return {...COMMAND_OPTIONS}
 
+    // Set options directly or by use a preset by project type.
     case SET_PROJECT_TYPE:
     case SET_OPTIONS:
       if (!state)
