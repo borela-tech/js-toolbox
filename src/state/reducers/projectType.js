@@ -17,7 +17,8 @@ export default function (state = null, action) {
 
   switch (type) {
     case SET_PROJECT_TYPE:
-      return payload.projectType
+      let {projectType} = payload
+      return projectType || state
   }
 
   return state

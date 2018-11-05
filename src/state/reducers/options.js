@@ -115,14 +115,12 @@ function getCommandOptions(command) {
       return LINT_OPTIONS
     case 'serve':
       return SERVE_OPTIONS
+    case 'scaffold':
+      return {}
     case 'start':
       return START_OPTIONS
     case 'test':
       return TEST_OPTIONS
-
-    case 'location':
-    case 'scaffold':
-      return {}
   }
 
   throw new Error(`Unknown command “${command}”.`)
@@ -173,7 +171,7 @@ export default function (state = null, action) {
         throw new Error('Available options not set.')
 
       const OPTIONS = {...state}
-      let {minify, ...rest} = command == SET_PROJECT_TYPE
+      let {minify, ...rest} = type == SET_PROJECT_TYPE
         ? getProjecTypeOptions(payload)
         : payload
 

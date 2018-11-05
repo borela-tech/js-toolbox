@@ -18,14 +18,14 @@ export default function (state = null, action) {
 
   switch (type) {
     case SET_TARGET_DIRECTORY:
-      let target = payload.directory
+      let {directory} = payload
 
-      if (!target)
+      if (!directory)
         return state
 
       return {
         project: pkgDir.sync(target),
-        target,
+        target: directory,
       }
   }
 

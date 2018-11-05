@@ -17,7 +17,8 @@ export default function (state = null, action) {
 
   switch (type) {
     case SET_COMMAND:
-      return payload.command
+      let {command} = payload
+      return command || state
   }
 
   return state
