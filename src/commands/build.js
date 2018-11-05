@@ -14,6 +14,7 @@ import store from '../state'
 import {addFlags} from './flags'
 
 import {
+  loadProjectConfig,
   setCommand,
   setOptions,
   setProjectType,
@@ -67,10 +68,17 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  let {dir, ...options} = args
+  let {dir, projectType, ...options} = args
 
   store.dispatch(setCommand('build'))
+  store.dispatch(loadProjectConfig())
   store.dispatch(setTargetDirectory(dir))
+
+  // if (projectType)
+  //   store.dispatch(setProjectType(projectType))
+
+  // store.dispatch(setOptions(options))
+
   console.log(store.getState())
 }
 

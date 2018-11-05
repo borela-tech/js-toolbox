@@ -24,6 +24,7 @@ function handler(args) {
 
   store.dispatch(setCommand('scaffold'))
   store.dispatch(setTargetDirectory(dir))
+
   console.log(store.getState())
 }
 
