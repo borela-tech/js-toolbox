@@ -20,11 +20,7 @@ import {
 } from '../state/actions'
 
 function handler(args) {
-  let {
-    dir,
-    projectType,
-    ...options,
-  } = args
+  let {dir, ...options} = args
 
   store.dispatch(setCommand('scaffold'))
   store.dispatch(setTargetDirectory(dir))

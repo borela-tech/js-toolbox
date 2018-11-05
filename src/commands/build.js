@@ -67,11 +67,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  let {
-    dir,
-    projectType,
-    ...options,
-  } = args
+  let {dir, ...options} = args
 
   store.dispatch(setCommand('build'))
   store.dispatch(setTargetDirectory(dir))
