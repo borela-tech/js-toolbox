@@ -11,6 +11,7 @@
 // the License.
 
 import pkgDir from 'pkg-dir'
+import {resolve} from 'path'
 import {TARGET_DIRECTORY_SET} from '../events/identifiers'
 
 export default function (state = null, event) {
@@ -22,6 +23,8 @@ export default function (state = null, event) {
 
       if (!directory)
         return state
+
+      directory = resolve(directory)
 
       return {
         project: pkgDir.sync(directory),
