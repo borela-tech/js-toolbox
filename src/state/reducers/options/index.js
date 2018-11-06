@@ -14,95 +14,13 @@ import {
   COMMAND_SET,
   OPTIONS_SET,
   PROJECT_TYPE_SET,
-} from '../events/identifiers'
+} from '../../events/identifiers'
 
-const BROWSERS = ['>= 0.5%', 'not ie 11', 'not op_mini all']
-const NODE = '10.13'
-
-/**
- * Available options for the “build” command.
- */
-const BUILD_OPTIONS = {
-  browsers: BROWSERS,
-  bundleStats: false,
-  commentFlow: false,
-  disableExperimentalPlugins: false,
-  disableSourceMaps: false,
-  includePolyfills: false,
-  jsx: false,
-  minifyCss: false,
-  minifyHtml: false,
-  minifyJs: false,
-  node: NODE,
-  production: false,
-  progress: false,
-  react: false,
-  removeFlow: false,
-  typeScript: false,
-  watch: false,
-}
-
-/**
- * Available options for the “lint” command.
- */
-const LINT_OPTIONS = {
-  disableExperimentalPlugins: false,
-  disableSourceMaps: false,
-  flow: false,
-  jsx: false,
-  progress: false,
-  react: false,
-  typeScript: false,
-}
-
-/**
- * Available options for the “serve” command.
- */
-const SERVE_OPTIONS = {
-  browsers: BROWSERS,
-  bundleStats: false,
-  commentFlow: false,
-  disableExperimentalPlugins: false,
-  disableSourceMaps: false,
-  includePolyfills: false,
-  jsx: false,
-  minifyCss: false,
-  minifyHtml: false,
-  minifyJs: false,
-  port: 9000,
-  production: false,
-  progress: false,
-  react: false,
-  removeFlow: false,
-  typeScript: false,
-}
-
-/**
- * Available options for the “start” command.
- */
-const START_OPTIONS = {
-  appArgs: undefined,
-  debug: false,
-}
-
-/**
- * Available options for the “test” command.
- */
-const TEST_OPTIONS = {
-  browsers: BROWSERS,
-  bundleStats: false,
-  commentFlow: false,
-  disableExperimentalPlugins: false,
-  disableSourceMaps: false,
-  includePolyfills: false,
-  jsx: false,
-  node: NODE,
-  progress: false,
-  react: false,
-  removeFlow: false,
-  typeScript: false,
-  watch: false,
-}
+import BUILD_OPTIONS from './available/build'
+import LINT_OPTIONS from './available/lint'
+import SERVE_OPTIONS from './available/serve'
+import START_OPTIONS from './available/start'
+import TEST_OPTIONS from './available/test'
 
 /**
  * Returns the available options for each command.
