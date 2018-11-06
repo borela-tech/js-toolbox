@@ -24,7 +24,7 @@ export default function (state = null, event) {
         return state
 
       return {
-        project: pkgDir.sync(target),
+        project: pkgDir.sync(directory),
         target: directory,
       }
   }
