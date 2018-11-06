@@ -12,6 +12,7 @@
 
 import {
   COMMAND_SET,
+  CONFIG_LOADED,
   OPTIONS_SET,
   PROJECT_TYPE_SET,
 } from '../../events/identifiers'
@@ -21,6 +22,28 @@ import LINT_OPTIONS from './available/lint'
 import SERVE_OPTIONS from './available/serve'
 import START_OPTIONS from './available/start'
 import TEST_OPTIONS from './available/test'
+
+/**
+ * Calculate the state of the options object after new options are set.
+ */
+function calculateOptionsState(state, newOptions) {
+  if (!state)
+    throw new Error('Command not set.')
+
+  let result = {...state}
+  let {minify, ...rest} = newOptions
+
+  if (minify) {
+    leftAssign(result, {
+      minifyCss: true,
+      minifyHtml: true,
+      minifyJs: true,
+    })
+  }
+
+  leftAssign(result, rest)
+  return result
+}
 
 /**
  * Returns the available options for each command.
@@ -79,32 +102,21 @@ export default function (state = null, event) {
   switch (type) {
     // Load the available options for each command.
     case COMMAND_SET:
-      let {command} = payload
-      return {...getCommandOptions(command)}
+      return {...getCommandOptions(payload)}
 
-    // Set options directly or by use a preset by project type.
+    case CONFIG_LOADED:
+      return calculateOptionsState(state, payload)
+
+    // Load the default options per project type.
     case PROJECT_TYPE_SET:
-      let {projectType} = payload
-      payload = getProjecTypeOptions(projectType)
-      // Fallthrough.
+      return calculateOptionsState(
+        state,
+        getProjecTypeOptions(payload)
+      )
 
+    // Set options directly.
     case OPTIONS_SET:
-      if (!state)
-        throw new Error('Command not set.')
-
-      const OPTIONS = {...state}
-      let {minify, ...rest} = payload
-
-      if (minify) {
-        leftAssign(OPTIONS, {
-          minifyCss: true,
-          minifyHtml: true,
-          minifyJs: true,
-        })
-      }
-
-      leftAssign(OPTIONS, rest)
-      return OPTIONS
+      return calculateOptionsState(state, payload)
   }
 
   return state

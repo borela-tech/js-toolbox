@@ -12,6 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
+import {loadConfig} from '../configs/borela'
 
 import {
   commandSet,
@@ -71,6 +72,8 @@ function handler(args) {
 
   store.dispatch(commandSet('build'))
   store.dispatch(targetDirectorySet(dir))
+
+  loadConfig()
 
   if (projectType)
     store.dispatch(projectTypeSet(projectType))

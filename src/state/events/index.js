@@ -12,10 +12,18 @@
 
 import {
   COMMAND_SET,
+  CONFIG_LOADED,
   OPTIONS_SET,
   PROJECT_TYPE_SET,
   TARGET_DIRECTORY_SET,
 } from './identifiers'
+
+export function configLoaded(options) {
+  return {
+    type: CONFIG_LOADED,
+    payload: {...options},
+  }
+}
 
 export function commandSet(command) {
   return {

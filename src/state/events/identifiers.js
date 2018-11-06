@@ -11,6 +11,7 @@
 // the License.
 
 export const COMMAND_SET = 'COMMAND_SET'
+export const CONFIG_LOADED = 'CONFIG_LOADED'
 export const OPTIONS_SET = 'OPTIONS_SET'
 export const PROJECT_TYPE_SET = 'PROJECT_TYPE_SET'
 export const TARGET_DIRECTORY_SET = 'TARGET_DIRECTORY_SET'

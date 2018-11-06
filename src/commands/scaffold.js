@@ -11,6 +11,7 @@
 // the License.
 
 import store from '../state'
+import {loadConfig} from '../configs/borela'
 
 import {
   commandSet,
@@ -25,6 +26,7 @@ function handler(args) {
   store.dispatch(commandSet('scaffold'))
   store.dispatch(targetDirectorySet(dir))
 
+  loadConfig()
   console.log(store.getState())
 }
 

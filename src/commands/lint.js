@@ -12,6 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
+import {loadConfig} from '../configs/borela'
 
 import {
   commandSet,
@@ -48,6 +49,7 @@ function handler(args) {
   store.dispatch(commandSet('lint'))
   store.dispatch(targetDirectorySet(dir))
 
+  loadConfig()
   console.log(store.getState())
 }
 

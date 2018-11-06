@@ -12,6 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
+import {loadConfig} from '../configs/borela'
 
 import {
   commandSet,
@@ -37,6 +38,8 @@ function handler(args) {
 
   store.dispatch(commandSet('start'))
   store.dispatch(targetDirectorySet(dir))
+
+  loadConfig()
 }
 
 export default {
