@@ -20,7 +20,7 @@ import {
 export function commandSet(command) {
   return {
     type: COMMAND_SET,
-    payload: {command},
+    payload: command,
   }
 }
 
@@ -34,13 +34,13 @@ export function optionsSet(options) {
 export function projectTypeSet(projectType) {
   return {
     type: PROJECT_TYPE_SET,
-    payload: {projectType},
+    payload: projectType,
   }
 }
 
 export function targetDirectorySet(directory) {
   return {
     type: TARGET_DIRECTORY_SET,
-    payload: {directory},
+    payload: directory,
   }
 }

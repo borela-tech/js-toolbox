@@ -17,8 +17,7 @@ export default function (state = null, event) {
 
   switch (type) {
     case COMMAND_SET:
-      let {command} = payload
-      return command || state
+      return payload || state
   }
 
   return state

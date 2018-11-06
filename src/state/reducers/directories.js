@@ -19,12 +19,10 @@ export default function (state = null, event) {
 
   switch (type) {
     case TARGET_DIRECTORY_SET:
-      let {directory} = payload
-
-      if (!directory)
+      if (!payload)
         return state
 
-      directory = resolve(directory)
+      let directory = resolve(payload)
 
       return {
         project: pkgDir.sync(directory),

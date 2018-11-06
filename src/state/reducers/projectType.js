@@ -17,8 +17,7 @@ export default function (state = null, event) {
 
   switch (type) {
     case PROJECT_TYPE_SET:
-      let {projectType} = payload
-      return projectType || state
+      return payload || state
   }
 
   return state
