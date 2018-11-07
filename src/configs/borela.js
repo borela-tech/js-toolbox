@@ -46,8 +46,13 @@ export function loadConfig() {
     {deep: true},
   )
 
-  // Update the state with the loaded settings.
   let {projectType, ...rest} = config
+
+  // Remove the “production” flag just in case it is added to the configuration
+  // accidentally.
+  delete rest.production
+
+  // Update the state with the loaded settings.
   store.dispatch(projectTypeSet(projectType))
   store.dispatch(configLoaded(rest))
 }
