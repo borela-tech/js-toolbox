@@ -23,7 +23,7 @@ export function loadConfig() {
   // Location of the config files.
   let {directories:{project}} = store.getState()
 
-  // Try to find a configuration setting/file.
+  // Try to find a configuration settings/file.
   const CONFIG_META = cosmiconfig('borela', {
     searchPlaces: [
       'package.json',
@@ -46,7 +46,7 @@ export function loadConfig() {
     {deep: true},
   )
 
-  // Update the state.
+  // Update the state with the loaded settings.
   let {projectType, ...rest} = config
   store.dispatch(projectTypeSet(projectType))
   store.dispatch(configLoaded(rest))
