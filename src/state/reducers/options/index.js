@@ -17,11 +17,7 @@ import {
   PROJECT_TYPE_SET,
 } from '../../events/identifiers'
 
-import BUILD_OPTIONS from './available/build'
-import LINT_OPTIONS from './available/lint'
-import SERVE_OPTIONS from './available/serve'
-import START_OPTIONS from './available/start'
-import TEST_OPTIONS from './available/test'
+import {getAvailableOptions} from './available'
 
 /**
  * Calculate the state of the options object after new options are set.
@@ -43,28 +39,6 @@ function calculateOptionsState(state, newOptions) {
 
   leftAssign(result, rest)
   return result
-}
-
-/**
- * Returns the available options for each command.
- */
-function getCommandOptions(command) {
-  switch (command) {
-    case 'build':
-      return BUILD_OPTIONS
-    case 'lint':
-      return LINT_OPTIONS
-    case 'serve':
-      return SERVE_OPTIONS
-    case 'scaffold':
-      return {}
-    case 'start':
-      return START_OPTIONS
-    case 'test':
-      return TEST_OPTIONS
-  }
-
-  throw new Error(`Unknown command “${command}”.`)
 }
 
 /**
@@ -102,7 +76,7 @@ export default function (state = null, event) {
   switch (type) {
     // Load the available options for each command.
     case COMMAND_SET:
-      return {...getCommandOptions(payload)}
+      return {...getAvailableOptions(payload)}
 
     case CONFIG_LOADED:
       return calculateOptionsState(state, payload)
