@@ -19,7 +19,7 @@ import TEST_OPTIONS from './test'
 /**
  * Returns the available options for each command.
  */
-function getAvailableOptions(command) {
+export function getAvailableOptions(command) {
   switch (command) {
     case 'build':
       return BUILD_OPTIONS
