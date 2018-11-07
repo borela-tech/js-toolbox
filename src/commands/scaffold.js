@@ -11,22 +11,10 @@
 // the License.
 
 import store from '../state'
-import {loadConfig} from '../configs/borela'
-
-import {
-  commandSet,
-  optionsSet,
-  projectTypeSet,
-  targetDirectorySet,
-} from '../state/events'
+import {prepareCommand} from './utils'
 
 function handler(args) {
-  let {dir, ...options} = args
-
-  store.dispatch(commandSet('scaffold'))
-  store.dispatch(targetDirectorySet(dir))
-
-  loadConfig()
+  prepareCommand('scaffold', args)
   console.log(store.getState())
 }
 

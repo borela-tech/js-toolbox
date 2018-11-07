@@ -12,14 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
-import {loadConfig} from '../configs/borela'
-
-import {
-  commandSet,
-  optionsSet,
-  projectTypeSet,
-  targetDirectorySet,
-} from '../state/events'
+import {prepareCommand} from './utils'
 
 import {
   DISABLE_EXPERIMENTAL_PLUGINS,
@@ -44,12 +37,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  let {dir, ...options} = args
-
-  store.dispatch(commandSet('lint'))
-  store.dispatch(targetDirectorySet(dir))
-
-  loadConfig()
+  prepareCommand('lint', args)
   console.log(store.getState())
 }
 

@@ -12,14 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
-import {loadConfig} from '../configs/borela'
-
-import {
-  commandSet,
-  optionsSet,
-  projectTypeSet,
-  targetDirectorySet,
-} from '../state/events'
+import {prepareCommand} from './utils'
 
 import {
   COMMENT_FLOW,
@@ -54,12 +47,8 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  let {dir, ...options} = args
-
-  store.dispatch(commandSet('test'))
-  store.dispatch(targetDirectorySet(dir))
-
-  loadConfig()
+  prepareCommand('test', args)
+  console.log(store.getState())
 }
 
 export default {

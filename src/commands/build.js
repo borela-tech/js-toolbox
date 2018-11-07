@@ -12,14 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
-import {loadConfig} from '../configs/borela'
-
-import {
-  commandSet,
-  optionsSet,
-  projectTypeSet,
-  targetDirectorySet,
-} from '../state/events'
+import {prepareCommand} from './utils'
 
 import {
   BROWSERS,
@@ -68,18 +61,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  let {dir, projectType, ...options} = args
-
-  store.dispatch(commandSet('build'))
-  store.dispatch(targetDirectorySet(dir))
-
-  loadConfig()
-
-  if (projectType)
-    store.dispatch(projectTypeSet(projectType))
-
-  store.dispatch(optionsSet(options))
-
+  prepareCommand('build', args)
   console.log(store.getState())
 }
 
