@@ -45,4 +45,5 @@ export default {
   command: 'lint [dir]',
   description: 'Lint using ESLint.',
   builder,
+  handler,
 }
