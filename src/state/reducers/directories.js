@@ -14,6 +14,8 @@ import pkgDir from 'pkg-dir'
 import {resolve} from 'path'
 import {TARGET_DIRECTORY_SET} from '../events/identifiers'
 
+const TOOLBOX_DIR = resolve(__dirname, '..', '..', '..')
+
 export default function (state = null, event) {
   let {payload, type} = event
 
@@ -27,6 +29,7 @@ export default function (state = null, event) {
       return {
         project: pkgDir.sync(directory),
         target: directory,
+        toolbox: TOOLBOX_DIR,
       }
   }
 
@@ -34,6 +37,7 @@ export default function (state = null, event) {
     state = {
       project: pkgDir.sync(),
       target: process.cwd(),
+      toolbox: TOOLBOX_DIR,
     }
   }
 
