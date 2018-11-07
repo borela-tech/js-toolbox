@@ -27,12 +27,14 @@ export function getAvailableOptions(command) {
       return LINT_OPTIONS
     case 'serve':
       return SERVE_OPTIONS
-    case 'scaffold':
-      return {}
     case 'start':
       return START_OPTIONS
     case 'test':
       return TEST_OPTIONS
+
+    case 'location':
+    case 'scaffold':
+      return {}
   }
 
   throw new Error(`Unknown command “${command}”.`)

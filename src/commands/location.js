@@ -10,10 +10,18 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import store from '../state'
+import {prepareCommand} from './utils'
 import {resolve} from 'path'
 
-function handler() {
-  process.stdout.write(resolve(__dirname, '..', '..'))
+function handler(args) {
+  prepareCommand('location', args)
+
+  let {
+    directories:{toolbox}
+  } = store.getState()
+
+  process.stdout.write(toolbox)
 }
 
 export default {
