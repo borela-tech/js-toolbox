@@ -22,40 +22,13 @@ import typeScript from './plugins/typeScript'
 
 let log = debug('bb:config:babel')
 
-/**
- * Add “@babel/preset-env” to the final preset configured to include polyfills
- * in the final bundle.
- */
-function includePolyfills(preset) {
+export default function () {
   let {
     options: {
       browsers,
+      includePolyfills,
       node,
     }
-  } = store.getState()
-
-  const OPTIONS = {
-    useBuiltIns: 'usage',
-    targets: {
-      browsers,
-      node,
-    },
-  }
-
-  // The preset env will check the “browsers” and “node” values to enable the
-  // necessary transformations.
-  preset.presets.push([
-    '@babel/preset-env',
-    OPTIONS,
-  ])
-}
-
-/**
- * The final Babel preset.
- */
-export default function () {
-  let {
-    options: {includePolyfills}
   } = store.getState()
 
   let preset = {
@@ -70,9 +43,24 @@ export default function () {
     presets: [],
   }
 
-  if (includePolyfills)
-    includePolyfills(preset)
+  if (includePolyfills) {
+    const PRESET_ENV_OPTIONS = {
+      useBuiltIns: 'usage',
+      targets: {
+        browsers,
+        node,
+      },
+    }
 
+    // The preset env will check the “browsers” and “node” values to enable the
+    // necessary transformations.
+    preset.presets.push([
+      '@babel/preset-env',
+      PRESET_ENV_OPTIONS,
+    ])
+  }
+
+  // Each function will check the state store and add the necessary plugins.
   preset
     |> experimental
     |> flow
