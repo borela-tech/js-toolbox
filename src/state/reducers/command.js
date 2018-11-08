@@ -14,11 +14,7 @@ import {COMMAND_SET} from '../events/identifiers'
 
 export default function (state = null, event) {
   let {payload, type} = event
-
-  switch (type) {
-    case COMMAND_SET:
-      return payload || state
-  }
-
-  return state
+  return type == COMMAND_SET
+    ? payload || state
+    : state
 }

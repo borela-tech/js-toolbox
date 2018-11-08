@@ -78,6 +78,7 @@ export default function (state = null, event) {
     case COMMAND_SET:
       return {...getAvailableOptions(payload)}
 
+    // Set options based on the configuration loaded.
     case CONFIG_LOADED:
       return calculateOptionsState(state, payload)
 

@@ -19,27 +19,20 @@ const TOOLBOX_DIR = resolve(__dirname, '..', '..', '..')
 export default function (state = null, event) {
   let {payload, type} = event
 
-  switch (type) {
-    case TARGET_DIRECTORY_SET:
-      if (!payload)
-        return state
-
-      let directory = resolve(payload)
-
-      return {
-        project: pkgDir.sync(directory),
-        target: directory,
-        toolbox: TOOLBOX_DIR,
-      }
-  }
-
-  if (!state) {
-    state = {
-      project: pkgDir.sync(),
-      target: process.cwd(),
+  if (payload && type == TARGET_DIRECTORY_SET) {
+    payload = resolve(payload)
+    return {
+      project: pkgDir.sync(payload),
+      target: payload,
       toolbox: TOOLBOX_DIR,
     }
   }
 
   return state
+    ? state
+    : {
+      project: pkgDir.sync(),
+      target: process.cwd(),
+      toolbox: TOOLBOX_DIR,
+    }
 }
