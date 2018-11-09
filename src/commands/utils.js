@@ -31,10 +31,11 @@ export function nodeEnvIsProduction() {
 }
 
 /**
- * Initialize the command by normalizing and environment and loading settings.
+ * Initialize the command by normalizing and environment, loading settings and
+ * updating the store based on the options passed directly to the CLI.
  *
  * @param store
- * Store that holds the state of the application.
+ * Store that holds the CLI’s state.
  */
 export function setUp(store, command:string, args:Object) {
   let {

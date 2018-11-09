@@ -10,6 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+/**
+ * Add React plugins if necessary.
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
 export default function ({storeState, preset}) {
   let {
     options: {
@@ -20,7 +26,7 @@ export default function ({storeState, preset}) {
   } = storeState
 
   if (!react)
-    return preset
+    return {storeState, preset}
 
   let {plugins} = preset
 
@@ -43,5 +49,5 @@ export default function ({storeState, preset}) {
     plugins.push('@babel/plugin-transform-react-jsx-source')
   }
 
-  return preset
+  return {storeState, preset}
 }

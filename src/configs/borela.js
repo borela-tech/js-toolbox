@@ -18,9 +18,15 @@ import {
   projectTypeSet,
 } from '../state/events'
 
+/**
+ * Loads the CLI config and update the store.
+ *
+ * @param store
+ * Store that holds the CLI’s state.
+ */
 export function loadConfig(store) {
   // Location of the config files.
-  let {directories:{project}} = store.getState()
+  let {directories: {project}} = store.getState()
 
   // Try to find a configuration settings/file.
   const CONFIG_META = cosmiconfig('borela', {

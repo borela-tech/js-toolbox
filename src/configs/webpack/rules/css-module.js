@@ -13,6 +13,12 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import pluginAutoPrefixer from 'autoprefixer'
 
+/**
+ * Generate a config to load CSS modules.
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
 export default function (storeState) {
   let {
     command,

@@ -10,6 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+/**
+ * Add TypeScript plugins if necessary.
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
 export default function ({storeState, preset}) {
   let {
     options: {typescript},
@@ -18,5 +24,5 @@ export default function ({storeState, preset}) {
   if (typeScript)
     preset.plugins.push(babelTransformPlugin('typescript'))
 
-  return preset
+  return {storeState, preset}
 }

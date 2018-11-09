@@ -10,13 +10,19 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+/**
+ * Add experimental plugins if necessary.
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
 export default function ({storeState, preset}) {
   let {
     options: {disableExperimentalPlugins},
   } = storeState
 
   if (disableExperimentalPlugins)
-    return preset
+    return {storeState, preset}
 
   let {plugins} = preset
 
@@ -75,5 +81,5 @@ export default function ({storeState, preset}) {
   // https://babeljs.io/docs/en/next/babel-plugin-proposal-unicode-property-regex
   plugins.push('@babel/plugin-proposal-unicode-property-regex')
 
-  return preset
+  return {storeState, preset}
 }

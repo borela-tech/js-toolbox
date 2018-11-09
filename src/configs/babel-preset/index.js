@@ -21,6 +21,12 @@ import typeScript from './plugins/typeScript'
 
 let log = debug('bb:config:babel')
 
+/**
+ * Generate a babel’s preset based on CLI’s state.
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
 export default function (storeState) {
   let {
     options: {

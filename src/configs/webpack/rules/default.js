@@ -68,6 +68,12 @@ export function isSubPathOf(path, parent) {
   return !result.startsWith('..')
 }
 
+/**
+ * Generate a config to load other assets e.g. images, fonts, etc...
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
 export default function (storeState) {
   return {
     exclude: [

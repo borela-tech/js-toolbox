@@ -10,6 +10,12 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+/**
+ * Add Flow plugins if necessary.
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
 export default function ({storeState, preset}) {
   let {
     options: {
@@ -20,7 +26,7 @@ export default function ({storeState, preset}) {
   } = storeState
 
   if (!flow && !commentFlow && !removeFlow)
-    return preset
+    return {storeState, preset}
 
   let {plugins} = preset
 
@@ -35,5 +41,5 @@ export default function ({storeState, preset}) {
   if (removeFlow)
     plugins.push('@babel/plugin-transform-flow-strip-types')
 
-  return preset
+  return {storeState, preset}
 }

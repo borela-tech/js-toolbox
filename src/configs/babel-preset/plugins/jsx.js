@@ -10,7 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export default function (storeState, preset) {
+/**
+ * Add JSX plugins to the preset if necessary.
+ *
+ * @param storeState
+ * CLI’s current state.
+ */
+export default function ({storeState, preset}) {
   let {
     options: {jsx},
   } = storeState
@@ -18,5 +24,5 @@ export default function (storeState, preset) {
   if (jsx)
     preset.plugins.push('@babel/plugin-syntax-jsx')
 
-  return preset
+  return {storeState, preset}
 }
