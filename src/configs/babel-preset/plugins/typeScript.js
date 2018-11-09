@@ -10,12 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../../../state'
-
-export default function (preset) {
+export default function ({storeState, preset}) {
   let {
     options: {typescript},
-  } = store.getState()
+  } = storeState
 
   if (typeScript)
     preset.plugins.push(babelTransformPlugin('typescript'))

@@ -10,12 +10,10 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../../../state'
-
-export default function (preset) {
+export default function ({storeState, preset}) {
   let {
     options: {disableExperimentalPlugins},
-  } = store.getState()
+  } = storeState
 
   if (disableExperimentalPlugins)
     return preset

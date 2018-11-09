@@ -10,16 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../../state'
-
-export default function (preset) {
+export default function ({storeState, preset}) {
   let {
     options: {
       jsx,
       react,
       production,
     },
-  } = store.getState()
+  } = storeState
 
   if (!react)
     return preset

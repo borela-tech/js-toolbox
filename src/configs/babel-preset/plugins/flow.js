@@ -10,16 +10,14 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../../../state'
-
-export default function (preset) {
+export default function ({storeState, preset}) {
   let {
     options: {
       commentFlow,
       flow,
       removeFlow,
     },
-  } = store.getState()
+  } = storeState
 
   if (!flow && !commentFlow && !removeFlow)
     return preset

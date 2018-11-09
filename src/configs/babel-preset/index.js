@@ -12,7 +12,6 @@
 
 import debug from 'debug'
 import prettyFormat from 'pretty-format'
-import store from '../../state'
 
 import experimental from './plugins/experimental'
 import flow from './plugins/flow'
@@ -22,14 +21,14 @@ import typeScript from './plugins/typeScript'
 
 let log = debug('bb:config:babel')
 
-export default function () {
+export default function (storeState) {
   let {
     options: {
       browsers,
       includePolyfills,
       node,
     }
-  } = store.getState()
+  } = storeState
 
   let preset = {
     plugins: [
@@ -60,8 +59,9 @@ export default function () {
     ])
   }
 
-  // Each function will check the state store and add the necessary plugins.
-  preset
+  // Each function will check the store’s state and add only the necessary
+  // plugins.
+  ({storeState, preset})
     |> experimental
     |> flow
     |> jsx
