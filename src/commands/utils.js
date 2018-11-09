@@ -10,7 +10,6 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../state'
 import {loadConfig} from '../configs/borela'
 
 import {
@@ -31,7 +30,13 @@ export function nodeEnvIsProduction() {
     : false
 }
 
-export function prepareCommand(command, args) {
+/**
+ * Initialize the command by normalizing and environment and loading settings.
+ *
+ * @param store
+ * Store that holds the state of the application.
+ */
+export function setUp(store, command:string, args:Object) {
   let {
     dir,
     projectType,

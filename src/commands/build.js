@@ -12,7 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
-import {prepareCommand} from './utils'
+import {setUp} from './utils'
 
 import {
   BROWSERS,
@@ -61,7 +61,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  prepareCommand('build', args)
+  setUp(store, 'build', args)
   console.log(store.getState())
 }
 

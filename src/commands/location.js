@@ -11,14 +11,14 @@
 // the License.
 
 import store from '../state'
-import {prepareCommand} from './utils'
+import {setUp} from './utils'
 import {resolve} from 'path'
 
 function handler(args) {
-  prepareCommand('location', args)
+  setUp(store, 'location', args)
 
   let {
-    directories:{toolbox}
+    directories: {toolbox},
   } = store.getState()
 
   process.stdout.write(toolbox)

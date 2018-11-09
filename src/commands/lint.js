@@ -12,7 +12,7 @@
 
 import store from '../state'
 import {addFlags} from './flags'
-import {prepareCommand} from './utils'
+import {setUp} from './utils'
 
 import {
   DISABLE_EXPERIMENTAL_PLUGINS,
@@ -37,7 +37,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  prepareCommand('lint', args)
+  setUp(store, 'lint', args)
   console.log(store.getState())
 }
 
