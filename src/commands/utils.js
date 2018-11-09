@@ -53,7 +53,7 @@ export function setUp(store, command:string, args:Object) {
   store.dispatch(commandSet(command))
   store.dispatch(targetDirectorySet(dir))
 
-  loadConfig()
+  loadConfig(store)
 
   if (projectType)
     store.dispatch(projectTypeSet(projectType))

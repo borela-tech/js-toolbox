@@ -12,14 +12,13 @@
 
 import cosmiconfig from 'cosmiconfig'
 import camelCaseKeys from 'camelcase-keys'
-import store from '../state'
 
 import {
   configLoaded,
   projectTypeSet,
 } from '../state/events'
 
-export function loadConfig() {
+export function loadConfig(store) {
   // Location of the config files.
   let {directories:{project}} = store.getState()
 
