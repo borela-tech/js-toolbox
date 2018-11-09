@@ -10,20 +10,22 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {createStore, combineReducers} from 'redux'
+import {
+  createStore as createReduxStore,
+  combineReducers,
+} from 'redux'
 
 import command from './reducers/command'
 import directories from './reducers/directories'
 import options from './reducers/options'
 import projectType from './reducers/projectType'
 
-const REDUCERS = combineReducers({
-  command,
-  directories,
-  options,
-  projectType,
-})
-
-const STORE = createStore(REDUCERS)
-
-export default STORE
+export function createStore() {
+  const REDUCERS = combineReducers({
+    command,
+    directories,
+    options,
+    projectType,
+  })
+  return createReduxStore(REDUCERS)
+}

@@ -10,12 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../state'
+import {createStore} from '../state'
 import {setUp} from './utils'
 
 function handler(args) {
-  setUp(store, 'scaffold', args)
-  console.log(store.getState())
+  const STORE = createStore()
+  setUp(STORE, 'scaffold', args)
+  console.log(STORE.getState())
 }
 
 export default {

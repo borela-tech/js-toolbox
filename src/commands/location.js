@@ -10,16 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../state'
+import {createStore} from '../state'
 import {setUp} from './utils'
 import {resolve} from 'path'
 
 function handler(args) {
-  setUp(store, 'location', args)
+  const STORE = createStore()
+  setUp(STORE, 'location', args)
 
   let {
     directories: {toolbox},
-  } = store.getState()
+  } = STORE.getState()
 
   process.stdout.write(toolbox)
 }

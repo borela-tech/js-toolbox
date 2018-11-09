@@ -10,8 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../state'
 import {addFlags} from './flags'
+import {createStore} from '../state'
 import {setUp} from './utils'
 
 import {
@@ -59,8 +59,9 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  setUp(store, 'serve', args)
-  console.log(store.getState())
+  const STORE = createStore()
+  setUp(STORE, 'serve', args)
+  console.log(STORE.getState())
 }
 
 export default {
