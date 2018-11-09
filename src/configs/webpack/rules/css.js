@@ -12,13 +12,12 @@
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import pluginAutoPrefixer from 'autoprefixer'
-import store from '../../../state'
 
-export default function () {
+export default function (storeState) {
   let {
     command,
     options: {disableSourceMaps},
-  } = store.getState()
+  } = storeState
 
   let rootLoader = 'style-loader'
   let rootOptions = {sourceMap: !disableSourceMaps}

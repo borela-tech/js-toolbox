@@ -10,49 +10,50 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import store from '../../../state'
 import {relative, sep} from 'path'
 
 /**
  * Calculate the file path for the loaded asset.
  */
-function fileName(file) {
-  let {
-    directories: {
-      target: PROJECT_DIR,
-      toolbox: TOOLBOX_DIR,
+export function fileName(storeState) {
+  return function (file) {
+    let {
+      directories: {
+        target: PROJECT_DIR,
+        toolbox: TOOLBOX_DIR,
+      }
+    } = storeState
+
+    let prefix = null
+    let reference = null
+
+    if (isSubPathOf(file, PROJECT_DIR)) {
+      // Assets from the target project.
+      prefix = []
+      reference = PROJECT_DIR
+    } else if (isSubPathOf(file, TOOLBOX_DIR)) {
+      // Assets from the Toolbox.
+      prefix = ['__borela__']
+      reference = TOOLBOX_DIR
     }
-  } = store.getState()
 
-  let prefix = null
-  let reference = null
+    const RELATIVE = relative(reference, file)
+    let nodes = RELATIVE.split(sep)
 
-  if (isSubPathOf(file, PROJECT_DIR)) {
-    // Assets from the target project.
-    prefix = []
-    reference = PROJECT_DIR
-  } else if (isSubPathOf(file, TOOLBOX_DIR)) {
-    // Assets from the Toolbox.
-    prefix = ['__borela__']
-    reference = TOOLBOX_DIR
+    if (nodes[0] === 'src')
+      nodes.shift()
+
+    if (prefix.length > 0)
+      nodes = [...prefix, ...nodes]
+
+    return `${nodes.join('/')}?[sha512:hash:base64:8]`
   }
-
-  const RELATIVE = relative(reference, file)
-  let nodes = RELATIVE.split(sep)
-
-  if (nodes[0] === 'src')
-    nodes.shift()
-
-  if (prefix.length > 0)
-    nodes = [...prefix, ...nodes]
-
-  return `${nodes.join('/')}?[sha512:hash:base64:8]`
 }
 
 /**
  * Returns true if “path” is subpath of “parent”.
  */
-function isSubPathOf(path, parent) {
+export function isSubPathOf(path, parent) {
   let result = relative(parent, path)
 
   // Returns an empty string when “parent” is the same as the “path”.
@@ -67,7 +68,7 @@ function isSubPathOf(path, parent) {
   return !result.startsWith('..')
 }
 
-export default function () {
+export default function (storeState) {
   return {
     exclude: [
       /\.css$/,
@@ -82,7 +83,7 @@ export default function () {
       options: {
         fallback: 'file-loader',
         limit: 1024,
-        name: fileName,
+        name: fileName(storeState),
       },
     }],
   }
