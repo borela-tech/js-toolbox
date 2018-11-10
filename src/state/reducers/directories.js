@@ -11,7 +11,7 @@
 // the License.
 
 import pkgDir from 'pkg-dir'
-import {resolve} from 'path'
+import {join, resolve} from 'path'
 import {TARGET_DIRECTORY_SET} from '../events/identifiers'
 
 const TOOLBOX_DIR = resolve(__dirname, '..', '..', '..')
@@ -19,20 +19,23 @@ const TOOLBOX_DIR = resolve(__dirname, '..', '..', '..')
 export default function (state = null, event) {
   let {payload, type} = event
 
-  if (payload && type == TARGET_DIRECTORY_SET) {
-    payload = resolve(payload)
-    return {
-      project: pkgDir.sync(payload),
-      target: payload,
-      toolbox: TOOLBOX_DIR,
-    }
-  }
+  if (type !== TARGET_DIRECTORY_SET && state)
+    return state
 
-  return state
-    ? state
-    : {
-      project: pkgDir.sync(),
-      target: process.cwd(),
-      toolbox: TOOLBOX_DIR,
-    }
+  const TARGET_DIR = resolve(payload || process.cwd())
+  const PROJECT_DIR = pkgDir.sync(TARGET_DIR)
+
+  return {
+    project: {
+      root: PROJECT_DIR,
+      build: join(PROJECT_DIR, 'build'),
+      nodeModules: join(PROJECT_DIR, 'node_modules'),
+      source: join(PROJECT_DIR, 'src'),
+    },
+    target: TARGET_DIR,
+    toolbox: {
+      root: TOOLBOX_DIR,
+      nodeModules: join(TOOLBOX_DIR, 'node_modules'),
+    },
+  }
 }

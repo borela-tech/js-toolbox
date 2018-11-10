@@ -26,7 +26,13 @@ import {
  */
 export function loadConfig(store) {
   // Location of the config files.
-  let {directories: {project}} = store.getState()
+  let {
+    directories: {
+      project: {
+        root: projectDir
+      },
+    },
+  } = store.getState()
 
   // Try to find a configuration settings/file.
   const CONFIG_META = cosmiconfig('borela', {
@@ -37,7 +43,7 @@ export function loadConfig(store) {
       'borela.config.js',
     ],
   })
-    .searchSync(project)
+    .searchSync(projectDir)
 
   // No configuration found, we will use the default settings for node apps.
   if (!CONFIG_META) {
