@@ -13,44 +13,6 @@
 import {relative, sep} from 'path'
 
 /**
- * Calculate the file path for the loaded asset.
- */
-export function fileName(storeState) {
-  return function (file) {
-    let {
-      directories: {
-        target: PROJECT_DIR,
-        toolbox: TOOLBOX_DIR,
-      }
-    } = storeState
-
-    let prefix = null
-    let reference = null
-
-    if (isSubPathOf(file, PROJECT_DIR)) {
-      // Assets from the target project.
-      prefix = []
-      reference = PROJECT_DIR
-    } else if (isSubPathOf(file, TOOLBOX_DIR)) {
-      // Assets from the Toolbox.
-      prefix = ['__borela__']
-      reference = TOOLBOX_DIR
-    }
-
-    const RELATIVE = relative(reference, file)
-    let nodes = RELATIVE.split(sep)
-
-    if (nodes[0] === 'src')
-      nodes.shift()
-
-    if (prefix.length > 0)
-      nodes = [...prefix, ...nodes]
-
-    return `${nodes.join('/')}?[sha512:hash:base64:8]`
-  }
-}
-
-/**
  * Returns true if “path” is subpath of “parent”.
  */
 export function isSubPathOf(path, parent) {
@@ -66,6 +28,47 @@ export function isSubPathOf(path, parent) {
     return false
 
   return !result.startsWith('..')
+}
+
+/**
+ * Normalize the file path for the loaded asset.
+ *
+ * @param storeState
+ * CLI’s current state.
+ * @param filePath
+ * File path sent by the loader.
+ */
+export function normalizeFilePath(storeState, filePath) {
+  let {
+    directories: {
+      target: PROJECT_DIR,
+      toolbox: TOOLBOX_DIR,
+    }
+  } = storeState
+
+  let prefix = null
+  let reference = null
+
+  if (isSubPathOf(filePath, PROJECT_DIR)) {
+    // Assets from the target project.
+    prefix = []
+    reference = PROJECT_DIR
+  } else if (isSubPathOf(filePath, TOOLBOX_DIR)) {
+    // Assets from the Toolbox.
+    prefix = ['__borela__']
+    reference = TOOLBOX_DIR
+  }
+
+  const RELATIVE = relative(reference, filePath)
+  let nodes = RELATIVE.split(sep)
+
+  if (nodes[0] === 'src')
+    nodes.shift()
+
+  if (prefix.length > 0)
+    nodes = [...prefix, ...nodes]
+
+  return `${nodes.join('/')}?[sha512:hash:base64:8]`
 }
 
 /**
@@ -89,7 +92,9 @@ export default function (storeState) {
       options: {
         fallback: 'file-loader',
         limit: 1024,
-        name: fileName(storeState),
+        name(filePath) {
+          return normalizeFilePath(storeState, filePath)
+        },
       },
     }],
   }
