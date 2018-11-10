@@ -29,3 +29,5 @@ export function createStore() {
   })
   return createReduxStore(REDUCERS)
 }
+
+export default createStore()

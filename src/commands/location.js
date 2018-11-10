@@ -10,12 +10,11 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {createStore} from '../state'
+import STORE from '../state'
 import {setUp} from './utils'
 import {resolve} from 'path'
 
 function handler(args) {
-  const STORE = createStore()
   setUp(STORE, 'location', args)
 
   let {
