@@ -18,7 +18,7 @@
  */
 export default function ({storeState, preset}) {
   let {
-    options: {typescript},
+    options: {typeScript},
   } = storeState
 
   if (typeScript)
