@@ -29,13 +29,13 @@ export default function (state = null, event) {
     project: {
       root: PROJECT_DIR,
       build: join(PROJECT_DIR, 'build'),
-      nodeModules: join(PROJECT_DIR, 'node_modules'),
+      modules: join(PROJECT_DIR, 'node_modules'),
       source: join(PROJECT_DIR, 'src'),
     },
     target: TARGET_DIR,
     toolbox: {
       root: TOOLBOX_DIR,
-      nodeModules: join(TOOLBOX_DIR, 'node_modules'),
+      modules: join(TOOLBOX_DIR, 'node_modules'),
     },
   }
 }
