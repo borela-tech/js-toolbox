@@ -10,9 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import babelPreset from '../../babel-preset'
-
-export default function () {
+export default function (babelPreset) {
   return {
     exclude: /node_modules/,
     test: /\.(jsx?|mjs|tsx?)$/,
