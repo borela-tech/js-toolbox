@@ -46,14 +46,23 @@ function calculateOptionsState(state, newOptions) {
  */
 function getProjecTypeOptions(projectType) {
   switch (projectType) {
+    case 'app':
+    case 'cli':
+      return {platforms: ['node']}
+
+    case 'lib':
+      return {platforms: ['browser', 'node']}
+
     case 'react-spa':
       return {
         commentFlow: true,
         jsx: true,
         react: true,
+        platforms: ['browser'],
       }
   }
-  return {}
+
+  throw new Error(`Unsupported project type “${projectType}”.`)
 }
 
 /**
