@@ -11,24 +11,7 @@
 // the License.
 
 import {isAbsolute, relative, sep} from 'path'
-
-/**
- * Returns true if “path” is subpath of “parent”.
- */
-export function isSubPathOf(path, parent) {
-  let result = relative(parent, path)
-
-  // Returns an empty string when “parent” is the same as the “path”.
-  if (!result)
-    return false
-
-  // Windows: If the result is an absolute path, this means that paths are on
-  // different drive letters.
-  if (isAbsolute(result))
-    return false
-
-  return !result.startsWith('..')
-}
+import {isSubPathOf} from '../../../utils'
 
 /**
  * Normalize the file path for the loaded asset.
