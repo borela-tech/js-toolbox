@@ -115,6 +115,16 @@ export const NODE = {
   type: 'string',
 }
 
+export const PLATFORMS = {
+  flag: 'platforms',
+  choices: [
+    'browser',
+    'node',
+  ],
+  description: 'Target platforms.',
+  type: 'array',
+}
+
 export const PORT = {
   flag: 'port',
   description: 'Port used to serve the app.',
@@ -136,15 +146,13 @@ export const PROGRESS = {
 export const PROJECT_TYPE = {
   flag: 'project-type',
   choices: [
+    'app',
     'cli',
     'lib',
-    'node-app',
-    'node-lib',
     'react-spa',
-    'web-lib',
   ],
   description: 'Project presets.',
-  type: 'string',
+  type: 'array',
 }
 
 export const REACT = {
