@@ -24,14 +24,17 @@ export default function (state = null, event) {
 
   const TARGET_DIR = resolve(payload || process.cwd())
   const PROJECT_DIR = pkgDir.sync(TARGET_DIR)
-
-  return {
-    project: {
+  const PROJECT_DIRECTORIES = !PROJECT_DIR
+    ? {}
+    : {
       root: PROJECT_DIR,
       build: join(PROJECT_DIR, 'build'),
       modules: join(PROJECT_DIR, 'node_modules'),
       source: join(PROJECT_DIR, 'src'),
-    },
+    }
+
+  return {
+    project: PROJECT_DIRECTORIES,
     target: TARGET_DIR,
     toolbox: {
       root: TOOLBOX_DIR,
