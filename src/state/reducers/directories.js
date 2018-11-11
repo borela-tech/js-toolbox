@@ -35,6 +35,7 @@ export default function (state = null, event) {
     target: TARGET_DIR,
     toolbox: {
       root: TOOLBOX_DIR,
+      entries: join(TOOLBOX_DIR, 'entries'),
       modules: join(TOOLBOX_DIR, 'node_modules'),
     },
   }
