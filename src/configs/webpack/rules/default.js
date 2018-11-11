@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {relative, sep} from 'path'
+import {isAbsolute, relative, sep} from 'path'
 
 /**
  * Returns true if “path” is subpath of “parent”.
@@ -41,9 +41,13 @@ export function isSubPathOf(path, parent) {
 export function normalizeFilePath(storeState, filePath) {
   let {
     directories: {
-      target: PROJECT_DIR,
-      toolbox: TOOLBOX_DIR,
-    }
+      project: {
+        root: PROJECT_DIR,
+      },
+      toolbox: {
+        root: TOOLBOX_DIR,
+      },
+    },
   } = storeState
 
   let prefix = null

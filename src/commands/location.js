@@ -18,10 +18,12 @@ function handler(args) {
   setUp(STORE, 'location', args)
 
   let {
-    directories: {toolbox},
+    directories: {
+      toolbox: {root},
+    },
   } = STORE.getState()
 
-  process.stdout.write(toolbox)
+  process.stdout.write(root)
 }
 
 export default {
