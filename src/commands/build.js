@@ -10,9 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import ora from 'ora'
+import chalk from 'chalk'
 import STORE from '../state'
+import webpack from 'webpack'
+import webpackConfig from '../configs/webpack'
 import {addFlags} from './flags'
-import {setUp} from './utils'
+
+import {
+  getModuleVersion,
+  setUp,
+} from './utils'
 
 import {
   BROWSERS,
@@ -27,6 +35,7 @@ import {
   MINIFY_HTML,
   MINIFY_JS,
   NODE,
+  PLATFORMS,
   PRODUCTION,
   PROGRESS,
   PROJECT_TYPE,
@@ -35,6 +44,14 @@ import {
   TYPE_SCRIPT,
   WATCH,
 } from './flags'
+
+const BORELA = chalk.supportsColor
+  ? chalk.inverse.bold.magenta(' BORELA TOOLBOX: ') + ' ' + chalk.inverse.bold.yellow(' 1.0.0 ')
+  : 'Borela: 1.0.0'
+
+const SUCCESS = chalk.supportsColor
+  ? chalk.inverse.bold.green(' DONE ')
+  : 'Done.'
 
 function builder(yargs) {
   addFlags(yargs, [
@@ -50,6 +67,7 @@ function builder(yargs) {
     MINIFY_HTML,
     MINIFY_JS,
     NODE,
+    PLATFORMS,
     PRODUCTION,
     PROGRESS,
     PROJECT_TYPE,
@@ -62,7 +80,84 @@ function builder(yargs) {
 
 function handler(args) {
   setUp(STORE, 'build', args)
-  console.log(STORE.getState())
+
+  let spinner = ora({
+    spinner: {
+    interval: 80,
+        frames: [
+          '⠋',
+          '⠙',
+          '⠹',
+          '⠸',
+          '⠼',
+          '⠴',
+          '⠦',
+          '⠧',
+          '⠇',
+          '⠏',
+        ]
+    },
+    text: 'Building...',
+  }).start()
+
+  // const STATE = STORE.getState()
+  // const WEBPACK_CONFIG = webpackConfig(STATE)
+  // const COMPILER = webpack(WEBPACK_CONFIG)
+
+  // let {watch} = STATE
+  // if (!watch)
+  //   COMPILER.run(reportBuild)
+  // else
+  //   COMPILER.watch(reportBuild)
+}
+
+function reportBuild(error, stats) {
+  if (error) {
+    reportException(error)
+    return
+  }
+
+  // Simplify the stats.
+  stats = stats.toJson('normal')
+
+  let {
+    builtAt,
+    errors,
+    hash,
+    time,
+    version,
+    warnings,
+  } = stats
+
+  console.log()
+  console.log(BORELA)
+  console.log()
+  console.log(`Webpack: ${version}`)
+  console.log(`Hash: ${hash}`)
+  console.log(`Build At: ${time}`)
+  console.log(`Time: ${time}ms`)
+
+  if (warnings.length > 0)
+    reportWarnings(warnings)
+
+  if (errors.length > 0) {
+    reportErrors(errors)
+  } else {
+    console.log()
+    console.log(SUCCESS)
+  }
+}
+
+function reportException(exception) {
+  // TODO..
+}
+
+function reportErrors(errors) {
+  // TODO..
+}
+
+function reportWarnings(warnings) {
+  // TODO..
 }
 
 export default {
