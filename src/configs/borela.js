@@ -47,7 +47,7 @@ export function loadConfig(store) {
 
   // No configuration found, we will use the default settings for node apps.
   if (!CONFIG_META) {
-    store.dispatch(projectTypeSet('node-app'))
+    store.dispatch(projectTypeSet('app'))
     return
   }
 
