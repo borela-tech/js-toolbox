@@ -12,6 +12,10 @@
 
 import {isAbsolute, relative} from 'path'
 
+export function isString(value) {
+  return typeof value === 'string' || value instanceof String
+}
+
 /**
  * Returns true if “path” is subpath of “parent”.
  */
@@ -28,4 +32,11 @@ export function isSubPathOf(path, parent) {
     return false
 
   return !result.startsWith('..')
+}
+
+export function nodeEnvIsProduction() {
+  let {NODE_ENV} = process.env
+  return isString(NODE_ENV)
+    ? NODE_ENV === 'production'
+    : false
 }

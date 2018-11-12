@@ -11,6 +11,7 @@
 // the License.
 
 import {loadConfig} from '../configs/borela'
+import {nodeEnvIsProduction} from '../utils'
 
 import {
   commandSet,
@@ -18,17 +19,6 @@ import {
   projectTypeSet,
   targetDirectorySet,
 } from '../state/events'
-
-export function isString(value) {
-  return typeof value === 'string' || value instanceof String
-}
-
-export function nodeEnvIsProduction() {
-  let {NODE_ENV} = process.env
-  return isString(NODE_ENV)
-    ? NODE_ENV === 'production'
-    : false
-}
 
 /**
  * Initialize the command by normalizing and environment, loading settings and
