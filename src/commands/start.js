@@ -12,7 +12,7 @@
 
 import STORE from '../state'
 import {addFlags} from './flags'
-import {setUp} from './utils'
+import {setUpCommand} from './utils'
 
 import {
   APP_ARGS,
@@ -27,7 +27,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  setUp(STORE, 'start', args)
+  setUpCommand(STORE, 'start', args)
   console.log(STORE.getState())
 }
 

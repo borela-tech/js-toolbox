@@ -12,7 +12,7 @@
 
 import STORE from '../state'
 import {addFlags} from './flags'
-import {setUp} from './utils'
+import {setUpCommand} from './utils'
 
 import {
   COMMENT_FLOW,
@@ -47,7 +47,7 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  setUp(STORE, 'test', args)
+  setUpCommand(STORE, 'test', args)
   console.log(STORE.getState())
 }
 

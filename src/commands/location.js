@@ -11,11 +11,11 @@
 // the License.
 
 import STORE from '../state'
-import {setUp} from './utils'
+import {setUpCommand} from './utils'
 import {resolve} from 'path'
 
 function handler(args) {
-  setUp(STORE, 'location', args)
+  setUpCommand(STORE, 'location', args)
 
   let {
     directories: {

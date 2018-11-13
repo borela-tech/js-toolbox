@@ -11,10 +11,10 @@
 // the License.
 
 import STORE from '../state'
-import {setUp} from './utils'
+import {setUpCommand} from './utils'
 
 function handler(args) {
-  setUp(STORE, 'scaffold', args)
+  setUpCommand(STORE, 'scaffold', args)
   console.log(STORE.getState())
 }
 

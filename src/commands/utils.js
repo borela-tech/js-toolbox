@@ -27,7 +27,7 @@ import {
  * @param store
  * Store that holds the CLI’s state.
  */
-export function setUp(store, command:string, args:Object) {
+export function setUpCommand(store, command:string, args:Object) {
   let {
     dir,
     projectType,
