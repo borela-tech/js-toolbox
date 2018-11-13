@@ -12,6 +12,11 @@
 
 *.log
 *.sublime-workspace
-build
 node_modules
 package-lock.json
+
+# Exclude all files under “build” directory unless they are also under the “src”
+# as it would indicate that the files are actually part of the source and not
+# the build artifact.
+**/build/**
+!**/src/**/build/**
