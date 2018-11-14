@@ -10,17 +10,18 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import ora from 'ora'
-import chalk from 'chalk'
 import STORE from '../state'
 import webpack from 'webpack'
 import webpackConfig from '../configs/webpack'
 import {addFlags} from './flags'
+import {onExitRequest} from '../utils'
+import {setUpCommand} from './utils'
 
 import {
-  getModuleVersion,
-  setUp,
-} from './utils'
+  taskStarted,
+  taskStopped,
+  taskUpdated,
+} from '../state/events'
 
 import {
   BROWSERS,
@@ -44,14 +45,6 @@ import {
   TYPE_SCRIPT,
   WATCH,
 } from './flags'
-
-const BORELA = chalk.supportsColor
-  ? chalk.inverse.bold.magenta(' BORELA TOOLBOX: ') + ' ' + chalk.inverse.bold.yellow(' 1.0.0 ')
-  : 'Borela: 1.0.0'
-
-const SUCCESS = chalk.supportsColor
-  ? chalk.inverse.bold.green(' DONE ')
-  : 'Done.'
 
 function builder(yargs) {
   addFlags(yargs, [
@@ -79,85 +72,61 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  setUp(STORE, 'build', args)
+  setUpCommand(STORE, 'build', args)
 
-  let spinner = ora({
-    spinner: {
-    interval: 80,
-        frames: [
-          '⠋',
-          '⠙',
-          '⠹',
-          '⠸',
-          '⠼',
-          '⠴',
-          '⠦',
-          '⠧',
-          '⠇',
-          '⠏',
-        ]
-    },
-    text: 'Building...',
-  }).start()
+  STORE.dispatch(taskStarted({
+    name: 'webpack',
+    status: 'Preparing Webpack compiler...',
+  }))
 
-  // const STATE = STORE.getState()
-  // const WEBPACK_CONFIG = webpackConfig(STATE)
-  // const COMPILER = webpack(WEBPACK_CONFIG)
+  const STATE = STORE.getState()
+  const WEBPACK_CONFIG = webpackConfig(STATE)
+  const COMPILER = webpack(WEBPACK_CONFIG)
 
-  // let {watch} = STATE
-  // if (!watch)
-  //   COMPILER.run(reportBuild)
-  // else
-  //   COMPILER.watch(reportBuild)
-}
+  let {
+    options: {watch},
+  } = STATE
 
-function reportBuild(error, stats) {
-  if (error) {
-    reportException(error)
+  if (watch) {
+    STORE.dispatch(taskUpdated({
+      name: 'webpack',
+      status: 'Running Webpack in watch mode...',
+    }))
+
+    const WATCHER = COMPILER.watch(reportWatchBuild)
+
+    onExitRequest(() => {
+      WATCHER.close()
+      STORE.dispatch(taskStopped({name: 'webpack'}))
+    })
+
     return
   }
 
-  // Simplify the stats.
+  STORE.dispatch(taskUpdated({
+    name: 'webpack',
+    status: 'Running Webpack...',
+  }))
+
+  COMPILER.run(reportBuild)
+}
+
+function reportBuild(error, stats) {
+  if (error)
+    throw error
+
   stats = stats.toJson('normal')
+  // STORE.dispatch(built(stats))
 
-  let {
-    builtAt,
-    errors,
-    hash,
-    time,
-    version,
-    warnings,
-  } = stats
-
-  console.log()
-  console.log(BORELA)
-  console.log()
-  console.log(`Webpack: ${version}`)
-  console.log(`Hash: ${hash}`)
-  console.log(`Build At: ${time}`)
-  console.log(`Time: ${time}ms`)
-
-  if (warnings.length > 0)
-    reportWarnings(warnings)
-
-  if (errors.length > 0) {
-    reportErrors(errors)
-  } else {
-    console.log()
-    console.log(SUCCESS)
-  }
+  STORE.dispatch(taskStopped({name: 'webpack'}))
 }
 
-function reportException(exception) {
-  // TODO..
-}
+function reportWatchBuild(error, stats) {
+  if (error)
+    throw error
 
-function reportErrors(errors) {
-  // TODO..
-}
-
-function reportWarnings(warnings) {
-  // TODO..
+  stats = stats.toJson('normal')
+  // STORE.dispatch(built(stats))
 }
 
 export default {
