@@ -12,6 +12,12 @@
 
 import {isAbsolute, relative} from 'path'
 
+export function onExitRequest(callback) {
+  process.on('SIGINT', callback)
+  process.on('SIGTERM', callback)
+  process.on('SIGQUIT', callback)
+}
+
 export function isString(value) {
   return typeof value === 'string' || value instanceof String
 }
