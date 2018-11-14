@@ -13,8 +13,10 @@
 // the License.
 
 import packageInfo from '../package'
+import STORE from './state'
 import Yargs from 'yargs'
 import {getEpilog, getProlog} from './banner'
+import {setUpUi} from './ui'
 
 import build from './commands/build'
 import lint from './commands/lint'
@@ -23,6 +25,8 @@ import scaffold from './commands/scaffold'
 import serve from './commands/serve'
 import start from './commands/start'
 import test from './commands/test'
+
+setUpUi(STORE)
 
 const VERSION = packageInfo.version
 const PROLOG = getProlog(VERSION)
