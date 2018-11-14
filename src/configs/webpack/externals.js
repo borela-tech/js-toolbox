@@ -47,20 +47,20 @@ export default function (storeState, options = {}) {
       return
     }
 
-    // Turn relative requests into absolute ones.
-    if (request.startsWith('.'))
-      request = resolve(context, request)
+    const RESOLVED_PATH = request.startsWith('.')
+      ? resolve(context, request)
+      : request
 
-    if (isAbsolute(request)) {
+    if (isAbsolute(RESOLVED_PATH)) {
       // Include default entry points.
-      if (isSubPathOf(request, entriesDir)) {
+      if (isSubPathOf(RESOLVED_PATH, entriesDir)) {
         logIncluded(prettyFormat({context, request}))
         callback()
         return
       }
 
       // Include files from the project.
-      if (isSubPathOf(request, projectSourceDir)) {
+      if (isSubPathOf(RESOLVED_PATH, projectSourceDir)) {
         logIncluded(prettyFormat({context, request}))
         callback()
         return
