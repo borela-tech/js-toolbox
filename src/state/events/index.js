@@ -16,6 +16,10 @@ import {
   OPTIONS_SET,
   PROJECT_TYPE_SET,
   TARGET_DIRECTORY_SET,
+
+  TASK_STARTED,
+  TASK_STOPPED,
+  TASK_UPDATED,
 } from './identifiers'
 
 export function configLoaded(options) {
@@ -50,5 +54,26 @@ export function targetDirectorySet(directory) {
   return {
     type: TARGET_DIRECTORY_SET,
     payload: directory,
+  }
+}
+
+export function taskStarted({name, status}) {
+  return {
+    type: TASK_STARTED,
+    payload: {name, status},
+  }
+}
+
+export function taskStopped({name}) {
+  return {
+    type: TASK_STOPPED,
+    payload: {name},
+  }
+}
+
+export function taskUpdated({name, status}) {
+  return {
+    type: TASK_UPDATED,
+    payload: {name, status},
   }
 }

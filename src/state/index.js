@@ -19,6 +19,7 @@ import command from './reducers/command'
 import directories from './reducers/directories'
 import options from './reducers/options'
 import projectType from './reducers/projectType'
+import tasks from './reducers/tasks'
 
 export function createStore() {
   const REDUCERS = combineReducers({
@@ -26,6 +27,7 @@ export function createStore() {
     directories,
     options,
     projectType,
+    tasks,
   })
   return createReduxStore(REDUCERS)
 }
