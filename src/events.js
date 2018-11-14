@@ -10,17 +10,15 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {
-  COMMAND_SET,
-  CONFIG_LOADED,
-  OPTIONS_SET,
-  PROJECT_TYPE_SET,
-  TARGET_DIRECTORY_SET,
+export const COMMAND_SET = 'COMMAND_SET'
+export const CONFIG_LOADED = 'CONFIG_LOADED'
+export const OPTIONS_SET = 'OPTIONS_SET'
+export const PROJECT_TYPE_SET = 'PROJECT_TYPE_SET'
+export const TARGET_DIRECTORY_SET = 'TARGET_DIRECTORY_SET'
 
-  TASK_STARTED,
-  TASK_STOPPED,
-  TASK_UPDATED,
-} from './identifiers'
+export const TASK_STARTED = 'TASK_STARTED'
+export const TASK_STOPPED = 'TASK_STOPPED'
+export const TASK_UPDATED = 'TASK_UPDATED'
 
 export function configLoaded(options) {
   return {

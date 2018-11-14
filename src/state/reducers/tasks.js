@@ -14,7 +14,7 @@ import {
   TASK_STARTED,
   TASK_STOPPED,
   TASK_UPDATED,
-} from '../events/identifiers'
+} from '../../events'
 
 export default function (state = {}, event) {
   let {payload, type} = event

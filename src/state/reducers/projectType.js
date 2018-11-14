@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import {PROJECT_TYPE_SET} from '../events/identifiers'
+import {PROJECT_TYPE_SET} from '../../events'
 
 export default function (state = null, event) {
   let {payload, type} = event

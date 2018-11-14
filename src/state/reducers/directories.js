@@ -12,7 +12,7 @@
 
 import pkgDir from 'pkg-dir'
 import {join, resolve} from 'path'
-import {TARGET_DIRECTORY_SET} from '../events/identifiers'
+import {TARGET_DIRECTORY_SET} from '../../events'
 
 const TOOLBOX_DIR = resolve(__dirname, '..', '..', '..')
 

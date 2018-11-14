@@ -17,7 +17,7 @@ import Multispinner from 'multispinner'
 import {
   TASK_STARTED,
   TASK_STOPPED,
-} from './state/events/identifiers'
+} from './events'
 
 const SPINNER_ANIMATION = {
   interval: 60,

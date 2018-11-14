@@ -15,7 +15,7 @@ import {
   CONFIG_LOADED,
   OPTIONS_SET,
   PROJECT_TYPE_SET,
-} from '../../events/identifiers'
+} from '../../../events'
 
 import {getAvailableOptions} from './available'
 
