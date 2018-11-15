@@ -10,6 +10,8 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import EVENTS_BUS from '../events-bus'
+
 import {
   createStore as createReduxStore,
   combineReducers,
@@ -21,7 +23,7 @@ import options from './reducers/options'
 import projectType from './reducers/projectType'
 import tasks from './reducers/tasks'
 
-export function createStore() {
+export function createStore(eventsBus) {
   const REDUCERS = combineReducers({
     command,
     directories,
@@ -29,7 +31,14 @@ export function createStore() {
     projectType,
     tasks,
   })
-  return createReduxStore(REDUCERS)
+
+  const STORE = createReduxStore(REDUCERS)
+
+  eventsBus.subscribe(event => {
+    STORE.dispatch(event)
+  })
+
+  return STORE
 }
 
-export default createStore()
+export default createStore(EVENTS_BUS)

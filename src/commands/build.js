@@ -10,6 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import EVENTS_BUS from '../events-bus'
 import STORE from '../state'
 import webpack from 'webpack'
 import webpackConfig from '../configs/webpack'
@@ -21,7 +22,7 @@ import {
   taskStarted,
   taskStopped,
   taskUpdated,
-} from '../state/events'
+} from '../events'
 
 import {
   BROWSERS,
@@ -72,9 +73,12 @@ function builder(yargs) {
 }
 
 function handler(args) {
-  setUpCommand(STORE, 'build', args)
+  setUpCommand(STORE, EVENTS_BUS, 'build', args)
 
-  STORE.dispatch(taskStarted({
+  console.log(STORE.getState())
+  return
+
+  EVENTS_BUS.publish(taskStarted({
     name: 'webpack',
     status: 'Preparing Webpack compiler...',
   }))
@@ -88,7 +92,7 @@ function handler(args) {
   } = STATE
 
   if (watch) {
-    STORE.dispatch(taskUpdated({
+    EVENTS_BUS.publish(taskUpdated({
       name: 'webpack',
       status: 'Running Webpack in watch mode...',
     }))
@@ -97,13 +101,13 @@ function handler(args) {
 
     onExitRequest(() => {
       WATCHER.close()
-      STORE.dispatch(taskStopped({name: 'webpack'}))
+      EVENTS_BUS.publish(taskStopped({name: 'webpack'}))
     })
 
     return
   }
 
-  STORE.dispatch(taskUpdated({
+  EVENTS_BUS.publish(taskUpdated({
     name: 'webpack',
     status: 'Running Webpack...',
   }))
@@ -116,9 +120,9 @@ function reportBuild(error, stats) {
     throw error
 
   stats = stats.toJson('normal')
-  // STORE.dispatch(built(stats))
+  // EVENTS_BUS.publish(built(stats))
 
-  STORE.dispatch(taskStopped({name: 'webpack'}))
+  EVENTS_BUS.publish(taskStopped({name: 'webpack'}))
 }
 
 function reportWatchBuild(error, stats) {
@@ -126,7 +130,7 @@ function reportWatchBuild(error, stats) {
     throw error
 
   stats = stats.toJson('normal')
-  // STORE.dispatch(built(stats))
+  // EVENTS_BUS.publish(built(stats))
 }
 
 export default {

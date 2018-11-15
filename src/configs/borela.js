@@ -16,7 +16,7 @@ import camelCaseKeys from 'camelcase-keys'
 import {
   configLoaded,
   projectTypeSet,
-} from '../state/events'
+} from '../events'
 
 /**
  * Loads the CLI config and update the store.
@@ -24,7 +24,7 @@ import {
  * @param store
  * Store that holds the CLI’s state.
  */
-export function loadConfig(store) {
+export function loadConfig(store, eventsBus) {
   // Location of the config files.
   let {
     directories: {
@@ -47,7 +47,7 @@ export function loadConfig(store) {
 
   // No configuration found, we will use the default settings for node apps.
   if (!CONFIG_META) {
-    store.dispatch(projectTypeSet('app'))
+    eventsBus.publish(projectTypeSet('app'))
     return
   }
 
@@ -64,6 +64,6 @@ export function loadConfig(store) {
   delete rest.production
 
   // Update the state with the loaded settings.
-  store.dispatch(projectTypeSet(projectType))
-  store.dispatch(configLoaded(rest))
+  eventsBus.publish(projectTypeSet(projectType))
+  eventsBus.publish(configLoaded(rest))
 }

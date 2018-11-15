@@ -18,7 +18,7 @@ import {
   optionsSet,
   projectTypeSet,
   targetDirectorySet,
-} from '../state/events'
+} from '../events'
 
 /**
  * Initialize the command by normalizing and environment, loading settings and
@@ -27,7 +27,12 @@ import {
  * @param store
  * Store that holds the CLI’s state.
  */
-export function setUpCommand(store, command:string, args:Object) {
+export function setUpCommand(
+  store,
+  eventsBus,
+  command:string,
+  args:Object
+) {
   let {
     dir,
     projectType,
@@ -41,13 +46,13 @@ export function setUpCommand(store, command:string, args:Object) {
   } else
     options.production = true
 
-  store.dispatch(commandSet(command))
-  store.dispatch(targetDirectorySet(dir))
+  eventsBus.publish(commandSet(command))
+  eventsBus.publish(targetDirectorySet(dir))
 
-  loadConfig(store)
+  loadConfig(store, eventsBus)
 
   if (projectType)
-    store.dispatch(projectTypeSet(projectType))
+    eventsBus.publish(projectTypeSet(projectType))
 
-  store.dispatch(optionsSet(options))
+  eventsBus.publish(optionsSet(options))
 }
