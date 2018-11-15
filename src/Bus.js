@@ -14,44 +14,42 @@
  * Generic communication bus.
  */
 export default class Bus {
-  listeners = {
+  subscribers = {
     // Listeners for all events.
-    all: [],
+    allEvents: [],
 
     // Listeners for specific events.
-    specific: {},
+    specificEvents: {},
   }
 
   publish(event) {
-    let {all, specific} = this.listeners
+    let {
+      allEvents,
+      specificEvents,
+    } = this.subscribers
 
-    for (let listener of all)
-      listener(event)
+    allEvents.forEach(subscriber => subscriber(event))
 
-    specific = specific[event.type]
-
-    if (!specific)
-      return
-
-    for (let listener of specific)
-      listener(event)
+    specificEvents[event.type]
+      ?.forEach(subscriber => subscriber(event))
   }
 
   subscribe(arg) {
     if (typeof arg === 'function')
-      return this._subscribe({listener: arg})
+      return this._subscribe({callback: arg})
     return this._subscribe(arg)
   }
 
-  _subscribe({type, listener}) {
-    let {all, specific} = this.listeners
+  _subscribe({type, callback}) {
+    let {
+      allEvents,
+      specificEvents,
+    } = this.subscribers
 
-    if (!type) {
-      all.push(listener)
-      return
-    }
+    const LIST = type
+      ? specificEvents[type] ??= []
+      : allEvents
 
-    specific = specific[type] ??= []
-    specific.push(listener)
+    LIST.push(callback)
   }
 }
