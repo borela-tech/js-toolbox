@@ -41,4 +41,7 @@ export function createStore(eventsBus) {
   return STORE
 }
 
+/**
+ * Main store for the application’s state.
+ */
 export default createStore(EVENTS_BUS)
