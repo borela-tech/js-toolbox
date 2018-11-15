@@ -10,47 +10,9 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export class EventsBus {
-  listeners = {
-    // Listeners for all events.
-    all: [],
+import Bus from './Bus'
 
-    // Listeners for specific events.
-    specific: {},
-  }
-
-  publish(event) {
-    let {all, specific} = this.listeners
-
-    for (let listener of all)
-      listener(event)
-
-    specific = specific[event.type]
-
-    if (!specific)
-      return
-
-    for (let listener of specific)
-      listener(event)
-  }
-
-  subscribe(arg) {
-    if (typeof arg === 'function')
-      return this._subscribe({listener: arg})
-    return this._subscribe(arg)
-  }
-
-  _subscribe({type, listener}) {
-    let {all, specific} = this.listeners
-
-    if (!type) {
-      all.push(listener)
-      return
-    }
-
-    specific = specific[type] ??= []
-    specific.push(listener)
-  }
-}
-
-export default new EventsBus
+/**
+ * Main events’ bus.
+ */
+export default new Bus
