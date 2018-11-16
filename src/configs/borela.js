@@ -24,7 +24,7 @@ import {
  * @param store
  * Store that holds the CLI’s state.
  */
-export function loadConfig(store, eventsBus) {
+export function loadConfig(store, eventBus) {
   // Location of the config files.
   let {
     directories: {
@@ -47,7 +47,7 @@ export function loadConfig(store, eventsBus) {
 
   // No configuration found, we will use the default settings for node apps.
   if (!CONFIG_META) {
-    eventsBus.publish(projectTypeSet('app'))
+    eventBus.publish(projectTypeSet('app'))
     return
   }
 
@@ -64,6 +64,6 @@ export function loadConfig(store, eventsBus) {
   delete rest.production
 
   // Update the state with the loaded settings.
-  eventsBus.publish(projectTypeSet(projectType))
-  eventsBus.publish(configLoaded(rest))
+  eventBus.publish(projectTypeSet(projectType))
+  eventBus.publish(configLoaded(rest))
 }

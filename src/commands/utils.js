@@ -29,7 +29,7 @@ import {
  */
 export function setUpCommand(
   store,
-  eventsBus,
+  eventBus,
   command:string,
   args:Object
 ) {
@@ -46,13 +46,13 @@ export function setUpCommand(
   } else
     options.production = true
 
-  eventsBus.publish(commandSet(command))
-  eventsBus.publish(targetDirectorySet(dir))
+  eventBus.publish(commandSet(command))
+  eventBus.publish(targetDirectorySet(dir))
 
-  loadConfig(store, eventsBus)
+  loadConfig(store, eventBus)
 
   if (projectType)
-    eventsBus.publish(projectTypeSet(projectType))
+    eventBus.publish(projectTypeSet(projectType))
 
-  eventsBus.publish(optionsSet(options))
+  eventBus.publish(optionsSet(options))
 }
