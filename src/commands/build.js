@@ -75,9 +75,6 @@ function builder(yargs) {
 function handler(args) {
   setUpCommand(STORE, EVENT_BUS, 'build', args)
 
-  console.log(STORE.getState())
-  return
-
   EVENT_BUS.publish(taskStarted({
     name: 'webpack',
     status: 'Preparing Webpack compiler...',
@@ -112,7 +109,7 @@ function handler(args) {
     status: 'Running Webpack...',
   }))
 
-  COMPILER.run(reportBuild)
+  // COMPILER.run(reportBuild)
 }
 
 function reportBuild(error, stats) {

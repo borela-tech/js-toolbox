@@ -12,6 +12,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import EVENT_BUS from './event-bus'
 import packageInfo from '../package'
 import STORE from './state'
 import Yargs from 'yargs'
@@ -26,7 +27,7 @@ import serve from './commands/serve'
 import start from './commands/start'
 import test from './commands/test'
 
-setUpUi(STORE)
+setUpUi(STORE, EVENT_BUS)
 
 const VERSION = packageInfo.version
 const PROLOG = getProlog(VERSION)

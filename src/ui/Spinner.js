@@ -11,25 +11,30 @@
 // the License.
 
 import chalk from 'chalk'
-import ora from 'ora'
-import Multispinner from 'multispinner'
 
-import {
-  TASK_STARTED,
-  TASK_STOPPED,
-} from './events'
-
-const SPINNER_ANIMATION = {
-  interval: 60,
-  frames: [
+export default class Spinner {
+  status = '...'
+  frame = 0
+  frames = [
     '[.  ]',
     '[:. ]',
     '[.:.]',
     '[ .:]',
     '[  .]',
     '[   ]',
-  ],
-}
+  ]
 
-export function setUpUi(store) {
+  constructor(status) {
+    this.status = status
+  }
+
+  tick() {
+    this.frame = (this.frame + 1) % this.frames.length
+
+    const SPINNER_FRAME = chalk.bold.yellow(
+      this.frames[this.frame]
+    )
+
+    return `${SPINNER_FRAME} ${this.status}`
+  }
 }
