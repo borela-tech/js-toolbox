@@ -15,23 +15,20 @@
  */
 export default class Bus {
   subscribers = {
-    // Listeners for all events.
-    allEvents: [],
+    // Listeners for all subjects.
+    all: [],
 
-    // Listeners for specific events.
-    specificEvents: {},
+    // Listeners for specific subjects.
+    specific: {},
   }
 
-  publish(event) {
-    let {
-      allEvents,
-      specificEvents,
-    } = this.subscribers
+  publish(subject) {
+    let {all, specific} = this.subscribers
 
-    allEvents.forEach(subscriber => subscriber(event))
+    all.forEach(subscriber => subscriber(subject))
 
-    specificEvents[event.type]
-      ?.forEach(subscriber => subscriber(event))
+    specific[subject.type]
+      ?.forEach(subscriber => subscriber(subject))
   }
 
   subscribe(arg) {
@@ -41,14 +38,11 @@ export default class Bus {
   }
 
   _subscribe({type, callback}) {
-    let {
-      allEvents,
-      specificEvents,
-    } = this.subscribers
+    let {all, specific} = this.subscribers
 
     const LIST = type
-      ? specificEvents[type] ??= []
-      : allEvents
+      ? specific[type] ??= []
+      : all
 
     LIST.push(callback)
   }
