@@ -16,6 +16,7 @@ import Spinner from './Spinner'
 import {eraseLines} from 'ansi-escapes'
 
 export default class CliUi {
+  fps = 30
   spinners = new Map
   lastFrameLines = 0
 
@@ -55,7 +56,7 @@ export default class CliUi {
 
     const TICKER = setInterval(() => {
       this.renderFrame()
-    }, 1000 / 30)
+    }, 1000 / this.fps)
 
     onExit(() => {
       clearInterval(TICKER)
