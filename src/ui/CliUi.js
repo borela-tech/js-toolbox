@@ -13,6 +13,7 @@
 import cursor from 'cli-cursor'
 import onExit from 'signal-exit'
 import Spinner from './Spinner'
+import {eraseLines} from 'ansi-escapes'
 
 export default class CliUi {
   spinners = new Map
@@ -22,38 +23,43 @@ export default class CliUi {
     this.spinners.set(name, new Spinner(status))
   }
 
-  clearFrame() {
-    for (let i = 0; i < this.lastFrameLines; i++) {
-      process.stdout.moveCursor(0, -1)
-      process.stdout.clearLine()
-    }
-  }
-
   renderFrame() {
     if (process.stdout.isTTY)
       this.renderSpinners()
   }
 
   renderSpinners() {
-    cursor.hide()
+    // Prepare the escapes to clear the last frame.
+    const CLEAR_LINES = eraseLines(this.lastFrameLines)
 
-    for (const [, SPINNER] of this.spinners)
-      process.stdout.write(SPINNER.tick() + '\n')
+    // Prepare the new frame.
+    let newFrame = ''
+
+    for (const [, SPINNER] of this.spinners) {
+      if (newFrame === '')
+        newFrame = SPINNER.tick()
+      else
+        newFrame += '\n' + SPINNER.tick()
+    }
 
     this.lastFrameLines = this.spinners.size
+
+    // Clear the last frame and render the new one.
+    process.stdout.write(`${CLEAR_LINES}${newFrame}`)
   }
 
   start() {
+    cursor.hide()
+
     this.renderFrame()
 
     const TICKER = setInterval(() => {
-      this.clearFrame()
       this.renderFrame()
     }, 1000 / 30)
 
     onExit(() => {
       clearInterval(TICKER)
-      this.clearFrame()
+      process.stdout.write(eraseLines(this.lastFrameLines))
     })
   }
 
