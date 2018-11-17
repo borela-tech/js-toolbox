@@ -13,18 +13,21 @@
 import chalk from 'chalk'
 
 export default class Spinner {
+  percentage = undefined
   status = '...'
   frame = 0
   frames = [
-    '[.  ]',
-    '[:. ]',
-    '[.:.]',
-    '[ .:]',
-    '[  .]',
-    '[   ]',
+    '[.   ]',
+    '[:.  ]',
+    '[.:. ]',
+    '[ .:.]',
+    '[  .:]',
+    '[   .]',
+    '[    ]',
   ]
 
-  constructor(status) {
+  constructor({percentage, status}) {
+    this.percentage = percentage
     this.status = status
   }
 
@@ -32,7 +35,9 @@ export default class Spinner {
     this.frame = (this.frame + 1) % this.frames.length
 
     const SPINNER_FRAME = chalk.bold.yellow(
-      this.frames[this.frame]
+      this.percentage
+        ? `[${this.percentage}%]`
+        : this.frames[this.frame]
     )
 
     return `${SPINNER_FRAME} ${this.status}`

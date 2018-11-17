@@ -55,10 +55,10 @@ export function targetDirectorySet(directory) {
   }
 }
 
-export function taskStarted({name, status}) {
+export function taskStarted({name, percentage, status}) {
   return {
     type: TASK_STARTED,
-    payload: {name, status},
+    payload: {name, percentage, status},
   }
 }
 
@@ -69,9 +69,9 @@ export function taskStopped({name}) {
   }
 }
 
-export function taskUpdated({name, status}) {
+export function taskUpdated({name, percentage, status}) {
   return {
     type: TASK_UPDATED,
-    payload: {name, status},
+    payload: {name, percentage, status},
   }
 }

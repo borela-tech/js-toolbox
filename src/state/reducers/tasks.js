@@ -21,10 +21,10 @@ export default function (state = {}, event) {
 
   switch (type) {
     case TASK_STARTED: {
-      let {name, status} = payload
+      let {name, percentage, status} = payload
       return {
         ...state,
-        [name]: status,
+        [name]: {percentage, status},
       }
     }
 
@@ -36,9 +36,9 @@ export default function (state = {}, event) {
     }
 
     case TASK_UPDATED: {
-      let {name, status} = payload
+      let {name, percentage, status} = payload
       let newState = {...state}
-      newState[name] = status
+      newState[name] = {percentage, status}
       return newState
     }
   }

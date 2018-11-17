@@ -20,8 +20,9 @@ export default class CliUi {
   spinners = new Map
   lastFrameLines = 0
 
-  addSpinner({name, status}) {
-    this.spinners.set(name, new Spinner(status))
+  addSpinner({name, percentage, status}) {
+    const NEW_SPINNER = new Spinner({percentage, status})
+    this.spinners.set(name, NEW_SPINNER)
   }
 
   renderFrame() {
@@ -52,8 +53,6 @@ export default class CliUi {
   start() {
     cursor.hide()
 
-    this.renderFrame()
-
     const TICKER = setInterval(() => {
       this.renderFrame()
     }, 1000 / this.fps)
@@ -68,8 +67,9 @@ export default class CliUi {
     this.spinners.delete(name)
   }
 
-  updateSpinner({name, status}) {
+  updateSpinner({name, percentage, status}) {
     const SPINNER = this.spinners.get(name)
+    SPINNER.percentage = percentage
     SPINNER.status = status
   }
 }
