@@ -11,6 +11,7 @@
 // the License.
 
 import BusySpinner from './Busy'
+import chalk from 'chalk'
 import PercentageSpinner from './Percentage'
 import PulseSpinner from './Pulse'
 import Spinner from '../Spinner'
@@ -33,14 +34,14 @@ export default class Full extends Spinner {
     if (this.percentage) {
       this.percentageSpinner.percentage = this.percentage
 
-      const PERCENTAGE_FRAME = this.percentageSpinner.tick()
-      const PULSE_FRAME = this.pulseSpinner.tick()
+      const PERCENTAGE_FRAME = chalk.green(this.percentageSpinner.tick())
+      const PULSE_FRAME = chalk.bold.yellow(this.pulseSpinner.tick())
 
       return `${PERCENTAGE_FRAME}${PULSE_FRAME} ${this.status}`
     }
 
-    const BUSY_FRAME = this.busySpinner.tick()
-    const PULSE_FRAME = this.pulseSpinner.tick()
+    const BUSY_FRAME = chalk.bold.blue(this.busySpinner.tick())
+    const PULSE_FRAME = chalk.bold.yellow(this.pulseSpinner.tick())
 
     return `${BUSY_FRAME}${PULSE_FRAME} ${this.status}`
   }
