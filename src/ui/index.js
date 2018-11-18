@@ -10,7 +10,7 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import CliUi from './CliUi'
+import Tty from './Tty'
 import {
   TASK_STARTED,
   TASK_STOPPED,
@@ -26,25 +26,28 @@ import {
  * Communication bus used to receive events.
  */
 export function setUpUi(store, eventBus) {
-  const CLI_UI = new CliUi
+  if (!process.stdout.isTTY)
+    return
+
+  const TTY = new Tty
 
   eventBus.subscribe(event => {
     let {type, payload} = event
 
     switch (type) {
       case TASK_STARTED:
-        CLI_UI.addSpinner(payload)
+        TTY.addSpinner(payload)
         break
 
       case TASK_STOPPED:
-        CLI_UI.removeSpinner(payload)
+        TTY.removeSpinner(payload)
         break
 
       case TASK_UPDATED:
-        CLI_UI.updateSpinner(payload)
+        TTY.updateSpinner(payload)
         break
     }
   })
 
-  CLI_UI.start()
+  TTY.start()
 }

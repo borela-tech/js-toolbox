@@ -12,10 +12,10 @@
 
 import cursor from 'cli-cursor'
 import onExit from 'signal-exit'
-import Spinner from './Spinner'
+import Spinner from './spinners/Full'
 import {eraseLines} from 'ansi-escapes'
 
-export default class CliUi {
+export default class Tty {
   fps = 30
   spinners = new Map
   lastFrameLines = 0
@@ -26,8 +26,7 @@ export default class CliUi {
   }
 
   renderFrame() {
-    if (process.stdout.isTTY)
-      this.renderSpinners()
+    this.renderSpinners()
   }
 
   renderSpinners() {

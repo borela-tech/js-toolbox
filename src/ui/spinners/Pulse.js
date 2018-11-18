@@ -10,29 +10,17 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export default class Spinner {
-  fps = 15
-  frame = 0
-  frames = undefined
-  lastFrameTime = new Date
+import Spinner from '../Spinner'
 
-  getFrame(i) {
-    return i >= 0
-      ? this.frames[i]
-      : 'abc'
-  }
-
-  tick() {
-    const FPS_WINDOW = 1000 / this.fps
-    const CURRENT_TIME = new Date
-
-    if (CURRENT_TIME - this.lastFrameTime > FPS_WINDOW) {
-      this.lastFrameTime = CURRENT_TIME
-      this.frame = this.frames
-        ? (this.frame + 1) % this.frames.length
-        : -1
-    }
-
-    return this.getFrame(this.frame)
-  }
+export default class Pulse extends Spinner {
+  fps = 5
+  frames = [
+    '[.   ]',
+    '[:.  ]',
+    '[.:. ]',
+    '[ .:.]',
+    '[  .:]',
+    '[   .]',
+    '[    ]',
+  ]
 }
