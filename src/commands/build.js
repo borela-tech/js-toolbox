@@ -104,10 +104,14 @@ function handler(args) {
     return
   }
 
-  EVENT_BUS.publish(taskUpdated({
-    name: 'webpack',
-    status: 'Running Webpack...',
-  }))
+  let i = -1
+  setInterval(() => {
+    EVENT_BUS.publish(taskUpdated({
+      name: 'webpack',
+      percentage: ++i,
+      status: 'Running Webpack...',
+    }))
+  }, 3000)
 
   // COMPILER.run(reportBuild)
 }
