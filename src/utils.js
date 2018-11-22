@@ -18,6 +18,14 @@ export function onExitRequest(callback) {
   process.on('SIGQUIT', callback)
 }
 
+export function isNil(value) {
+  return value === undefined || value === null
+}
+
+export function isNumber(value) {
+  return typeof value === 'number' || value instanceof Number
+}
+
 export function isString(value) {
   return typeof value === 'string' || value instanceof String
 }
