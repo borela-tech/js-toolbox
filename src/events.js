@@ -65,7 +65,7 @@ export function taskStarted({name, percentage, status}) {
 export function taskStopped({name}) {
   return {
     type: TASK_STOPPED,
-    payload: {name},
+    payload: name,
   }
 }
 

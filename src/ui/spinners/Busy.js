@@ -13,13 +13,16 @@
 import Spinner from '../Spinner'
 
 export default class Busy extends Spinner {
-  frames = [
+  _animationFrames = [
     '[=   ]',
     '[==  ]',
     '[=== ]',
     '[ ===]',
     '[  ==]',
     '[   =]',
-    '[    ]',
+    '[  ==]',
+    '[ ===]',
+    '[=== ]',
+    '[=   ]',
   ]
 }

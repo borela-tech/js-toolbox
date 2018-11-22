@@ -10,7 +10,13 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
+import MultiSpinner from './MultiSpinner'
+import TaskSpinner from './spinners/Task'
 import Tty from './Tty'
+
+import Spinner from './Spinner'
+import Visual from './Visual'
+
 import {
   TASK_STARTED,
   TASK_STOPPED,
@@ -29,23 +35,28 @@ export function setUpUi(store, eventBus) {
   if (!process.stdout.isTTY)
     return
 
-  const TTY = new Tty
+  const SPINNER = new MultiSpinner
+  const TTY = new Tty(SPINNER)
 
   eventBus.subscribe(event => {
     let {type, payload} = event
 
     switch (type) {
-      case TASK_STARTED:
-        TTY.addSpinner(payload)
+      case TASK_STARTED: {
+        let {name, ...args} = payload
+        SPINNER.addSpinner(name, new TaskSpinner(args))
         break
+      }
 
       case TASK_STOPPED:
-        TTY.removeSpinner(payload)
+        SPINNER.removeSpinner(payload)
         break
 
-      case TASK_UPDATED:
-        TTY.updateSpinner(payload)
+      case TASK_UPDATED: {
+        let {name, ...args} = payload
+        SPINNER.updateSpinner(name, args)
         break
+      }
     }
   })
 

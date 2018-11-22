@@ -10,29 +10,77 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-export default class Spinner {
-  fps = 15
-  frame = 0
-  frames = undefined
-  lastFrameTime = new Date
+import Visual from './Visual'
+import {isNumber, isString} from '../utils'
 
-  getFrame(i) {
-    return i >= 0
-      ? this.frames[i]
-      : 'abc'
+export default class Spinner extends Visual {
+  /**
+   * Array containing the frames of the animation.
+   */
+  _animationFrames = undefined
+
+  /**
+   * Current frame number.
+   */
+  _frameIndex = 0
+
+  /**
+   * Some spinners shows a progress indication based on the percentage value.
+   */
+  _percentage = undefined
+
+  /**
+   * If supported by the spinner’s animation, it will show a status text too.
+   */
+  _status = ''
+
+  constructor({percentage, status = ''} = {}) {
+    super()
+    this._percentage = percentage
+    this._status = status
   }
 
-  tick() {
-    const FPS_WINDOW = 1000 / this.fps
-    const CURRENT_TIME = new Date
+  get percentage() {
+    return this._percentage
+  }
 
-    if (CURRENT_TIME - this.lastFrameTime > FPS_WINDOW) {
-      this.lastFrameTime = CURRENT_TIME
-      this.frame = this.frames
-        ? (this.frame + 1) % this.frames.length
-        : -1
+  set percentage(value) {
+    if (!isNumber(value)) {
+      if (value === undefined)
+        this._percentage = undefined
+      return
     }
 
-    return this.getFrame(this.frame)
+    this._percentage = value
+  }
+
+  get status() {
+    return this._status
+  }
+
+  set status(value) {
+    if (isString(value))
+      this._status = value
+  }
+
+  /**
+   * Render the next frame if there are any in the frames in the animation
+   * array.
+   */
+  getNextFrame() {
+    this._frameIndex = this._animationFrames
+      ? (this._frameIndex + 1) % this._animationFrames.length
+      : -1
+    return {
+      frame: this._frameIndex >= 0
+        ? this._animationFrames[this._frameIndex]
+        : '',
+      lines: 1,
+    }
+  }
+
+  update({percentage, status} = {}) {
+    this._percentage = percentage
+    this._status = status
   }
 }

@@ -13,14 +13,13 @@
 import Spinner from '../Spinner'
 
 export default class Pulse extends Spinner {
-  fps = 5
-  frames = [
-    '[.   ]',
-    '[:.  ]',
-    '[.:. ]',
-    '[ .:.]',
-    '[  .:]',
+  _animationFrames = [
     '[   .]',
+    '[  .:]',
+    '[ .:.]',
+    '[.:. ]',
+    '[:.  ]',
+    '[.   ]',
     '[    ]',
   ]
 }

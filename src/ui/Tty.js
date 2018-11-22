@@ -12,41 +12,31 @@
 
 import cursor from 'cli-cursor'
 import onExit from 'signal-exit'
-import Spinner from './spinners/Full'
-import {eraseLines} from 'ansi-escapes'
 
 export default class Tty {
-  fps = 30
-  spinners = new Map
-  lastFrameLines = 0
+  /**
+   * Maximum frames per second of the TTY.
+   */
+  _fps = 15
 
-  addSpinner({name, percentage, status}) {
-    const NEW_SPINNER = new Spinner({percentage, status})
-    this.spinners.set(name, NEW_SPINNER)
+  /**
+   * Spinner used to indicate progress.
+   */
+  _spinner = undefined
+
+  constructor(spinner) {
+    this._spinner = spinner
   }
 
   renderFrame() {
-    this.renderSpinners()
-  }
+    let frame = this._spinner.getFrameEraser()
 
-  renderSpinners() {
-    // Prepare the escapes to clear the last frame.
-    const CLEAR_LINES = eraseLines(this.lastFrameLines)
-
-    // Prepare the new frame.
-    let newFrame = ''
-
-    for (const [, SPINNER] of this.spinners) {
-      if (newFrame === '')
-        newFrame = SPINNER.tick()
-      else
-        newFrame += '\n' + SPINNER.tick()
+    if (this._spinner) {
+      let {frame: spinnerFrame} = this._spinner.render()
+      frame += spinnerFrame
     }
 
-    this.lastFrameLines = this.spinners.size
-
-    // Clear the last frame and render the new one.
-    process.stdout.write(`${CLEAR_LINES}${newFrame}`)
+    process.stdout.write(frame)
   }
 
   start() {
@@ -54,21 +44,11 @@ export default class Tty {
 
     const TICKER = setInterval(() => {
       this.renderFrame()
-    }, 1000 / this.fps)
+    }, 1000 / this._fps)
 
     onExit(() => {
       clearInterval(TICKER)
-      process.stdout.write(eraseLines(this.lastFrameLines))
+      // process.stdout.write(eraseLines(this.lastFrameLines))
     })
-  }
-
-  removeSpinner({name}) {
-    this.spinners.delete(name)
-  }
-
-  updateSpinner({name, percentage, status}) {
-    const SPINNER = this.spinners.get(name)
-    SPINNER.percentage = percentage
-    SPINNER.status = status
   }
 }

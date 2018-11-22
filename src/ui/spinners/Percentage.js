@@ -13,12 +13,13 @@
 import Spinner from '../Spinner'
 
 export default class Percentage extends Spinner {
-  percentage = 0
-
-  getFrame(i) {
+  postProcess() {
     const PERCENTAGE = this.percentage
       .toString()
       .padStart(3, ' ')
-    return `[${PERCENTAGE}%]`
+    return {
+      frame: `[${PERCENTAGE}%]`,
+      lines: 1,
+    }
   }
 }
