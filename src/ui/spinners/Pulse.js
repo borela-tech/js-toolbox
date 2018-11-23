@@ -11,6 +11,7 @@
 // the License.
 
 import Spinner from '../Spinner'
+import {blue} from 'chalk'
 
 export default class Pulse extends Spinner {
   _animationFrames = [
@@ -36,4 +37,11 @@ export default class Pulse extends Spinner {
     '[    ]',
     '[    ]',
   ]
+
+  postProcess({frame, lines}) {
+    return {
+      frame: blue(frame),
+      lines,
+    }
+  }
 }
