@@ -20,6 +20,11 @@ export default class Tty {
   _fps = 15
 
   /**
+   * Stores temporarily the log messages to print before the spinner.
+   */
+  _logMessages = ''
+
+  /**
    * Spinner used to indicate progress.
    */
   _spinner = undefined
@@ -28,27 +33,50 @@ export default class Tty {
     this._spinner = spinner
   }
 
-  renderFrame() {
-    let frame = this._spinner.getFrameEraser()
+  getFrameEraser() {
+    return this._spinner.getFrameEraser()
+  }
 
-    if (this._spinner) {
-      let {frame: spinnerFrame} = this._spinner.render()
-      frame += spinnerFrame
-    }
+  write(message) {
+    this._logMessages += message
+  }
 
-    process.stdout.write(frame)
+  writeLine(message) {
+    this._logMessages += `${message}\n`
+  }
+
+  renderLogMessages() {
+    if (!this._logMessages)
+      return ''
+
+    const RESULT = !this._logMessages.endsWith('\n')
+      ? `${this._logMessages}\n`
+      : this._logMessages
+
+    this._logMessages = ''
+    return RESULT
+  }
+
+  renderSpinner() {
+    if (!this._spinner)
+      return
+    let {frame} = this._spinner.render()
+    return frame
   }
 
   start() {
     cursor.hide()
 
     const TICKER = setInterval(() => {
-      this.renderFrame()
+      const ERASE_FRAME = this.getFrameEraser()
+      const LOG_MESSAGES = this.renderLogMessages()
+      const SPINNER = this.renderSpinner()
+      process.stdout.write(ERASE_FRAME + LOG_MESSAGES + SPINNER)
     }, 1000 / this._fps)
 
     onExit(() => {
       clearInterval(TICKER)
-      // process.stdout.write(eraseLines(this.lastFrameLines))
+      process.stdout.write(this.getFrameEraser())
     })
   }
 }

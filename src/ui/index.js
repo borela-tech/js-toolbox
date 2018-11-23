@@ -18,6 +18,7 @@ import Spinner from './Spinner'
 import Visual from './Visual'
 
 import {
+  LOG_MESSAGE,
   TASK_STARTED,
   TASK_STOPPED,
   TASK_UPDATED,
@@ -42,6 +43,10 @@ export function setUpUi(store, eventBus) {
     let {type, payload} = event
 
     switch (type) {
+      case LOG_MESSAGE:
+        TTY.writeLine(payload)
+        break
+
       case TASK_STARTED: {
         let {name, ...args} = payload
         SPINNER.addSpinner(name, new TaskSpinner(args))

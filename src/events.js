@@ -16,6 +16,8 @@ export const OPTIONS_SET = 'OPTIONS_SET'
 export const PROJECT_TYPE_SET = 'PROJECT_TYPE_SET'
 export const TARGET_DIRECTORY_SET = 'TARGET_DIRECTORY_SET'
 
+export const LOG_MESSAGE = 'LOG_MESSAGE'
+
 export const TASK_STARTED = 'TASK_STARTED'
 export const TASK_STOPPED = 'TASK_STOPPED'
 export const TASK_UPDATED = 'TASK_UPDATED'
@@ -31,6 +33,13 @@ export function commandSet(command) {
   return {
     type: COMMAND_SET,
     payload: command,
+  }
+}
+
+export function logMessage(message) {
+  return {
+    type: LOG_MESSAGE,
+    payload: message,
   }
 }
 

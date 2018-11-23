@@ -19,6 +19,7 @@ import {onExitRequest} from '../utils'
 import {setUpCommand} from './utils'
 
 import {
+  logMessage,
   taskStarted,
   taskStopped,
   taskUpdated,
@@ -112,6 +113,10 @@ function handler(args) {
       status: 'Running Webpack...',
     }))
   }, 3000)
+
+  setInterval(() => {
+    EVENT_BUS.publish(logMessage('This is a test message'))
+  }, 10000)
 
   // COMPILER.run(reportBuild)
 }
