@@ -33,7 +33,6 @@ export default class Visual {
    */
   _frameTime = new Date
 
-
   /**
    * Generate the necessary escape characters to erase the frame lines.
    */

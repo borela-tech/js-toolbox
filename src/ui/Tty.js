@@ -46,22 +46,17 @@ export default class Tty {
   }
 
   renderLogMessages() {
-    if (!this._logMessages)
+    if (!this._logMessages.endsWith('\n'))
       return ''
-
-    const RESULT = !this._logMessages.endsWith('\n')
-      ? `${this._logMessages}\n`
-      : this._logMessages
-
+    const RESULT = this._logMessages
     this._logMessages = ''
     return RESULT
   }
 
   renderSpinner() {
-    if (!this._spinner)
-      return
-    let {frame} = this._spinner.render()
-    return frame
+    return this._spinner
+      ? this._spinner.render().frame
+      : ''
   }
 
   start() {
