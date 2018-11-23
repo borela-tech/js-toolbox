@@ -50,7 +50,6 @@ export default class Spinner extends Visual {
         this._percentage = undefined
       return
     }
-
     this._percentage = value
   }
 
