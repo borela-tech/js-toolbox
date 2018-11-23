@@ -10,18 +10,27 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-import Visual from './Visual'
-import Task from './spinners/Task'
+import Pulse from './spinners/Pulse'
 import Spinner from './Spinner'
+import Task from './spinners/Task'
+import Visual from './Visual'
 
 export default class MultiSpinner extends Visual {
   _spinners = new Map
+  _pulseSpinner = new Pulse
 
   addSpinner(name, spinner) {
     this._spinners.set(name, spinner)
   }
 
   getNextFrame() {
+    if (this._spinners.size < 1) {
+      return {
+        frame: '',
+        lines: 0,
+      }
+    }
+
     let finalFrame = ''
     let finalLines = 0
 
@@ -31,9 +40,10 @@ export default class MultiSpinner extends Visual {
       finalLines += lines
     }
 
+    const {frame: PULSE_FRAME} = this._pulseSpinner.render()
     return {
-      frame: finalFrame,
-      lines: finalLines,
+      frame: finalFrame + '\n' + PULSE_FRAME,
+      lines: finalLines + 1,
     }
   }
 
