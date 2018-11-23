@@ -12,7 +12,6 @@
 
 import Busy from './Busy'
 import Percentage from './Percentage'
-import Pulse from './Pulse'
 import Spinner from '../Spinner'
 
 import {
@@ -20,12 +19,12 @@ import {
   blue,
   green,
   yellow,
+  magenta,
 } from 'chalk'
 
 export default class Task extends Spinner {
   _busySpinner = new Busy
   _percentageSpinner = new Percentage
-  _pulseSpinner = new Pulse
 
   getNextFrame() {
     if (this.percentage)
@@ -35,13 +34,10 @@ export default class Task extends Spinner {
       ? this._percentageSpinner.render()
       : this._busySpinner.render()
 
-    let {frame: pulseFrame} = this._pulseSpinner.render()
-
-    progressFrame = green(progressFrame)
-    pulseFrame = yellow(pulseFrame)
+    progressFrame = magenta(progressFrame)
 
     return {
-      frame: `${progressFrame}${pulseFrame} ${this.status}`,
+      frame: `${progressFrame} ${this.status}`,
       lines: 1,
     }
   }
